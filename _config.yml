@@ -150,7 +150,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: ""
+baseurl: "https://bytetunnels.com" # e.g. "https://username.github.io/repo-name"
 
 # ------------ The following options are not recommended to be modified ------------------
 
