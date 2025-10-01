@@ -36,9 +36,7 @@ The web scraping landscape changes rapidly, and staying ahead means constantly e
 
 Welcome to ByteTunnels – where data extraction meets practical expertise.
 
-<img
-    src="/assets/img/banner-contact.jpg"
-    alt="Contact Arman for Complex Problems"
-    id="post-image-viewer"
-    class="img-fluid"
-  />
+## Let's Connect
+If you're facing a complex data extraction challenge or just want to chat about web scraping, feel free to reach out! I'm always open to discussing new projects, collaborations, or just sharing knowledge.
+
+You can contact me via: [LinkedIn](https://www.linkedin.com/in/armanhossain) or arman@bytetunnels.com
