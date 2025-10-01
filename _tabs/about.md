@@ -35,3 +35,10 @@ I believe in learning by doing. Every post here comes from actual projects and r
 The web scraping landscape changes rapidly, and staying ahead means constantly experimenting with new tools, techniques, and approaches. I'm here to share what works, what doesn't, and why.
 
 Welcome to ByteTunnels – where data extraction meets practical expertise.
+
+<img
+    src="/assets/img/banner-contact.jpg"
+    alt="Contact Arman for Complex Problems"
+    id="post-image-viewer"
+    class="img-fluid"
+  />
