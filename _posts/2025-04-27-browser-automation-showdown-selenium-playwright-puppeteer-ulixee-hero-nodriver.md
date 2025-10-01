@@ -366,14 +366,14 @@ Your choice depends on several critical factors:
 Based on testing across various scenarios:
 
 ```mermaid
-graph LR
-    subgraph "Speed Rankings (pages/minute)"
-        P[Puppeteer: 45-60]
-        PL[Playwright: 40-55]
-        S[Selenium: 25-40]
-        N[Nodriver: 30-45]
-        H[Hero: 20-35]
-    end
+graph TD
+    SR[Speed Rankings pages/minute]
+
+    SR --> P[Puppeteer: 45-60]
+    SR --> PL[Playwright: 40-55]
+    SR --> S[Selenium: 25-40]
+    SR --> N[Nodriver: 30-45]
+    SR --> H[Hero: 20-35]
 ```
 
 ## The Stealth Factor

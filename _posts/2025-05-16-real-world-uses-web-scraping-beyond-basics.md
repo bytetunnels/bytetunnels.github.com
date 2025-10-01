@@ -183,15 +183,24 @@ Scientific literature mining involves scraping research databases, academic jour
 Educational data collection supports institutional research, student success initiatives, and educational policy development. Universities scrape various data sources to understand student outcomes, employment trends, and industry demands for curriculum development.
 
 ```mermaid
-graph LR
-    A[Research Databases] --> E[Data Collection Layer]
-    B[Academic Journals] --> E
-    C[Conference Proceedings] --> E
-    D[Preprint Servers] --> E
+graph TD
+    A[Research Databases]
+    B[Academic Journals]
+    C[Conference Proceedings]
+    D[Preprint Servers]
+    E[Data Collection Layer]
+
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+
     E --> F[Text Processing]
     E --> G[Metadata Extraction]
+
     F --> H[Topic Modeling]
     G --> I[Citation Analysis]
+
     H --> J[Research Insights]
     I --> J
     J --> K[Knowledge Discovery]

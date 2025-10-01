@@ -271,12 +271,15 @@ await page.evaluateOnNewDocument(() => {
 Efficient browser automation requires careful resource management and performance optimization.
 
 ```mermaid
-graph LR
-    A[Browser Launch] --> B[Context Creation]
+graph TD
+    A[Browser Launch]
+    A --> B[Context Creation]
     B --> C[Page Navigation]
     C --> D{Resource Blocking}
+
     D -->|Images/CSS| E[Faster Loading]
     D -->|All Resources| F[Complete Experience]
+
     E --> G[Data Extraction]
     F --> G
     G --> H[Context Cleanup]

@@ -120,12 +120,14 @@ The beauty of static scraping lies in its simplicity and efficiency. You can pro
 Dynamic websites require a different strategy entirely. You need to render the JavaScript to access the content, which means using browser automation tools or finding alternative data sources.
 
 ```mermaid
-flowchart LR
-    A[Dynamic Website] --> B{Scraping Strategy}
+flowchart TD
+    A[Dynamic Website]
+    A --> B{Scraping Strategy}
+
     B -->|Option 1| C[Browser Automation]
     B -->|Option 2| D[API Reverse Engineering]
     B -->|Option 3| E[Server-Side Rendering]
-    
+
     C --> F[Playwright/Selenium]
     D --> G[Direct API Calls]
     E --> H[Puppeteer/Chrome]
@@ -266,18 +268,20 @@ class APIScraper:
 The choice between static and dynamic scraping approaches has significant performance implications that extend beyond simple execution time.
 
 ```mermaid
-graph LR
-    A[Performance Factors] --> B[Resource Usage]
+graph TD
+    A[Performance Factors]
+
+    A --> B[Resource Usage]
     A --> C[Speed]
     A --> D[Scalability]
     A --> E[Reliability]
-    
+
     B --> F[Static: Low RAM/CPU]
     B --> G[Dynamic: High RAM/CPU]
-    
+
     C --> H[Static: Fast]
     C --> I[Dynamic: Slower]
-    
+
     D --> J[Static: Highly Scalable]
     D --> K[Dynamic: Limited Scale]
 ```

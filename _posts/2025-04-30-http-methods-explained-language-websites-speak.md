@@ -173,14 +173,16 @@ print(f"Allowed methods: {allowed_methods}")
 
 ```mermaid
 flowchart TD
-    A[Web Scraping Task] --> B{What's the Goal?}
+    A[Web Scraping Task]
+    A --> B{What's the Goal?}
+
     B -->|Fetch Data| C[Use GET]
     B -->|Submit Form| D[Use POST]
     B -->|Check Availability| E[Use HEAD]
     B -->|Update Data| F[Use PUT/PATCH]
     B -->|Remove Data| G[Use DELETE]
     B -->|Check Permissions| H[Use OPTIONS]
-    
+
     C --> I[Webpage Content<br/>API Responses<br/>File Downloads]
     D --> J[Login Forms<br/>Search Queries<br/>Data Submission]
     E --> K[Link Validation<br/>File Size Checks<br/>Cache Validation]

@@ -212,8 +212,9 @@ with sync_playwright() as p:
 The DOM is also an event-driven system. Elements can respond to user interactions:
 
 ```mermaid
-graph LR
-    A[User Click] --> B[DOM Event]
+graph TD
+    A[User Click]
+    A --> B[DOM Event]
     B --> C[Event Handler]
     C --> D[DOM Modification]
     D --> E[Visual Update]

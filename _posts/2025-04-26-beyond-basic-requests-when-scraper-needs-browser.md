@@ -69,20 +69,29 @@ Some content only appears after specific user actions—clicking buttons, scroll
 Browser automation tools control real web browsers programmatically, giving you access to the full rendering engine that processes JavaScript, handles cookies, manages sessions, and executes all the complex behaviors modern websites expect.
 
 ```mermaid
-flowchart LR
-    subgraph "Basic Scraping"
-        A1[HTTP Request] --> A2[Raw HTML]
-        A2 --> A3[Parse Static Content]
+flowchart TD
+    subgraph BS["Basic Scraping"]
+        A1[HTTP Request]
+        A2[Raw HTML]
+        A3[Parse Static Content]
+        A1 --> A2
+        A2 --> A3
     end
-    
-    subgraph "Browser Automation"
-        B1[Launch Browser] --> B2[Navigate to Page]
-        B2 --> B3[Wait for JS Execution]
-        B3 --> B4[Handle Dynamic Content]
-        B4 --> B5[Interact with Elements]
-        B5 --> B6[Extract Final Data]
+
+    subgraph BA["Browser Automation"]
+        B1[Launch Browser]
+        B2[Navigate to Page]
+        B3[Wait for JS Execution]
+        B4[Handle Dynamic Content]
+        B5[Interact with Elements]
+        B6[Extract Final Data]
+        B1 --> B2
+        B2 --> B3
+        B3 --> B4
+        B4 --> B5
+        B5 --> B6
     end
-    
+
     style A3 fill:#ffcccc
     style B6 fill:#ccffcc
 ```
@@ -157,28 +166,22 @@ const puppeteer = require('puppeteer');
 Browser automation comes with significant overhead compared to basic HTTP requests. Understanding these trade-offs helps you make informed decisions about when to use each approach.
 
 ```mermaid
-graph LR
-    subgraph Metrics
-        A[Speed]
-        B[Resource Usage]
-        C[Complexity]
-        D[Reliability]
-    end
-    
-    subgraph "Basic Requests"
-        A --> A1[Very Fast]
-        B --> B1[Low Memory]
-        C --> C1[Simple]
-        D --> D1[Limited]
-    end
-    
-    subgraph "Browser Automation"
-        A --> A2[Slower]
-        B --> B2[High Memory]
-        C --> C2[Complex]
-        D --> D2[High]
-    end
-    
+graph TD
+    M[Performance Comparison]
+
+    M --> BR[Basic Requests]
+    M --> BA[Browser Automation]
+
+    BR --> A1[Speed: Very Fast]
+    BR --> B1[Resource Usage: Low Memory]
+    BR --> C1[Complexity: Simple]
+    BR --> D1[Reliability: Limited]
+
+    BA --> A2[Speed: Slower]
+    BA --> B2[Resource Usage: High Memory]
+    BA --> C2[Complexity: Complex]
+    BA --> D2[Reliability: High]
+
     style A1 fill:#ccffcc
     style B1 fill:#ccffcc
     style C1 fill:#ccffcc

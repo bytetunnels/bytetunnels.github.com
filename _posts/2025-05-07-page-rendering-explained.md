@@ -77,9 +77,12 @@ This CSS processing phase is critical for scrapers to understand. Content might 
 Once the browser has both DOM and CSS information, it creates the render tree—a combination that represents what should actually be displayed on screen. Elements with `display: none` are excluded from the render tree entirely, while elements with `visibility: hidden` are included but marked as invisible.
 
 ```mermaid
-graph LR
-    A[DOM Tree] --> C[Render Tree]
-    B[CSS Styles] --> C
+graph TD
+    A[DOM Tree]
+    B[CSS Styles]
+
+    A --> C[Render Tree]
+    B --> C
     C --> D[Layout/Reflow]
     D --> E[Paint]
     E --> F[Composite]

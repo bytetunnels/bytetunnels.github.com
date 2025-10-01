@@ -122,8 +122,10 @@ third_item = driver.find_element(By.XPATH, "(//div[@class='item'])[3]")
 XPath shines when you need to navigate between related elements:
 
 ```mermaid
-graph LR
-    A[Current Element] --> B[Parent: ..]
+graph TD
+    A[Current Element]
+
+    A --> B[Parent: ..]
     A --> C[Child: child::]
     A --> D[Following Sibling: following-sibling::]
     A --> E[Preceding Sibling: preceding-sibling::]

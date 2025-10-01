@@ -298,29 +298,31 @@ async def monitor_websocket_data(uri):
 # asyncio.run(monitor_websocket_data("wss://example.com/live-data"))
 ```
 
-<div class="mermaid">
-graph LR
-    A[Web Data Types] --> B[Structured]
+```mermaid
+graph TD
+    A[Web Data Types]
+
+    A --> B[Structured]
     A --> C[Semi-Structured]
     A --> D[Unstructured]
     A --> E[Dynamic]
-    
+
     B --> B1[Easy to Parse]
     B --> B2[Predictable Format]
     B --> B3[Standard Libraries]
-    
+
     C --> C1[Some Structure]
     C --> C2[Flexible Schema]
     C --> C3[Mixed Patterns]
-    
+
     D --> D1[HTML Parsing Required]
     D --> D2[CSS Selectors]
     D --> D3[Pattern Recognition]
-    
+
     E --> E1[JavaScript Required]
     E --> E2[Browser Automation]
     E --> E3[Real-time Processing]
-</div>
+```
 
 ## Binary Data and Media Files
 

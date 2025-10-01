@@ -35,12 +35,16 @@ However, some websites implement detection mechanisms that specifically target h
 The performance difference between headless and headed browsers can be substantial, particularly when running multiple instances or processing large datasets.
 
 ```mermaid
-graph LR
-    A[Browser Mode Decision] --> B[Headless]
+graph TD
+    A[Browser Mode Decision]
+
+    A --> B[Headless]
     A --> C[Headed]
+
     B --> D[Faster Execution]
     B --> E[Lower Memory Usage]
     B --> F[Better Server Performance]
+
     C --> G[Visual Debugging]
     C --> H[Better Anti-Detection]
     C --> I[Human-like Behavior]

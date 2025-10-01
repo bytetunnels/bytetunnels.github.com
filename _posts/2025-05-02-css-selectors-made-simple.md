@@ -309,19 +309,21 @@ for container in product_containers:
 While CSS selectors are intuitive and widely supported, XPath offers more power for complex document traversal.
 
 ```mermaid
-graph LR
-    A[Selection Task] --> B{Complexity Level}
+graph TD
+    A[Selection Task]
+    A --> B{Complexity Level}
+
     B -->|Simple| C[CSS Selectors]
     B -->|Complex| D[Consider XPath]
-    
+
     C --> C1[✓ Faster execution]
     C --> C2[✓ Easier to read]
     C --> C3[✓ Better browser support]
-    
+
     D --> D1[✓ Text content matching]
     D --> D2[✓ Parent navigation]
     D --> D3[✓ Complex conditions]
-    
+
     style C fill:#e8f5e8
     style D fill:#fff3cd
 ```

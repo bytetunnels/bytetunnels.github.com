@@ -106,16 +106,21 @@ driver.find_elements(By.XPATH, "//table//tr[position()>1]")  # Skip header row
 ```
 
 ```mermaid
-graph LR
-    A[XPath Query] --> B{Element Type}
+graph TD
+    A[XPath Query]
+    A --> B{Element Type}
+
     B --> C[By Text Content]
     B --> D[By Attributes]
     B --> E[By Position]
+
     C --> F["//span[text()='Price']"]
     D --> G["//div[@class='item']"]
     E --> H["//tr[position()>1]"]
+
     F --> I[Exact Match]
     F --> J[Contains Match]
+
     I --> K["text()='exact'"]
     J --> L["contains(text(), 'partial')"]
 ```

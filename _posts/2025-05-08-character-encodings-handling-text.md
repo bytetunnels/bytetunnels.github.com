@@ -40,23 +40,25 @@ When you make a request to a web server, multiple layers can introduce encoding 
 Browsers are quite forgiving with encoding issues and often make educated guesses about what encoding to use. Your scraping code, however, needs to be more explicit about handling these situations.
 
 ```mermaid
-flowchart LR
-    A[Web Server] --> B[HTTP Response]
+flowchart TD
+    A[Web Server]
+    A --> B[HTTP Response]
+
     B --> C[Content-Type Header]
     B --> D[HTML Meta Tag]
     B --> E[Raw Bytes]
-    
+
     C --> F[Declared Encoding]
     D --> G[Page Encoding]
     E --> H[Auto-Detection]
-    
+
     F --> I{Encoding Match?}
     G --> I
     H --> I
-    
+
     I -->|Yes| J[Clean Text]
     I -->|No| K[Garbled Text]
-    
+
     style K fill:#ffcccc
     style J fill:#ccffcc
 ```

@@ -180,14 +180,17 @@ print("All salaries:", all_salaries)  # ['$75,000', '$65,000']
 - `//div[@class="item"]/following-sibling::div` - Next sibling elements
 
 ```mermaid
-flowchart LR
-    A[XPath Query] --> B{Element Type}
+flowchart TD
+    A[XPath Query]
+    A --> B{Element Type}
+
     B -->|Tag| C[//div]
     B -->|Class| D[//div[@class='item']]
     B -->|Text| E[//span[text()='Total']]
     B -->|Position| F[//tr[position()>1]]
-    
-    G[Navigation] --> H[Child: /child]
+
+    G[Navigation]
+    G --> H[Child: /child]
     G --> I[Descendant: //descendant]
     G --> J[Following: /following-sibling]
     G --> K[Parent: /parent::*]
@@ -355,15 +358,17 @@ products = tree.css('.product-item')
 The key is matching your tool choice to your specific needs. For learning and prototyping, BeautifulSoup's readable syntax wins. For production scrapers processing thousands of pages, lxml or selectolax provide the speed you need.
 
 ```mermaid
-graph LR
-    A[HTML Parsing Need] --> B{Document Size}
+graph TD
+    A[HTML Parsing Need]
+
+    A --> B{Document Size}
     B -->|Small < 1MB| C[BeautifulSoup]
     B -->|Large > 1MB| D[lxml/Selectolax]
-    
+
     A --> E{Complexity}
     E -->|Simple CSS| F[BeautifulSoup]
     E -->|Complex XPath| G[lxml]
-    
+
     A --> H{Performance Critical}
     H -->|Yes| I[Selectolax]
     H -->|No| J[BeautifulSoup]

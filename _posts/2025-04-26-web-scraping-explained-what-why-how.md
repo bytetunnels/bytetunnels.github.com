@@ -102,17 +102,20 @@ scrape_dynamic_content()
 Successful web scraping requires understanding how websites are structured. Modern websites follow predictable patterns that make data extraction more systematic.
 
 ```mermaid
-graph LR
-    A[HTML Document] --> B[Head Section]
+graph TD
+    A[HTML Document]
+    A --> B[Head Section]
     A --> C[Body Section]
+
     C --> D[Navigation]
     C --> E[Main Content]
     C --> F[Sidebar]
     C --> G[Footer]
+
     E --> H[Product Cards]
     E --> I[Article Content]
     E --> J[Data Tables]
-    
+
     style A fill:#fff3e0
     style E fill:#e8f5e8
     style H fill:#e3f2fd

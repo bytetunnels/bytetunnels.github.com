@@ -211,17 +211,19 @@ The architectural differences reveal their core purposes. Crawlers maintain queu
 ## Technical Implementation Patterns
 
 ```mermaid
-flowchart LR
-    subgraph "Crawling Pattern"
-        CR1[Start URL] --> CR2[Extract Links]
+flowchart TD
+    subgraph CP["Crawling Pattern"]
+        CR1[Start URL]
+        CR1 --> CR2[Extract Links]
         CR2 --> CR3[Filter & Queue]
         CR3 --> CR4[Visit Next]
         CR4 --> CR2
         CR4 --> CR5[Store Metadata]
     end
-    
-    subgraph "Scraping Pattern"  
-        SC1[Known URLs] --> SC2[Target Elements]
+
+    subgraph SP["Scraping Pattern"]
+        SC1[Known URLs]
+        SC1 --> SC2[Target Elements]
         SC2 --> SC3[Extract Data]
         SC3 --> SC4[Process & Clean]
         SC4 --> SC5[Structured Output]

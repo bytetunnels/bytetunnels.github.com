@@ -278,21 +278,23 @@ Several trends are shaping the future of web scraping:
 **Legal and Regulatory Frameworks**: Increasing attention from regulators is pushing the industry toward more transparent and compliant practices.
 
 ```mermaid
-graph LR
-    A[Current Web Scraping] --> B[AI-Powered Adaptation]
+graph TD
+    A[Current Web Scraping]
+
+    A --> B[AI-Powered Adaptation]
     A --> C[Self-Healing Capabilities]
     A --> D[Distributed Architecture]
     A --> E[Enhanced Stealth]
-    
+
     B --> F[Computer Vision Integration]
     B --> G[Natural Language Processing]
-    
+
     C --> H[Automatic Selector Updates]
     C --> I[Layout Change Detection]
-    
+
     D --> J[Cloud-Native Solutions]
     D --> K[Global Proxy Networks]
-    
+
     E --> L[Advanced Fingerprinting Evasion]
     E --> M[Behavioral Mimicry]
 ```

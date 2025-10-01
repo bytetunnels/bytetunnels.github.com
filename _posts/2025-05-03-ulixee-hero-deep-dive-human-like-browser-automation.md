@@ -112,16 +112,18 @@ async function demonstrateHumanEmulation() {
 Hero's session management capabilities set it apart from other automation tools. The platform can maintain persistent sessions, handle complex authentication flows, and even resume interrupted scraping operations.
 
 ```mermaid
-graph LR
-    A[Session Start] --> B[Profile Creation]
+graph TD
+    A[Session Start]
+    A --> B[Profile Creation]
     B --> C[Fingerprint Assignment]
     C --> D[Cookie Management]
     D --> E[Local Storage Setup]
     E --> F[Browsing Actions]
     F --> G[Session Persistence]
     G --> H[Resume Capability]
-    
-    I[Session Pool] --> J[Multiple Concurrent Sessions]
+
+    I[Session Pool]
+    I --> J[Multiple Concurrent Sessions]
     J --> K[Load Distribution]
     J --> L[Failure Isolation]
 ```

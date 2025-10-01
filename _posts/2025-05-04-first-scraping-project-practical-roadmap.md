@@ -174,14 +174,17 @@ class BookScraper:
 Most real-world scraping involves multiple pages. Here's how to handle pagination:
 
 ```mermaid
-flowchart LR
-    A[Start Scraping] --> B[Fetch Page 1]
+flowchart TD
+    A[Start Scraping]
+    A --> B[Fetch Page 1]
     B --> C[Extract Data]
     C --> D[Check for Next Page]
     D --> E{Next Page Exists?}
+
     E -->|Yes| F[Increment Page Number]
     F --> G[Fetch Next Page]
     G --> C
+
     E -->|No| H[Save All Data]
     H --> I[End]
 ```

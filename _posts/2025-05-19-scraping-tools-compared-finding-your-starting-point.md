@@ -197,18 +197,20 @@ Puppeteer excels in Chrome-specific scenarios and integrates naturally with Java
 The choice between these tools depends on several factors that form a decision matrix:
 
 ```mermaid
-graph LR
-    A[Project Requirements] --> B{JavaScript Required?}
+graph TD
+    A[Project Requirements]
+    A --> B{JavaScript Required?}
+
     B -->|No| C{Performance Critical?}
     B -->|Yes| D{Browser Compatibility?}
-    
+
     C -->|Yes| E[Requests + BeautifulSoup]
     C -->|No| F[Consider Async HTTP]
-    
+
     D -->|Multiple Browsers| G[Selenium]
     D -->|Chrome Only| H[Puppeteer]
     D -->|Modern Features| I[Playwright]
-    
+
     E --> J[Best for Static Sites]
     F --> K[High Concurrency]
     G --> L[Legacy Support]

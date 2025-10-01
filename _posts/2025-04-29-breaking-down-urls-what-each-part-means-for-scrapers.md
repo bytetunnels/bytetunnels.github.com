@@ -60,12 +60,14 @@ Some sites serve different content based on protocol. I've encountered APIs that
 The domain section contains multiple layers of information. Subdomains often indicate different services or API versions, while the main domain and TLD can reveal geographic targeting or organizational structure.
 
 ```mermaid
-graph LR
-    A[api.v2.example.com] --> B[Subdomain: api]
+graph TD
+    A[api.v2.example.com]
+
+    A --> B[Subdomain: api]
     A --> C[Version: v2]
     A --> D[Main Domain: example]
     A --> E[TLD: com]
-    
+
     B --> B1[API Service]
     C --> C1[Version 2]
     D --> D1[Organization]

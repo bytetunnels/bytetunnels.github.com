@@ -309,19 +309,21 @@ def get_edge_driver():
 Browser automation is resource-intensive compared to simple HTTP requests. Here's how to optimize performance:
 
 ```mermaid
-graph LR
-    A[Performance Optimization] --> B[Resource Management]
+graph TD
+    A[Performance Optimization]
+
+    A --> B[Resource Management]
     A --> C[Loading Strategy]
     A --> D[Element Selection]
-    
+
     B --> B1[Headless Mode]
     B --> B2[Disable Images/CSS]
     B --> B3[Browser Pool]
-    
+
     C --> C1[Page Load Strategy]
     C --> C2[Selective Content]
     C --> C3[Smart Waiting]
-    
+
     D --> D1[CSS over XPath]
     D --> D2[Specific Selectors]
     D --> D3[Implicit Waits]

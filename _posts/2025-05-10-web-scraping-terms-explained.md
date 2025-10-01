@@ -106,12 +106,17 @@ response = requests.get('https://example.com', headers=headers)
 **Rate Limiting** controls how many requests you can make within a specific time period. Websites use this to prevent overload from automated requests. It's like a bouncer controlling how many people enter a club per minute.
 
 ```mermaid
-graph LR
-    A[Request 1] --> B[✓ Allowed]
-    C[Request 2] --> D[✓ Allowed]
-    E[Request 3] --> F[✓ Allowed]
-    G[Request 4] --> H[⚠ Rate Limited]
-    
+graph TD
+    A[Request 1]
+    C[Request 2]
+    E[Request 3]
+    G[Request 4]
+
+    A --> B[✓ Allowed]
+    C --> D[✓ Allowed]
+    E --> F[✓ Allowed]
+    G --> H[⚠ Rate Limited]
+
     style B fill:#e8f5e8
     style D fill:#e8f5e8
     style F fill:#e8f5e8

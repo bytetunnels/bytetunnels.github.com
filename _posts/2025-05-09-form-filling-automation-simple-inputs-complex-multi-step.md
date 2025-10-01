@@ -388,24 +388,26 @@ class ResilientFormFiller:
 Form automation performance significantly impacts overall scraping efficiency, especially when processing large volumes of submissions. Optimization strategies focus on reducing wait times, minimizing browser overhead, and implementing intelligent retry mechanisms.
 
 ```mermaid
-graph LR
-    A[Form Automation Performance] --> B[Wait Strategy Optimization]
+graph TD
+    A[Form Automation Performance]
+
+    A --> B[Wait Strategy Optimization]
     A --> C[Resource Management]
     A --> D[Batch Processing]
     A --> E[Caching Strategies]
-    
+
     B --> B1[Smart Waits]
     B --> B2[Conditional Loading]
     B --> B3[Timeout Management]
-    
+
     C --> C1[Browser Pooling]
     C --> C2[Memory Management]
     C --> C3[Session Reuse]
-    
+
     D --> D1[Queue Management]
     D --> D2[Parallel Processing]
     D --> D3[Rate Limiting]
-    
+
     E --> E1[Form Structure Cache]
     E --> E2[Validation Pattern Cache]
     E --> E3[Session State Cache]
