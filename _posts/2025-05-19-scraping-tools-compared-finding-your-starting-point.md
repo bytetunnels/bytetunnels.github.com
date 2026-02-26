@@ -82,10 +82,10 @@ graph TD
     D --> H[Playwright]
     D --> I[Puppeteer]
     
-    E --> J[Fast & Lightweight]
+    E --> J["Fast & Lightweight"]
     F --> K[Concurrent Processing]
     G --> L[Wide Browser Support]
-    H --> M[Modern & Feature Rich]
+    H --> M["Modern & Feature Rich"]
     I --> N[Chrome/Node.js Focus]
 ```
 

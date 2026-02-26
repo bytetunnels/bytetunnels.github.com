@@ -112,10 +112,10 @@ graph TD
     E[Request 3]
     G[Request 4]
 
-    A --> B[✓ Allowed]
-    C --> D[✓ Allowed]
-    E --> F[✓ Allowed]
-    G --> H[⚠ Rate Limited]
+    A --> B["✓ Allowed"]
+    C --> D["✓ Allowed"]
+    E --> F["✓ Allowed"]
+    G --> H["⚠ Rate Limited"]
 
     style B fill:#e8f5e8
     style D fill:#e8f5e8

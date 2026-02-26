@@ -166,9 +166,9 @@ Pseudo-selectors add another layer of precision, allowing you to target elements
 ```mermaid
 graph TD
     A[HTML Document] --> B[.container]
-    B --> C[.product-item:first-child]
-    B --> D[.product-item:nth-child(2)]
-    B --> E[.product-item:last-child]
+    B --> C[".product-item:first-child"]
+    B --> D[".product-item:nth-child(2)"]
+    B --> E[".product-item:last-child"]
     
     C --> C1[.title]
     C --> C2[.price]

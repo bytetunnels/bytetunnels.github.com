@@ -21,7 +21,7 @@ flowchart TD
     B --> C[Receive HTML Response]
     C --> D[Parse HTML Content]
     D --> E[Extract Desired Data]
-    E --> F[Clean & Structure Data]
+    E --> F["Clean & Structure Data"]
     F --> G[Store/Process Data]
     
     style A fill:#e1f5fe
@@ -326,14 +326,14 @@ sequenceDiagram
     
     S->>W: HTTP Request (Page 1)
     W->>S: HTML Response
-    S->>S: Parse & Extract Data
+    S->>S: Parse and Extract Data
     S->>D: Store Products
-    
+
     Note over S: Wait (politeness delay)
-    
+
     S->>W: HTTP Request (Page 2)
     W->>S: HTML Response
-    S->>S: Parse & Extract Data
+    S->>S: Parse and Extract Data
     S->>D: Store Products
     
     Note over S: Continue for remaining pages

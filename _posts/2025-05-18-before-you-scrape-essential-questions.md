@@ -180,7 +180,7 @@ graph LR
     E --> H[Retry with Delay]
     F --> I[Log and Skip]
     
-    G --> J{Retry Count < Max?}
+    G --> J{"Retry Count < Max?"}
     H --> J
     J -->|Yes| A
     J -->|No| K[Mark as Failed]

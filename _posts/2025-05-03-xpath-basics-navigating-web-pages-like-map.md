@@ -21,10 +21,10 @@ graph TD
     A --> C[body]
     B --> D[title]
     B --> E[meta]
-    C --> F[div class='container']
+    C --> F["div class='container'"]
     C --> G[header]
-    F --> H[div class='content']
-    F --> I[div class='sidebar']
+    F --> H["div class='content'"]
+    F --> I["div class='sidebar'"]
     H --> J[h1]
     H --> K[p]
     H --> L[ul]
@@ -125,12 +125,12 @@ XPath shines when you need to navigate between related elements:
 graph TD
     A[Current Element]
 
-    A --> B[Parent: ..]
-    A --> C[Child: child::]
-    A --> D[Following Sibling: following-sibling::]
-    A --> E[Preceding Sibling: preceding-sibling::]
-    A --> F[Descendant: descendant::]
-    A --> G[Ancestor: ancestor::]
+    A --> B["Parent: .."]
+    A --> C["Child: child::"]
+    A --> D["Following Sibling: following-sibling::"]
+    A --> E["Preceding Sibling: preceding-sibling::"]
+    A --> F["Descendant: descendant::"]
+    A --> G["Ancestor: ancestor::"]
 ```
 
 ### Practical Relationship Navigation

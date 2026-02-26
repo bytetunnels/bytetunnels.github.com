@@ -32,9 +32,9 @@ graph TD
     B --> D[p.description]
     B --> E[span.price]
     
-    F[Attributes] --> G[class='product-container']
-    F --> H[id='item-123']
-    F --> I[data-price='29.99']
+    F[Attributes] --> G["class='product-container'"]
+    F --> H["id='item-123'"]
+    F --> I["data-price='29.99'"]
     
     B -.-> F
 ```
@@ -185,9 +185,9 @@ flowchart TD
     A --> B{Element Type}
 
     B -->|Tag| C[//div]
-    B -->|Class| D[//div[@class='item']]
-    B -->|Text| E[//span[text()='Total']]
-    B -->|Position| F[//tr[position()>1]]
+    B -->|Class| D["//div[@class='item']"]
+    B -->|Text| E["//span[text()='Total']"]
+    B -->|Position| F["//tr[position()>1]"]
 
     G[Navigation]
     G --> H[Child: /child]
@@ -362,8 +362,8 @@ graph TD
     A[HTML Parsing Need]
 
     A --> B{Document Size}
-    B -->|Small < 1MB| C[BeautifulSoup]
-    B -->|Large > 1MB| D[lxml/Selectolax]
+    B -->|"Small &lt; 1MB"| C[BeautifulSoup]
+    B -->|"Large &gt; 1MB"| D[lxml/Selectolax]
 
     A --> E{Complexity}
     E -->|Simple CSS| F[BeautifulSoup]

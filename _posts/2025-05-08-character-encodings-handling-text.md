@@ -19,14 +19,14 @@ The most basic encoding system is ASCII, which handles English characters and ba
 
 ```mermaid
 graph TD
-    A[Text: "Hello"] --> B[ASCII Encoding]
+    A["Text: Hello"] --> B[ASCII Encoding]
     B --> C[Bytes: 72 101 108 108 111]
     C --> D[Transmission/Storage]
     D --> E[ASCII Decoding]
-    E --> F[Text: "Hello"]
-    
-    G[Text: "Café"] --> H[ASCII Encoding]
-    H --> I[Error: Character 'é' not in ASCII]
+    E --> F["Text: Hello"]
+
+    G["Text: Café"] --> H[ASCII Encoding]
+    H --> I["Error: Character é not in ASCII"]
     
     style I fill:#ffcccc
 ```

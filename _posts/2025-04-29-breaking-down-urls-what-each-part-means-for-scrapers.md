@@ -151,11 +151,11 @@ graph TB
     A --> E[Format Control]
     A --> F[Authentication]
     
-    B --> B1[?page=1&limit=50]
-    C --> C1[?category=electronics&price_min=100]
-    D --> D1[?sort_by=date&order=desc]
-    E --> E1[?format=json&include=metadata]
-    F --> F1[?api_key=ABC123&token=XYZ]
+    B --> B1["?page=1&limit=50"]
+    C --> C1["?category=electronics&price_min=100"]
+    D --> D1["?sort_by=date&order=desc"]
+    E --> E1["?format=json&include=metadata"]
+    F --> F1["?api_key=ABC123&token=XYZ"]
 ```
 
 Here's how to systematically explore parameter spaces:
