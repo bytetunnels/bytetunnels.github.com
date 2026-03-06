@@ -34,7 +34,7 @@ graph TD
     style I fill:#ffcccc
 ```
 
-UTF-8 emerged as the solution to ASCII's limitations. It's a variable-length encoding that can represent every character in the Unicode standard while maintaining backward compatibility with ASCII. This means the first 128 characters in UTF-8 are identical to ASCII, but it can also handle millions of additional characters from virtually every writing system on Earth.
+UTF-8 emerged as the solution to ASCII's limitations. It's a variable-length encoding that can represent every character in the Unicode standard while maintaining backward compatibility with ASCII. This means the first 128 characters in UTF-8 are identical to ASCII, but it can also handle over a million additional codepoints, covering virtually every writing system on Earth.
 
 ## Why Encoding Problems Happen in Web Scraping
 

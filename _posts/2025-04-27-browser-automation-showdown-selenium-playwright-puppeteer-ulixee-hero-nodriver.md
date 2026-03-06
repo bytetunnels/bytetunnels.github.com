@@ -258,8 +258,8 @@ Nodriver represents the cutting edge of Python browser automation, focusing on b
 ### Strengths
 - **Zero Detection**: Advanced techniques to avoid all known detection methods
 - **Python Native**: Designed specifically for Python developers
-- **No Dependencies**: Minimal setup requirements
-- **Active Evasion**: Automatically adapts to new detection methods
+- **Minimal Setup**: Only requires Chrome/Chromium to be installed
+- **Passive Evasion**: Avoids detection by not using WebDriver/ChromeDriver
 
 ### Code Example: Nodriver's Invisible Approach
 ```python

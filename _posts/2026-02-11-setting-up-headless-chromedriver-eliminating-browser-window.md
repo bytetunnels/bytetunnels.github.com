@@ -33,7 +33,7 @@ Both modes produce the same DOM. The difference is purely about whether the rend
 
 ## Python Selenium Headless Setup
 
-Modern Selenium 4+ makes headless configuration straightforward. The key is using `--headless=new`, the updated headless mode introduced in Chrome 112.
+Modern Selenium 4+ makes headless configuration straightforward. The key is using `--headless=new`, the updated headless mode available since Chrome 109 and formally promoted in Chrome 112.
 
 ```python
 from selenium import webdriver
@@ -116,7 +116,7 @@ Chrome has two headless implementations, and the difference between them matters
 
 The old `--headless` flag (now called `--headless=old`) launched a separate headless shell that shared the rendering engine but had a different browser implementation. This caused subtle behavioral differences. Some JavaScript APIs returned unexpected values, certain CSS features were not fully supported, and the browser fingerprint was distinctly different from regular Chrome.
 
-Chrome 112 introduced `--headless=new`, which runs the full headed Chrome browser with the display output disabled. This is a critical change. The new headless mode uses exactly the same browser code path as headed Chrome, meaning:
+Chrome 109 introduced the `--headless=new` flag (previously `--headless=chrome` from Chrome 96), which runs the full headed Chrome browser with the display output disabled. This is a critical change. The new headless mode uses exactly the same browser code path as headed Chrome, meaning:
 
 ```python
 # Old headless -- separate implementation, behavioral differences

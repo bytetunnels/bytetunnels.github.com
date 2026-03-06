@@ -142,7 +142,7 @@ Browser Use is an open-source framework that connects LLMs to browser automation
 
 ### Stagehand by Browserbase
 
-Stagehand has gained enormous traction in the developer community, amassing over 50,000 GitHub stars. As one of the leading [Puppeteer alternatives](/posts/top-puppeteer-alternatives-what-to-use-instead/), it extends Playwright with AI-powered selectors, letting you write automation scripts that use natural language to identify elements instead of brittle CSS selectors. Stagehand sits at a practical middle ground between fully autonomous agents and traditional scripted automation.
+Stagehand has gained enormous traction in the developer community, amassing over 20,000 GitHub stars. As one of the leading [Puppeteer alternatives](/posts/top-puppeteer-alternatives-what-to-use-instead/), it extends Playwright with AI-powered selectors, letting you write automation scripts that use natural language to identify elements instead of brittle CSS selectors. Stagehand sits at a practical middle ground between fully autonomous agents and traditional scripted automation.
 
 ```mermaid
 graph TD
@@ -403,7 +403,7 @@ async function resilientScrape(page, taskDescription) {
 
 Chrome Auto Browse is a notable announcement, but it is an early step in a much longer journey. The daily task limits, the restriction to Chrome, and the reliance on Google's servers all constrain its current utility. For web scraping professionals, the real story is not Auto Browse itself but the broader direction it points toward: AI agents that understand and interact with websites the way humans do.
 
-The tools to build these agents are already open source and available today. Browser Use achieves 89.1% on WebVoyager. Stagehand has over 50,000 stars on GitHub. [Playwright, Puppeteer, Selenium, and Scrapy](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/) give you the browser control foundation. The pieces are there, though [many hard problems remain unsolved](/posts/the-unsolved-problems-of-ai-web-scraping-in-2026/).
+The tools to build these agents are already open source and available today. Browser Use achieves 89.1% on WebVoyager. Stagehand has over 20,000 stars on GitHub. [Playwright, Puppeteer, Selenium, and Scrapy](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/) give you the browser control foundation. The pieces are there, though [many hard problems remain unsolved](/posts/the-unsolved-problems-of-ai-web-scraping-in-2026/).
 
 ```mermaid
 graph TD

@@ -78,7 +78,7 @@ Puppeteer Extra's plugin architecture allows you to compose exactly the function
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
-const UserAgentOverride = require('puppeteer-extra-plugin-user-agent-override');
+const AnonymizeUA = require('puppeteer-extra-plugin-anonymize-ua');
 
 // Add stealth plugin with custom evasions
 puppeteer.use(
@@ -108,8 +108,8 @@ puppeteer.use(
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
 
 // Rotate user agents
-puppeteer.use(UserAgentOverride({
-  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+puppeteer.use(AnonymizeUA({
+  customFn: (ua) => ua.replace('HeadlessChrome', 'Chrome')
 }));
 
 const browser = await puppeteer.launch({

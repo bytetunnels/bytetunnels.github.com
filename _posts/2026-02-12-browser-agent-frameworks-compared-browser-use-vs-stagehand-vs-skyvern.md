@@ -119,7 +119,7 @@ Browser Use excels at exploratory tasks where the exact page structure is unpred
 
 ## Stagehand: The Deterministic-First Approach
 
-Stagehand, built by Browserbase, takes the opposite approach. With over 50,000 GitHub stars, it has become the leading TypeScript framework for AI-augmented browser automation. Rather than handing everything to an AI agent, Stagehand extends [Playwright with natural language capabilities](/posts/playwright-for-browser-automation-in-ai-agents/) that you invoke only when needed, and can integrate with [Playwright MCP](/posts/playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly/) for even tighter agent connectivity.
+Stagehand, built by Browserbase, takes the opposite approach. With over 20,000 GitHub stars, it has become the leading TypeScript framework for AI-augmented browser automation. Rather than handing everything to an AI agent, Stagehand extends [Playwright with natural language capabilities](/posts/playwright-for-browser-automation-in-ai-agents/) that you invoke only when needed, and can integrate with [Playwright MCP](/posts/playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly/) for even tighter agent connectivity.
 
 The philosophy is pragmatic: use standard Playwright for predictable flows and switch to AI commands only for ambiguous tasks like interpreting visual layouts or handling dynamic content.
 

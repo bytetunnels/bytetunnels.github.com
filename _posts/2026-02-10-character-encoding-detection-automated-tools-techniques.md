@@ -39,7 +39,7 @@ Three libraries dominate the Python encoding detection space. For a head-to-head
 
 ### chardet: The Classic
 
-`chardet` is a port of Mozilla's automatic charset detection algorithm. It has been the go-to library for over a decade and is a dependency of the `requests` library.
+`chardet` is a port of Mozilla's automatic charset detection algorithm. It has been the go-to library for over a decade and was formerly a dependency of the `requests` library (replaced by `charset-normalizer` in requests 2.26.0+).
 
 ```python
 import chardet

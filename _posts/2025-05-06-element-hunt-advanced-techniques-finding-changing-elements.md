@@ -233,8 +233,8 @@ def handle_react_elements(page):
     # Wait for React to finish rendering
     page.wait_for_function("window.React !== undefined")
     
-    # Look for React-specific attributes
-    react_component = page.locator('[data-reactid]')
+    # Look for React-specific attributes (data-reactroot for React 16+, data-reactid for older versions)
+    react_component = page.locator('[data-reactroot], [data-reactid]')
     
     # Use React DevTools if available
     page.evaluate("""

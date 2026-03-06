@@ -54,8 +54,8 @@ graph TD
 ```
 
 In headless mode, you can expect:
-- 20-40% faster page load times
-- 30-50% reduction in memory usage
+- 10-20% faster page load times
+- 15-30% reduction in memory usage
 - Ability to run more concurrent instances
 - Better suited for server environments
 

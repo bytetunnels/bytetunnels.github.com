@@ -377,13 +377,13 @@ Not every library supports every CSS selector. Here is what you can rely on:
 | Descendant / Child          | Yes           | Yes            | Yes    | Yes        |
 | Sibling `+` and `~`         | Yes           | Yes            | Yes    | Yes        |
 | `:first-child`, `:nth-child`| Yes           | Yes            | Yes    | Yes        |
-| `:not(selector)`            | Limited       | Yes            | Yes    | Yes        |
-| `:has(selector)`            | No            | No             | No     | Yes        |
+| `:not(selector)`            | Yes           | Yes            | Yes    | Yes        |
+| `:has(selector)`            | Yes           | No             | No     | Yes        |
 | `::text` (Parsel extension) | No            | No             | Yes    | No         |
 | `::attr(name)` (Parsel ext) | No            | No             | Yes    | No         |
 | `[attr^=]`, `[attr$=]`, `[attr*=]` | Yes    | Yes            | Yes    | Yes        |
 
-Selectolax has the broadest support for modern CSS features like `:has()`. Parsel's `::text` and `::attr()` are unique extensions not part of the CSS specification.
+Selectolax and BeautifulSoup (via soupsieve) both support modern CSS features like `:has()`. Parsel's `::text` and `::attr()` are unique extensions not part of the CSS specification.
 
 ## Installation Summary
 

@@ -161,7 +161,7 @@ If you are locked to Python 3.10 or 3.11 and need raw speed for batch encoding d
 
 ## charset-normalizer: The Modern Replacement
 
-`charset-normalizer` is the library that replaced `chardet` in the `requests` library starting with version 2.28.0 (released in June 2022). It was written from scratch with a different detection approach: instead of porting Mozilla's algorithm, it uses a coherence-based method that analyzes character frequency distributions and Unicode properties.
+`charset-normalizer` is the library that replaced `chardet` in the `requests` library starting with version 2.26.0 (released in August 2021), with `chardet` fully removed as a dependency by version 2.28.0. It was written from scratch with a different detection approach: instead of porting Mozilla's algorithm, it uses a coherence-based method that analyzes character frequency distributions and Unicode properties.
 
 ```bash
 pip install charset-normalizer

@@ -350,15 +350,14 @@ def optimize_selenium_performance():
     
     # Disable unnecessary features
     chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--disable-plugins")
-    chrome_options.add_argument("--disable-java")
-    
+    chrome_options.add_argument("--disable-gpu")
+
     # Set page load strategy
     chrome_options.page_load_strategy = 'eager'  # Don't wait for all resources
-    
+
     # Memory optimization
-    chrome_options.add_argument("--memory-pressure-off")
-    chrome_options.add_argument("--max_old_space_size=4096")
+    chrome_options.add_argument("--disable-background-networking")
+    chrome_options.add_argument("--disable-default-apps")
     
     return webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
