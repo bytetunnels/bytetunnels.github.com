@@ -196,32 +196,18 @@ def simulate_user_interactions():
 Different browsers offer various configuration options, including [headless vs headed modes](/posts/headless-vs-headed-browser-automation/). Chrome provides extensive customization capabilities:
 
 ```python
-def configure_chrome_driver():
-    chrome_options = Options()
-    
-    # Run in headless mode (no GUI)
-    chrome_options.add_argument("--headless")
-    
-    # Set window size
-    chrome_options.add_argument("--window-size=1920,1080")
-    
-    # Disable images for faster loading
-    prefs = {"profile.managed_default_content_settings.images": 2}
-    chrome_options.add_experimental_option("prefs", prefs)
-    
-    # Disable extensions
-    chrome_options.add_argument("--disable-extensions")
-    
-    # Set user agent
-    chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
-    
-    # Disable logging
-    chrome_options.add_argument("--log-level=3")
-    
-    return webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=chrome_options
-    )
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+
+# Disable images for faster loading
+prefs = {"profile.managed_default_content_settings.images": 2}
+chrome_options.add_experimental_option("prefs", prefs)
+
+# Set page load strategy
+chrome_options.page_load_strategy = 'eager'  # Don't wait for all resources
 ```
 
 ## Error Handling and Best Practices
@@ -287,30 +273,18 @@ class SeleniumScraper:
 
 ## Working with Multiple Browser Types
 
-Selenium supports various browsers, each with unique characteristics:
+Selenium supports various browsers, each with unique characteristics. The setup pattern is the same -- import the browser-specific Service, Options, and driver manager, then launch:
 
 ```python
-def get_firefox_driver():
-    from selenium.webdriver.firefox.service import Service as FirefoxService
-    from selenium.webdriver.firefox.options import Options as FirefoxOptions
-    from webdriver_manager.firefox import GeckoDriverManager
-    
-    firefox_options = FirefoxOptions()
-    firefox_options.add_argument("--headless")
-    
-    service = FirefoxService(GeckoDriverManager().install())
-    return webdriver.Firefox(service=service, options=firefox_options)
+# Firefox example -- Edge follows the same pattern
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from webdriver_manager.firefox import GeckoDriverManager
 
-def get_edge_driver():
-    from selenium.webdriver.edge.service import Service as EdgeService
-    from selenium.webdriver.edge.options import Options as EdgeOptions
-    from webdriver_manager.microsoft import EdgeChromiumDriverManager
-    
-    edge_options = EdgeOptions()
-    edge_options.add_argument("--headless")
-    
-    service = EdgeService(EdgeChromiumDriverManager().install())
-    return webdriver.Edge(service=service, options=edge_options)
+firefox_options = FirefoxOptions()
+firefox_options.add_argument("--headless")
+service = FirefoxService(GeckoDriverManager().install())
+driver = webdriver.Firefox(service=service, options=firefox_options)
 ```
 
 ## Performance Considerations
@@ -338,106 +312,37 @@ graph TD
     D --> D3[Implicit Waits]
 ```
 
-```python
-def optimize_selenium_performance():
-    chrome_options = Options()
-    
-    # Essential performance options
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    
-    # Disable unnecessary features
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--disable-gpu")
-
-    # Set page load strategy
-    chrome_options.page_load_strategy = 'eager'  # Don't wait for all resources
-
-    # Memory optimization
-    chrome_options.add_argument("--disable-background-networking")
-    chrome_options.add_argument("--disable-default-apps")
-    
-    return webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=chrome_options
-    )
-```
+The browser configuration options shown earlier -- headless mode, disabling images, and the `eager` page load strategy -- are the most impactful performance tweaks. Combine them with `--no-sandbox`, `--disable-dev-shm-usage`, and `--disable-gpu` for server environments.
 
 ## Practical Example: Scraping a Real Website
 
 Let's put everything together with a practical example that scrapes product information:
 
 ```python
-import json
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+# Building on the SeleniumScraper class above, here's the data extraction logic:
+scraper = SeleniumScraper()
 
-class ProductScraper:
-    def __init__(self):
-        self.setup_driver()
-    
-    def setup_driver(self):
-        options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
-        
-        self.driver = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()),
-            options=options
-        )
-        self.wait = WebDriverWait(self.driver, 10)
-    
-    def scrape_products(self, url):
-        products = []
-        
+try:
+    scraper.driver.get("https://example-store.com/products")
+
+    wait = WebDriverWait(scraper.driver, 10)
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, "product-item")))
+
+    products = []
+    for element in scraper.driver.find_elements(By.CLASS_NAME, "product-item"):
         try:
-            self.driver.get(url)
-            
-            # Wait for product grid to load
-            self.wait.until(
-                EC.presence_of_element_located((By.CLASS_NAME, "product-item"))
-            )
-            
-            product_elements = self.driver.find_elements(By.CLASS_NAME, "product-item")
-            
-            for element in product_elements:
-                try:
-                    product = {
-                        'name': element.find_element(By.CLASS_NAME, "product-name").text,
-                        'price': element.find_element(By.CLASS_NAME, "price").text,
-                        'rating': len(element.find_elements(By.CSS_SELECTOR, ".rating .star.filled")),
-                        'availability': element.find_element(By.CLASS_NAME, "availability").text
-                    }
-                    products.append(product)
-                except Exception as e:
-                    print(f"Error scraping product: {e}")
-                    continue
-            
-            return products
-            
-        except Exception as e:
-            print(f"Scraping failed: {e}")
-            return []
-    
-    def save_products(self, products, filename):
-        with open(filename, 'w') as f:
-            json.dump(products, f, indent=2)
-    
-    def cleanup(self):
-        self.driver.quit()
+            products.append({
+                'name': element.find_element(By.CLASS_NAME, "product-name").text,
+                'price': element.find_element(By.CLASS_NAME, "price").text,
+                'rating': len(element.find_elements(By.CSS_SELECTOR, ".rating .star.filled")),
+            })
+        except NoSuchElementException:
+            continue
 
-# Usage
-scraper = ProductScraper()
-products = scraper.scrape_products("https://example-store.com/products")
-scraper.save_products(products, "products.json")
-scraper.cleanup()
+    with open("products.json", 'w') as f:
+        json.dump(products, f, indent=2)
+finally:
+    scraper.cleanup()
 ```
 
 Selenium WebDriver opens the door to scraping the modern web's most complex applications. While it requires more resources than simple HTTP requests, the ability to execute JavaScript, handle dynamic content, and simulate real user interactions makes it indispensable for serious web scraping projects.

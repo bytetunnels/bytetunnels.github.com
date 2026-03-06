@@ -89,70 +89,7 @@ async function useSavedCookies() {
 }
 ```
 
-### Selenium Cookie Handling
-
-```python
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import json
-import pickle
-
-def save_session_selenium():
-    driver = webdriver.Chrome()
-    
-    try:
-        # Login process
-        driver.get("https://example.com/login")
-        
-        driver.find_element(By.ID, "username").send_keys("your_username")
-        driver.find_element(By.ID, "password").send_keys("your_password")
-        driver.find_element(By.ID, "login-button").click()
-        
-        # Wait for login to complete
-        WebDriverWait(driver, 10).until(
-            EC.url_contains("dashboard")
-        )
-        
-        # Save cookies
-        cookies = driver.get_cookies()
-        
-        # Save as JSON
-        with open('selenium_cookies.json', 'w') as f:
-            json.dump(cookies, f)
-        
-        # Or save as pickle for Python objects
-        with open('selenium_cookies.pkl', 'wb') as f:
-            pickle.dump(cookies, f)
-            
-    finally:
-        driver.quit()
-
-def load_session_selenium():
-    driver = webdriver.Chrome()
-    
-    try:
-        # Navigate to domain first (required for adding cookies)
-        driver.get("https://example.com")
-        
-        # Load cookies
-        with open('selenium_cookies.json', 'r') as f:
-            cookies = json.load(f)
-        
-        # Add each cookie
-        for cookie in cookies:
-            driver.add_cookie(cookie)
-        
-        # Navigate to protected page
-        driver.get("https://example.com/dashboard")
-        
-        # Verify logged in state
-        assert "Dashboard" in driver.title
-        
-    finally:
-        driver.quit()
-```
+The same pattern applies in Selenium: use `driver.get_cookies()` to save and `driver.add_cookie(cookie)` to restore, with the requirement that you navigate to the domain before adding cookies.
 
 ## Local Storage and Session Storage Management
 
@@ -219,40 +156,7 @@ async function manageStorage(page) {
 }
 ```
 
-### Python Storage Management with Selenium
-
-```python
-def manage_web_storage(driver):
-    # Execute JavaScript to access localStorage
-    local_storage = driver.execute_script("""
-        var storage = {};
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            storage[key] = localStorage.getItem(key);
-        }
-        return storage;
-    """)
-    
-    # Access sessionStorage
-    session_storage = driver.execute_script("""
-        var storage = {};
-        for (var i = 0; i < sessionStorage.length; i++) {
-            var key = sessionStorage.key(i);
-            storage[key] = sessionStorage.getItem(key);
-        }
-        return storage;
-    """)
-    
-    print(f"Local Storage: {local_storage}")
-    print(f"Session Storage: {session_storage}")
-    
-    # Set storage values
-    driver.execute_script("""
-        localStorage.setItem('app_state', 'initialized');
-        sessionStorage.setItem('current_view', 'dashboard');
-    """)
-```
-
+In Selenium, the same approach works via `driver.execute_script()` -- iterate over `localStorage` or `sessionStorage` keys and call `getItem()` to read values, or `setItem()` to write them.
 
 <figure>
   <img src="/assets/img/inline-session-management-cookies-storage-user--1.jpg" alt="Cookies are small, but they carry the weight of authentication." loading="lazy">
@@ -341,34 +245,6 @@ class SessionManager:
         
         print("Session restored successfully")
         return True
-
-# Usage example
-def demonstrate_session_management():
-    session_manager = SessionManager()
-    
-    # Initial login and save session
-    driver = webdriver.Chrome()
-    try:
-        driver.get("https://example.com/login")
-        # Perform login steps...
-        
-        # Save complete session
-        session_manager.save_complete_session(driver)
-        
-    finally:
-        driver.quit()
-    
-    # Later: restore session in new browser instance
-    driver = webdriver.Chrome()
-    try:
-        # Restore session
-        session_manager.load_complete_session(driver, "https://example.com")
-        
-        # Continue with authenticated session
-        driver.get("https://example.com/protected-page")
-        
-    finally:
-        driver.quit()
 ```
 
 ## Handling Session Expiration and Renewal
@@ -512,23 +388,9 @@ async function createPersistentSession() {
     // Close context - session data is automatically saved
     await context.close();
 }
-
-// Resume session from saved profile
-async function resumePersistentSession() {
-    const userDataDir = './browser-profile';
-    
-    const context = await chromium.launchPersistentContext(userDataDir, {
-        headless: false
-    });
-    
-    const page = await context.newPage();
-    
-    // Navigate directly to protected area - should be logged in
-    await page.goto('https://example.com/dashboard');
-    
-    await context.close();
-}
 ```
+
+To resume a saved session, simply call `launchPersistentContext` with the same `userDataDir` and navigate directly to the protected area -- the session data will already be present.
 
 Managing session state effectively is like conducting an orchestra—every storage mechanism must work in harmony to create a seamless user experience. Sessions often come into play during [form filling automation and login flows](/posts/form-filling-automation-simple-inputs-complex-multi-step/), where maintaining auth state is essential. For Selenium-specific techniques, see [Selenium session management: saving cookies and localStorage](/posts/selenium-session-management-saving-cookies-localstorage/). Whether you're maintaining authentication across multiple scraping sessions or preserving complex application state, the techniques we've explored provide the foundation for robust, reliable browser automation.
 

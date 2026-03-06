@@ -164,51 +164,24 @@ graph TB
 Here's how to systematically explore parameter spaces:
 
 ```python
-from urllib.parse import urlencode, parse_qs, urlparse
-import itertools
+from urllib.parse import urlencode
 
-class ParameterExplorer:
-    def __init__(self, base_url):
-        self.base_url = base_url
-        
-    def build_url(self, params):
-        return f"{self.base_url}?{urlencode(params)}"
-    
-    def explore_pagination(self, max_pages=10):
-        """Test different pagination parameters"""
-        pagination_patterns = [
-            {'page': 1, 'limit': 50},
-            {'offset': 0, 'count': 25},
-            {'start': 0, 'end': 100},
-            {'p': 1, 'per_page': 20}
-        ]
-        
-        for pattern in pagination_patterns:
-            for page in range(1, max_pages + 1):
-                params = pattern.copy()
-                if 'page' in params:
-                    params['page'] = page
-                elif 'offset' in params:
-                    params['offset'] = (page - 1) * params['count']
-                
-                yield self.build_url(params)
-    
-    def explore_formats(self):
-        """Test different output formats"""
-        formats = ['json', 'xml', 'csv', 'html']
-        format_params = ['format', 'output', 'type', 'ext']
-        
-        for fmt, param in itertools.product(formats, format_params):
-            yield self.build_url({param: fmt})
+base_url = "https://api.example.com/data"
 
-# Usage example
-explorer = ParameterExplorer('https://api.example.com/data')
+# Common pagination patterns to test against an unknown API
+pagination_patterns = [
+    {'page': 1, 'limit': 50},
+    {'offset': 0, 'count': 25},
+    {'p': 1, 'per_page': 20},
+]
 
-# Test pagination
-for url in list(explorer.explore_pagination(3)):
+for pattern in pagination_patterns:
+    url = f"{base_url}?{urlencode(pattern)}"
     print(f"Testing: {url}")
-    # Make request and analyze response
+    # Make request and check if the response contains paginated data
 ```
+
+You can also probe output format by trying `?format=json`, `?output=xml`, and similar variations -- many APIs support multiple formats through query parameters.
 
 
 <figure>
@@ -260,147 +233,42 @@ scrapeWithFragment('https://spa-app.com/dashboard', 'reports')
 URLs can't contain certain characters directly. Understanding encoding helps you construct valid requests and decode extracted data properly.
 
 ```python
-from urllib.parse import quote, unquote, quote_plus
+from urllib.parse import quote, quote_plus
 
-def safe_url_construction(base_url, search_term, filters):
-    """Properly encode URL components"""
-    
-    # Different encoding for different contexts
-    encoded_search = quote_plus(search_term)  # Spaces become +
-    encoded_filter = quote(filters)  # Spaces become %20
-    
-    url = f"{base_url}?q={encoded_search}&filter={encoded_filter}"
-    
-    return url
+# quote_plus encodes spaces as + (for query values)
+# quote encodes spaces as %20 (for path segments)
+search = quote_plus("Python & JavaScript")  # "Python+%26+JavaScript"
+path = quote("café naïve")                  # "caf%C3%A9+na%C3%AFve"
 
-# Example with problematic characters
-search_terms = [
-    "Python & JavaScript",
-    "Price: $100-$500",
-    "Data #analysis",
-    "UTF-8: café naïve"
-]
-
-for term in search_terms:
-    safe_url = safe_url_construction('https://search.com', term, 'active')
-    print(f"Original: {term}")
-    print(f"Safe URL: {safe_url}")
-    print(f"Decoded: {unquote(safe_url)}\n")
+url = f"https://search.com?q={search}&filter={quote('active')}"
 ```
 
 ## Dynamic URL Generation
 
 Many modern applications generate URLs dynamically. Recognizing these patterns helps you predict URL structures and build comprehensive scrapers.
 
-```ruby
-require 'uri'
-require 'cgi'
-
-class URLPatternAnalyzer
-  def initialize
-    @patterns = []
-  end
-  
-  def analyze_batch(urls)
-    urls.each { |url| extract_pattern(url) }
-    identify_common_patterns
-  end
-  
-  private
-  
-  def extract_pattern(url)
-    # Extract numeric IDs
-    numeric_ids = url.scan(/\/(\d+)(?:\/|$|\?)/)
-    
-    # Extract date patterns
-    date_patterns = url.scan(/(\d{4}[-\/]\d{2}[-\/]\d{2})/)
-    
-    # Extract parameter patterns
-    params = URI.parse(url).query
-    param_keys = params ? CGI.parse(params).keys : []
-    
-    @patterns << {
-      url: url,
-      numeric_ids: numeric_ids.flatten,
-      dates: date_patterns.flatten,
-      param_keys: param_keys
-    }
-  end
-  
-  def identify_common_patterns
-    common_params = @patterns
-      .flat_map { |p| p[:param_keys] }
-      .tally
-      .sort_by { |k, v| -v }
-      .first(10)
-    
-    puts "Most common parameters: #{common_params}"
-  end
-end
-
-# Usage
-analyzer = URLPatternAnalyzer.new
-sample_urls = [
-  'https://shop.com/products/12345?category=electronics&sort=price',
-  'https://shop.com/products/67890?category=books&sort=rating',
-  'https://shop.com/orders/2024-03-15?status=completed'
-]
-
-analyzer.analyze_batch(sample_urls)
-```
+When analyzing URLs at scale, look for numeric IDs (`/\d+/`), date patterns (`/\d{4}-\d{2}-\d{2}/`), and common query parameter names across your sample. Tallying the most frequent parameter keys across a batch of URLs quickly reveals the site's routing conventions.
 
 ## Security Implications in URL Structure
 
 URLs reveal security information that affects scraping strategies. Authentication methods, rate limiting hints, and access control patterns are often visible in URL structures.
 
 ```python
-import hashlib
-import time
+import hashlib, time
 from urllib.parse import urlencode
 
-class SecureURLBuilder:
-    def __init__(self, api_key, secret):
-        self.api_key = api_key
-        self.secret = secret
-    
-    def build_signed_url(self, endpoint, params):
-        """Build URL with signature for APIs requiring request signing"""
-        
-        # Add timestamp and API key
-        params.update({
-            'api_key': self.api_key,
-            'timestamp': int(time.time())
-        })
-        
-        # Create signature
-        param_string = urlencode(sorted(params.items()))
-        signature_data = f"{endpoint}?{param_string}"
-        signature = hashlib.sha256(
-            f"{signature_data}{self.secret}".encode()
-        ).hexdigest()
-        
-        params['signature'] = signature
-        
-        return f"{endpoint}?{urlencode(params)}"
-    
-    def extract_rate_limit_info(self, url):
-        """Guess rate limiting from URL patterns"""
-        
-        rate_limit_indicators = [
-            'api_key' in url,  # Key-based limiting
-            'per_page' in url or 'limit' in url,  # Pagination limits
-            '/v1/' in url or '/v2/' in url,  # Versioned APIs often have limits
-        ]
-        
-        return any(rate_limit_indicators)
-
-# Usage
-builder = SecureURLBuilder('your_api_key', 'your_secret')
-signed_url = builder.build_signed_url(
-    'https://api.service.com/data',
-    {'category': 'electronics', 'limit': 100}
-)
+def build_signed_url(endpoint, params, api_key, secret):
+    """Build URL with signature for APIs requiring request signing."""
+    params.update({'api_key': api_key, 'timestamp': int(time.time())})
+    param_string = urlencode(sorted(params.items()))
+    signature = hashlib.sha256(
+        f"{endpoint}?{param_string}{secret}".encode()
+    ).hexdigest()
+    params['signature'] = signature
+    return f"{endpoint}?{urlencode(params)}"
 ```
+
+URL patterns also reveal rate limiting hints: the presence of `api_key`, `per_page`, `limit`, or versioned paths like `/v1/` all suggest the API enforces request quotas.
 
 Understanding URLs transforms you from someone who copies and pastes endpoints into someone who can predict, construct, and navigate entire API ecosystems. Every URL tells a story about the system behind it, the data it protects, and the patterns you can exploit for comprehensive extraction.
 

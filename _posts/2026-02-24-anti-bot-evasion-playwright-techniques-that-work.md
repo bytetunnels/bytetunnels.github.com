@@ -156,59 +156,7 @@ graph TD
 
 For Node.js, the equivalent package is `puppeteer-extra-plugin-stealth` used through `playwright-extra`. The patches are similar --- they override `navigator.plugins`, add a fake `window.chrome` object, fix the WebGL renderer string, and normalize the permissions API.
 
-### What Stealth Patches Actually Do
-
-Here is a simplified version of what the `window.chrome` patch looks like under the hood.
-
-```python
-page.add_init_script("""
-    // Add window.chrome object that detection scripts expect
-    window.chrome = {
-        runtime: {
-            onMessage: undefined,
-            sendMessage: undefined,
-            connect: undefined,
-        },
-        loadTimes: function() { return {}; },
-        csi: function() { return {}; },
-    };
-""")
-```
-
-And the `navigator.plugins` fix.
-
-```python
-page.add_init_script("""
-    Object.defineProperty(navigator, 'plugins', {
-        get: () => {
-            const plugins = [
-                {
-                    name: 'Chrome PDF Plugin',
-                    description: 'Portable Document Format',
-                    filename: 'internal-pdf-viewer',
-                    length: 1,
-                },
-                {
-                    name: 'Chrome PDF Viewer',
-                    description: '',
-                    filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai',
-                    length: 1,
-                },
-                {
-                    name: 'Native Client',
-                    description: '',
-                    filename: 'internal-nacl-plugin',
-                    length: 2,
-                },
-            ];
-            plugins.length = 3;
-            return plugins;
-        },
-    });
-""")
-```
-
-These patches make the browser session look like a standard Chrome installation instead of an automated instance.
+Under the hood, these patches use `Object.defineProperty` to override `navigator.plugins` with a realistic plugin list (Chrome PDF Plugin, Chrome PDF Viewer, Native Client), add a `window.chrome` object with the `runtime`, `loadTimes`, and `csi` properties that detection scripts expect, and normalize the permissions API behavior. The net effect is making the browser session look like a standard Chrome installation instead of an automated instance.
 
 ## Step 4: Handle Cloudflare Challenges
 
@@ -243,32 +191,13 @@ def handle_cloudflare(page, url, max_wait=30):
     return page
 
 
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
-    context = browser.new_context(
-        viewport={"width": 1920, "height": 1080},
-        user_agent=(
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
-    )
-
-    page = context.new_page()
-    stealth_sync(page)
-
+    # Usage with your stealth-configured context:
     page = handle_cloudflare(page, "https://target-site.com")
 
     # Extract the cf_clearance cookie for future requests
-    cookies = context.cookies()
     cf_cookie = next(
-        (c for c in cookies if c["name"] == "cf_clearance"),
-        None
+        (c for c in context.cookies() if c["name"] == "cf_clearance"), None
     )
-    if cf_cookie:
-        print(f"cf_clearance: {cf_cookie['value'][:20]}...")
-
-    browser.close()
 ```
 
 The critical detail is running in headed mode (`headless=False`). Cloudflare's latest challenges use canvas and WebGL checks that fail in headless mode. If you must run headless, you will need the `--headless=new` flag in Chromium, which uses the new headless mode that is much closer to a headed session.
@@ -406,54 +335,7 @@ with sync_playwright() as p:
     # all cookies, localStorage, and session data persist
 ```
 
-You can also manually save and restore cookies if you need more control.
-
-```python
-import json
-from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth_sync
-
-COOKIE_FILE = "cookies.json"
-
-
-def save_cookies(context, path):
-    """Save all cookies from the browser context to a JSON file."""
-    cookies = context.cookies()
-    with open(path, "w") as f:
-        json.dump(cookies, f, indent=2)
-    print(f"Saved {len(cookies)} cookies to {path}")
-
-
-def load_cookies(context, path):
-    """Load cookies from a JSON file into the browser context."""
-    if not os.path.exists(path):
-        print("No saved cookies found.")
-        return
-    with open(path, "r") as f:
-        cookies = json.load(f)
-    context.add_cookies(cookies)
-    print(f"Loaded {len(cookies)} cookies from {path}")
-
-
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    stealth_sync(page)
-
-    # Restore previous session
-    load_cookies(context, COOKIE_FILE)
-
-    page.goto("https://target-site.com")
-    # ... interact with the site ...
-
-    # Save session for next run
-    save_cookies(context, COOKIE_FILE)
-
-    browser.close()
-```
-
-This is especially useful for sites that issue long-lived session cookies after you pass an initial challenge. Instead of solving Cloudflare's challenge on every run, solve it once, save the `cf_clearance` cookie, and reuse it until it expires.
+For finer control, you can also save and restore cookies manually using `context.cookies()` and `context.add_cookies()` with a JSON file, as shown in our [Playwright cookie management guide](/posts/playwright-cookie-management-http-level-scraping/). This is especially useful for sites that issue long-lived session cookies after you pass an initial challenge. Instead of solving Cloudflare's challenge on every run, solve it once, save the `cf_clearance` cookie, and reuse it until it expires.
 
 ## Step 7: Rotate User Agents and Fingerprints
 
@@ -466,41 +348,22 @@ from playwright_stealth import stealth_sync
 
 USER_AGENTS = [
     {
-        "ua": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
         "viewport": {"width": 1920, "height": 1080},
         "timezone": "America/New_York",
         "locale": "en-US",
     },
     {
-        "ua": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
+        "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
         "viewport": {"width": 1440, "height": 900},
         "timezone": "America/Los_Angeles",
         "locale": "en-US",
     },
     {
-        "ua": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/121.0.0.0 Safari/537.36"
-        ),
-        "viewport": {"width": 1366, "height": 768},
-        "timezone": "Europe/London",
-        "locale": "en-GB",
-    },
-    {
-        "ua": (
-            "Mozilla/5.0 (X11; Linux x86_64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
+        "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
         "viewport": {"width": 1920, "height": 1080},
         "timezone": "Europe/Berlin",
         "locale": "de-DE",
@@ -598,29 +461,7 @@ with sync_playwright() as p:
     browser.close()
 ```
 
-Be careful with what you block. Some sites check whether their analytics scripts loaded successfully and flag visitors where those scripts are missing. If you suspect this, allow analytics requests but block the actual data transmission.
-
-```python
-def selective_block(route, request):
-    """Block only outgoing tracking beacons, not the script loads."""
-    url = request.url
-
-    # Allow loading the analytics script itself
-    if "google-analytics.com/analytics.js" in url:
-        route.continue_()
-        return
-
-    # Block the data collection endpoints
-    if "google-analytics.com/collect" in url:
-        route.abort()
-        return
-
-    if "google-analytics.com/j/collect" in url:
-        route.abort()
-        return
-
-    route.continue_()
-```
+Be careful with what you block. Some sites check whether their analytics scripts loaded successfully and flag visitors where those scripts are missing. If you suspect this, allow loading the analytics script itself (e.g., `analytics.js`) but block the data collection endpoints (e.g., `/collect`).
 
 
 <figure>
@@ -662,10 +503,9 @@ If your user agent claims to be Chrome 122 but the browser engine does not suppo
 
 Before pointing your stealth setup at a real target, test it against public bot detection pages. These sites run the same detection scripts that anti-bot systems use in production.
 
-```python
-from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth_sync
+Using your stealth-configured browser (from the earlier steps), visit each site, wait for detection scripts to finish (`wait_for_timeout(5000)`), and take a full-page screenshot:
 
+```python
 TEST_SITES = [
     ("SannySoft", "https://bot.sannysoft.com"),
     ("BrowserLeaks", "https://browserleaks.com/javascript"),
@@ -674,35 +514,10 @@ TEST_SITES = [
     ("Pixelscan", "https://pixelscan.net"),
 ]
 
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
-    context = browser.new_context(
-        viewport={"width": 1920, "height": 1080},
-        user_agent=(
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
-        locale="en-US",
-        timezone_id="America/New_York",
-    )
-
-    page = context.new_page()
-    stealth_sync(page)
-
-    page.add_init_script("""
-        Object.defineProperty(navigator, 'webdriver', {
-            get: () => undefined
-        });
-    """)
-
-    for name, url in TEST_SITES:
-        page.goto(url, wait_until="networkidle")
-        page.wait_for_timeout(5000)  # Let detection scripts finish
-        page.screenshot(path=f"test_{name.lower()}.png", full_page=True)
-        print(f"Screenshot saved for {name}")
-
-    browser.close()
+for name, url in TEST_SITES:
+    page.goto(url, wait_until="networkidle")
+    page.wait_for_timeout(5000)
+    page.screenshot(path=f"test_{name.lower()}.png", full_page=True)
 ```
 
 Review the screenshots carefully. Green results on SannySoft mean those checks passed. CreepJS gives a trust score --- anything below 60% means you have leaks to fix. Pixelscan will flag specific inconsistencies in your fingerprint.
@@ -771,71 +586,9 @@ Playwright with stealth patches handles the vast majority of sites. For a head-t
 Here is a complete template that combines all eight techniques into a single reusable setup.
 
 ```python
-import json
-import os
-import random
-import time
-
-from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth_sync
-
-BLOCKED_DOMAINS = [
-    "google-analytics.com",
-    "googletagmanager.com",
-    "doubleclick.net",
-    "facebook.net",
-]
-
-PROFILES = [
-    {
-        "ua": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
-        "viewport": {"width": 1920, "height": 1080},
-        "timezone": "America/New_York",
-        "locale": "en-US",
-    },
-    {
-        "ua": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
-        "viewport": {"width": 1440, "height": 900},
-        "timezone": "America/Los_Angeles",
-        "locale": "en-US",
-    },
-]
-
-COOKIE_FILE = "session_cookies.json"
-
-
-def human_delay(min_ms=200, max_ms=800):
-    time.sleep(random.uniform(min_ms, max_ms) / 1000.0)
-
-
-def block_resources(route, request):
-    if any(d in request.url for d in BLOCKED_DOMAINS):
-        route.abort()
-        return
-    route.continue_()
-
-
-def save_cookies(context, path):
-    with open(path, "w") as f:
-        json.dump(context.cookies(), f)
-
-
-def load_cookies(context, path):
-    if os.path.exists(path):
-        with open(path, "r") as f:
-            context.add_cookies(json.load(f))
-
-
 def create_stealth_page(playwright):
-    profile = random.choice(PROFILES)
+    """Combines all 8 techniques into a single reusable setup."""
+    profile = random.choice(PROFILES)  # From the USER_AGENTS list above
 
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(
@@ -849,32 +602,21 @@ def create_stealth_page(playwright):
     page = context.new_page()
     stealth_sync(page)
 
+    # Fix webdriver flag and screen dimensions
     page.add_init_script("""
-        Object.defineProperty(navigator, 'webdriver', {
-            get: () => undefined
-        });
+        Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
         Object.defineProperty(screen, 'width', { get: () => %d });
         Object.defineProperty(screen, 'height', { get: () => %d });
     """ % (profile["viewport"]["width"], profile["viewport"]["height"]))
 
+    # Block tracking domains
     page.route("**/*", block_resources)
+    # Restore saved cookies
     load_cookies(context, COOKIE_FILE)
 
     return browser, context, page
-
-
-with sync_playwright() as p:
-    browser, context, page = create_stealth_page(p)
-
-    page.goto("https://target-site.com", wait_until="domcontentloaded")
-    human_delay(1000, 3000)
-
-    # Your scraping logic here
-    title = page.title()
-    print(f"Page title: {title}")
-
-    save_cookies(context, COOKIE_FILE)
-    browser.close()
 ```
+
+Use `create_stealth_page()` as the entry point for every scraping session. After scraping, save cookies with `json.dump(context.cookies(), f)` for reuse.
 
 Apply these techniques incrementally. Start with the webdriver flag removal and stealth patches, test against your target, and add more layers only if needed. Over-engineering your evasion setup wastes time if the target only checks for `navigator.webdriver`.

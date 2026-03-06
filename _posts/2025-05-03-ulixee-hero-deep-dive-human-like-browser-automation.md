@@ -215,25 +215,9 @@ async function handleComplexInteractions() {
   await hero.waitForMillis(200); // Brief pause like humans do
   await option.click();
   
-  // Handle modal dialogs with proper focus management
-  const modalTrigger = await hero.querySelector('.open-modal');
-  await modalTrigger.click();
-  
-  await hero.waitForElement('.modal', {
-    waitForVisible: true
-  });
-  
-  // Interact within modal context
-  const modalInput = await hero.querySelector('.modal input[type="text"]');
-  await modalInput.type('Complex interaction data');
-  
-  // Handle file uploads (Hero can work with real files)
-  const fileInput = await hero.querySelector('input[type="file"]');
-  await fileInput.uploadFile('./data-file.csv');
-  
-  // Close modal with escape key (human-like behavior)
-  await hero.keyboard.press('Escape');
-  
+  // Hero also handles modals (click trigger, waitForElement, interact within),
+  // file uploads (uploadFile), and keyboard shortcuts (keyboard.press)
+
   await hero.close();
 }
 ```
@@ -245,57 +229,24 @@ Hero's architecture allows for sophisticated performance optimization while main
 ```javascript
 async function optimizedHeroSession() {
   const hero = new Hero({
-    // Optimize for performance while maintaining stealth
     blockedResourceTypes: ['images', 'fonts', 'media'],
-    blockedResourceUrls: [
-      '*analytics*',
-      '*tracking*',
-      '*ads*'
-    ],
-    
-    // Connection optimization
-    connectionToCore: {
-      host: 'localhost',
-      port: 1818
-    },
-    
-    // Resource limits
+    blockedResourceUrls: ['*analytics*', '*tracking*', '*ads*'],
+    connectionToCore: { host: 'localhost', port: 1818 },
     maxConcurrentConnections: 6,
     requestTimeout: 30000
   });
-  
-  // Batch operations for efficiency
-  const urls = [
-    'https://example.com/page1',
-    'https://example.com/page2',
-    'https://example.com/page3'
-  ];
-  
-  const results = [];
-  
-  for (const url of urls) {
-    await hero.goto(url);
-    
-    // Parallel data extraction
-    const [title, meta, content] = await Promise.all([
-      hero.document.title,
-      hero.querySelector('meta[name="description"]').getAttribute('content'),
-      hero.querySelector('.main-content').textContent
-    ]);
-    
-    results.push({ url, title, meta, content });
-    
-    // Efficient resource cleanup between pages
-    await hero.executeJs(() => {
-      // Clear large objects from memory
-      if (window.largeDataObjects) {
-        delete window.largeDataObjects;
-      }
-    });
-  }
-  
+
+  await hero.goto('https://example.com/page1');
+
+  // Parallel data extraction from a single page
+  const [title, meta, content] = await Promise.all([
+    hero.document.title,
+    hero.querySelector('meta[name="description"]').getAttribute('content'),
+    hero.querySelector('.main-content').textContent
+  ]);
+
   await hero.close();
-  return results;
+  return { title, meta, content };
 }
 ```
 
@@ -391,92 +342,7 @@ async function robustHeroScraping() {
 
 ## Integration with Data Pipelines
 
-Hero integrates seamlessly with existing data processing pipelines, offering flexible output formats and real-time streaming capabilities.
-
-```javascript
-async function pipelineIntegration() {
-  const hero = new Hero();
-  
-  // Set up data streaming
-  const dataStream = [];
-  
-  hero.on('resource-response', (response) => {
-    // Capture API responses automatically
-    if (response.url.includes('/api/') && response.status === 200) {
-      console.log('API response captured:', response.url);
-    }
-  });
-  
-  await hero.goto('https://example.com/dashboard');
-  
-  // Real-time data extraction as page loads
-  hero.on('dom-ready', async () => {
-    const initialData = await hero.evaluateOnWindow(() => {
-      return window.initialDataState || {};
-    });
-    
-    if (Object.keys(initialData).length > 0) {
-      dataStream.push({
-        timestamp: Date.now(),
-        type: 'initial_load',
-        data: initialData
-      });
-    }
-  });
-  
-  // Monitor dynamic content changes
-  await hero.executeJs(() => {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length > 0) {
-          window.heroDataUpdated = true;
-        }
-      });
-    });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  });
-  
-  // Periodic data collection
-  for (let i = 0; i < 10; i++) {
-    await hero.waitForMillis(2000);
-    
-    const hasUpdates = await hero.evaluateOnWindow(() => {
-      if (window.heroDataUpdated) {
-        window.heroDataUpdated = false;
-        return true;
-      }
-      return false;
-    });
-    
-    if (hasUpdates) {
-      const newData = await hero.evaluateOnWindow(() => {
-        // Extract updated content
-        return Array.from(document.querySelectorAll('.live-data')).map(el => ({
-          id: el.dataset.id,
-          content: el.textContent.trim(),
-          timestamp: Date.now()
-        }));
-      });
-      
-      dataStream.push({
-        timestamp: Date.now(),
-        type: 'dynamic_update',
-        data: newData
-      });
-    }
-  }
-  
-  await hero.close();
-  
-  // Process collected data
-  console.log('Total data points collected:', dataStream.length);
-  return dataStream;
-}
-```
+Hero integrates seamlessly with existing data processing pipelines. You can listen for API responses via `hero.on('resource-response')`, capture initial page state through `hero.evaluateOnWindow()` on DOM ready, and monitor dynamic content changes using a `MutationObserver` injected via `hero.executeJs()`. Periodic polling then collects updated data into a stream that feeds your downstream pipeline.
 
 Hero represents a paradigm shift in browser automation, moving beyond simple script execution to create genuinely human-like browsing experiences. To understand why tools like Hero exist, it helps to trace the [evolution of web scraping detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) and the increasingly sophisticated countermeasures they have inspired. Its comprehensive approach to detection evasion, combined with sophisticated session management and robust error handling, makes it an invaluable tool for complex web scraping scenarios.
 

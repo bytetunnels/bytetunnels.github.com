@@ -194,67 +194,7 @@ with open("/var/log/nginx/access.log", "r") as f:
 analyzer.report()
 ```
 
-```javascript
-// JavaScript version for Node.js log analysis
-const fs = require("fs");
-const readline = require("readline");
-
-const AI_BOT_PATTERNS = [
-  [/GPTBot/i, "OpenAI GPTBot"],
-  [/ChatGPT-User/i, "ChatGPT Browsing"],
-  [/Google-Extended/i, "Google AI Training"],
-  [/Amazonbot/i, "Amazon AI"],
-  [/anthropic-ai/i, "Anthropic"],
-  [/ClaudeBot/i, "Anthropic Claude"],
-  [/CCBot/i, "Common Crawl"],
-  [/Bytespider/i, "ByteDance"],
-  [/PerplexityBot/i, "Perplexity AI"],
-];
-
-async function analyzeLogFile(logPath) {
-  const stats = { human: 0, bots: {} };
-  const logPattern =
-    /(\S+) \S+ \S+ \[([^\]]+)\] "[^"]*" \d+ \d+ "[^"]*" "([^"]*)"/;
-
-  const rl = readline.createInterface({
-    input: fs.createReadStream(logPath),
-    crlfDelay: Infinity,
-  });
-
-  for await (const line of rl) {
-    const match = line.match(logPattern);
-    if (!match) continue;
-
-    const userAgent = match[3];
-    let isBot = false;
-
-    for (const [pattern, botName] of AI_BOT_PATTERNS) {
-      if (pattern.test(userAgent)) {
-        stats.bots[botName] = (stats.bots[botName] || 0) + 1;
-        isBot = true;
-        break;
-      }
-    }
-
-    if (!isBot) stats.human++;
-  }
-
-  const totalBots = Object.values(stats.bots).reduce((a, b) => a + b, 0);
-  const ratio = totalBots > 0 ? Math.round(stats.human / totalBots) : "N/A";
-
-  console.log(`Human visits: ${stats.human.toLocaleString()}`);
-  console.log(`Bot visits: ${totalBots.toLocaleString()}`);
-  console.log(`Ratio: 1 bot per ${ratio} humans`);
-  console.log("\nBot breakdown:");
-  Object.entries(stats.bots)
-    .sort(([, a], [, b]) => b - a)
-    .forEach(([name, count]) => {
-      console.log(`  ${name}: ${count.toLocaleString()}`);
-    });
-}
-
-analyzeLogFile("/var/log/nginx/access.log");
-```
+The same pattern works in JavaScript/Node.js using `readline` to stream the log file and regex patterns to match bot user agents.
 
 ## Rate Limiting for Website Operators
 
@@ -302,33 +242,9 @@ class AdaptiveRateLimiter:
             return 0
         oldest_in_window = min(self.request_log[ip])
         return max(0, int(60 - (time.time() - oldest_in_window)))
-
-
-# Usage in a web framework
-limiter = AdaptiveRateLimiter(human_rpm=60, bot_rpm=10)
-
-def handle_request(request):
-    ip = request.remote_addr
-    user_agent = request.headers.get("User-Agent", "")
-
-    # Detect if this is a known AI bot
-    is_bot = any(
-        pattern in user_agent.lower()
-        for pattern in ["gptbot", "claudebot", "perplexitybot", "bytespider"]
-    )
-
-    allowed, status, message = limiter.should_allow(ip, is_bot)
-
-    if not allowed:
-        retry_after = limiter.get_retry_after(ip)
-        return {
-            "status": 429,
-            "headers": {"Retry-After": str(retry_after)},
-            "body": "Too many requests"
-        }
-
-    return process_request(request)
 ```
+
+In your web framework's request handler, check the `User-Agent` against known bot patterns (GPTBot, ClaudeBot, PerplexityBot, Bytespider, etc.) and pass `is_bot=True` to `should_allow()`. Return a `429` with a `Retry-After` header when the limit is exceeded.
 
 
 <figure>
@@ -441,74 +357,6 @@ for url in urls_to_scrape:
         rotator.report_result(proxy, domain, response.status_code == 200, response.status_code)
     except Exception:
         rotator.report_result(proxy, domain, False)
-```
-
-```javascript
-// JavaScript adaptive proxy rotator
-class AdaptiveProxyRotator {
-  constructor(proxies) {
-    this.proxies = proxies;
-    this.stats = new Map();
-    proxies.forEach((proxy) => {
-      this.stats.set(proxy, {
-        success: 0,
-        failure: 0,
-        lastUsed: 0,
-        blockedDomains: new Set(),
-      });
-    });
-  }
-
-  getProxy(targetDomain) {
-    const now = Date.now();
-    const candidates = [];
-
-    for (const proxy of this.proxies) {
-      const stat = this.stats.get(proxy);
-
-      if (stat.blockedDomains.has(targetDomain)) continue;
-      if (now - stat.lastUsed < 2000) continue;
-
-      const total = stat.success + stat.failure;
-      const score = total === 0 ? 0.5 : stat.success / total;
-      candidates.push({ proxy, score });
-    }
-
-    if (candidates.length === 0) {
-      // Reset blocks for this domain
-      for (const [, stat] of this.stats) {
-        stat.blockedDomains.delete(targetDomain);
-      }
-      return this.proxies[Math.floor(Math.random() * this.proxies.length)];
-    }
-
-    // Weighted random selection
-    const totalScore = candidates.reduce((sum, c) => sum + c.score + 0.1, 0);
-    let random = Math.random() * totalScore;
-
-    for (const candidate of candidates) {
-      random -= candidate.score + 0.1;
-      if (random <= 0) {
-        this.stats.get(candidate.proxy).lastUsed = now;
-        return candidate.proxy;
-      }
-    }
-
-    return candidates[0].proxy;
-  }
-
-  reportResult(proxy, domain, success, statusCode = 200) {
-    const stat = this.stats.get(proxy);
-    if (success) {
-      stat.success++;
-    } else {
-      stat.failure++;
-      if ([403, 407, 429].includes(statusCode)) {
-        stat.blockedDomains.add(domain);
-      }
-    }
-  }
-}
 ```
 
 ## Is the Web Becoming Machine-to-Machine

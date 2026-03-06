@@ -56,32 +56,13 @@ Playwright's browser context manages this entire lifecycle automatically, just l
 The `context.cookies()` method returns every cookie currently stored in the browser context. Each cookie is a dictionary with all the attributes the browser tracks.
 
 ```python
-import asyncio
 from playwright.async_api import async_playwright
 
-async def read_cookies():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context()
-        page = await context.new_page()
-
-        await page.goto("https://httpbin.org/cookies/set?session_id=abc123&user=demo")
-
-        # Read all cookies in the context
-        cookies = await context.cookies()
-        for cookie in cookies:
-            print(f"Name: {cookie['name']}")
-            print(f"Value: {cookie['value']}")
-            print(f"Domain: {cookie['domain']}")
-            print(f"Path: {cookie['path']}")
-            print(f"HttpOnly: {cookie.get('httpOnly', False)}")
-            print(f"Secure: {cookie.get('secure', False)}")
-            print(f"Expires: {cookie.get('expires', -1)}")
-            print("---")
-
-        await browser.close()
-
-asyncio.run(read_cookies())
+# After navigating to a page, read all cookies:
+cookies = await context.cookies()
+for cookie in cookies:
+    print(f"{cookie['name']}: {cookie['value']} "
+          f"(domain={cookie['domain']}, httpOnly={cookie.get('httpOnly', False)})")
 ```
 
 You can also filter cookies by URL to get only those that would be sent to a specific domain:
@@ -191,32 +172,7 @@ async def login_and_save_cookies():
 asyncio.run(login_and_save_cookies())
 ```
 
-The resulting JSON file contains an array of cookie objects with all their attributes. Here is what it looks like:
-
-```json
-[
-  {
-    "name": "session_id",
-    "value": "s%3A1a2b3c4d5e6f.XYZABC",
-    "domain": ".example.com",
-    "path": "/",
-    "expires": 1740000000,
-    "httpOnly": true,
-    "secure": true,
-    "sameSite": "Lax"
-  },
-  {
-    "name": "_csrf_token",
-    "value": "dGhpcyBpcyBhIHRva2Vu",
-    "domain": ".example.com",
-    "path": "/",
-    "expires": -1,
-    "httpOnly": true,
-    "secure": true,
-    "sameSite": "Strict"
-  }
-]
-```
+The resulting JSON file contains an array of cookie objects, each with `name`, `value`, `domain`, `path`, `expires`, `httpOnly`, `secure`, and `sameSite` attributes -- the same structure shown later in the storage state section.
 
 ## Restoring Cookies to Skip Login
 
@@ -254,45 +210,7 @@ async def scrape_with_saved_cookies():
 asyncio.run(scrape_with_saved_cookies())
 ```
 
-A practical scraping script combines both steps with a fallback:
-
-```python
-async def scrape_with_cookie_fallback():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context()
-
-        # Try loading saved cookies
-        if COOKIE_FILE.exists():
-            cookies = json.loads(COOKIE_FILE.read_text())
-            await context.add_cookies(cookies)
-
-        page = await context.new_page()
-        await page.goto("https://example.com/dashboard")
-
-        # If cookies are invalid, perform login
-        if "/login" in page.url:
-            print("Session expired, logging in...")
-            await page.fill("#username", "myuser")
-            await page.fill("#password", "mypassword")
-            await page.click("#login-button")
-            await page.wait_for_url("**/dashboard**")
-
-            # Save fresh cookies
-            cookies = await context.cookies()
-            COOKIE_FILE.write_text(json.dumps(cookies, indent=2))
-            print("Fresh cookies saved.")
-
-        # Now scrape the authenticated content
-        data = await page.query_selector_all(".data-row")
-        for row in data:
-            text = await row.inner_text()
-            print(text)
-
-        await browser.close()
-
-asyncio.run(scrape_with_cookie_fallback())
-```
+The practical pattern of combining cookie loading with a login fallback is shown in the full example later in this post.
 
 
 <figure>
@@ -324,62 +242,13 @@ flowchart TD
 
 Saving storage state to a file:
 
+After a successful login, save the complete state with a single call:
+
 ```python
-async def login_and_save_state():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
-        context = await browser.new_context()
-        page = await context.new_page()
-
-        # Perform login
-        await page.goto("https://example.com/login")
-        await page.fill("#username", "myuser")
-        await page.fill("#password", "mypassword")
-        await page.click("#login-button")
-        await page.wait_for_url("**/dashboard**")
-
-        # Save complete storage state -- cookies + localStorage
-        await context.storage_state(path="state.json")
-        print("Storage state saved to state.json")
-
-        await browser.close()
-
-asyncio.run(login_and_save_state())
+await context.storage_state(path="state.json")
 ```
 
-The resulting `state.json` file has this structure:
-
-```json
-{
-  "cookies": [
-    {
-      "name": "session_id",
-      "value": "s%3A1a2b3c4d5e6f.XYZABC",
-      "domain": ".example.com",
-      "path": "/",
-      "expires": 1740000000,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "Lax"
-    }
-  ],
-  "origins": [
-    {
-      "origin": "https://example.com",
-      "localStorage": [
-        {
-          "name": "auth_token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        },
-        {
-          "name": "user_profile",
-          "value": "{\"id\":123,\"name\":\"Demo User\",\"role\":\"admin\"}"
-        }
-      ]
-    }
-  ]
-}
-```
+The resulting `state.json` contains a `cookies` array (same format as `context.cookies()`) plus an `origins` array with `localStorage` key-value pairs for each origin. This captures JWT tokens, user preferences, and other client-side state that cookies alone would miss.
 
 ## Loading Storage State into a New Context
 
@@ -405,35 +274,7 @@ async def scrape_with_saved_state():
 asyncio.run(scrape_with_saved_state())
 ```
 
-You can also load storage state from a dictionary instead of a file, which is useful when you are generating state programmatically or pulling it from a database:
-
-```python
-import json
-
-state = {
-    "cookies": [
-        {
-            "name": "session_id",
-            "value": "abc123",
-            "domain": ".example.com",
-            "path": "/",
-            "httpOnly": True,
-            "secure": True,
-            "sameSite": "Lax"
-        }
-    ],
-    "origins": [
-        {
-            "origin": "https://example.com",
-            "localStorage": [
-                {"name": "token", "value": "eyJhbGci..."}
-            ]
-        }
-    ]
-}
-
-context = await browser.new_context(storage_state=json.dumps(state))
-```
+You can also pass a dictionary (serialized with `json.dumps()`) instead of a file path to `storage_state`, which is useful when generating state programmatically or pulling it from a database.
 
 ## Practical Example: Login Once, Scrape Many Times
 
@@ -564,48 +405,24 @@ Cookie consent banners are a practical annoyance in scraping, particularly when 
 ```python
 async def dismiss_cookie_banner(page):
     """Attempt to dismiss common cookie consent banners."""
-    # Common selectors for accept buttons
     selectors = [
-        "button:has-text('Accept')",
         "button:has-text('Accept All')",
-        "button:has-text('Allow All')",
-        "button:has-text('I Agree')",
+        "button:has-text('Accept')",
         "#onetrust-accept-btn-handler",
         ".cc-accept",
-        "[data-testid='cookie-accept']",
     ]
-
     for selector in selectors:
         try:
             button = page.locator(selector).first
             if await button.is_visible(timeout=2000):
                 await button.click()
-                print(f"Dismissed cookie banner via: {selector}")
                 return True
         except Exception:
             continue
-
     return False
-
-
-async def scrape_with_consent_handling():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context()
-        page = await context.new_page()
-
-        await page.goto("https://example.com")
-
-        # Try to dismiss any cookie banner
-        await dismiss_cookie_banner(page)
-
-        # After accepting, save cookies so the banner does not appear again
-        await context.storage_state(path="state.json")
-
-        await browser.close()
-
-asyncio.run(scrape_with_consent_handling())
 ```
+
+After dismissing, save storage state so the consent cookie persists and the banner does not appear on future runs.
 
 An alternative approach is to pre-inject the consent cookie before visiting the site. Most consent management platforms store the user's choice in a cookie. If you know the cookie name and value, you can skip the banner entirely.
 
@@ -633,33 +450,7 @@ HttpOnly cookies are set with the `HttpOnly` flag, which prevents client-side Ja
 
 This is relevant to scraping because it means you cannot extract session cookies using `page.evaluate("document.cookie")`. The result will be incomplete.
 
-```python
-async def demonstrate_httponly():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context()
-        page = await context.new_page()
-
-        await page.goto("https://example.com")
-
-        # This MISSES HttpOnly cookies
-        js_cookies = await page.evaluate("document.cookie")
-        print(f"JS visible cookies: {js_cookies}")
-
-        # This gets ALL cookies, including HttpOnly
-        all_cookies = await context.cookies()
-        httponly_cookies = [c for c in all_cookies if c.get("httpOnly")]
-        print(f"Total cookies: {len(all_cookies)}")
-        print(f"HttpOnly cookies: {len(httponly_cookies)}")
-        for c in httponly_cookies:
-            print(f"  {c['name']} = {c['value'][:20]}...")
-
-        await browser.close()
-
-asyncio.run(demonstrate_httponly())
-```
-
-The takeaway is simple: always use `context.cookies()` instead of `page.evaluate("document.cookie")` when you need a complete picture of the cookies in play. The context-level method operates at the browser engine level, below the JavaScript security boundary, so it sees everything.
+If you try `page.evaluate("document.cookie")`, HttpOnly cookies will be missing from the result. Always use `context.cookies()` instead -- it operates at the browser engine level, below the JavaScript security boundary, and returns every cookie including HttpOnly ones.
 
 ## Cookie Expiration and Refresh Strategies
 
@@ -689,87 +480,20 @@ async def check_cookie_expiry(context, min_remaining_seconds=300):
     """Check if any critical cookies are close to expiring."""
     cookies = await context.cookies()
     now = time.time()
-    expiring_soon = []
-
+    expiring = []
     for cookie in cookies:
         expires = cookie.get("expires", -1)
         if expires == -1:
-            # Session cookie -- no explicit expiry
-            continue
+            continue  # Session cookie, no explicit expiry
         remaining = expires - now
         if remaining < min_remaining_seconds:
-            expiring_soon.append({
-                "name": cookie["name"],
-                "remaining_seconds": max(0, int(remaining)),
-                "expired": remaining <= 0
-            })
-
-    return expiring_soon
-
-
-async def scrape_with_expiry_check():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context(storage_state="state.json")
-
-        # Check before scraping
-        expiring = await check_cookie_expiry(context)
-        if any(c["expired"] for c in expiring):
-            print("Critical cookies expired. Re-authenticating...")
-            page = await context.new_page()
-            await perform_login(context, page)
-        elif expiring:
-            print(f"Warning: {len(expiring)} cookies expiring soon")
-            for c in expiring:
-                print(f"  {c['name']}: {c['remaining_seconds']}s remaining")
-
-        page = await context.new_page()
-        await page.goto("https://example.com/dashboard")
-
-        # Scrape data...
-
-        # Always save fresh state after successful run
-        await context.storage_state(path="state.json")
-        await browser.close()
-
-asyncio.run(scrape_with_expiry_check())
+            expiring.append({"name": cookie["name"], "expired": remaining <= 0})
+    return expiring
 ```
 
-For long-running scraping jobs that span hours, implement periodic state refreshing:
+Call this before starting a scraping run. If any cookies have expired, clear the state and re-authenticate. Always save fresh state with `context.storage_state(path="state.json")` after each successful run.
 
-```python
-async def long_running_scrape(urls: list[str]):
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        context = await browser.new_context(storage_state="state.json")
-        page = await context.new_page()
-
-        last_state_save = time.time()
-        state_save_interval = 600  # Save state every 10 minutes
-
-        for i, url in enumerate(urls):
-            await page.goto(url)
-
-            # Check if session is still valid
-            if "/login" in page.url:
-                print(f"Session lost at URL #{i}. Re-authenticating...")
-                await perform_login(context, page)
-                await page.goto(url)  # Retry the failed URL
-
-            # Extract data
-            content = await page.content()
-            # ... process content ...
-
-            # Periodically save state
-            if time.time() - last_state_save > state_save_interval:
-                await context.storage_state(path="state.json")
-                last_state_save = time.time()
-                print(f"State saved after processing {i + 1} URLs")
-
-        # Final state save
-        await context.storage_state(path="state.json")
-        await browser.close()
-```
+For long-running jobs that span hours, call `context.storage_state(path="state.json")` periodically (e.g., every 10 minutes or every N URLs) and check for session expiry by detecting login redirects after each navigation.
 
 ## Bridging Playwright Cookies to HTTP Clients
 

@@ -168,53 +168,13 @@ token = session.cookies.get('token', domain='api.example.com')
 print(f'Total cookies: {len(session.cookies)}')
 ```
 
-The cookie jar also exposes a `dict` view:
-
-```python
-# Convert to a plain dictionary (name -> value)
-cookie_dict = requests.utils.dict_from_cookiejar(session.cookies)
-print(cookie_dict)
-# {'session_id': 'a7f3c9e1b2d4', 'csrftoken': 'x9k2m...'}
-```
-
-This is useful when you need to pass cookies to another tool or serialize them for storage. If you work with browser-based tools, the same principles apply to [Selenium session management for saving cookies and localStorage](/posts/selenium-session-management-saving-cookies-localstorage/).
+You can also convert the cookie jar to a plain dictionary with `requests.utils.dict_from_cookiejar(session.cookies)` when you need to pass cookies to another tool. If you work with browser-based tools, the same principles apply to [Selenium session management for saving cookies and localStorage](/posts/selenium-session-management-saving-cookies-localstorage/).
 
 ## Saving Cookies to Disk
 
 If you are scraping on a schedule, logging in every single run is wasteful and potentially suspicious. Saving cookies to disk lets you restore a valid session without hitting the login endpoint again.
 
-### Using pickle
-
-The most direct approach. The cookie jar is a Python object, so `pickle` works out of the box.
-
-```python
-import pickle
-import requests
-
-session = requests.Session()
-session.post('https://example.com/login', data={
-    'username': 'admin',
-    'password': 'secret123'
-})
-
-# Save cookies
-with open('cookies.pkl', 'wb') as f:
-    pickle.dump(session.cookies, f)
-
-# Load cookies in a later run
-session2 = requests.Session()
-with open('cookies.pkl', 'rb') as f:
-    session2.cookies.update(pickle.load(f))
-
-# This request uses the restored session cookie
-response = session2.get('https://example.com/dashboard')
-```
-
-Pickle is simple but has a downside: the files are not human-readable, and unpickling data from untrusted sources is a security risk.
-
-### Using JSON
-
-For a portable, inspectable format, export cookies as a list of dictionaries.
+You can use `pickle.dump(session.cookies)` for the simplest approach, but pickle files are not human-readable and unpickling untrusted data is a security risk. JSON is the better choice for a portable, inspectable format.
 
 ```python
 import json
@@ -490,29 +450,14 @@ app_page = session.get('https://app.example.com/dashboard')
 For browser-level cookie handling, [Playwright's cookie management at the HTTP level](/posts/playwright-cookie-management-http-level-scraping/) offers similar domain-scoping controls. If the application uses a separate API domain that does not share the cookie scope, you may need to extract a token from the login response and set it manually:
 
 ```python
-import requests
+# Extract a token from the login response for a different domain
+token = session.post('https://auth.example.com/login', data=credentials).json().get('api_token')
 
-session = requests.Session()
+# Option 1: Set it as a cookie for the other domain
+session.cookies.set('api_token', token, domain='api.otherdomain.com')
 
-# Log in and get an API token from the response
-login_response = session.post('https://auth.example.com/login', data={
-    'username': 'admin',
-    'password': 'secret123'
-})
-
-# Some apps return the token in JSON
-token_data = login_response.json()
-api_token = token_data.get('api_token')
-
-# Manually set the token for a completely different domain
-session.cookies.set('api_token', api_token, domain='api.otherdomain.com')
-
-# Or use an Authorization header instead of cookies
-session.headers.update({
-    'Authorization': f'Bearer {api_token}'
-})
-
-response = session.get('https://api.otherdomain.com/v1/data')
+# Option 2: Use an Authorization header instead
+session.headers.update({'Authorization': f'Bearer {token}'})
 ```
 
 ## Complete Example: Authenticated Scraper with Cookie Persistence
@@ -520,10 +465,7 @@ response = session.get('https://api.otherdomain.com/v1/data')
 Here is a complete, production-ready scraper that ties together every technique from this post: CSRF handling, cookie persistence, expiration detection, and automatic re-authentication.
 
 ```python
-import json
-import os
-import time
-import requests
+import json, os, time, requests
 from bs4 import BeautifulSoup
 
 class SessionCookieScraper:
@@ -535,148 +477,59 @@ class SessionCookieScraper:
         self.cookie_file = config.get('cookie_file', 'session_cookies.json')
         self.check_url = config.get('check_url', self.login_url)
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                           'AppleWebKit/537.36 (KHTML, like Gecko) '
-                           'Chrome/120.0.0.0 Safari/537.36')
-        })
 
-    def _save_cookies(self):
-        """Persist cookies to disk as JSON."""
-        cookies = []
-        for cookie in self.session.cookies:
-            cookies.append({
-                'name': cookie.name,
-                'value': cookie.value,
-                'domain': cookie.domain,
-                'path': cookie.path,
-                'secure': cookie.secure,
-                'expires': cookie.expires
-            })
-        with open(self.cookie_file, 'w') as f:
-            json.dump(cookies, f, indent=2)
-
-    def _load_cookies(self):
-        """Load cookies from disk if available."""
-        if not os.path.exists(self.cookie_file):
-            return False
-        try:
-            with open(self.cookie_file, 'r') as f:
-                cookies = json.load(f)
-            now = time.time()
-            for c in cookies:
-                # Skip cookies that have already expired
-                if c.get('expires') and c['expires'] < now:
-                    continue
-                self.session.cookies.set(
-                    c['name'], c['value'],
-                    domain=c['domain'], path=c['path']
-                )
-            return len(self.session.cookies) > 0
-        except (json.JSONDecodeError, KeyError):
-            return False
+    # _save_cookies / _load_cookies use the JSON pattern shown above
 
     def _extract_csrf_token(self):
         """GET the login page and extract a CSRF token if present."""
         response = self.session.get(self.login_url)
         soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Check common CSRF field names
         for name in ('csrf_token', 'csrfmiddlewaretoken', '_token', 'authenticity_token'):
             field = soup.select_one(f'input[name="{name}"]')
             if field:
                 return name, field['value']
-
-        # Check cookies (Django pattern)
         csrf_cookie = self.session.cookies.get('csrftoken')
         if csrf_cookie:
             return 'csrfmiddlewaretoken', csrf_cookie
-
         return None, None
 
     def _login(self):
-        """Perform a full login with CSRF handling."""
         csrf_name, csrf_value = self._extract_csrf_token()
-
         post_data = dict(self.credentials)
-        if csrf_name and csrf_value:
+        if csrf_name:
             post_data[csrf_name] = csrf_value
-
-        response = self.session.post(self.login_url, data=post_data)
-
-        # Verify login succeeded
-        if response.status_code >= 400:
-            raise Exception(f'Login returned status {response.status_code}')
-
+        self.session.post(self.login_url, data=post_data)
         self._save_cookies()
-        print(f'Login successful, {len(self.session.cookies)} cookies saved')
-
-    def _is_authenticated(self):
-        """Test whether the current session is still valid."""
-        response = self.session.get(self.check_url, allow_redirects=False)
-        if response.status_code in (301, 302, 303, 307, 308):
-            location = response.headers.get('Location', '')
-            if 'login' in location.lower():
-                return False
-        return response.status_code == 200
 
     def ensure_authenticated(self):
-        """Load saved cookies or perform a fresh login."""
         if self._load_cookies() and self._is_authenticated():
-            print('Resumed session from saved cookies')
             return
-
         self.session.cookies.clear()
         self._login()
 
     def get(self, url, **kwargs):
-        """GET with automatic re-authentication."""
+        """GET with automatic re-authentication on 401/403."""
         response = self.session.get(url, **kwargs)
         if response.status_code in (401, 403):
-            print('Session expired, re-authenticating...')
             self.session.cookies.clear()
             self._login()
             response = self.session.get(url, **kwargs)
         return response
 
-    def scrape(self, url, selector=None):
-        """Fetch a page and optionally extract elements by CSS selector."""
-        response = self.get(url)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-        if selector:
-            return soup.select(selector)
-        return soup
-
-
-# --- Usage ---
-
-config = {
+# Usage
+scraper = SessionCookieScraper({
     'login_url': 'https://example.com/login',
-    'credentials': {
-        'username': 'admin',
-        'password': 'secret123'
-    },
+    'credentials': {'username': 'admin', 'password': 'secret123'},
     'check_url': 'https://example.com/dashboard',
-    'cookie_file': 'example_session.json'
-}
-
-scraper = SessionCookieScraper(config)
+})
 scraper.ensure_authenticated()
 
-# Scrape multiple pages using the persisted session
 for page in range(1, 11):
-    items = scraper.scrape(
-        f'https://example.com/data?page={page}',
-        selector='.result-item'
-    )
-    for item in items:
-        title = item.select_one('.title')
-        value = item.select_one('.value')
-        if title and value:
-            print(f'{title.text.strip()}: {value.text.strip()}')
-
-    time.sleep(1)  # polite delay between requests
+    response = scraper.get(f'https://example.com/data?page={page}')
+    soup = BeautifulSoup(response.text, 'html.parser')
+    for item in soup.select('.result-item'):
+        print(item.text.strip())
+    time.sleep(1)
 ```
 
 ## Key Takeaways

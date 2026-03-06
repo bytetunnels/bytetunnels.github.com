@@ -126,58 +126,7 @@ safe, msg = tracker.should_follow("https://example.com/products/category-a/item/
 print(f"Safe to follow: {safe}, {msg}")
 ```
 
-The equivalent approach in JavaScript:
-
-```javascript
-class LinkDepthTracker {
-  constructor(maxDepth = 3) {
-    this.maxDepth = maxDepth;
-    this.depthMap = new Map();
-    this.seedUrls = new Set();
-  }
-
-  addSeed(url) {
-    const normalized = this.normalize(url);
-    this.seedUrls.add(normalized);
-    this.depthMap.set(normalized, 0);
-  }
-
-  registerLink(sourceUrl, targetUrl) {
-    const source = this.normalize(sourceUrl);
-    const target = this.normalize(targetUrl);
-    const sourceDepth = this.depthMap.get(source) ?? Infinity;
-    const newDepth = sourceDepth + 1;
-
-    if (!this.depthMap.has(target) || newDepth < this.depthMap.get(target)) {
-      this.depthMap.set(target, newDepth);
-    }
-    return this.depthMap.get(target);
-  }
-
-  shouldFollow(url) {
-    const depth = this.depthMap.get(this.normalize(url)) ?? Infinity;
-    if (depth > this.maxDepth) {
-      return { safe: false, reason: `Depth ${depth} exceeds limit - possible labyrinth` };
-    }
-    return { safe: true, reason: "OK" };
-  }
-
-  normalize(url) {
-    const parsed = new URL(url);
-    return `${parsed.protocol}//${parsed.host}${parsed.pathname}`.replace(/\/$/, "");
-  }
-}
-
-// Usage
-const tracker = new LinkDepthTracker(3);
-tracker.addSeed("https://example.com/products");
-
-const depth = tracker.registerLink(
-  "https://example.com/products",
-  "https://example.com/products/category-a"
-);
-console.log(`Link depth: ${depth}`); // 1
-```
+The same approach works in JavaScript using a `Map` for the depth lookup and `new URL()` for normalization.
 
 ### Content Validation
 
@@ -303,20 +252,9 @@ class RequestChainAnalyzer:
                 )
 
         return warnings
-
-
-# Usage
-analyzer = RequestChainAnalyzer()
-analyzer.record_request("https://shop.example.com/products")
-analyzer.record_request("https://shop.example.com/products/widgets")
-analyzer.record_request("https://shop.example.com/products/widgets/blue/details")
-analyzer.record_request("https://shop.example.com/products/widgets/blue/details/specs")
-analyzer.record_request("https://shop.example.com/products/widgets/blue/details/specs/more")
-
-warnings = analyzer.analyze()
-for w in warnings:
-    print(f"WARNING: {w}")
 ```
+
+Feed each request URL into `record_request()` as your scraper runs, then call `analyze()` periodically to check for labyrinth indicators like deep path structures, repetitive segments, or suspiciously high unique-page discovery rates.
 
 
 <figure>
@@ -352,43 +290,7 @@ flowchart TD
 
 The most reliable way to avoid labyrinths is to never blindly follow links in the first place. Instead of crawling, maintain an explicit list of URLs to scrape.
 
-```python
-class TargetedScraper:
-    """Scrape from a predefined URL list instead of following links."""
-
-    def __init__(self, target_urls):
-        self.target_urls = set(target_urls)
-        self.scraped = set()
-        self.results = []
-
-    def scrape_all(self, session):
-        for url in self.target_urls:
-            if url in self.scraped:
-                continue
-
-            response = session.get(url, timeout=10)
-
-            # Do NOT follow any links found on the page
-            # Only extract data from the target URLs
-            data = self.extract_data(response.text)
-            self.results.append(data)
-            self.scraped.add(url)
-
-        return self.results
-
-    def extract_data(self, html):
-        # Your extraction logic here
-        pass
-
-
-# Build your URL list from a sitemap or known patterns
-target_urls = [
-    "https://shop.example.com/products/1",
-    "https://shop.example.com/products/2",
-    "https://shop.example.com/products/3",
-]
-scraper = TargetedScraper(target_urls)
-```
+Build your URL list from a sitemap, a database, or known URL patterns (e.g. `https://shop.example.com/products/{id}`). Iterate over that list directly, extract data from each page, and never follow discovered links. This eliminates the possibility of being led into generated content.
 
 ### Strategy 2: Sitemap-First Crawling
 
@@ -424,93 +326,13 @@ real_urls = get_urls_from_sitemap("https://example.com/sitemap.xml")
 print(f"Found {len(real_urls)} legitimate URLs from sitemap")
 ```
 
-```javascript
-const axios = require("axios");
-const { XMLParser } = require("fast-xml-parser");
-
-async function getUrlsFromSitemap(sitemapUrl) {
-  const response = await axios.get(sitemapUrl, { timeout: 10000 });
-  const parser = new XMLParser();
-  const parsed = parser.parse(response.data);
-
-  // Handle sitemap index
-  if (parsed.sitemapindex?.sitemap) {
-    const sitemaps = Array.isArray(parsed.sitemapindex.sitemap)
-      ? parsed.sitemapindex.sitemap
-      : [parsed.sitemapindex.sitemap];
-
-    const allUrls = [];
-    for (const sm of sitemaps) {
-      const urls = await getUrlsFromSitemap(sm.loc);
-      allUrls.push(...urls);
-    }
-    return allUrls;
-  }
-
-  // Regular sitemap
-  if (parsed.urlset?.url) {
-    const urls = Array.isArray(parsed.urlset.url)
-      ? parsed.urlset.url
-      : [parsed.urlset.url];
-    return urls.map((u) => u.loc);
-  }
-
-  return [];
-}
-
-// Usage
-getUrlsFromSitemap("https://example.com/sitemap.xml")
-  .then((urls) => console.log(`Found ${urls.length} URLs from sitemap`));
-```
+In JavaScript, use `fast-xml-parser` to parse the sitemap XML and apply the same recursive approach for sitemap index files.
 
 ### Strategy 3: Behavioral Fingerprint Awareness
 
 Beyond link depth, consider how your scraper's overall [behavioral pattern](/posts/how-to-automate-web-form-filling-complete-guide/) looks. A legitimate user reads content, pauses, and navigates selectively. Tools like [Nodriver](/posts/nodriver-complete-guide-undetected-browser-automation-python/) and other [stealth browsers](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) can help you [appear more human](/posts/playwright-vs-selenium-stealth-which-evades-detection-better/), but even they cannot save you if your crawl patterns give you away. If you are new to Nodriver, the [installation and first script guide](/posts/getting-started-nodriver-python-installation-first-script/) is a good starting point. A bot that falls into a labyrinth follows every link at machine speed.
 
-```python
-import time
-import random
-
-class HumanLikeCrawler:
-    """Crawl with human-like patterns to avoid labyrinth detection."""
-
-    def __init__(self, depth_tracker, content_validator):
-        self.depth_tracker = depth_tracker
-        self.content_validator = content_validator
-        self.pages_visited = 0
-        self.pages_since_backtrack = 0
-
-    def visit_page(self, url, session):
-        # Check depth before visiting
-        safe, msg = self.depth_tracker.should_follow(url)
-        if not safe:
-            print(f"Skipping {url}: {msg}")
-            return None
-
-        # Add human-like delay
-        delay = random.uniform(2.0, 5.0)
-        time.sleep(delay)
-
-        response = session.get(url, timeout=10)
-
-        # Validate content
-        domain = urlparse(url).netloc
-        valid, issues = self.content_validator.validate(domain, response.text)
-        if not valid:
-            print(f"Content validation failed for {url}: {issues}")
-            return None
-
-        self.pages_visited += 1
-        self.pages_since_backtrack += 1
-
-        # Simulate human backtracking behavior
-        if self.pages_since_backtrack > random.randint(3, 6):
-            self.pages_since_backtrack = 0
-            # A real user would go back to a previous page
-            # Do not keep diving deeper
-
-        return response
-```
+Combine the `LinkDepthTracker` and `ContentValidator` from earlier sections into your crawl loop: check depth before visiting, add randomized delays (2-5 seconds), validate content after fetching, and simulate human backtracking by periodically stopping deeper navigation after 3-6 pages. This makes your crawl pattern look selective rather than exhaustive.
 
 ## The Broader Anti-Bot Landscape
 

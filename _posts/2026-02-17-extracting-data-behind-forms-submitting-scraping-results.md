@@ -240,24 +240,7 @@ while True:
 print(f"Total results collected: {len(all_results)}")
 ```
 
-Other sites use "Next" links instead. Follow those until there is no next page:
-
-```python
-# After initial form submission...
-while True:
-    soup = BeautifulSoup(response.text, "html.parser")
-    # ... extract results from current page ...
-
-    next_link = soup.select_one("a.pagination-next")
-    if not next_link or not next_link.get("href"):
-        break
-
-    next_url = next_link["href"]
-    if not next_url.startswith("http"):
-        next_url = "https://example.com" + next_url
-
-    response = session.get(next_url)
-```
+Other sites use "Next" links instead of page numbers. The same pattern applies: after each request, parse the response for an `a.pagination-next` element, follow its `href` if present, and stop when no next link exists.
 
 ## Handling AJAX Form Submissions
 
@@ -330,139 +313,11 @@ Now you know the exact URL and payload format. You can replay these requests wit
   <figcaption>Forms are the web's input mechanism — and automating them requires precision. <span class="img-credit">Photo by Tima Miroshnichenko / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
 </figure>
 
-## Full Example: Submitting a Search Form with Requests
+## Putting It Together
 
-Here is a complete example that ties together form loading, CSRF extraction, submission, and paginated result parsing.
+A complete scraping pipeline combines the patterns shown above: use a `requests.Session` for cookie persistence, fetch the form page to extract the CSRF token, submit with the token included, parse results, then loop through pages by incrementing the page parameter and checking for a "next page" link. Add `time.sleep()` between requests and set a `User-Agent` header for politeness.
 
-```python
-import requests
-from bs4 import BeautifulSoup
-import time
-
-BASE_URL = "https://example.com"
-session = requests.Session()
-session.headers.update({
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
-    ),
-})
-
-
-def get_csrf_token():
-    """Load the search page and extract the CSRF token."""
-    response = session.get(f"{BASE_URL}/search")
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    token_input = soup.select_one('input[name="csrf_token"]')
-    if token_input:
-        return token_input["value"]
-    raise ValueError("Could not find CSRF token")
-
-
-def submit_search(query, page_num=1):
-    """Submit the search form and return parsed results."""
-    csrf_token = get_csrf_token()
-    response = session.post(
-        f"{BASE_URL}/search/results",
-        data={"q": query, "page": str(page_num), "csrf_token": csrf_token},
-    )
-    response.raise_for_status()
-    return response.text
-
-
-def parse_results(html):
-    """Extract structured data from the results page."""
-    soup = BeautifulSoup(html, "html.parser")
-    results = []
-
-    for card in soup.select("div.result-card"):
-        title_el = card.select_one("h3.title")
-        link_el = card.select_one("a.result-link")
-        if title_el:
-            results.append({
-                "title": title_el.text.strip(),
-                "url": link_el["href"] if link_el else "",
-            })
-
-    has_next = soup.select_one("a.next-page") is not None
-    return results, has_next
-
-
-def scrape_all_results(query, max_pages=10):
-    """Scrape all pages of results for a given query."""
-    all_results = []
-    for page_num in range(1, max_pages + 1):
-        print(f"Fetching page {page_num}...")
-        html = submit_search(query, page_num)
-        results, has_next = parse_results(html)
-        all_results.extend(results)
-
-        if not has_next:
-            break
-        time.sleep(1.5)
-
-    return all_results
-
-
-results = scrape_all_results("python web scraping", max_pages=5)
-print(f"\nTotal results: {len(results)}")
-for r in results[:5]:
-    print(f"  {r['title']}: {r['url']}")
-```
-
-## Full Example: Same Task with Playwright
-
-The same scraping task using Playwright, for sites where the requests approach does not work.
-
-```python
-from playwright.sync_api import sync_playwright
-import time
-
-
-def scrape_with_playwright(query, max_pages=10):
-    all_results = []
-
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-
-        page.goto("https://example.com/search")
-        page.fill('input[name="q"]', query)
-        page.click('button[type="submit"]')
-        page.wait_for_load_state("networkidle")
-
-        for page_num in range(1, max_pages + 1):
-            print(f"Scraping page {page_num}...")
-            cards = page.query_selector_all("div.result-card")
-
-            for card in cards:
-                title_el = card.query_selector("h3.title")
-                link_el = card.query_selector("a.result-link")
-                if title_el:
-                    all_results.append({
-                        "title": title_el.inner_text(),
-                        "url": link_el.get_attribute("href") if link_el else "",
-                    })
-
-            next_button = page.query_selector("a.next-page")
-            if not next_button:
-                break
-
-            next_button.click()
-            page.wait_for_load_state("networkidle")
-            time.sleep(1.0)
-
-        browser.close()
-    return all_results
-
-
-results = scrape_with_playwright("python web scraping", max_pages=5)
-print(f"\nTotal results: {len(results)}")
-for r in results[:5]:
-    print(f"  {r['title']}: {r['url']}")
-```
+The same task works with Playwright using the browser approach shown earlier in this article. The key difference is that Playwright handles pagination by clicking the "Next" button element and calling `page.wait_for_load_state("networkidle")` between pages, rather than resubmitting form data with a page number parameter.
 
 ## Multi-Step Forms: Handling Wizard-Style Flows
 
@@ -514,37 +369,7 @@ step2_resp = session.post("https://example.com/search/step2", data={
 })
 ```
 
-With Playwright, wizard forms are simpler because the browser handles tokens and session state automatically:
-
-```python
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page()
-    page.goto("https://example.com/search/step1")
-
-    # Step 1
-    page.select_option('select[name="category"]', "electronics")
-    page.fill('input[name="keyword"]', "laptop")
-    page.click('button.next-step')
-    page.wait_for_load_state("networkidle")
-
-    # Step 2
-    page.fill('input[name="min_price"]', "500")
-    page.fill('input[name="max_price"]', "2000")
-    page.click('button.next-step')
-    page.wait_for_load_state("networkidle")
-
-    # Extract results
-    results = page.query_selector_all("div.result-card")
-    for result in results:
-        title = result.query_selector("h3.title")
-        if title:
-            print(title.inner_text())
-
-    browser.close()
-```
+With Playwright, wizard forms are simpler because the browser handles tokens and session state automatically. You just fill each step's fields, click the "Next" button, and call `page.wait_for_load_state("networkidle")` between steps -- no manual token extraction needed.
 
 ## When the Form Is Just a Frontend for an API
 

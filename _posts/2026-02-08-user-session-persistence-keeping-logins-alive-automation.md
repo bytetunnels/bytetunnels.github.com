@@ -281,26 +281,7 @@ print(f"Got {len(data.json())} records")
 
 ### Cookie Jar Export (No Pickle)
 
-If you prefer not to pickle the entire session object, you can export just the cookies to a portable JSON format.
-
-```python
-import requests
-import json
-
-session = requests.Session()
-
-# After login, save cookies as a dictionary
-def save_cookies(session, path="request_cookies.json"):
-    cookie_dict = dict(session.cookies)
-    with open(path, "w") as f:
-        json.dump(cookie_dict, f, indent=2)
-
-def load_cookies(session, path="request_cookies.json"):
-    with open(path, "r") as f:
-        cookie_dict = json.load(f)
-    session.cookies.update(cookie_dict)
-    return session
-```
+If you prefer not to pickle the entire session object, export just the cookies as a JSON dictionary using `dict(session.cookies)` and restore them with `session.cookies.update(cookie_dict)`. This avoids pickle's security concerns and produces a human-readable file.
 
 
 <figure>
@@ -577,36 +558,9 @@ def decrypt_session_file(input_path, output_path):
         f.write(decrypted)
 ```
 
-### Environment Variables for Credentials
+### Environment Variables and File Permissions
 
-```python
-import os
-
-# Never hardcode credentials
-USERNAME = os.environ.get("SCRAPER_USERNAME")
-PASSWORD = os.environ.get("SCRAPER_PASSWORD")
-
-if not USERNAME or not PASSWORD:
-    raise EnvironmentError(
-        "Set SCRAPER_USERNAME and SCRAPER_PASSWORD environment variables"
-    )
-```
-
-### File Permissions
-
-On Unix systems, restrict session files so only your user can read them.
-
-```python
-import os
-import stat
-
-def save_secure(path, content):
-    """Write a file with restricted permissions."""
-    with open(path, "w") as f:
-        f.write(content)
-    # Owner read/write only -- no group or world access
-    os.chmod(path, stat.S_IRUSR | stat.S_IWUSR)
-```
+Never hardcode credentials -- read them from environment variables with `os.environ.get()` and raise an error if they are missing. On Unix systems, restrict session state files with `os.chmod(path, 0o600)` so only your user can read them.
 
 ## Multi-Account Management
 
@@ -688,209 +642,9 @@ class MultiAccountScraper:
         self.pw.stop()
 ```
 
-## Complete Example: Persistent Login Scraper with Auto-Refresh
+## Combining Everything
 
-This final example ties everything together. It restores a Playwright session from disk, validates it before scraping, re-authenticates on expiration, saves updated state, and handles errors gracefully. It uses environment variables for credentials, detects expiration through both URL checks and content inspection, and writes results to a JSON output file.
-
-```python
-import os
-import json
-import time
-from datetime import datetime
-from playwright.sync_api import sync_playwright
-
-AUTH_FILE = "auth_state.json"
-OUTPUT_FILE = "scrape_results.json"
-MAX_RETRIES = 3
-
-
-class ProductionScraper:
-    """
-    A persistent scraper that maintains login state across runs.
-    Automatically re-authenticates when sessions expire.
-    """
-
-    def __init__(self):
-        self.pw = sync_playwright().start()
-        self.browser = self.pw.chromium.launch(headless=True)
-        self.context = None
-        self.page = None
-        self._session_valid = False
-
-    def start(self):
-        """Initialize with saved session or fresh login."""
-        if os.path.exists(AUTH_FILE):
-            print(f"Found saved session at {AUTH_FILE}")
-            self.context = self.browser.new_context(
-                storage_state=AUTH_FILE
-            )
-            self.page = self.context.new_page()
-
-            # Validate the restored session
-            self.page.goto(
-                "https://example.com/dashboard",
-                wait_until="domcontentloaded"
-            )
-
-            if self._check_authenticated():
-                self._session_valid = True
-                print("Session restored and validated")
-                return
-            else:
-                print("Saved session is expired")
-                self.context.close()
-
-        # No valid session found -- perform login
-        self._full_login()
-
-    def _full_login(self):
-        """Perform complete login flow."""
-        username = os.environ.get("SITE_USER")
-        password = os.environ.get("SITE_PASS")
-
-        if not username or not password:
-            raise RuntimeError("SITE_USER and SITE_PASS must be set")
-
-        self.context = self.browser.new_context()
-        self.page = self.context.new_page()
-
-        print("Navigating to login page...")
-        self.page.goto("https://example.com/login")
-        self.page.wait_for_selector("#username", state="visible")
-
-        self.page.fill("#username", username)
-        self.page.fill("#password", password)
-        self.page.click("button[type='submit']")
-
-        # Wait for successful login
-        self.page.wait_for_url(
-            "**/dashboard**",
-            timeout=30000
-        )
-
-        if not self._check_authenticated():
-            raise RuntimeError("Login appeared to succeed but validation failed")
-
-        # Save session state
-        self.context.storage_state(path=AUTH_FILE)
-        self._session_valid = True
-        print("Login successful, session state saved")
-
-    def _check_authenticated(self):
-        """Determine if the current page shows authenticated content."""
-        url = self.page.url
-
-        # Check URL -- did we get redirected to login?
-        if any(x in url for x in ["/login", "/signin", "/auth"]):
-            return False
-
-        # Check for a known authenticated element
-        try:
-            self.page.wait_for_selector(
-                ".user-menu, .dashboard-content, [data-user]",
-                timeout=5000
-            )
-            return True
-        except Exception:
-            return False
-
-    def _ensure_authenticated(self):
-        """Re-login if session has expired."""
-        if not self._check_authenticated():
-            print("Session expired, re-authenticating...")
-            self.context.close()
-            self._full_login()
-
-    def scrape(self, url, retries=0):
-        """Scrape a single URL with session management."""
-        try:
-            self.page.goto(url, wait_until="domcontentloaded")
-            self._ensure_authenticated()
-
-            # Extract data from the page
-            title = self.page.title()
-            content = self.page.inner_text("main") if self.page.query_selector("main") else ""
-
-            return {
-                "url": url,
-                "title": title,
-                "content": content[:5000],
-                "scraped_at": datetime.utcnow().isoformat(),
-                "success": True
-            }
-
-        except Exception as e:
-            if retries < MAX_RETRIES:
-                print(f"Error on {url}, retry {retries + 1}: {e}")
-                time.sleep(2 ** retries)  # exponential backoff
-                return self.scrape(url, retries + 1)
-
-            return {
-                "url": url,
-                "error": str(e),
-                "scraped_at": datetime.utcnow().isoformat(),
-                "success": False
-            }
-
-    def run(self, urls):
-        """Scrape a list of URLs with session persistence."""
-        self.start()
-
-        results = []
-        for i, url in enumerate(urls):
-            print(f"[{i + 1}/{len(urls)}] Scraping {url}")
-            result = self.scrape(url)
-            results.append(result)
-
-            if result["success"]:
-                print(f"  OK: {result['title']}")
-            else:
-                print(f"  FAILED: {result.get('error', 'unknown')}")
-
-            # Save updated session state after each page
-            # in case cookies were refreshed server-side
-            self.context.storage_state(path=AUTH_FILE)
-
-            # Respectful delay between requests
-            time.sleep(2)
-
-        # Write results
-        with open(OUTPUT_FILE, "w") as f:
-            json.dump(results, f, indent=2)
-
-        succeeded = sum(1 for r in results if r["success"])
-        print(f"\nDone: {succeeded}/{len(results)} pages scraped")
-        print(f"Results saved to {OUTPUT_FILE}")
-
-        return results
-
-    def close(self):
-        """Clean up all resources."""
-        if self.context:
-            # Save final session state before shutdown
-            try:
-                self.context.storage_state(path=AUTH_FILE)
-            except Exception:
-                pass
-            self.context.close()
-        self.browser.close()
-        self.pw.stop()
-
-
-if __name__ == "__main__":
-    urls_to_scrape = [
-        "https://example.com/dashboard",
-        "https://example.com/orders",
-        "https://example.com/account/settings",
-        "https://example.com/reports/monthly",
-    ]
-
-    scraper = ProductionScraper()
-    try:
-        scraper.run(urls_to_scrape)
-    finally:
-        scraper.close()
-```
+The `PersistentScraper` class in the auto-refresh section above already demonstrates the complete production pattern: restore session from disk, validate before scraping, re-authenticate on expiration, and save updated state. To harden it further, add exponential backoff on retries, save `context.storage_state()` after each page (in case cookies were refreshed server-side), and wrap the main loop in a `try/finally` block that calls `close()` to persist final state before shutdown.
 
 ## Choosing the Right Approach
 

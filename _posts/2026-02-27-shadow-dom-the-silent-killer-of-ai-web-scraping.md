@@ -68,35 +68,13 @@ customElements.define("my-product-card", ProductCard);
 ```
 
 ```python
-# What a traditional scraper sees when it encounters this component
+# What a traditional scraper sees
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page()
-    page.set_content("""
-        <html>
-        <body>
-            <h1>Products</h1>
-            <my-product-card></my-product-card>
-            <script>
-                class ProductCard extends HTMLElement {
-                    constructor() {
-                        super();
-                        const shadow = this.attachShadow({ mode: 'open' });
-                        shadow.innerHTML = `
-                            <div class="card">
-                                <h3 class="name">Premium Widget</h3>
-                                <span class="price">$29.99</span>
-                            </div>
-                        `;
-                    }
-                }
-                customElements.define('my-product-card', ProductCard);
-            </script>
-        </body>
-        </html>
-    """)
+    page.goto("https://example.com/products")  # Page with <my-product-card> components
 
     # This works -- the h1 is in the main document
     title = page.query_selector("h1")
@@ -144,32 +122,7 @@ Accessibility tree snapshots are the approach many AI browser agents use, includ
 
 HTML parsers like Beautiful Soup and Cheerio parse the raw HTML string. Since shadow DOM is created by JavaScript at runtime, it does not exist in the HTML source. Parsers that work with the initial HTML will never see shadow DOM content -- and even [regex-based extraction](/posts/building-web-scraper-with-regex-practical-patterns-pitfalls/) or [standalone parsers](/posts/regex-for-web-scraping-extracting-data-without-parser/) cannot help here, because the content simply is not in the source.
 
-```python
-# Demonstrating the failure with Beautiful Soup
-from bs4 import BeautifulSoup
-
-# This is what the raw HTML looks like
-raw_html = """
-<html>
-<body>
-    <h1>Products</h1>
-    <my-product-card></my-product-card>
-    <my-product-card></my-product-card>
-</body>
-</html>
-"""
-
-soup = BeautifulSoup(raw_html, "html.parser")
-
-# Find all product titles -- returns empty because they are in shadow DOM
-titles = soup.select(".product-title")
-print(f"Found {len(titles)} titles")  # 0
-
-# Find the custom elements -- they exist but are empty
-cards = soup.find_all("my-product-card")
-print(f"Found {len(cards)} cards")  # 2
-print(f"Card content: '{cards[0].text}'")  # Empty string
-```
+If you parse the raw HTML with Beautiful Soup, `soup.select(".product-title")` returns nothing because shadow DOM content does not exist in the HTML source. The custom element tags like `<my-product-card></my-product-card>` are present but empty -- their content is created by JavaScript at runtime inside shadow roots.
 
 ## Which Component Libraries Use Shadow DOM
 
@@ -284,36 +237,6 @@ with sync_playwright() as p:
     browser.close()
 ```
 
-```javascript
-// Playwright's JavaScript API with shadow DOM piercing
-const { chromium } = require("playwright");
-
-async function scrapeWithShadowPiercing() {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await page.goto("https://example.com/products");
-
-  // Playwright locators pierce shadow DOM automatically
-  const prices = await page.locator(".price").allTextContents();
-  console.log(`Found ${prices.length} prices:`, prices);
-
-  // Get all product data using locators that cross shadow boundaries
-  const cards = page.locator("my-product-card");
-  const count = await cards.count();
-
-  for (let i = 0; i < count; i++) {
-    const card = cards.nth(i);
-    const title = await card.locator(".product-title").textContent();
-    const price = await card.locator(".price").textContent();
-    console.log(`${title}: ${price}`);
-  }
-
-  await browser.close();
-}
-
-scrapeWithShadowPiercing();
-```
-
 Playwright is the strongest option for scraping sites with Web Components, which is one reason it tops many lists of [Puppeteer alternatives](/posts/top-puppeteer-alternatives-what-to-use-instead/). [Puppeteer does not pierce shadow DOM by default](/posts/playwright-vs-puppeteer-speed-stealth-developer-experience/), and when [compared to Selenium](/posts/selenium-vs-puppeteer-definitive-comparison-web-scraping/) or [evaluated on its own merits](/posts/puppeteer-vs-selenium-which-should-you-pick/), most other tools have no shadow DOM support at all.
 
 ## The Recursive Shadow DOM Walker
@@ -376,83 +299,13 @@ function deepQuerySelectorAll(root, selector) {
 }
 ```
 
-```python
-# Using the recursive walker from Playwright via evaluate
-from playwright.sync_api import sync_playwright
-
-def deep_extract(page, selector):
-    """Extract all matching elements, piercing all shadow DOM boundaries."""
-    return page.evaluate("""
-        (selector) => {
-            const results = [];
-
-            function walkShadowDom(root) {
-                const matches = root.querySelectorAll(selector);
-                for (const match of matches) {
-                    results.push({
-                        tag: match.tagName.toLowerCase(),
-                        text: match.textContent.trim(),
-                        html: match.outerHTML.slice(0, 200)
-                    });
-                }
-
-                // Recurse into shadow roots
-                const allElements = root.querySelectorAll('*');
-                for (const el of allElements) {
-                    if (el.shadowRoot) {
-                        walkShadowDom(el.shadowRoot);
-                    }
-                }
-            }
-
-            walkShadowDom(document);
-            return results;
-        }
-    """, selector)
-
-with sync_playwright() as p:
-    browser = p.chromium.launch()
-    page = browser.new_page()
-    page.goto("https://example.com")
-
-    # Find all prices, regardless of how deeply nested in shadow DOM
-    prices = deep_extract(page, ".price")
-    for price in prices:
-        print(f"Found price: {price['text']}")
-
-    # Find all buttons across shadow boundaries
-    buttons = deep_extract(page, "button")
-    for btn in buttons:
-        print(f"Found button: {btn['text']}")
-
-    browser.close()
-```
+To use this walker from Playwright or Puppeteer, pass the `walkShadowDom` and `deepQuerySelectorAll` functions into `page.evaluate()`. The walker recursively traverses every shadow boundary and collects matching elements, regardless of nesting depth.
 
 ## Handling Closed Shadow DOM
 
 Closed shadow DOM is a different beast. When a component uses `attachShadow({ mode: 'closed' })`, the browser does not expose the `shadowRoot` property at all. From JavaScript, there is no standard way to access the internal elements.
 
-```javascript
-// Closed shadow DOM -- no standard access
-class SecureWidget extends HTMLElement {
-  constructor() {
-    super();
-    // mode: 'closed' means shadowRoot returns null from outside
-    const shadow = this.attachShadow({ mode: "closed" });
-    shadow.innerHTML = `
-      <div class="secure-content">
-        <p>This content is hidden from external JavaScript</p>
-      </div>
-    `;
-  }
-}
-
-customElements.define("secure-widget", SecureWidget);
-
-// From outside:
-const widget = document.querySelector("secure-widget");
-console.log(widget.shadowRoot); // null -- no access
-```
+When a component uses `attachShadow({ mode: "closed" })`, the `shadowRoot` property returns `null` from outside JavaScript. There is no standard way to access the internal elements.
 
 In practice, closed shadow DOM is rare. Most component libraries use open shadow DOM because developers need to access their own components' internals for testing and debugging. When you do encounter it, there are a few options.
 
@@ -486,32 +339,6 @@ with sync_playwright() as p:
     print(f"Extracted from closed shadow DOM: {content}")
 
     browser.close()
-```
-
-```javascript
-// JavaScript equivalent: force open shadow DOM
-const { chromium } = require("playwright");
-
-async function scrapeClosedShadowDom(url) {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-
-  // Intercept attachShadow before the page loads
-  await page.addInitScript(() => {
-    const original = Element.prototype.attachShadow;
-    Element.prototype.attachShadow = function (options) {
-      return original.call(this, { ...options, mode: "open" });
-    };
-  });
-
-  await page.goto(url);
-
-  // All shadow roots are now open and pierceable
-  const content = await page.locator(".secure-content").allTextContents();
-  console.log("Extracted content:", content);
-
-  await browser.close();
-}
 ```
 
 This technique works because `addInitScript` runs before any page JavaScript executes. By overriding `attachShadow`, every shadow root created on the page becomes open, regardless of what the original code specified.

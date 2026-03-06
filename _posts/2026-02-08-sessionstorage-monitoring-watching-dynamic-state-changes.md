@@ -51,40 +51,7 @@ sessionStorage.setItem = function(key, value) {
 
 This intercepts every call to `setItem`, logs the key and value as a JSON string to the console, and then delegates to the real implementation so the application still works normally. The `.bind(sessionStorage)` is important -- without it, `this` inside the original method would point to the wrong object, and the call would fail.
 
-To be thorough, you should also intercept `removeItem` and `clear`, since applications use those to manage state as well.
-
-```javascript
-const originalSetItem = sessionStorage.setItem.bind(sessionStorage);
-const originalRemoveItem = sessionStorage.removeItem.bind(sessionStorage);
-const originalClear = sessionStorage.clear.bind(sessionStorage);
-
-sessionStorage.setItem = function(key, value) {
-    console.log(JSON.stringify({
-        type: "sessionStorage:set",
-        key: key,
-        value: value,
-        timestamp: Date.now()
-    }));
-    return originalSetItem(key, value);
-};
-
-sessionStorage.removeItem = function(key) {
-    console.log(JSON.stringify({
-        type: "sessionStorage:remove",
-        key: key,
-        timestamp: Date.now()
-    }));
-    return originalRemoveItem(key);
-};
-
-sessionStorage.clear = function() {
-    console.log(JSON.stringify({
-        type: "sessionStorage:clear",
-        timestamp: Date.now()
-    }));
-    return originalClear();
-};
-```
+To be thorough, you should also intercept `removeItem` and `clear` using the same pattern -- bind the original, wrap it, log the change, and delegate. The full three-method override is shown in the Playwright injection section below.
 
 Some applications also write to sessionStorage using bracket notation (`sessionStorage["key"] = "value"`) or the property-based API (`sessionStorage.key = "value"`). These bypass `setItem` entirely. If you need to catch those, you would need to use a `Proxy`, which is more complex but covers every access pattern.
 
@@ -685,85 +652,13 @@ if __name__ == "__main__":
             {"type": "wait", "ms": 3000},
         ]
     )
-
-    print(f"DOM title: {result['dom']['title']}")
     print(f"Storage changes: {result['storage_summary']['total_changes']}")
-    print(f"Unique keys modified: {result['storage_summary']['unique_keys']}")
     print(f"Cached JSON payloads: {len(result['cached_json'])}")
-
-    for item in result["cached_json"]:
-        print(f"\n  Key: {item['key']}")
-        data = item["data"]
-        if isinstance(data, dict):
-            print(f"  Fields: {list(data.keys())[:8]}")
-        elif isinstance(data, list):
-            print(f"  Array with {len(data)} items")
 ```
 
 ## Extracting Monitored Data for Your Pipeline
 
-Once you have captured sessionStorage changes, you need to get that data out of the monitoring layer and into whatever pipeline processes your scraped data. The monitor class stores everything in memory, so you can serialize it directly.
-
-```python
-import json
-import csv
-from pathlib import Path
-
-
-def export_changes_json(monitor: SessionStorageMonitor, output_path: str):
-    """Export all captured changes to a JSON file."""
-    data = []
-    for change in monitor.changes:
-        entry = {
-            "change_type": change.change_type,
-            "key": change.key,
-            "value": change.value,
-            "previous_value": change.previous_value,
-            "timestamp": change.timestamp,
-            "source": change.source
-        }
-        data.append(entry)
-
-    Path(output_path).write_text(json.dumps(data, indent=2))
-
-
-def export_json_values_csv(monitor: SessionStorageMonitor, output_path: str):
-    """
-    Export captured JSON values to CSV, flattening top-level keys
-    into columns.
-    """
-    json_items = monitor.get_json_values()
-    if not json_items:
-        return
-
-    # Collect all top-level keys across all JSON payloads
-    all_fields = set()
-    rows = []
-    for item in json_items:
-        if isinstance(item["data"], dict):
-            all_fields.update(item["data"].keys())
-            row = {"_storage_key": item["key"]}
-            row.update(item["data"])
-            rows.append(row)
-
-    if not rows:
-        return
-
-    fieldnames = ["_storage_key"] + sorted(all_fields)
-    with open(output_path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
-        writer.writeheader()
-        writer.writerows(rows)
-
-
-def filter_changes_by_key(monitor: SessionStorageMonitor,
-                          key_pattern: str) -> list[StorageChange]:
-    """Return changes matching a key pattern (substring match)."""
-    return [
-        c for c in monitor.changes
-        if c.key and key_pattern.lower() in c.key.lower()
-    ]
-```
+Once you have captured sessionStorage changes, you need to get that data out of the monitoring layer and into whatever pipeline processes your scraped data. The monitor class stores everything in memory via `monitor.changes`, so you can serialize it directly to JSON with `json.dumps()`, flatten JSON values into CSV rows, or filter changes by key pattern with a simple list comprehension.
 
 The key insight is that sessionStorage monitoring gives you a stream of structured data that would be tedious or impossible to extract from the DOM alone. For techniques on [extracting ephemeral browser data from sessionStorage](/posts/scraping-sessionstorage-extracting-ephemeral-browser-data/) in a one-shot fashion, that approach complements continuous monitoring well. Cached API responses in sessionStorage are already JSON -- you skip the entire parsing step. Auth tokens are stored as plain strings -- no need to intercept network requests. Cart mutations happen as discrete writes -- you get a clean event stream instead of trying to diff rendered HTML.
 

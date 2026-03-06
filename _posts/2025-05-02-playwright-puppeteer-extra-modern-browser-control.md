@@ -239,41 +239,7 @@ await context.addInitScript(() => {
 
 ### Puppeteer Extra's Advanced Evasions
 
-The stealth plugin provides comprehensive evasion capabilities:
-
-```javascript
-// Custom evasion for specific detection methods
-puppeteer.use(
-  StealthPlugin({
-    enabledEvasions: new Set([
-      'navigator.webdriver',
-      'chrome.runtime',
-      'window.outerdimensions'
-    ])
-  })
-);
-
-// Additional manual evasions
-const page = await browser.newPage();
-await page.evaluateOnNewDocument(() => {
-  // Override the plugins array
-  Object.defineProperty(navigator, 'plugins', {
-    get: () => [1, 2, 3, 4, 5]
-  });
-  
-  // Add WebGL fingerprint randomization
-  const getParameter = WebGLRenderingContext.prototype.getParameter;
-  WebGLRenderingContext.prototype.getParameter = function(parameter) {
-    if (parameter === 37445) {
-      return 'Intel Inc.';
-    }
-    if (parameter === 37446) {
-      return 'Intel Iris OpenGL Engine';
-    }
-    return getParameter.apply(this, arguments);
-  };
-});
-```
+The stealth plugin configuration shown in the setup section above provides comprehensive evasion. For additional manual evasions, use `page.evaluateOnNewDocument()` to override properties like `navigator.plugins` and randomize WebGL fingerprints via `WebGLRenderingContext.prototype.getParameter`.
 
 ## Performance Optimization and Resource Management
 
@@ -322,30 +288,7 @@ page.on('request', (req) => {
 
 ### Memory Management
 
-```javascript
-// Playwright context cleanup
-for (let i = 0; i < 100; i++) {
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  // ... scraping logic
-  await context.close(); // Important: clean up contexts
-}
-
-// Puppeteer page recycling
-const pages = [];
-for (let i = 0; i < 5; i++) {
-  pages.push(await browser.newPage());
-}
-
-// Rotate through pages instead of creating new ones
-let currentPageIndex = 0;
-for (const url of urls) {
-  const page = pages[currentPageIndex % pages.length];
-  await page.goto(url);
-  // ... scraping logic
-  currentPageIndex++;
-}
-```
+For Playwright, always close contexts after use with `await context.close()` -- each context holds its own cookies, cache, and storage. For Puppeteer, consider pre-creating a pool of pages and rotating through them instead of creating and destroying pages per URL, which reduces garbage collection overhead.
 
 ## Real-World Implementation Patterns
 
@@ -353,17 +296,12 @@ Practical browser automation often involves combining multiple techniques for ro
 
 ```javascript
 class AdvancedScraper {
-  constructor() {
-    this.browser = null;
-    this.contexts = [];
-  }
-
   async initialize(framework = 'playwright') {
     if (framework === 'playwright') {
       const { chromium } = require('playwright');
       this.browser = await chromium.launch({
         headless: process.env.NODE_ENV === 'production',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox']
       });
     } else {
       const puppeteer = require('puppeteer-extra');
@@ -372,31 +310,22 @@ class AdvancedScraper {
     }
   }
 
-  async createSession() {
-    const context = await this.browser.newContext({
-      userAgent: this.randomUserAgent(),
-      viewport: { width: 1920, height: 1080 },
-      locale: 'en-US'
-    });
-    
-    this.contexts.push(context);
-    return context;
-  }
-
   async scrapeWithRetry(url, selector, maxRetries = 3) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const context = await this.browser.newContext({
+        userAgent: this.randomUserAgent(),
+        viewport: { width: 1920, height: 1080 }
+      });
       try {
-        const context = await this.createSession();
         const page = await context.newPage();
-        
         await page.goto(url, { waitUntil: 'networkidle' });
         const data = await page.locator(selector).textContent();
-        
-        await context.close();
         return data;
       } catch (error) {
         if (attempt === maxRetries) throw error;
-        await this.delay(1000 * attempt);
+        await new Promise(r => setTimeout(r, 1000 * attempt));
+      } finally {
+        await context.close();
       }
     }
   }
@@ -405,20 +334,8 @@ class AdvancedScraper {
     const agents = [
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
     ];
     return agents[Math.floor(Math.random() * agents.length)];
-  }
-
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async cleanup() {
-    for (const context of this.contexts) {
-      await context.close();
-    }
-    await this.browser.close();
   }
 }
 ```

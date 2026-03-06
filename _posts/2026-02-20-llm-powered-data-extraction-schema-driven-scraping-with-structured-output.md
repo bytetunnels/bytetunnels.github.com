@@ -144,29 +144,19 @@ for product in products.products:
 In the JavaScript ecosystem, Zod schemas serve the same purpose as Pydantic models. The LLM Scraper library by Mishushakov builds on this to provide a streamlined extraction API.
 
 ```javascript
-// Install: npm install zod llm-scraper playwright
-
 import { z } from 'zod';
 import LLMScraper from 'llm-scraper';
 import { openai } from '@llm-scraper/models';
 import { chromium } from 'playwright';
 
-// Define the extraction schema with Zod
 const ProductSchema = z.object({
     products: z.array(z.object({
         name: z.string().describe('The product name or title'),
         price: z.number().describe('The current price in USD'),
-        originalPrice: z.number().nullable()
-            .describe('The original price before discount'),
-        rating: z.number().nullable()
-            .describe('The average rating out of 5 stars'),
-        reviewCount: z.number().nullable()
-            .describe('The total number of reviews'),
+        rating: z.number().nullable().describe('Average rating out of 5'),
         inStock: z.boolean().describe('Whether the product is in stock'),
-        description: z.string().describe('The product description'),
     })),
     pageTitle: z.string(),
-    totalResults: z.number().nullable(),
 });
 
 async function extractProducts(url) {
@@ -174,24 +164,15 @@ async function extractProducts(url) {
     const page = await browser.newPage();
     await page.goto(url);
 
-    // Initialize LLM Scraper with your preferred model
     const llm = openai.chat('gpt-4o');
     const scraper = new LLMScraper(llm);
-
-    const { data: result } = await scraper.run(page, ProductSchema, {
+    const { data } = await scraper.run(page, ProductSchema, {
         prompt: 'Extract all product listings from this page.',
     });
 
-    console.log(`Found ${result.products.length} products:`);
-    for (const product of result.products) {
-        console.log(`  ${product.name}: $${product.price}`);
-    }
-
     await browser.close();
-    return result;
+    return data;
 }
-
-extractProducts('https://example.com/products');
 ```
 
 
@@ -303,123 +284,36 @@ print(f"Pruned: {len(pruned)} characters")
 print(f"Reduction: {(1 - len(pruned)/len(raw_html))*100:.1f}%")
 ```
 
-```javascript
-// JavaScript DOM pruning using cheerio
-const cheerio = require('cheerio');
-
-function pruneDOM(html, contentSelector = null) {
-    const $ = cheerio.load(html);
-
-    // Remove non-content elements
-    const tagsToRemove = [
-        'script', 'style', 'noscript', 'iframe', 'svg',
-        'link', 'meta', 'header', 'footer', 'nav'
-    ];
-    tagsToRemove.forEach(tag => $(tag).remove());
-
-    // Remove hidden elements
-    $('[style*="display: none"], [style*="display:none"]').remove();
-    $('[hidden]').remove();
-    $('[aria-hidden="true"]').remove();
-
-    // Remove common noise patterns
-    const noisePattern = /cookie|consent|popup|modal|overlay|sidebar|widget|social|share|newsletter|advert/i;
-    $('[class]').each((_, el) => {
-        const classes = $(el).attr('class') || '';
-        if (noisePattern.test(classes)) $(el).remove();
-    });
-    $('[id]').each((_, el) => {
-        const id = $(el).attr('id') || '';
-        if (noisePattern.test(id)) $(el).remove();
-    });
-
-    // Focus on main content
-    if (contentSelector && $(contentSelector).length) {
-        const mainContent = $(contentSelector).html();
-        return mainContent.replace(/\s+/g, ' ').trim();
-    }
-
-    return $.html().replace(/\s+/g, ' ').trim();
-}
-
-// Usage
-const originalLength = html.length;
-const pruned = pruneDOM(html, 'main');
-console.log(`Reduced from ${originalLength} to ${pruned.length} characters`);
-```
+The same approach works in JavaScript using `cheerio` with `$(tag).remove()` for the same set of noise elements.
 
 ## Validation and Retry Logic
 
 LLMs are probabilistic. Even with structured output modes, extraction can fail. Fields might be null when they should not be, prices might come back as strings instead of numbers, or the model might hallucinate data that is not on the page. Robust validation and retry logic is not optional.
 
+Wrap the extraction call from the previous section in a retry loop. The key technique is to include the validation error message in the retry prompt so the model can self-correct:
+
 ```python
-import json
-from pydantic import ValidationError
-from openai import OpenAI
+for attempt in range(max_retries):
+    messages = [
+        {"role": "system", "content": "Extract structured data from the HTML."},
+        {"role": "user", "content": f"HTML content:\n\n{html[:8000]}"},
+    ]
+    if last_error:
+        messages.append({
+            "role": "user",
+            "content": f"Previous extraction had errors: {last_error}. Fix them.",
+        })
 
-client = OpenAI()
-
-def extract_with_retry(
-    html: str,
-    schema_class,
-    max_retries: int = 3,
-    model: str = "gpt-4o",
-) -> dict:
-    """
-    Extract data with automatic retry on validation failure.
-    Each retry includes the previous error in the prompt for self-correction.
-    """
-    schema = schema_class.model_json_schema()
-    last_error = None
-
-    for attempt in range(max_retries):
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "Extract structured data from the HTML. "
-                    "Return valid JSON matching the schema exactly."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"HTML content:\n\n{html[:8000]}",
-            },
-        ]
-
-        # On retry, include the validation error
-        if last_error:
-            messages.append({
-                "role": "user",
-                "content": (
-                    f"Your previous extraction had validation errors: "
-                    f"{last_error}. Please fix these issues."
-                ),
-            })
-
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            response_format={
-                "type": "json_schema",
-                "json_schema": {"name": "extraction", "schema": schema},
-            },
-        )
-
-        raw = response.choices[0].message.content
-
-        try:
-            result = schema_class.model_validate_json(raw)
-            if attempt > 0:
-                print(f"Succeeded on retry {attempt}")
-            return result
-        except ValidationError as e:
-            last_error = str(e)
-            print(f"Attempt {attempt + 1} failed: {last_error}")
-
-    raise ValueError(
-        f"Extraction failed after {max_retries} attempts. Last error: {last_error}"
+    response = client.chat.completions.create(
+        model="gpt-4o", messages=messages,
+        response_format={"type": "json_schema",
+                         "json_schema": {"name": "extraction", "schema": schema}},
     )
+
+    try:
+        return schema_class.model_validate_json(response.choices[0].message.content)
+    except ValidationError as e:
+        last_error = str(e)
 ```
 
 ## Comparing LLM Scraping Approaches

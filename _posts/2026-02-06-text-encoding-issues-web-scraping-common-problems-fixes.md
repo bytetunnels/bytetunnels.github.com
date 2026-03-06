@@ -152,44 +152,6 @@ fixed_text = ftfy.fix_text(mangled_text)
 print(fixed_text)
 ```
 
-For more control, process different sections with different encodings:
-
-```python
-from bs4 import BeautifulSoup
-
-def decode_mixed_page(raw_bytes):
-    """Handle pages with mixed encodings by trying multiple decoders."""
-    # First pass: decode as UTF-8, replacing errors
-    text = raw_bytes.decode("utf-8", errors="replace")
-    soup = BeautifulSoup(text, "html.parser")
-
-    for element in soup.find_all(string=True):
-        if "\ufffd" in element:
-            # This section had decoding errors -- try latin-1
-            # Find the byte range and re-decode
-            original = element.encode("utf-8")
-            # Replace the replacement characters by trying latin-1
-            try:
-                fixed = original.replace(
-                    b"\xef\xbf\xbd",  # UTF-8 encoding of U+FFFD
-                    b"?"
-                )
-                element.replace_with(fixed.decode("utf-8"))
-            except (UnicodeDecodeError, UnicodeEncodeError):
-                pass
-
-    return str(soup)
-
-
-# A more practical approach: re-decode the raw bytes with ftfy
-import ftfy
-
-def fix_mixed_encoding(raw_bytes):
-    """Try UTF-8 first, then fix any mojibake with ftfy."""
-    text = raw_bytes.decode("utf-8", errors="replace")
-    return ftfy.fix_text(text)
-```
-
 Install ftfy with:
 
 ```bash
@@ -257,24 +219,6 @@ for p in soup.find_all("p"):
 
 The rule is simple: if you are using [regex to strip HTML tags](/posts/regex-for-web-scraping-extracting-data-without-parser/), you must also call `html.unescape()` on the result. If you are using BeautifulSoup or lxml, the `.get_text()` method handles entity decoding automatically.
 
-```python
-import re
-import html
-
-
-def strip_html_safely(raw_html):
-    """Remove HTML tags AND decode entities."""
-    # Remove tags
-    text = re.sub(r"<[^>]+>", "", raw_html)
-    # Decode entities
-    text = html.unescape(text)
-    return text
-
-
-print(strip_html_safely("<p>Price: &pound;5.99 &mdash; 50% off!</p>"))
-# Output: 'Price: PS5.99 -- 50% off!'
-```
-
 
 <figure>
   <img src="/assets/img/inline-text-encoding-issues-web-scraping-common-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
@@ -326,21 +270,6 @@ print(f"Before: {garbled}")
 print(f"After:  {fixed}")
 # Before: CafÃ©
 # After:  Cafe
-```
-
-```python
-# More examples of double-encoded text and their fixes:
-test_cases = [
-    ("CrÃ¨me BrÃ»lÃ©e", "Creme Brulee"),
-    ("naÃ¯ve", "naive"),
-    ("EspaÃ±ol", "Espanol"),
-    ("Ã¼ber", "uber"),
-]
-
-for garbled, expected in test_cases:
-    fixed = fix_double_encoded_utf8(garbled)
-    status = "PASS" if fixed == expected else "FAIL"
-    print(f"[{status}] '{garbled}' -> '{fixed}' (expected '{expected}')")
 ```
 
 You can also use `ftfy` for this, which handles double encoding automatically:
@@ -403,34 +332,7 @@ response = requests.get("https://example.com/data.csv")
 text = response.content.decode("utf-8-sig")
 ```
 
-```python
-# If you already have a string with a BOM:
-def strip_bom(text):
-    """Remove BOM from the start of a string if present."""
-    if text.startswith("\ufeff"):
-        return text[1:]
-    return text
-
-text_with_bom = "\ufeffProduct Name,Price"
-clean_text = strip_bom(text_with_bom)
-print(repr(clean_text))
-# Output: 'Product Name,Price'
-```
-
-```python
-# When reading files from disk that might have BOMs:
-with open("downloaded_data.csv", encoding="utf-8-sig") as f:
-    content = f.read()
-# The BOM is automatically stripped
-
-# For CSV files specifically:
-import csv
-
-with open("downloaded_data.csv", encoding="utf-8-sig", newline="") as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        print(row["Product Name"])  # Works correctly, no BOM prefix
-```
+The same `utf-8-sig` encoding works when reading files from disk: `open("data.csv", encoding="utf-8-sig")`. If you already have a string with a BOM, strip it with `text.lstrip("\ufeff")`.
 
 ## Problem 6: Non-Breaking Spaces and Invisible Unicode
 
@@ -503,27 +405,7 @@ print(match.group(1))
 # Output: '29.99'
 ```
 
-```python
-# Common invisible characters you will encounter in scraped data:
-invisible_examples = {
-    "\u00a0": "non-breaking space (nbsp)",
-    "\u200b": "zero-width space",
-    "\u200c": "zero-width non-joiner",
-    "\u200d": "zero-width joiner",
-    "\u00ad": "soft hyphen",
-    "\u2060": "word joiner",
-    "\u2002": "en space",
-    "\u2003": "em space",
-    "\u2009": "thin space",
-    "\ufeff": "zero-width no-break space (BOM)",
-}
-
-sample = "Hello\u200b \u00a0World\u200d\u00ad!"
-print(f"Original repr: {repr(sample)}")
-print(f"Looks like:    {sample}")
-print(f"Normalized:    {normalize_unicode(sample)}")
-print(f"Norm repr:     {repr(normalize_unicode(sample))}")
-```
+Other invisible characters you will encounter include: zero-width space (`\u200b`), zero-width joiner (`\u200d`), soft hyphen (`\u00ad`), en space (`\u2002`), em space (`\u2003`), and thin space (`\u2009`). The `normalize_unicode` function above strips all of these.
 
 
 <figure>
@@ -533,55 +415,7 @@ print(f"Norm repr:     {repr(normalize_unicode(sample))}")
 
 ## The Safe Scraping Pattern
 
-Based on all the problems above, here is a robust pattern for fetching and decoding web pages. Use this as your default approach instead of relying on `response.text`.
-
-```python
-import requests
-import html
-import unicodedata
-from charset_normalizer import from_bytes
-
-
-def safe_fetch(url, fallback_encoding="utf-8"):
-    """Fetch a URL and return correctly decoded, cleaned text.
-
-    This function:
-    1. Gets raw bytes (never trusts response.text)
-    2. Detects the actual encoding
-    3. Decodes explicitly
-    4. Strips BOM if present
-    5. Normalizes Unicode
-    """
-    response = requests.get(url, timeout=30)
-    raw_bytes = response.content
-
-    # Step 1: Detect encoding from HTML meta tags
-    encoding = fallback_encoding
-    if b'charset="utf-8"' in raw_bytes[:1024].lower():
-        encoding = "utf-8"
-    elif b"charset=utf-8" in raw_bytes[:1024].lower():
-        encoding = "utf-8"
-    else:
-        # Step 2: Use charset-normalizer for detection
-        result = from_bytes(raw_bytes).best()
-        if result is not None and result.encoding:
-            encoding = result.encoding
-
-    # Step 3: Decode with BOM handling
-    if encoding.lower().replace("-", "") == "utf8":
-        encoding = "utf-8-sig"  # Handles BOM automatically
-
-    text = raw_bytes.decode(encoding, errors="replace")
-
-    # Step 4: Normalize Unicode (non-breaking spaces, etc.)
-    text = unicodedata.normalize("NFKC", text)
-
-    return text
-
-
-# Usage
-page_text = safe_fetch("https://example.com/products")
-```
+Based on all the problems above, here is a robust pattern for fetching and decoding web pages. Use this as your default approach instead of relying on `response.text`. The complete `scrape_clean_text` function at the end of this article combines all of these steps. The flow looks like this:
 
 ```mermaid
 graph TD
@@ -607,118 +441,34 @@ graph TD
 After decoding, you should verify the output. Here are practical checks you can run on your scraped text.
 
 ```python
-def audit_text_encoding(text, label=""):
+def audit_text_encoding(text):
     """Check scraped text for common encoding problems."""
     issues = []
 
-    # Check 1: Replacement characters indicate failed decoding
     if "\ufffd" in text:
-        count = text.count("\ufffd")
-        issues.append(f"Contains {count} replacement character(s) U+FFFD")
+        issues.append(f"{text.count(chr(0xFFFD))} replacement character(s)")
 
-    # Check 2: Common mojibake patterns (double-encoded UTF-8)
-    mojibake_patterns = [
-        ("Ã©", "e"),   # UTF-8 e decoded as latin-1
-        ("Ã¨", "e"),   # UTF-8 e decoded as latin-1
-        ("Ã¼", "u"),   # UTF-8 u decoded as latin-1
-        ("Ã±", "n"),   # UTF-8 n decoded as latin-1
-        ("Ã¶", "o"),   # UTF-8 o decoded as latin-1
-        ("Ã ", "a"),   # UTF-8 a decoded as latin-1
-        ("â€"", "--"),  # UTF-8 em dash decoded as windows-1252
-        ("â€™", "'"),   # UTF-8 right single quote as windows-1252
-        ("â€œ", '"'),   # UTF-8 left double quote as windows-1252
-    ]
-    for garbled, correct in mojibake_patterns:
+    # Common mojibake patterns (double-encoded UTF-8)
+    for garbled in ["Ã©", "Ã¨", "Ã¼", "Ã±", "â€"", "â€™"]:
         if garbled in text:
-            issues.append(f"Mojibake detected: '{garbled}' should be '{correct}'")
+            issues.append(f"Mojibake: '{garbled}'")
 
-    # Check 3: BOM at start of text
     if text.startswith("\ufeff"):
-        issues.append("BOM (Byte Order Mark) present at start of text")
-
-    # Check 4: Non-breaking spaces
-    nbsp_count = text.count("\u00a0")
-    if nbsp_count > 0:
-        issues.append(f"Contains {nbsp_count} non-breaking space(s)")
-
-    # Check 5: Zero-width characters
-    zw_chars = {
-        "\u200b": "zero-width space",
-        "\u200c": "zero-width non-joiner",
-        "\u200d": "zero-width joiner",
-    }
-    for char, name in zw_chars.items():
+        issues.append("BOM present")
+    if "\u00a0" in text:
+        issues.append(f"{text.count(chr(0xA0))} non-breaking space(s)")
+    for char in ["\u200b", "\u200c", "\u200d"]:
         if char in text:
-            issues.append(f"Contains {name} (U+{ord(char):04X})")
+            issues.append(f"Zero-width char U+{ord(char):04X}")
 
-    # Report
-    prefix = f"[{label}] " if label else ""
-    if issues:
-        print(f"{prefix}ENCODING ISSUES FOUND:")
-        for issue in issues:
-            print(f"  - {issue}")
-    else:
-        print(f"{prefix}Text encoding looks clean")
-
-    return len(issues) == 0
-
-
-# Usage
-sample_texts = {
-    "Good UTF-8": "Cafe creme brulee",
-    "Double encoded": "CafÃ© crÃ¨me brÃ»lÃ©e",
-    "Has BOM": "\ufeffProduct list",
-    "Has nbsp": "Price:\xa0$29.99",
-    "Has replacement chars": "Product \ufffd unknown",
-}
-
-for label, text in sample_texts.items():
-    audit_text_encoding(text, label)
-    print()
+    return issues  # Empty list means clean text
 ```
 
-```
-[Good UTF-8] Text encoding looks clean
-
-[Double encoded] ENCODING ISSUES FOUND:
-  - Mojibake detected: 'Ã©' should be 'e'
-  - Mojibake detected: 'Ã¨' should be 'e'
-  - Mojibake detected: 'Ã»' should be 'u'
-
-[Has BOM] ENCODING ISSUES FOUND:
-  - BOM (Byte Order Mark) present at start of text
-
-[Has nbsp] ENCODING ISSUES FOUND:
-  - Contains 1 non-breaking space(s)
-
-[Has replacement chars] ENCODING ISSUES FOUND:
-  - Contains 1 replacement character(s) U+FFFD
-```
+Run this against your scraped text to catch encoding issues before they reach your database.
 
 ## Library Recommendations
 
 Here is a summary of the libraries mentioned in this guide and when to use each one.
-
-```mermaid
-graph TD
-    A["Encoding Problem"] --> B{"What kind<br>of problem?"}
-
-    B -->|"Wrong encoding<br>detection"| C["charset-normalizer<br>pip install charset-normalizer"]
-    B -->|"Mojibake or<br>double encoding"| D["ftfy<br>pip install ftfy"]
-    B -->|"HTML entities<br>not decoded"| E["html.unescape()<br>built-in stdlib"]
-    B -->|"Invisible Unicode<br>characters"| F["unicodedata.normalize()<br>built-in stdlib"]
-    B -->|"BOM in text"| G["utf-8-sig encoding<br>built-in codec"]
-
-    C --> H["Replaces chardet<br>Faster, more accurate"]
-    D --> I["Fixes text for you<br>Handles multi-layer errors"]
-
-    style A fill:#2d3748,stroke:#4a5568,color:#fff
-    style C fill:#744210,stroke:#975a16,color:#fff
-    style D fill:#744210,stroke:#975a16,color:#fff
-    style E fill:#22543d,stroke:#276749,color:#fff
-    style F fill:#22543d,stroke:#276749,color:#fff
-    style G fill:#22543d,stroke:#276749,color:#fff
-```
 
 | Library | Install | Use Case |
 |---------|---------|----------|

@@ -183,29 +183,13 @@ def has_valid_cookies(session, required_cookie="session_id"):
     for cookie in session.cookies:
         if cookie.name == required_cookie:
             if cookie.expires is None:
-                # Session cookie -- valid as long as the process is alive
-                return True
+                return True  # Session cookie -- valid as long as process is alive
             if cookie.expires > time.time():
                 return True
-            else:
-                print(f"Cookie '{cookie.name}' expired at {cookie.expires}")
-                return False
+            print(f"Cookie '{cookie.name}' expired at {cookie.expires}")
+            return False
     print(f"Cookie '{required_cookie}' not found in jar")
     return False
-
-def get_soonest_expiry(session):
-    """Return the earliest expiry timestamp among all cookies."""
-    expiries = [c.expires for c in session.cookies if c.expires is not None]
-    if not expiries:
-        return None
-    return min(expiries)
-
-def seconds_until_expiry(session):
-    """Seconds until the earliest cookie expires. None if no expiry set."""
-    soonest = get_soonest_expiry(session)
-    if soonest is None:
-        return None
-    return max(0, soonest - time.time())
 ```
 
 ### Reactive: Catching 401 and 403 Responses
@@ -561,27 +545,7 @@ class MultiSiteCookieManager:
         return manager.get(url, **kwargs)
 ```
 
-```python
-multi = MultiSiteCookieManager(cookie_dir="cookie_store")
-
-# Configure each site
-multi.get_manager(
-    "shop.example.com",
-    login_url="https://shop.example.com/auth",
-    credentials={"user": "a", "pass": "b"},
-)
-multi.get_manager(
-    "api.another-site.com",
-    login_url="https://api.another-site.com/token",
-    credentials={"key": "abc123"},
-)
-
-# Each request uses the right cookie jar
-resp1 = multi.get("https://shop.example.com/products")
-resp2 = multi.get("https://api.another-site.com/v2/items")
-
-multi.save_all()
-```
+Each domain gets its own `CookieManager` instance, its own cookie file on disk, and its own authentication credentials. The `get()` method parses the URL to route requests through the correct manager automatically.
 
 ## Thread Safety: Sharing Cookies Across Concurrent Scrapers
 
@@ -673,241 +637,18 @@ for cookie in session.cookies:
 
 ### Domain Scoping
 
-A cookie set for `.example.com` is sent to `www.example.com`, `api.example.com`, and any other subdomain. A cookie set for `www.example.com` (without the leading dot) is only sent to that exact host. If your scraper authenticates on `www.example.com` but fetches data from `api.example.com`, the session cookie might not be included.
-
-```python
-def check_domain_coverage(session, target_url):
-    """Check which cookies will actually be sent to a target URL."""
-    from urllib.parse import urlparse
-    target_domain = urlparse(target_url).netloc
-
-    sent = []
-    skipped = []
-    for cookie in session.cookies:
-        # Simplified domain matching
-        if target_domain == cookie.domain or target_domain.endswith(cookie.domain):
-            sent.append(cookie.name)
-        else:
-            skipped.append((cookie.name, cookie.domain))
-
-    if skipped:
-        logger.warning(
-            "Cookies that will NOT be sent to %s: %s",
-            target_url,
-            [(n, d) for n, d in skipped],
-        )
-    return sent
-```
+A cookie set for `.example.com` is sent to `www.example.com`, `api.example.com`, and any other subdomain. A cookie set for `www.example.com` (without the leading dot) is only sent to that exact host. If your scraper authenticates on `www.example.com` but fetches data from `api.example.com`, the session cookie might not be included. Iterate over `session.cookies` and compare each cookie's `domain` against the target URL's hostname to diagnose missing cookies.
 
 ### Path Matching
 
-A cookie with `path=/api` is only sent for requests to URLs starting with `/api`. If the login endpoint sets a cookie with a restrictive path, requests to other paths will not include it.
-
-```python
-for cookie in session.cookies:
-    if cookie.path != "/":
-        print(f"Cookie '{cookie.name}' restricted to path '{cookie.path}'")
-```
+A cookie with `path=/api` is only sent for requests to URLs starting with `/api`. If the login endpoint sets a cookie with a restrictive path, requests to other paths will not include it. Check `cookie.path` for any cookie that is not set to `"/"`.
 
 ### Cookie Size and Count Limits
 
 Browsers limit cookies to about 4 KB each and roughly 50 cookies per domain. If a site sets a very large number of cookies, some may be silently dropped. The `requests` library does not enforce these limits, but upstream proxies or load balancers might.
 
-## Complete Example: Long-Running Scraper with Persistent Cookie Management
+## Putting It All Together
 
-This puts everything together into a production-ready scraper skeleton.
+The `CookieManager` class above already handles every scenario a long-running scraper needs: it loads cookies on startup, detects expiration before and during requests, re-authenticates automatically, and saves state after each login. To build a production scraper, instantiate the manager, add a signal handler to call `manager.save()` on shutdown, and wrap your main loop around `manager.get()`. Add the `MultiSiteCookieManager` when you target multiple domains. Wrap it in `ThreadSafeCookieManager` when you add concurrency. Swap in Playwright's `storage_state` when a full browser is required. The core loop -- load, validate, use, renew, save -- stays the same regardless of the underlying HTTP client.
 
-```python
-import json
-import time
-import logging
-import signal
-import sys
-import requests
-from pathlib import Path
-from datetime import datetime
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-)
-logger = logging.getLogger("scraper")
-
-COOKIE_FILE = Path("scraper_cookies.json")
-LOGIN_URL = "https://example.com/api/auth/login"
-BASE_URL = "https://example.com/api"
-CREDENTIALS = {"username": "scraper_bot", "password": "hunter2"}
-SAVE_INTERVAL = 50  # save cookies every N requests
-RENEWAL_BUFFER = 600  # re-auth 10 minutes before expiry
-
-
-class PersistentScraper:
-    """A long-running scraper with persistent cookie management."""
-
-    def __init__(self):
-        self.session = requests.Session()
-        self.session.headers.update({
-            "User-Agent": "Mozilla/5.0 (compatible; DataBot/1.0)",
-            "Accept": "application/json",
-        })
-        self.request_count = 0
-        self.running = True
-
-        # Graceful shutdown handler
-        signal.signal(signal.SIGINT, self._shutdown)
-        signal.signal(signal.SIGTERM, self._shutdown)
-
-    def _shutdown(self, signum, frame):
-        logger.info("Shutdown signal received, saving state...")
-        self.save_cookies()
-        self.running = False
-        sys.exit(0)
-
-    def load_cookies(self):
-        """Load cookies from disk."""
-        if not COOKIE_FILE.exists():
-            return False
-        try:
-            data = json.loads(COOKIE_FILE.read_text())
-            for c in data:
-                self.session.cookies.set(
-                    c["name"], c["value"],
-                    domain=c.get("domain", ""),
-                    path=c.get("path", "/"),
-                )
-            logger.info("Loaded %d cookies from disk", len(data))
-            return True
-        except Exception as e:
-            logger.warning("Failed to load cookies: %s", e)
-            return False
-
-    def save_cookies(self):
-        """Save current cookies to disk."""
-        cookies = []
-        for c in self.session.cookies:
-            cookies.append({
-                "name": c.name,
-                "value": c.value,
-                "domain": c.domain,
-                "path": c.path,
-                "expires": c.expires,
-                "secure": c.secure,
-            })
-        COOKIE_FILE.write_text(json.dumps(cookies, indent=2))
-        logger.info("Saved %d cookies to disk", len(cookies))
-
-    def cookies_valid(self):
-        """Check if session cookies are still valid."""
-        for cookie in self.session.cookies:
-            if cookie.name == "session_id":
-                if cookie.expires is None:
-                    return True
-                remaining = cookie.expires - time.time()
-                if remaining > RENEWAL_BUFFER:
-                    return True
-                logger.info("Session expires in %.0f seconds", remaining)
-                return False
-        return False
-
-    def authenticate(self):
-        """Login and save the new cookies."""
-        logger.info("Authenticating...")
-        resp = self.session.post(LOGIN_URL, json=CREDENTIALS)
-        if resp.status_code != 200:
-            raise RuntimeError(f"Login failed: {resp.status_code} {resp.text[:200]}")
-        logger.info("Authentication successful")
-        self.save_cookies()
-
-    def ensure_authenticated(self):
-        """Make sure we have valid session cookies."""
-        if not self.cookies_valid():
-            self.authenticate()
-
-    def fetch(self, url, **kwargs):
-        """Fetch a URL with automatic auth management."""
-        self.ensure_authenticated()
-        resp = self.session.get(url, **kwargs)
-
-        # Handle auth expiry mid-run
-        if resp.status_code in {401, 403}:
-            logger.warning("Got %d, re-authenticating", resp.status_code)
-            self.authenticate()
-            resp = self.session.get(url, **kwargs)
-
-        self.request_count += 1
-
-        # Periodic cookie save
-        if self.request_count % SAVE_INTERVAL == 0:
-            self.save_cookies()
-
-        return resp
-
-    def run(self, start_page=1, max_pages=10000):
-        """Main scraping loop."""
-        # Try to resume from saved cookies
-        loaded = self.load_cookies()
-        if not loaded or not self.cookies_valid():
-            self.authenticate()
-
-        page = start_page
-        consecutive_errors = 0
-
-        while self.running and page <= max_pages:
-            try:
-                resp = self.fetch(f"{BASE_URL}/products?page={page}")
-
-                if resp.status_code == 200:
-                    data = resp.json()
-                    products = data.get("results", [])
-
-                    if not products:
-                        logger.info("No more results at page %d, done", page)
-                        break
-
-                    self.process_products(products, page)
-                    consecutive_errors = 0
-                    page += 1
-
-                elif resp.status_code == 429:
-                    retry_after = int(resp.headers.get("Retry-After", 60))
-                    logger.warning("Rate limited, sleeping %d seconds", retry_after)
-                    time.sleep(retry_after)
-
-                else:
-                    logger.error("Unexpected status %d on page %d", resp.status_code, page)
-                    consecutive_errors += 1
-
-                if consecutive_errors >= 5:
-                    logger.error("Too many consecutive errors, stopping")
-                    break
-
-                # Polite delay between requests
-                time.sleep(1.5)
-
-            except requests.RequestException as e:
-                logger.error("Request failed: %s", e)
-                consecutive_errors += 1
-                time.sleep(10)
-
-        self.save_cookies()
-        logger.info(
-            "Scraping complete: %d pages processed, %d total requests",
-            page - start_page, self.request_count,
-        )
-
-    def process_products(self, products, page):
-        """Process scraped data -- replace with your actual logic."""
-        logger.info("Page %d: got %d products", page, len(products))
-        for product in products:
-            # Store in database, write to file, etc.
-            pass
-
-
-if __name__ == "__main__":
-    scraper = PersistentScraper()
-    scraper.run(start_page=1)
-```
-
-This scraper handles every scenario discussed in this post. It loads cookies on startup, detects expiration before and during requests, re-authenticates automatically, saves state periodically, and persists cookies on graceful shutdown via signal handlers. When it crashes and restarts, it picks up the saved cookies instead of logging in again. The `RENEWAL_BUFFER` ensures re-authentication happens before the cookie actually expires, avoiding the brief window where a request goes out with a cookie that expires between sending the request and receiving the response.
-
-The pattern scales to more complex setups, including [keeping logins alive](/posts/user-session-persistence-keeping-logins-alive-automation/) across days-long runs. Add the `MultiSiteCookieManager` when you target multiple domains. Wrap it in `ThreadSafeCookieManager` when you add concurrency. Swap in Playwright's `storage_state` when a full browser is required. The core loop -- load, validate, use, renew, save -- stays the same regardless of the underlying HTTP client.
+The pattern scales to more complex setups, including [keeping logins alive](/posts/user-session-persistence-keeping-logins-alive-automation/) across days-long runs. The `RENEWAL_BUFFER` in the `CookieManager` ensures re-authentication happens before the cookie actually expires, avoiding the brief window where a request goes out with a cookie that expires between sending the request and receiving the response.

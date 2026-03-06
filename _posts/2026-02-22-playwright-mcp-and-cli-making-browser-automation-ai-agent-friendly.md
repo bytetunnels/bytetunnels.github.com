@@ -70,46 +70,6 @@ config_path = "~/.config/claude/claude_desktop_config.json"
 print(json.dumps(mcp_config, indent=2))
 ```
 
-```javascript
-// For VS Code with GitHub Copilot, add to .vscode/settings.json
-const vscodeConfig = {
-  "mcp": {
-    "servers": {
-      "playwright": {
-        "command": "npx",
-        "args": ["@playwright/mcp"]
-      }
-    }
-  }
-};
-
-// For a custom MCP client connecting to the Playwright server
-const { Client } = require("@modelcontextprotocol/sdk/client/index.js");
-const { StdioClientTransport } = require(
-  "@modelcontextprotocol/sdk/client/stdio.js"
-);
-
-async function connectToPlaywright() {
-  const transport = new StdioClientTransport({
-    command: "npx",
-    args: ["@playwright/mcp"],
-  });
-
-  const client = new Client({
-    name: "my-browser-agent",
-    version: "1.0.0",
-  });
-
-  await client.connect(transport);
-
-  // List available tools
-  const tools = await client.listTools();
-  console.log("Available browser tools:", tools.tools.map((t) => t.name));
-
-  return client;
-}
-```
-
 Once running, the MCP server exposes tools like `browser_navigate`, `browser_click`, `browser_type`, `browser_screenshot`, and `browser_snapshot`. An AI agent discovers these tools through the MCP protocol and uses them to drive the browser, from simple navigation to complex [form filling](/posts/how-to-automate-web-form-filling-complete-guide/) workflows.
 
 ## The CLI Alternative: 4x Token Reduction
@@ -171,37 +131,6 @@ for item in result["items"]:
     print(f"  {item['title']}: {item['price']}")
 ```
 
-```javascript
-// JavaScript equivalent using the Playwright CLI
-const { execFile } = require("child_process");
-const { promisify } = require("util");
-const execFileAsync = promisify(execFile);
-
-async function runPlaywrightCli(command, args = []) {
-  const { stdout } = await execFileAsync(
-    "npx",
-    ["@playwright/cli", command, ...args],
-    { timeout: 30000 }
-  );
-  return JSON.parse(stdout);
-}
-
-// Single command replaces multiple MCP round-trips
-async function extractProducts() {
-  const result = await runPlaywrightCli("run", [
-    "--url", "https://example.com/products",
-    "--action", "extract",
-    "--selector", ".product-card",
-    "--fields", "title:.product-name,price:.product-price",
-  ]);
-
-  console.log(`Extracted ${result.items.length} products`);
-  result.items.forEach((item) => {
-    console.log(`  ${item.title}: ${item.price}`);
-  });
-}
-```
-
 The token reduction matters for two reasons. First, cost: if your agent runs hundreds of browser automation tasks per day, cutting token usage by 75% directly reduces your API bill. Second, speed: fewer round trips means faster task completion. An agent that describes its intent in a single command and receives structured results will always outperform one that needs to issue ten sequential instructions.
 
 ## The Three Playwright Agents
@@ -260,34 +189,7 @@ plan = run_planner("https://my-app.example.com")
 
 ### The Generator
 
-The Generator takes the Planner's Markdown output and converts it into actual Playwright test files. Each test scenario in the plan becomes a runnable test with proper assertions, selectors, and wait conditions.
-
-```javascript
-// Using the Generator agent to create tests from a plan
-const { execFile } = require("child_process");
-const { promisify } = require("util");
-const execFileAsync = promisify(execFile);
-
-async function runGenerator(planPath, outputDir = "./tests") {
-  const { stdout, stderr } = await execFileAsync(
-    "npx",
-    [
-      "playwright", "agent", "generator",
-      "--plan", planPath,
-      "--output-dir", outputDir,
-    ],
-    { timeout: 120000 }
-  );
-
-  console.log(`Generated tests in ${outputDir}`);
-  console.log(stdout);
-  return outputDir;
-}
-
-// Convert the plan into executable tests
-runGenerator("./test-plan.md", "./tests/generated")
-  .then((dir) => console.log(`Tests ready in ${dir}`));
-```
+The Generator takes the Planner's Markdown output and converts it into actual Playwright test files. Each test scenario in the plan becomes a runnable test with proper assertions, selectors, and wait conditions. Run it with `npx playwright agent generator --plan ./test-plan.md --output-dir ./tests/generated`.
 
 ### The Healer
 
@@ -341,53 +243,8 @@ The Healer addresses one of the biggest pain points in [browser automation](/pos
 Here is a practical example showing how to configure a complete pipeline where an AI agent uses MCP to drive Playwright for a scraping task.
 
 ```python
-# Complete example: AI agent using Playwright via MCP
-import json
-import asyncio
-
-async def setup_mcp_browser_agent():
-    """Set up a complete MCP-based browser automation pipeline."""
-
-    # MCP server configuration
-    server_config = {
-        "name": "playwright",
-        "command": "npx",
-        "args": ["@playwright/mcp"],
-        "env": {
-            "PLAYWRIGHT_BROWSERS_PATH": "/usr/local/share/playwright",
-            "HEADLESS": "true"  # Run headless for scraping
-        }
-    }
-
-    # Define the tools the agent can use
-    available_tools = [
-        {
-            "name": "browser_navigate",
-            "description": "Navigate to a URL",
-            "parameters": {"url": "string"}
-        },
-        {
-            "name": "browser_snapshot",
-            "description": "Get accessibility tree of current page",
-            "parameters": {}
-        },
-        {
-            "name": "browser_click",
-            "description": "Click an element",
-            "parameters": {"element": "string", "ref": "string"}
-        },
-        {
-            "name": "browser_type",
-            "description": "Type text into an input field",
-            "parameters": {"element": "string", "ref": "string", "text": "string"}
-        },
-    ]
-
-    return server_config, available_tools
-
-
 # Example agent loop using MCP tools
-async def scrape_with_mcp_agent(task, tools, mcp_client):
+async def scrape_with_mcp_agent(mcp_client):
     """Run a scraping task through an MCP-connected agent."""
     # Navigate to the target
     await mcp_client.call_tool("browser_navigate", {
@@ -397,56 +254,14 @@ async def scrape_with_mcp_agent(task, tools, mcp_client):
     # Get the page accessibility snapshot
     snapshot = await mcp_client.call_tool("browser_snapshot", {})
 
-    # The agent can now reason over the snapshot
-    # and decide which elements to interact with
-    print("Page snapshot received, agent can now plan actions")
-    return snapshot
-```
+    # The agent reasons over the snapshot and decides next actions
+    # e.g., click pagination, fill search fields, extract data
+    await mcp_client.call_tool("browser_click", {
+        "element": "Next Page",
+        "ref": "button[aria-label='Next']",
+    })
 
-```javascript
-// JavaScript: Full MCP client connecting to Playwright
-const { Client } = require("@modelcontextprotocol/sdk/client/index.js");
-const { StdioClientTransport } = require(
-  "@modelcontextprotocol/sdk/client/stdio.js"
-);
-
-async function scrapeWithMCP(targetUrl) {
-  // Connect to the Playwright MCP server
-  const transport = new StdioClientTransport({
-    command: "npx",
-    args: ["@playwright/mcp"],
-  });
-
-  const client = new Client({
-    name: "scraping-agent",
-    version: "1.0.0",
-  });
-
-  await client.connect(transport);
-
-  // Navigate to target
-  await client.callTool({ name: "browser_navigate", arguments: { url: targetUrl } });
-
-  // Get structured page content via accessibility snapshot
-  const snapshot = await client.callTool({ name: "browser_snapshot", arguments: {} });
-  console.log("Page content:", snapshot);
-
-  // Click a pagination button
-  await client.callTool({ name: "browser_click", arguments: {
-    element: "Next Page",
-    ref: "button[aria-label='Next']",
-  } });
-
-  // Get next page content
-  const page2 = await client.callTool({ name: "browser_snapshot", arguments: {} });
-  console.log("Page 2 content:", page2);
-
-  await client.close();
-  return [snapshot, page2];
-}
-
-scrapeWithMCP("https://example.com/products")
-  .then((results) => console.log(`Scraped ${results.length} pages`));
+    return await mcp_client.call_tool("browser_snapshot", {})
 ```
 
 ## Chrome for Testing and What Changed in v1.57

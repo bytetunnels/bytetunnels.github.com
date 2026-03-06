@@ -58,27 +58,7 @@ for url in urls:
     time.sleep(2)  # Wait 2 seconds between requests
 ```
 
-This works but has a problem: the delay is fixed. If the server is fast, you wait unnecessarily. If the server is struggling, two seconds might not be enough. It also does not account for time spent processing the response -- if your parsing takes a second, the actual gap between requests is three seconds, not two.
-
-A slightly better version accounts for processing time:
-
-```python
-import time
-import requests
-
-MIN_DELAY = 2.0  # Minimum seconds between request starts
-
-session = requests.Session()
-
-for url in urls:
-    start = time.monotonic()
-    response = session.get(url)
-    # ... process response ...
-    elapsed = time.monotonic() - start
-    remaining = MIN_DELAY - elapsed
-    if remaining > 0:
-        time.sleep(remaining)
-```
+This works but has a problem: the delay is fixed. If the server is fast, you wait unnecessarily. If the server is struggling, two seconds might not be enough. It also does not account for time spent processing the response -- if your parsing takes a second, the actual gap between requests is three seconds, not two. A better approach is to track `time.monotonic()` around each request and sleep only for the remaining interval. But for real control, you want a proper rate limiter.
 
 ## Token Bucket Rate Limiter
 
@@ -374,34 +354,23 @@ User-agent rotation serves two purposes: it prevents your scraper from being tri
 A good user-agent list uses strings from currently shipping browser versions. Outdated user agents are a red flag -- real users update their browsers.
 
 ```python
-# A curated list of current desktop browser user agents.
-# Update these periodically to match current browser releases.
 USER_AGENTS = [
     # Chrome 122 on Windows
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-
-    # Chrome 122 on macOS
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-
     # Firefox 123 on Windows
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) "
     "Gecko/20100101 Firefox/123.0",
-
-    # Firefox 123 on macOS
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) "
-    "Gecko/20100101 Firefox/123.0",
-
     # Safari 17.3 on macOS
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
     "(KHTML, like Gecko) Version/17.3 Safari/605.1.15",
-
     # Edge 122 on Windows
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0",
 ]
 ```
+
+Include variants for macOS and other platforms as needed -- the key is to use strings from currently shipping browser versions and update them periodically.
 
 ### Rotating Per Request vs Per Session
 
@@ -475,20 +444,7 @@ Putting it all together -- a scraper that combines the token bucket limiter, ada
 import time
 import random
 import requests
-from dataclasses import dataclass, field
-
-
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) "
-    "Gecko/20100101 Firefox/123.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
-    "(KHTML, like Gecko) Version/17.3 Safari/605.1.15",
-]
-
+from dataclasses import dataclass
 
 @dataclass
 class ScraperConfig:
@@ -499,11 +455,8 @@ class ScraperConfig:
     max_retries: int = 3
     rotate_ua_every: int = 50
 
-
 class PoliteScraper:
-    """
-    A rate-limited scraper with adaptive backoff and UA rotation.
-    """
+    """A rate-limited scraper with adaptive backoff and UA rotation."""
 
     def __init__(self, config: ScraperConfig = None):
         self.config = config or ScraperConfig()
@@ -514,46 +467,16 @@ class PoliteScraper:
         )
         self.last_request_time = 0.0
 
-    def _wait(self):
-        """Enforce minimum delay between requests."""
-        now = time.monotonic()
-        elapsed = now - self.last_request_time
-        wait = self.delay - elapsed
-        if wait > 0:
-            time.sleep(wait)
-
-    def _handle_rate_limit(self, response: requests.Response) -> float:
-        """
-        Handle 429 response. Returns number of seconds to wait.
-        """
-        self.delay = min(
-            self.delay * self.config.backoff_factor, self.config.max_delay
-        )
-
-        retry_after = response.headers.get("Retry-After")
-        if retry_after:
-            try:
-                return float(retry_after)
-            except ValueError:
-                pass
-        return self.delay
-
     def fetch(self, url: str, **kwargs) -> requests.Response | None:
-        """
-        Fetch a URL with rate limiting, retries, and UA rotation.
-
-        Returns the Response on success, or None after max retries.
-        """
         headers = kwargs.pop("headers", {})
         headers.setdefault("User-Agent", self.ua_rotator.get())
         headers.setdefault("Accept-Language", "en-US,en;q=0.9")
-        headers.setdefault(
-            "Accept",
-            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        )
 
         for attempt in range(self.config.max_retries):
-            self._wait()
+            # Enforce minimum delay between requests
+            elapsed = time.monotonic() - self.last_request_time
+            if elapsed < self.delay:
+                time.sleep(self.delay - elapsed)
             self.last_request_time = time.monotonic()
 
             try:
@@ -563,31 +486,18 @@ class PoliteScraper:
                 time.sleep(self.delay)
                 continue
 
-            if response.status_code == 429:
-                wait_time = self._handle_rate_limit(response)
-                print(
-                    f"429 on {url} (attempt {attempt + 1}). "
-                    f"Waiting {wait_time:.1f}s"
-                )
-                time.sleep(wait_time)
+            if response.status_code in (429, 503):
+                self.delay = min(self.delay * self.config.backoff_factor,
+                                 self.config.max_delay)
+                wait = float(response.headers.get("Retry-After", self.delay))
+                print(f"{response.status_code} on {url}. Waiting {wait:.1f}s")
+                time.sleep(wait)
                 continue
 
-            if response.status_code == 503:
-                wait_time = self.delay * self.config.backoff_factor
-                print(
-                    f"503 on {url} (attempt {attempt + 1}). "
-                    f"Waiting {wait_time:.1f}s"
-                )
-                time.sleep(wait_time)
-                continue
-
-            # Successful response -- gradually recover delay
+            # Gradually recover delay after success
             if self.delay > 1.0 / self.config.requests_per_second:
-                self.delay = max(
-                    self.delay * 0.9,
-                    1.0 / self.config.requests_per_second,
-                )
-
+                self.delay = max(self.delay * 0.9,
+                                 1.0 / self.config.requests_per_second)
             return response
 
         print(f"Max retries exceeded for {url}")
@@ -595,116 +505,11 @@ class PoliteScraper:
 
     def close(self):
         self.session.close()
-
-
-# Usage
-if __name__ == "__main__":
-    scraper = PoliteScraper(
-        ScraperConfig(requests_per_second=1.0, rotate_ua_every=25)
-    )
-
-    urls = [f"https://example.com/products/page/{i}" for i in range(1, 51)]
-
-    for url in urls:
-        response = scraper.fetch(url, timeout=10)
-        if response and response.status_code == 200:
-            # Process the response
-            print(f"OK: {url} ({len(response.content)} bytes)")
-
-    scraper.close()
 ```
 
-## Scrapy Settings for Polite Crawling
+This combines the `TokenBucket` for burst control, the `AdaptiveRateLimiter` for backoff, and the `UserAgentRotator` for session-consistent UA rotation into a single class. Use it as a drop-in replacement for raw `requests.get()` calls.
 
-Here is a complete Scrapy settings block that combines rate limiting, user-agent rotation, and other polite crawling practices:
-
-```python
-# settings.py for a polite Scrapy spider
-
-BOT_NAME = "polite_spider"
-SPIDER_MODULES = ["polite_spider.spiders"]
-
-# --- Identification ---
-# Identify yourself honestly so site operators can contact you
-USER_AGENT = (
-    "PoliteSpider/1.0 (+https://yoursite.com/bot-info; contact@yoursite.com)"
-)
-
-# --- Rate Limiting ---
-DOWNLOAD_DELAY = 2
-RANDOMIZE_DOWNLOAD_DELAY = True  # Adds 0.5x to 1.5x jitter to DOWNLOAD_DELAY
-CONCURRENT_REQUESTS = 8
-CONCURRENT_REQUESTS_PER_DOMAIN = 1
-
-# --- AutoThrottle ---
-AUTOTHROTTLE_ENABLED = True
-AUTOTHROTTLE_START_DELAY = 2
-AUTOTHROTTLE_MAX_DELAY = 30
-AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
-
-# --- Respect robots.txt ---
-ROBOTSTXT_OBEY = True
-
-# --- Retry on rate limiting ---
-RETRY_HTTP_CODES = [429, 500, 502, 503, 504]
-RETRY_TIMES = 3
-
-# --- Caching (avoid re-downloading unchanged pages) ---
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 86400  # 24 hours
-HTTPCACHE_DIR = "httpcache"
-HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
-
-# --- Default headers ---
-DEFAULT_REQUEST_HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-}
-
-# --- Logging ---
-LOG_LEVEL = "INFO"
-```
-
-For user-agent rotation in Scrapy, you can use a downloader middleware:
-
-```python
-# middlewares.py
-import random
-
-
-class RotateUserAgentMiddleware:
-    """Rotate user agents per request in Scrapy."""
-
-    def __init__(self):
-        self.user_agents = [
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) "
-            "Gecko/20100101 Firefox/123.0",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
-            "Version/17.3 Safari/605.1.15",
-        ]
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls()
-
-    def process_request(self, request, spider):
-        request.headers["User-Agent"] = random.choice(self.user_agents)
-```
-
-Enable it in settings:
-
-```python
-DOWNLOADER_MIDDLEWARES = {
-    "scrapy.downloadermiddlewares.useragent.UserAgentMiddleware": None,
-    "polite_spider.middlewares.RotateUserAgentMiddleware": 400,
-}
-```
+For Scrapy-based projects, the settings shown earlier (`DOWNLOAD_DELAY`, `AUTOTHROTTLE_ENABLED`, and `CONCURRENT_REQUESTS_PER_DOMAIN`) cover the rate limiting side. For user-agent rotation in Scrapy, create a downloader middleware that calls `random.choice()` on your UA list in `process_request`, and disable the default `UserAgentMiddleware` in your `DOWNLOADER_MIDDLEWARES` setting.
 
 ## Respecting Crawl-delay in robots.txt
 
@@ -755,107 +560,32 @@ Rate limiting and user-agent rotation are the foundation, but truly responsible 
 
 Never re-download a page you already have. Use a local cache so that if your scraper crashes and restarts, it picks up where it left off without hitting the server again.
 
-```python
-import hashlib
-import json
-import os
-from pathlib import Path
-
-
-class SimpleCache:
-    """File-based HTTP response cache."""
-
-    def __init__(self, cache_dir: str = ".scraper_cache"):
-        self.cache_dir = Path(cache_dir)
-        self.cache_dir.mkdir(parents=True, exist_ok=True)
-
-    def _key(self, url: str) -> str:
-        return hashlib.sha256(url.encode()).hexdigest()
-
-    def get(self, url: str) -> dict | None:
-        path = self.cache_dir / f"{self._key(url)}.json"
-        if path.exists():
-            with open(path) as f:
-                return json.load(f)
-        return None
-
-    def put(self, url: str, status_code: int, body: str, headers: dict):
-        path = self.cache_dir / f"{self._key(url)}.json"
-        data = {
-            "url": url,
-            "status_code": status_code,
-            "body": body,
-            "headers": dict(headers),
-        }
-        with open(path, "w") as f:
-            json.dump(data, f)
-```
+A simple file-based cache using `hashlib.sha256(url)` as the filename and `json.dump()` for the response body, status code, and headers is sufficient. For Scrapy projects, enable `HTTPCACHE_ENABLED = True` with a 24-hour expiration instead.
 
 ### Use Conditional Requests
 
 If you scrape the same pages periodically, use `If-Modified-Since` or `If-None-Match` headers. The server can respond with 304 (Not Modified) instead of sending the full page again, saving bandwidth for both sides.
 
 ```python
-from email.utils import parsedate_to_datetime, format_datetime
-from datetime import datetime, timezone
+headers = {}
+if last_modified:
+    headers["If-Modified-Since"] = last_modified
+if etag:
+    headers["If-None-Match"] = etag
 
-
-def fetch_with_conditional(
-    session: requests.Session,
-    url: str,
-    last_modified: str = None,
-    etag: str = None,
-) -> requests.Response:
-    """
-    Fetch a URL using conditional headers to avoid redundant downloads.
-
-    Args:
-        session: requests Session.
-        url: URL to fetch.
-        last_modified: Value from a previous Last-Modified response header.
-        etag: Value from a previous ETag response header.
-    """
-    headers = {}
-    if last_modified:
-        headers["If-Modified-Since"] = last_modified
-    if etag:
-        headers["If-None-Match"] = etag
-
-    response = session.get(url, headers=headers)
-
-    if response.status_code == 304:
-        print(f"Not modified: {url}")
-        # Use cached version
-    else:
-        # Store the new Last-Modified and ETag for next time
-        new_last_modified = response.headers.get("Last-Modified")
-        new_etag = response.headers.get("ETag")
-        print(
-            f"Updated: {url} "
-            f"(Last-Modified: {new_last_modified}, ETag: {new_etag})"
-        )
-
-    return response
+response = session.get(url, headers=headers)
+if response.status_code == 304:
+    # Use cached version -- server confirmed nothing changed
+    pass
 ```
+
+Store the `Last-Modified` and `ETag` values from each response, and include them on the next request to the same URL.
 
 ### Scrape During Off-Peak Hours
 
 If you are scraping a business website, their peak traffic is likely during business hours in their timezone. Schedule your crawls for late night or early morning their time.
 
-```python
-from datetime import datetime
-import pytz
-
-
-def is_off_peak(timezone_str: str = "America/New_York") -> bool:
-    """
-    Check if it is currently off-peak hours (10 PM - 6 AM)
-    in the target timezone.
-    """
-    tz = pytz.timezone(timezone_str)
-    local_hour = datetime.now(tz).hour
-    return local_hour >= 22 or local_hour < 6
-```
+Check the current hour in the target site's timezone using `pytz` or `zoneinfo`, and only run your scraper during off-peak hours (typically 10 PM to 6 AM local time).
 
 ## What NOT to Do
 

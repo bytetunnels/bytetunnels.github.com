@@ -145,48 +145,6 @@ elif result["status"] == "ok":
     print(f"Content retrieved: {len(result['content'])} chars")
 ```
 
-```javascript
-// JavaScript equivalent for Node.js scrapers
-
-async function licenseAwareFetch(url) {
-    const response = await fetch(url, {
-        headers: {
-            "User-Agent": "MyBot/1.0 (contact@example.com)"
-        }
-    });
-
-    if (response.status === 200) {
-        const content = await response.text();
-        return { status: "ok", content };
-    }
-
-    if (response.status === 402) {
-        const licenseUrl = response.headers.get("X-License-URL");
-        const licenseType = response.headers.get("X-Content-License");
-
-        let bodyLicensing = {};
-        try {
-            const body = await response.json();
-            bodyLicensing = body.licensing || {};
-        } catch (e) {
-            // Response body may not be JSON
-        }
-
-        return {
-            status: "license_required",
-            licensing: { licenseUrl, licenseType, ...bodyLicensing }
-        };
-    }
-
-    return { status: `error_${response.status}`, content: null };
-}
-
-// Usage
-const result = await licenseAwareFetch("https://news.example.com/article/12345");
-if (result.status === "license_required") {
-    console.log("License needed:", result.licensing);
-}
-```
 
 
 <figure>
@@ -321,8 +279,6 @@ flowchart TD
 ```
 
 ```python
-import asyncio
-import json
 from datetime import datetime
 
 class CompliantScrapingPipeline:
@@ -331,93 +287,41 @@ class CompliantScrapingPipeline:
         self.results = []
         self.skipped = []
 
-    async def process_urls(self, urls):
-        """
-        Process a list of URLs with full compliance checking.
-        """
-        for url in urls:
-            compliance = self.checker.full_compliance_check(url)
-            recommendation = compliance["recommendation"]
+    def process_url(self, url):
+        """Check compliance before scraping a single URL."""
+        compliance = self.checker.full_compliance_check(url)
+        recommendation = compliance["recommendation"]
 
-            if recommendation.startswith("DO NOT"):
-                self.skipped.append({
-                    "url": url,
-                    "reason": recommendation,
-                    "timestamp": datetime.utcnow().isoformat(),
-                })
-                continue
+        if recommendation.startswith("DO NOT") or recommendation.startswith("CHECK LICENSE"):
+            self.skipped.append({
+                "url": url,
+                "reason": recommendation,
+                "timestamp": datetime.utcnow().isoformat(),
+            })
+            return None
 
-            if recommendation.startswith("CHECK LICENSE"):
-                # Log for manual review
-                self.skipped.append({
-                    "url": url,
-                    "reason": "License check needed",
-                    "tdm_info": compliance["ai_headers"].get("tdm_reservation"),
-                    "timestamp": datetime.utcnow().isoformat(),
-                })
-                continue
-
-            # Proceed with compliant scraping
-            content = await self.fetch_with_provenance(url, compliance)
-            if content:
-                self.results.append(content)
-
-    async def fetch_with_provenance(self, url, compliance):
-        """
-        Fetch content and attach provenance metadata.
-        """
-        import aiohttp
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status == 200:
-                    text = await response.text()
-                    return {
-                        "url": url,
-                        "content": text,
-                        "fetched_at": datetime.utcnow().isoformat(),
-                        "compliance": {
-                            "robots_allowed": True,
-                            "ai_restrictions": compliance["robots_txt"]["ai_restrictions"],
-                            "recommendation": compliance["recommendation"],
-                        },
-                    }
-
-                elif response.status == 402:
-                    self.skipped.append({
-                        "url": url,
-                        "reason": "402 Payment Required",
-                        "timestamp": datetime.utcnow().isoformat(),
-                    })
-
-        return None
-
-    def export_provenance_log(self, filepath):
-        """
-        Export a full log of what was scraped and what was skipped.
-        """
-        log = {
-            "scraped": len(self.results),
-            "skipped": len(self.skipped),
-            "skipped_details": self.skipped,
-            "generated_at": datetime.utcnow().isoformat(),
+        # Proceed with compliant scraping -- attach provenance metadata
+        # to every piece of scraped content for audit trails
+        return {
+            "url": url,
+            "fetched_at": datetime.utcnow().isoformat(),
+            "compliance": {
+                "ai_restrictions": compliance["robots_txt"]["ai_restrictions"],
+                "recommendation": recommendation,
+            },
         }
-        with open(filepath, "w") as f:
-            json.dump(log, f, indent=2)
 
 # Usage
 pipeline = CompliantScrapingPipeline(config={
     "user_agent": "MyResearchBot/1.0 (contact@example.com)"
 })
 
-urls = [
-    "https://news.example.com/article/1",
-    "https://news.example.com/article/2",
-    "https://blog.example.com/post/100",
-]
-
-asyncio.run(pipeline.process_urls(urls))
-pipeline.export_provenance_log("./provenance_log.json")
+for url in ["https://news.example.com/article/1", "https://blog.example.com/post/100"]:
+    result = pipeline.process_url(url)
+    if result:
+        print(f"OK to scrape: {result['url']}")
+    else:
+        print(f"Skipped: {url}")
 ```
 
 ## What This Means for Scraping Professionals

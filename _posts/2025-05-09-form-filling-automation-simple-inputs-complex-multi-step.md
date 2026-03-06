@@ -291,27 +291,9 @@ def handle_advanced_form_inputs():
         ]
         multi_file_input.set_input_files(files)
         
-        # Handle drag-and-drop file upload
-        page.locator('#drop-zone').dispatch_event(
-            'drop',
-            {
-                'dataTransfer': {
-                    'files': [{'name': 'dragged_file.txt', 'type': 'text/plain'}]
-                }
-            }
-        )
-        
-        # Handle rich text editor (TinyMCE example)
-        page.frame('rich-text-editor').fill('body', 'Rich text content with <strong>formatting</strong>')
-        
-        # Handle custom slider components
-        slider = page.locator('.price-slider')
-        slider_box = slider.bounding_box()
-        page.mouse.click(
-            slider_box['x'] + slider_box['width'] * 0.7,  # 70% position
-            slider_box['y'] + slider_box['height'] / 2
-        )
-        
+        # For drag-and-drop uploads, use dispatch_event('drop', ...) with dataTransfer
+        # For rich text editors (TinyMCE, etc.), switch to the iframe and fill the body
+
         # Handle date picker
         page.click('#date-picker-trigger')
         page.wait_for_selector('.date-picker-calendar')
@@ -324,73 +306,7 @@ def handle_advanced_form_inputs():
 
 Robust form automation requires comprehensive error handling and recovery mechanisms. Forms can fail for numerous reasons: network timeouts, validation errors, server issues, or unexpected UI changes.
 
-```python
-import logging
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-class ResilientFormFiller:
-    def __init__(self, driver):
-        self.driver = driver
-        self.logger = logging.getLogger(__name__)
-        self.max_retries = 3
-        
-    def safe_fill_field(self, locator, value, retry_count=0):
-        try:
-            element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(locator)
-            )
-            
-            # Clear field before filling
-            element.clear()
-            element.send_keys(value)
-            
-            # Verify the value was entered correctly
-            if element.get_attribute('value') != value:
-                raise ValueError(f"Field value mismatch: expected {value}")
-                
-            return True
-            
-        except (TimeoutException, NoSuchElementException) as e:
-            self.logger.warning(f"Failed to fill field {locator}: {str(e)}")
-            
-            if retry_count < self.max_retries:
-                self.logger.info(f"Retrying field fill (attempt {retry_count + 1})")
-                time.sleep(2)
-                return self.safe_fill_field(locator, value, retry_count + 1)
-            else:
-                self.logger.error(f"Max retries exceeded for field {locator}")
-                return False
-                
-        except ValueError as e:
-            self.logger.error(f"Value validation failed: {str(e)}")
-            return False
-    
-    def handle_form_validation_errors(self):
-        """Detect and handle form validation errors"""
-        try:
-            error_elements = self.driver.find_elements(By.CLASS_NAME, 'error-message')
-            
-            if error_elements:
-                for error in error_elements:
-                    error_text = error.text
-                    self.logger.warning(f"Form validation error: {error_text}")
-                    
-                    # Handle specific error types
-                    if 'email' in error_text.lower():
-                        self.correct_email_field()
-                    elif 'phone' in error_text.lower():
-                        self.correct_phone_field()
-                    elif 'required' in error_text.lower():
-                        self.fill_required_fields()
-                        
-                return len(error_elements) > 0
-                
-        except Exception as e:
-            self.logger.error(f"Error handling validation errors: {str(e)}")
-            return False
-```
+The core pattern for resilient form filling is: wait for the element with `WebDriverWait`, clear and fill it, verify the value was entered correctly via `get_attribute('value')`, and retry with exponential backoff on `TimeoutException` or `NoSuchElementException`. For validation errors, scan for `.error-message` elements after submission and dispatch corrections based on the error text (email format, phone format, required fields).
 
 ## Performance Optimization and Best Practices
 
@@ -426,48 +342,27 @@ Implementing intelligent waiting strategies reduces unnecessary delays while ens
 
 ```python
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import queue
-import threading
 
 class OptimizedFormProcessor:
     def __init__(self, max_workers=5):
-        self.form_queue = queue.Queue()
         self.max_workers = max_workers
         self.results = []
-        
+
     def batch_process_forms(self, form_data_list):
         """Process multiple forms concurrently"""
-        
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             future_to_form = {
-                executor.submit(self.process_single_form, form_data): form_data 
-                for form_data in form_data_list
+                executor.submit(self.process_single_form, data): data
+                for data in form_data_list
             }
-            
             for future in as_completed(future_to_form):
-                form_data = future_to_form[future]
                 try:
-                    result = future.result()
-                    self.results.append(result)
-                    print(f"Completed form for {form_data.get('email', 'unknown')}")
+                    self.results.append(future.result())
                 except Exception as e:
                     print(f"Form processing failed: {str(e)}")
-    
-    def process_single_form(self, form_data):
-        # Use browser context for isolation
-        with sync_playwright() as p:
-            browser = p.chromium.launch()
-            context = browser.new_context()
-            page = context.new_page()
-            
-            try:
-                # Optimized form filling logic
-                success = self.fill_form_optimized(page, form_data)
-                return {'status': 'success' if success else 'failed', 'data': form_data}
-            finally:
-                context.close()
-                browser.close()
 ```
+
+Each `process_single_form` call launches an isolated Playwright browser context, fills the form, and returns the result. Browser context isolation ensures forms do not share cookies or state.
 
 Form automation represents one of the most practical applications of browser automation in web scraping. The techniques covered here—from basic input handling to complex multi-step workflows—form the foundation for extracting data from interactive web applications and automated testing scenarios.
 
