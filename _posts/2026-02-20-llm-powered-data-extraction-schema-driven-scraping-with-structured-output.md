@@ -5,9 +5,12 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["llm", "data extraction", "json schema", "python", "javascript", "structured output", "ai scraping", "pydantic"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2026-02-20-llm-powered-data-extraction-schema-driven-scraping-with-structured-output-hero.png
+  alt: "LLM-Powered Data Extraction: Schema-Driven Scraping with Structured Output"
 ---
 
-The biggest change in web scraping over the past year has not been a new browser automation framework or a faster HTTP client. It has been schema-driven LLM extraction -- a pattern where you define the exact structure of the data you want and let a language model figure out how to pull it from raw HTML. No more writing CSS selectors that break when a site redesigns. No more maintaining XPath expressions for every edge case. You describe the output, and the LLM delivers it.
+The biggest change in web scraping over the past year has not been a new browser automation framework or a faster HTTP client. It has been schema-driven LLM extraction -- a pattern where you define the exact structure of the data you want and let a language model figure out how to pull it from raw HTML. For a comparison of which models perform best at this, see our [guide to the best LLMs for structured data extraction](/posts/best-llm-structured-data-extraction-html-2026/). No more writing CSS selectors that break when a site redesigns. No more maintaining XPath expressions for every edge case. You describe the output, and the LLM delivers it.
 
 Production systems are running this pattern today. ScrapeGraphAI lets you describe extraction tasks in plain English. LLM Scraper uses Zod schemas to constrain TypeScript extraction. A February 2026 paper from Cairo University demonstrated that even a 0.6 billion parameter model can hit state-of-the-art extraction accuracy when paired with intelligent DOM pruning. The AI-based web scraping market is projected to reach $3.16 billion by 2029, growing at a 39.4% compound annual rate.
 
@@ -18,7 +21,7 @@ This post covers the practical mechanics of schema-driven LLM extraction: how to
 The core idea is simple. Instead of writing imperative code that navigates the DOM and extracts fields one by one, you declare what you want and let the LLM handle the how. The pipeline has four stages.
 
 ```mermaid
-graph LR
+graph TD
     A["Fetch HTML"] --> B["Preprocess and prune DOM"]
     B --> C["Send schema + content to LLM"]
     C --> D["Validate output against schema"]
@@ -34,11 +37,11 @@ graph LR
     style F fill:#99ff99
 ```
 
-First, fetch the raw HTML. This can be a simple HTTP request for static pages or a browser render for JavaScript-heavy sites. Then preprocess by stripping out navigation, ads, scripts, and other noise. This step matters for controlling costs, since every token sent to an LLM costs money. Next, send the cleaned content along with your schema to the LLM. The model returns structured data that conforms to your schema. Finally, validate the output against the schema. If fields are missing or types are wrong, retry with the validation error included in the prompt so the model can self-correct.
+First, fetch the raw HTML. This can be a [simple HTTP request](/posts/python-requests-vs-selenium-speed-performance-comparison/) for static pages or a browser render using [Playwright or Puppeteer](/posts/playwright-vs-puppeteer-speed-stealth-developer-experience/) for JavaScript-heavy sites. Then preprocess by stripping out navigation, ads, scripts, and other noise. This step matters for controlling costs, since every token sent to an LLM costs money. Next, send the cleaned content along with your schema to the LLM. The model returns structured data that conforms to your schema. Finally, validate the output against the schema. If fields are missing or types are wrong, retry with the validation error included in the prompt so the model can self-correct.
 
 ## Defining Schemas in Python with Pydantic
 
-Pydantic is the natural choice for schema definition in Python. Its models serve double duty: they define what you want the LLM to extract, and they validate the output when it comes back.
+[Pydantic and Zod are the natural choices for schema definition](/posts/schema-driven-scraping-llms-pydantic-zod-structured-output/) in their respective ecosystems. Pydantic is the natural choice in Python. Its models serve double duty: they define what you want the LLM to extract, and they validate the output when it comes back.
 
 ```python
 from pydantic import BaseModel, Field
@@ -145,6 +148,7 @@ In the JavaScript ecosystem, Zod schemas serve the same purpose as Pydantic mode
 
 import { z } from 'zod';
 import LLMScraper from 'llm-scraper';
+import { openai } from '@llm-scraper/models';
 import { chromium } from 'playwright';
 
 // Define the extraction schema with Zod
@@ -171,9 +175,10 @@ async function extractProducts(url) {
     await page.goto(url);
 
     // Initialize LLM Scraper with your preferred model
-    const scraper = new LLMScraper(page);
+    const llm = openai.chat('gpt-4o');
+    const scraper = new LLMScraper(llm);
 
-    const result = await scraper.extract(ProductSchema, {
+    const { data: result } = await scraper.run(page, ProductSchema, {
         prompt: 'Extract all product listings from this page.',
     });
 
@@ -189,13 +194,19 @@ async function extractProducts(url) {
 extractProducts('https://example.com/products');
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-llm-powered-data-extraction-schema-drive-1.jpg" alt="LLMs can extract structured data from unstructured HTML with surprising accuracy." loading="lazy">
+  <figcaption>LLMs can extract structured data from unstructured HTML with surprising accuracy. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## DOM Pruning: Keeping LLM Extraction Affordable
 
 LLM-powered scraping is expensive at scale. A single product page might contain 100,000 tokens of HTML. At typical API pricing, extracting data from a million pages could cost thousands of dollars. DOM pruning changes that equation.
 
 The AXE paper from Cairo University, published in February 2026, showed a striking result. By intelligently pruning the DOM before sending it to an LLM, researchers reduced input tokens by 97.9% while maintaining state-of-the-art extraction accuracy with an F1 score of 88.1%. This worked even with a model of only 0.6 billion parameters.
 
-Most of a web page's HTML is irrelevant to extraction. Navigation menus, footer links, script tags, style blocks, advertisements, and tracking pixels all consume tokens without contributing useful data. Removing them before the LLM sees the page cuts cost dramatically.
+Most of a web page's HTML is irrelevant to extraction. Navigation menus, footer links, script tags, style blocks, advertisements, tracking pixels, and [shadow DOM elements](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/) all consume tokens without contributing useful data. Removing them before the LLM sees the page cuts cost dramatically.
 
 ```mermaid
 graph TD
@@ -446,15 +457,21 @@ graph TD
 
 Direct API calls give you the most flexibility. You control the prompt, the model, the preprocessing, and the retry logic. This is the best option for production systems where you need to optimize cost and handle edge cases specific to your target sites.
 
-Libraries like LLM Scraper and ScrapeGraphAI handle the boilerplate. LLM Scraper integrates Zod schemas with Playwright for end-to-end extraction in TypeScript. ScrapeGraphAI goes further, letting you describe extraction tasks in plain English without writing schemas at all. These work well for prototyping and for extraction tasks that do not require fine-grained control.
+Libraries like LLM Scraper and ScrapeGraphAI handle the boilerplate. LLM Scraper integrates Zod schemas with [Playwright for AI-agent-driven extraction](/posts/playwright-for-browser-automation-in-ai-agents/) in TypeScript. ScrapeGraphAI goes further, letting you describe extraction tasks in plain English without writing schemas at all. These work well for prototyping and for extraction tasks that do not require fine-grained control.
 
-Managed services like Firecrawl turn websites into LLM-ready markdown and integrate with frameworks like LangChain and LlamaIndex. Bright Data has emerged as a market leader in this space, using Gemini to deliver up to 25 metadata fields per page. These services eliminate infrastructure concerns but cost more per extraction.
+Managed services like Firecrawl turn websites into LLM-ready markdown and integrate with [browser agent frameworks](/posts/browser-agent-frameworks-compared-browser-use-vs-stagehand-vs-skyvern/) like LangChain and LlamaIndex. Bright Data has emerged as a market leader in this space, using Gemini to deliver up to 25 metadata fields per page. [Crawl4AI](/posts/crawl4ai-v08-crash-recovery-prefetch-mode-and-whats-new/) offers an open-source alternative with crash recovery and prefetch modes. These services eliminate infrastructure concerns but cost more per extraction.
+
+
+<figure>
+  <img src="/assets/img/inline-llm-powered-data-extraction-schema-drive-2.jpg" alt="Natural language understanding gives scrapers a new kind of intelligence." loading="lazy">
+  <figcaption>Natural language understanding gives scrapers a new kind of intelligence. <span class="img-credit">Photo by Pixabay / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Cost Optimization Strategies
 
 Cost is the factor that determines whether LLM extraction makes it to production. Four strategies matter most.
 
-Prune the DOM first, always. As shown above, pruning can reduce tokens by 95% or more. This is the single highest-impact optimization. Playwright's CLI achieves roughly a 4x reduction by converting pages to clean markdown before extraction, taking a page from around 114,000 tokens down to around 27,000.
+Prune the DOM first, always. As shown above, pruning can reduce tokens by 95% or more. This is the single highest-impact optimization. [Playwright's MCP and CLI](/posts/playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly/) achieves roughly a 4x reduction by converting pages to clean markdown before extraction, taking a page from around 114,000 tokens down to around 27,000.
 
 Use the smallest model that works. The AXE paper proved that a 0.6B parameter model can match the accuracy of much larger models when the input is properly pruned. For straightforward extraction tasks like pulling product names and prices, you do not need GPT-4o. A smaller, cheaper model with good preprocessing often suffices.
 
@@ -527,7 +544,7 @@ for page_html in all_pages:
 
 ## When to Use LLM Extraction vs Traditional Scraping
 
-LLM extraction is powerful, but it is not always the right tool. Traditional CSS selector and XPath-based scraping remains faster, cheaper, and more predictable for well-structured sites that rarely change. LLM extraction works best in specific scenarios:
+LLM extraction is powerful, but it is not always the right tool. Traditional CSS selector, XPath, and even [regex-based scraping](/posts/regex-for-web-scraping-extracting-data-without-parser/) remains faster, cheaper, and more predictable for well-structured sites that rarely change. LLM extraction works best in specific scenarios:
 
 - Unstructured or inconsistent layouts where the same data appears in different HTML structures across pages
 - Rapid prototyping where you need data from a new site within minutes, not hours
@@ -541,6 +558,6 @@ For high-volume, recurring extraction from stable sites, the hybrid approach -- 
 
 The schema-driven extraction pattern is maturing fast. Costs are dropping as models get cheaper and DOM pruning techniques improve. Accuracy is already production-grade for most use cases. And the developer experience of defining what you want rather than how to get it is a real improvement in making web data accessible.
 
-The remaining challenges are real but solvable. Cost at scale still requires careful optimization. Hallucination -- where models confidently return data that does not exist on the page -- demands robust validation. And the fastest-changing sites may need a combination of LLM extraction and traditional techniques to handle reliably.
+The remaining challenges are real but solvable. Cost at scale still requires careful optimization. [Hallucination](/posts/the-unsolved-problems-of-ai-web-scraping-in-2026/) -- where models confidently return data that does not exist on the page -- demands robust validation. And the fastest-changing sites may need a combination of LLM extraction and traditional techniques to handle reliably.
 
 For most new scraping projects, schema-driven LLM extraction is becoming the default starting point, and the tools supporting it are improving every month.

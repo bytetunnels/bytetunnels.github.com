@@ -5,6 +5,9 @@ categories: ["Browser Automation"]
 tags: ["javascript", "dynamic content", "spa", "ajax", "playwright", "selenium", "puppeteer", "web scraping", "dom manipulation"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-30-taming-dynamic-websites-browser-automation-javascript-hero.png
+  alt: "Taming Dynamic Websites: How Browser Automation Handles JavaScript"
 ---
 
 The web has evolved dramatically from static HTML pages to dynamic, interactive applications powered by JavaScript. Today's websites load content asynchronously, manipulate the DOM after initial page load, and create complex user experiences that traditional HTTP-based scraping simply cannot handle. This is where browser automation becomes not just useful, but essential.
@@ -33,7 +36,7 @@ Consider this common scenario: you visit an e-commerce product listing page, and
 
 ## The Limitations of Traditional Scraping
 
-Traditional web scraping using libraries like `requests` in Python or `fetch` in JavaScript can only retrieve the initial HTML response from the server. Here's what happens when you try to scrape a JavaScript-heavy site:
+Traditional web scraping using libraries like `requests` in Python or `fetch` in JavaScript can only retrieve the initial HTML response from the server. As our [comparison of Python requests vs Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) shows, the speed advantage of raw HTTP requests disappears when JavaScript rendering is required. Here's what happens when you try to scrape a JavaScript-heavy site:
 
 ```python
 import requests
@@ -210,6 +213,12 @@ def intercept_ajax_requests():
         browser.close()
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-taming-dynamic-websites-browser-automati-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
+  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Handling Complex JavaScript Frameworks
 
 Different JavaScript frameworks present unique challenges and opportunities for scraping.
@@ -246,15 +255,17 @@ def navigate_spa_routes():
 React applications often require specific interaction patterns:
 
 ```javascript
-// Execute JavaScript in the browser context
-await page.evaluate(() => {
-    // Trigger React component methods
-    const component = document.querySelector('[data-react-component="ProductList"]');
-    if (component && component._reactInternalInstance) {
-        // Interact with React component directly
-        component._reactInternalInstance.loadMoreProducts();
-    }
-});
+// Instead of accessing React internals directly, interact via the DOM
+// Click the "Load More" button that React renders
+await page.click('[data-react-component="ProductList"] button.load-more');
+
+// Or intercept the underlying API call
+const responsePromise = page.waitForResponse(
+    response => response.url().includes('/api/products') && response.status() === 200
+);
+await page.click('[data-react-component="ProductList"] button.load-more');
+const response = await responsePromise;
+const data = await response.json();
 ```
 
 ## Performance Optimization for JavaScript-Heavy Sites
@@ -262,7 +273,7 @@ await page.evaluate(() => {
 Browser automation can be resource-intensive. Here are strategies to optimize performance:
 
 ```mermaid
-graph LR
+graph TD
     A[Optimize Performance] --> B[Disable Images]
     A --> C[Block Unnecessary Resources]
     A --> D[Use Headless Mode]

@@ -5,9 +5,12 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web scraping ethics", "robots.txt", "rate limiting", "scraping etiquette", "best practices", "responsible scraping", "terms of service", "legal compliance"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-20-responsible-scraper-etiquette-best-practices-hero.png
+  alt: "The Responsible Scraper: Etiquette and Best Practices"
 ---
 
-Web scraping is a powerful tool that can unlock valuable insights from the vast ocean of online data. However, with great power comes great responsibility. The line between legitimate data gathering and harmful automated behavior isn't always clear, but understanding and following proper etiquette can make the difference between being a welcomed visitor and an unwanted pest on the web.
+Web scraping is a powerful tool that can unlock valuable insights from the vast ocean of online data. However, with great power comes great responsibility. The line between legitimate data gathering and harmful automated behavior isn't always clear — and many [common myths about web scraping](/posts/web-scraping-myths-separating-fact-fiction/) only add to the confusion — but understanding and following proper etiquette can make the difference between being a welcomed visitor and an unwanted pest on the web.
 
 Think of web scraping like visiting someone's house. You wouldn't burst through the front door, rummage through every room at lightning speed, and leave without a word. Similarly, when your scraper visits a website, it should behave respectfully, follow the house rules, and avoid overwhelming the host.
 
@@ -15,7 +18,7 @@ Think of web scraping like visiting someone's house. You wouldn't burst through 
 
 Every website operates under an implicit social contract with its visitors. When you browse a site manually, you naturally pace your interactions – reading content, pausing between pages, and generally behaving like a human. Automated scrapers, by their very nature, can violate this contract by requesting dozens of pages per second, consuming excessive bandwidth, and potentially disrupting service for other users.
 
-The foundation of responsible scraping lies in recognizing that websites are businesses with real costs. Every request hits their servers, consumes bandwidth, and requires computational resources. A poorly designed scraper can inadvertently launch what amounts to a distributed denial-of-service attack, bringing down websites and costing businesses money.
+The foundation of responsible scraping lies in recognizing that websites are businesses with real costs. Every request hits their servers, consumes bandwidth, and requires computational resources. A poorly designed scraper can inadvertently launch what amounts to a distributed denial-of-service attack, bringing down websites and costing businesses money. This is one reason why [asking essential questions before you scrape](/posts/before-you-scrape-essential-questions/) is so important.
 
 ```mermaid
 graph TD
@@ -64,11 +67,11 @@ else:
     print("Scraping restricted by robots.txt")
 ```
 
-While `robots.txt` isn't legally binding, respecting it demonstrates good faith and helps maintain positive relationships with website owners. Some sites use robots.txt to direct scrapers to API endpoints or provide specific guidelines for automated access.
+While `robots.txt` [isn't legally binding](/posts/is-robots-txt-legally-binding-scraping-law-explained/), respecting it demonstrates good faith and helps maintain positive relationships with website owners. Some sites use robots.txt to direct scrapers to API endpoints or provide specific guidelines for automated access. It is also worth keeping an eye on the emerging [IETF AIPref standard](/posts/ietf-aipref-the-new-robots-txt-for-the-ai-era/), which extends the robots.txt concept for AI crawlers.
 
 ## Rate Limiting: The Art of Patience
 
-One of the most crucial aspects of responsible scraping is implementing proper rate limiting. This means controlling the frequency and volume of your requests to avoid overwhelming target servers. A good rule of thumb is to make your scraper behavior indistinguishable from that of a careful human user.
+One of the most crucial aspects of responsible scraping is implementing proper [rate limiting and user-agent rotation](/posts/how-to-configure-rate-limiting-user-agent-rotation-responsibly/). This means controlling the frequency and volume of your requests to avoid overwhelming target servers. A good rule of thumb is to make your scraper behavior indistinguishable from that of a careful human user.
 
 ```python
 import time
@@ -136,7 +139,7 @@ headers = {
 Including contact information in your User-Agent allows website administrators to reach out if there are issues, rather than immediately blocking your IP address.
 
 ```mermaid
-graph LR
+graph TD
     A[Request] --> B[Server]
     B --> C{Check User-Agent}
     C -->|Identified Bot| D[Apply Bot Rules]
@@ -174,6 +177,12 @@ def handle_response(response: requests.Response) -> bool:
         print(f"Unexpected status code: {response.status_code}")
         return False
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-responsible-scraper-etiquette-best-pract-1.jpg" alt="Responsible scraping starts with respecting the ecosystem you depend on." loading="lazy">
+  <figcaption>Responsible scraping starts with respecting the ecosystem you depend on. <span class="img-credit">Photo by Thirdman / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Data Usage and Storage Ethics
 
@@ -238,7 +247,7 @@ flowchart TD
 
 ## Legal and Terms of Service Considerations
 
-While technical etiquette is important, legal compliance is essential. Always review the terms of service of websites you plan to scrape. Some sites explicitly prohibit automated access, while others provide guidelines for acceptable use.
+While technical etiquette is important, legal compliance is essential. Many [legal myths around web scraping](/posts/legal-myths-web-scraping-what-courts-actually-say/) persist, so always review the terms of service of websites you plan to scrape. Some sites explicitly prohibit automated access, while others provide guidelines for acceptable use.
 
 Key legal considerations include:
 

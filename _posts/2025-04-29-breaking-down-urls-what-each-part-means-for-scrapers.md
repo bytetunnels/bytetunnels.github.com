@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["urls", "web scraping", "anatomy", "fundamentals", "parameters", "endpoints", "routing"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-29-breaking-down-urls-what-each-part-means-for-scrapers-hero.png
+  alt: "Breaking Down URLs: What Each Part Means for Scrapers"
 ---
 
 Every web scraping journey begins with a URL. These seemingly simple strings of text are actually complex blueprints that tell your scraper exactly where to go and how to get there. Understanding URL anatomy isn't just academic knowledge—it's the foundation that separates successful scrapers from those who struggle with broken endpoints and missed data.
@@ -53,7 +56,7 @@ response = requests.get('https://example.com/data', verify=True)
 response = requests.get('https://example.com/data', verify=False)
 ```
 
-Some sites serve different content based on protocol. I've encountered APIs that return different data structures when accessed via HTTP versus HTTPS, particularly in development environments where security configurations differ.
+Some sites serve different content based on protocol. I've encountered APIs that return different data structures when accessed via HTTP versus HTTPS, particularly in development environments where security configurations differ. The tool you use to make these requests matters too — our [Python Requests vs. Selenium comparison](/posts/python-requests-vs-selenium-speed-performance-comparison/) explains when a simple HTTP client is enough and when you need a full browser.
 
 ## Domain Decomposition: Reading the Address
 
@@ -207,6 +210,12 @@ for url in list(explorer.explore_pagination(3)):
     # Make request and analyze response
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-breaking-down-urls-what-each-part-means--1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Fragment Identifiers: The Hidden Navigation
 
 Fragments (the `#section` part) don't get sent to servers in HTTP requests, but they're crucial for single-page applications and JavaScript-heavy sites. Modern scrapers need to handle these properly.
@@ -284,6 +293,9 @@ for term in search_terms:
 Many modern applications generate URLs dynamically. Recognizing these patterns helps you predict URL structures and build comprehensive scrapers.
 
 ```ruby
+require 'uri'
+require 'cgi'
+
 class URLPatternAnalyzer
   def initialize
     @patterns = []
@@ -392,6 +404,6 @@ signed_url = builder.build_signed_url(
 
 Understanding URLs transforms you from someone who copies and pastes endpoints into someone who can predict, construct, and navigate entire API ecosystems. Every URL tells a story about the system behind it, the data it protects, and the patterns you can exploit for comprehensive extraction.
 
-The next time you encounter a new scraping target, spend time dissecting its URLs. Look for patterns, test parameter combinations, and map the routing structure. This upfront analysis will save you countless hours of trial and error later.
+The next time you encounter a new scraping target, spend time dissecting its URLs. Look for patterns, test parameter combinations, and map the routing structure. This upfront analysis will save you countless hours of trial and error later. And before you start crawling, it is worth checking whether the site's [robots.txt carries any legal weight](/posts/is-robots-txt-legally-binding-scraping-law-explained/) for your use case.
 
 What's the most complex URL structure you've encountered in your scraping projects, and how did you reverse-engineer its pattern to scale your extraction?

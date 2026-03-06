@@ -5,9 +5,12 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web scraping", "history", "evolution", "automation", "data extraction", "technology", "browser automation"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-27-evolution-of-web-scraping-from-then-to-now-hero.png
+  alt: "The Evolution of Web Scraping: From Then to Now"
 ---
 
-Web scraping has transformed from a niche technical skill to an essential data extraction methodology that powers countless businesses and research initiatives worldwide. Understanding this evolution helps us appreciate not only how far we've come but also where we're headed in the world of automated data collection.
+[Web scraping](/posts/web-scraping-explained-what-why-how/) has transformed from a niche technical skill to an essential data extraction methodology that powers countless businesses and research initiatives worldwide. Understanding this evolution helps us appreciate not only how far we've come but also where we're headed in the world of automated data collection.
 
 ## The Early Days: Manual Data Collection and Basic Scripts
 
@@ -61,7 +64,7 @@ def modern_basic_scraper(url):
     return data
 ```
 
-This era introduced concepts like CSS selectors and XPath expressions, making it easier to target specific elements on web pages. Scrapers became more reliable and maintainable, though they still faced limitations with dynamic content.
+This era introduced concepts like CSS selectors and XPath expressions, making it easier to target specific elements on web pages. Scrapers became more reliable and maintainable, though they still faced limitations with dynamic content. The [tool landscape](/posts/scraping-tools-compared-finding-your-starting-point/) was rapidly expanding.
 
 ```mermaid
 timeline
@@ -120,7 +123,7 @@ While Selenium solved the JavaScript problem, it introduced new challenges: slow
 
 ## The Modern Era: Advanced Browser Automation
 
-Today's web scraping landscape is dominated by sophisticated browser automation tools that offer better performance, more features, and enhanced stealth capabilities. Tools like Playwright, Puppeteer, and newer entrants like Nodriver have revolutionized the field:
+Today's web scraping landscape is dominated by sophisticated [browser automation tools](/posts/browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver/) that offer better performance, more features, and enhanced stealth capabilities. Tools like Playwright, Puppeteer, and newer entrants like Nodriver have revolutionized the field:
 
 ```javascript
 const playwright = require('playwright');
@@ -131,14 +134,14 @@ async function modernScraper(url) {
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     
-    const page = await browser.newPage();
-    
-    // Advanced stealth configurations
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-    await page.setExtraHTTPHeaders({
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br'
+    const context = await browser.newContext({
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        extraHTTPHeaders: {
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br'
+        }
     });
+    const page = await context.newPage();
     
     await page.goto(url, { waitUntil: 'networkidle' });
     
@@ -166,9 +169,15 @@ These modern tools provide:
 - Screenshot and PDF generation
 - Precise element interaction
 
+
+<figure>
+  <img src="/assets/img/inline-evolution-of-web-scraping-from-then-to-n-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## The Cat-and-Mouse Game: Anti-Bot Measures
 
-As web scraping became more prevalent, websites began implementing increasingly sophisticated anti-bot measures. This sparked an ongoing arms race between scrapers and website protection systems:
+As web scraping became more prevalent, websites began implementing increasingly sophisticated anti-bot measures. This sparked an ongoing arms race between scrapers and website protection systems, with the [evolution of detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) accelerating rapidly:
 
 ```mermaid
 graph TD
@@ -301,6 +310,6 @@ graph TD
 
 **Privacy-Preserving Techniques**: New methods are emerging that allow data collection while respecting user privacy and website terms of service.
 
-The journey from simple regex-based text extraction to today's sophisticated browser automation represents just the beginning of web scraping's evolution. As websites become more complex and protective measures more advanced, the tools and techniques for data extraction continue to evolve rapidly.
+The journey from simple regex-based text extraction to today's sophisticated browser automation represents just the beginning of web scraping's evolution. As websites become more complex and protective measures more advanced, the tools and techniques for data extraction continue to evolve rapidly, with [stealth browsers and anti-detection tools](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) leading the charge.
 
 What aspects of web scraping evolution surprise you the most, and which modern challenges do you find most interesting to tackle in your own data extraction projects?

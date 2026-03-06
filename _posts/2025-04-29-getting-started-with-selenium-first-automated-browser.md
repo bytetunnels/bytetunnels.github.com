@@ -5,6 +5,9 @@ categories: ["Browser Automation"]
 tags: ["selenium", "webdriver", "python", "browser automation", "web scraping", "chromedriver", "firefox", "beginners guide"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-29-getting-started-with-selenium-first-automated-browser-hero.png
+  alt: "Getting Started with Selenium: Your First Automated Browser Session"
 ---
 
 Browser automation fundamentally changes how we approach web scraping. While basic HTTP requests work perfectly for static content, today's web is dominated by JavaScript-heavy applications that render content dynamically. Selenium WebDriver stands as the pioneer in this space, offering a robust framework that has been battle-tested across millions of automation projects worldwide.
@@ -104,11 +107,11 @@ driver.find_element(By.LINK_TEXT, "Click here")
 driver.find_element(By.PARTIAL_LINK_TEXT, "Click")
 ```
 
-CSS selectors and XPath expressions provide the most flexibility. CSS selectors are generally faster and more readable, while XPath offers advanced features like text content matching and complex traversal patterns.
+[CSS selectors](/posts/css-selectors-made-simple/) and [XPath expressions](/posts/xpath-basics-navigating-web-pages-like-map/) provide the most flexibility. CSS selectors are generally faster and more readable, while XPath offers advanced features like text content matching and complex traversal patterns.
 
 ## Handling Dynamic Content
 
-Modern websites often load content asynchronously. Simple `time.sleep()` calls are unreliable and inefficient. Selenium's WebDriverWait provides intelligent waiting mechanisms:
+Modern websites often load content asynchronously. Simple `time.sleep()` calls are unreliable and inefficient. Selenium's WebDriverWait provides [intelligent waiting mechanisms](/posts/timing-is-everything-mastering-waits-in-browser-automation/):
 
 ```python
 from selenium.webdriver.support.ui import WebDriverWait
@@ -182,9 +185,15 @@ def simulate_user_interactions():
         driver.quit()
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-getting-started-with-selenium-first-auto-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
+  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Browser Configuration and Options
 
-Different browsers offer various configuration options. Chrome provides extensive customization capabilities:
+Different browsers offer various configuration options, including [headless vs headed modes](/posts/headless-vs-headed-browser-automation/). Chrome provides extensive customization capabilities:
 
 ```python
 def configure_chrome_driver():
@@ -306,7 +315,7 @@ def get_edge_driver():
 
 ## Performance Considerations
 
-Browser automation is resource-intensive compared to simple HTTP requests. Here's how to optimize performance:
+Browser automation is resource-intensive [compared to simple HTTP requests](/posts/python-requests-vs-selenium-speed-performance-comparison/). Here's how to optimize performance:
 
 ```mermaid
 graph TD
@@ -368,6 +377,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 class ProductScraper:
@@ -433,6 +443,6 @@ scraper.cleanup()
 
 Selenium WebDriver opens the door to scraping the modern web's most complex applications. While it requires more resources than simple HTTP requests, the ability to execute JavaScript, handle dynamic content, and simulate real user interactions makes it indispensable for serious web scraping projects.
 
-The key to mastering Selenium lies in understanding when to use it—not every scraping task requires a full browser. But when dealing with SPAs, authentication flows, or JavaScript-heavy sites, Selenium becomes your most powerful ally.
+The key to mastering Selenium lies in understanding when to use it—not every scraping task requires a full browser. You may also want to [make Selenium less detectable](/posts/selenium-stealth-making-selenium-less-detectable/) for tougher targets. But when dealing with SPAs, authentication flows, or JavaScript-heavy sites, Selenium becomes your most powerful ally. To see how it stacks up against newer alternatives, check out our [browser automation comparison](/posts/browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver/).
 
 What type of dynamic website are you planning to tackle with Selenium? Share your challenging scraping scenarios in the comments, and let's explore how browser automation can solve your specific data extraction puzzles.

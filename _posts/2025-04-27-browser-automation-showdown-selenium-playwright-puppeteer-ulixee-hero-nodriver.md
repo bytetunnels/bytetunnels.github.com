@@ -5,13 +5,16 @@ categories: ["Browser Automation"]
 tags: ["selenium", "playwright", "puppeteer", "ulixee hero", "nodriver", "browser automation", "web scraping", "comparison"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-27-browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver-hero.png
+  alt: "Browser Automation Showdown: Selenium vs Playwright vs Puppeteer vs Ulixee Hero vs Nodriver"
 ---
 
 The world of browser automation has exploded with options, each promising to be the ultimate solution for controlling browsers programmatically. But which tool should you choose for your next web scraping project? Let's dive deep into five major players that are reshaping how we approach browser automation.
 
 ## The Evolution of Browser Control
 
-Browser automation started with Selenium's pioneering WebDriver protocol, but the landscape has dramatically evolved. Modern tools now focus on stealth, performance, and developer experience in ways that weren't possible just a few years ago.
+Browser automation started with Selenium's pioneering WebDriver protocol, but the landscape has dramatically evolved. Modern tools now focus on stealth, performance, and developer experience in ways that weren't possible just a few years ago. For an even wider comparison that includes Scrapy, see our [Playwright vs Puppeteer vs Selenium vs Scrapy mega comparison](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/).
 
 ```mermaid
 graph TD
@@ -175,6 +178,10 @@ puppeteer.use(StealthPlugin());
 - **Node.js Focused**: Less convenient for Python developers
 - **Detection Issues**: Standard Puppeteer is easily detected
 
+If Puppeteer's limitations concern you, our guide to the [top Puppeteer alternatives](/posts/top-puppeteer-alternatives-what-to-use-instead/) covers what else is available.
+
+For a focused head-to-head, the [Selenium vs Puppeteer definitive comparison](/posts/selenium-vs-puppeteer-definitive-comparison-web-scraping/) breaks down exactly where each tool wins.
+
 ## Ulixee Hero: The Stealth Specialist
 
 Hero takes a radically different approach, focusing on creating truly undetectable browser automation by emulating human behavior patterns.
@@ -237,6 +244,12 @@ const Hero = require('@ulixee/hero');
 - **Learning Curve**: Unique API different from other tools
 - **Performance**: Human emulation adds overhead
 - **Newer Tool**: Smaller community and ecosystem
+
+
+<figure>
+  <img src="/assets/img/inline-browser-automation-showdown-selenium-pla-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
+  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Nodriver: The Undetectable Python Solution
 

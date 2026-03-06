@@ -5,9 +5,12 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web data", "data types", "structured data", "unstructured data", "json", "html", "apis", "field guide"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-12-types-of-web-data-field-guide-hero.png
+  alt: "Types of Web Data You'll Encounter: A Field Guide"
 ---
 
-Every seasoned web scraper knows that not all data is created equal. From pristine JSON APIs to chaotic HTML soup, the web serves up an incredible variety of data formats, each with its own quirks, challenges, and extraction strategies. Understanding these different data types isn't just academic—it's the difference between writing elegant, maintainable scrapers and wrestling with brittle code that breaks at the first sign of change.
+Every seasoned web scraper knows that not all data is created equal. If you're still getting oriented, start with [web scraping explained: what, why, and how](/posts/web-scraping-explained-what-why-how/). From pristine JSON APIs to chaotic HTML soup, the web serves up an incredible variety of data formats, each with its own quirks, challenges, and extraction strategies. Understanding these different data types isn't just academic—it's the difference between writing elegant, maintainable scrapers and wrestling with brittle code that breaks at the first sign of change.
 
 Let's dive into the wild world of web data and explore what you're likely to encounter in your scraping adventures.
 
@@ -72,7 +75,7 @@ print(df.head())
 print(f"Total records: {len(df)}")
 ```
 
-The challenge with CSV data often lies in inconsistent formatting, missing headers, or special characters that break parsing. Always validate your assumptions about delimiter types and encoding.
+The challenge with CSV data often lies in inconsistent formatting, missing headers, or special characters that break parsing. Understanding [character encodings and handling text](/posts/character-encodings-handling-text/) can save you hours of debugging. Always validate your assumptions about delimiter types and encoding.
 
 <div class="mermaid">
 graph TD
@@ -180,7 +183,7 @@ Unstructured data is where scraping gets interesting—and challenging. This is 
 
 ### Traditional HTML Scraping
 
-Most web scraping involves parsing HTML to extract meaningful data. This requires understanding DOM structure, CSS selectors, and XPath expressions.
+Most web scraping involves parsing HTML to extract meaningful data. This requires understanding DOM structure, CSS selectors, and XPath expressions. Our guide on [HTML basics for scrapers: finding your way around tags](/posts/html-basics-for-scrapers-finding-way-around-tags/) covers the essentials.
 
 ```python
 from bs4 import BeautifulSoup
@@ -324,6 +327,12 @@ graph TD
     E --> E3[Real-time Processing]
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-types-of-web-data-field-guide-1.jpg" alt="Raw data becomes valuable only when it's structured and clean." loading="lazy">
+  <figcaption>Raw data becomes valuable only when it's structured and clean. <span class="img-credit">Photo by RDNE Stock project / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Binary Data and Media Files
 
 Not all web data is text-based. You'll often need to handle images, PDFs, videos, and other binary formats.
@@ -387,7 +396,7 @@ def extract_pdf_text(pdf_url):
 
 ## Database-Like Structures in Web Applications
 
-Some web applications expose database-like interfaces through their APIs or embed database queries in their responses.
+Some web applications expose database-like interfaces through their APIs or embed database queries in their responses. For an overview of where this data lives, see [types of web databases: surface web, deep web, and APIs](/posts/types-of-web-databases-surface-web-deep-web-apis/).
 
 ### GraphQL Endpoints
 
@@ -463,6 +472,6 @@ def validate_extracted_email(email):
     return re.match(pattern, email) is not None
 ```
 
-Understanding the landscape of web data types transforms you from someone who writes scrapers to someone who architects data extraction solutions. Each data type requires different tools, techniques, and strategies. The key is recognizing patterns, building flexible extraction logic, and always having fallback plans for when websites inevitably change.
+Once you've collected raw data, the next step is [web parsing: turning raw HTML into usable data](/posts/what-is-web-parsing-turning-raw-html-into-usable-data/). Understanding the landscape of web data types transforms you from someone who writes scrapers to someone who architects data extraction solutions. Each data type requires different tools, techniques, and strategies. The key is recognizing patterns, building flexible extraction logic, and always having fallback plans for when websites inevitably change.
 
 What's the most unusual or challenging data format you've encountered while scraping? Share your war stories and the creative solutions you developed to tackle them—every scraper has that one website that pushed their skills to the limit!

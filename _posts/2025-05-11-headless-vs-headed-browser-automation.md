@@ -5,11 +5,14 @@ categories: ["Browser Automation"]
 tags: ["headless", "browser", "selenium", "playwright", "puppeteer", "performance", "debugging", "stealth"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-11-headless-vs-headed-browser-automation-hero.png
+  alt: "Headless vs Headed: When to Show the Browser and When to Hide It"
 ---
 
 When diving into browser automation, one of the first decisions you'll face is whether to run your browser in headless or headed mode. This choice might seem simple on the surface, but it carries significant implications for performance, debugging capabilities, detection avoidance, and overall scraping success.
 
-Headless browsers run without a visible user interface, operating entirely in the background. Headed browsers, on the other hand, display the familiar browser window where you can watch every action unfold in real-time. Each approach has distinct advantages and trade-offs that can make or break your scraping project.
+Headless browsers run without a visible user interface, operating entirely in the background. Headed browsers, on the other hand, display the familiar browser window where you can watch every action unfold in real-time. Each approach has distinct advantages and trade-offs that can make or break your scraping project. For a broader comparison of the tools themselves, see our [browser automation showdown: Selenium, Playwright, Puppeteer, Ulixee Hero, and nodriver](/posts/browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver/).
 
 ## Understanding the Fundamental Difference
 
@@ -28,7 +31,7 @@ chrome_options.add_argument("--headless")
 driver_headless = webdriver.Chrome(options=chrome_options)
 ```
 
-However, some websites implement detection mechanisms that specifically target headless browsers. They might check for the absence of certain window properties, missing GPU rendering capabilities, or behavioral patterns that suggest automated operation.
+However, some websites implement detection mechanisms that specifically target headless browsers. They might check for the absence of certain window properties, missing GPU rendering capabilities, or behavioral patterns that suggest automated operation. For a step-by-step walkthrough, see [setting up headless ChromeDriver and eliminating the browser window](/posts/setting-up-headless-chromedriver-eliminating-browser-window/).
 
 ## Performance Impact Analysis
 
@@ -56,7 +59,7 @@ In headless mode, you can expect:
 - Ability to run more concurrent instances
 - Better suited for server environments
 
-Playwright demonstrates this performance difference clearly:
+[Playwright and Puppeteer offer modern browser control](/posts/playwright-puppeteer-extra-modern-browser-control/) with built-in headless support. Playwright demonstrates this performance difference clearly:
 
 ```javascript
 const { chromium } = require('playwright');
@@ -107,7 +110,7 @@ def debug_with_headed_browser():
         browser.close()
 ```
 
-The visual debugging capability becomes particularly crucial when:
+If you're new to the space, [getting started with Selenium and your first automated browser](/posts/getting-started-with-selenium-first-automated-browser/) shows how to set up both modes. The visual debugging capability becomes particularly crucial when:
 - Elements don't behave as expected
 - Timing issues cause intermittent failures
 - Page layouts change dynamically
@@ -144,7 +147,7 @@ console.log(navigator.webdriver); // Often true in automation
 console.log(window.chrome);       // Might be undefined in headless
 ```
 
-To combat headless detection, you can implement stealth measures:
+To combat headless detection, you can implement stealth measures. Our guides on [stealth scraping techniques for flying under the radar](/posts/stealth-scraping-techniques-flying-under-radar/) and [Selenium stealth for making Selenium less detectable](/posts/selenium-stealth-making-selenium-less-detectable/) cover these approaches in depth:
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -176,6 +179,12 @@ def stealth_headless_setup():
         
         return browser, page
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-headless-vs-headed-browser-automation-1.jpg" alt="Headless browsers do everything a visible browser does — just without the window." loading="lazy">
+  <figcaption>Headless browsers do everything a visible browser does — just without the window. <span class="img-credit">Photo by Ron Lach / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Resource Management and Scalability
 

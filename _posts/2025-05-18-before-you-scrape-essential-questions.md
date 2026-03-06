@@ -5,11 +5,14 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web scraping", "planning", "ethics", "legal", "strategy", "fundamentals", "best practices"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-18-before-you-scrape-essential-questions-hero.png
+  alt: "Before You Scrape: Essential Questions to Ask"
 ---
 
 When I first started web scraping, I made the rookie mistake of diving straight into code without asking the right questions. I'd fire up requests or selenium and start pulling data, only to hit roadblocks that could have been avoided with proper planning. Over the years, I've learned that the most successful scraping projects begin not with writing code, but with asking the right questions.
 
-Think of web scraping like planning a heist in a movie – except completely legal and ethical. You wouldn't just walk into a bank without understanding the layout, security measures, and escape routes. Similarly, successful web scraping requires reconnaissance, strategy, and careful planning.
+If you need a refresher on [what web scraping is and how it works](/posts/web-scraping-explained-what-why-how/), start there. Think of web scraping like planning a heist in a movie – except completely legal and ethical. You wouldn't just walk into a bank without understanding the layout, security measures, and escape routes. Similarly, successful web scraping requires reconnaissance, strategy, and careful planning.
 
 ## The Strategic Foundation
 
@@ -102,7 +105,7 @@ def check_robots_txt(base_url, user_agent='*'):
 
 ### What's the Ethical Approach?
 
-Beyond legal compliance, consider the ethical implications:
+Beyond legal compliance, consider the [ethical implications of scraping](/posts/responsible-scraper-etiquette-best-practices/):
 
 - **Server load**: Will your scraping impact the site's performance?
 - **Business impact**: Could your scraping harm the site owner's business?
@@ -131,7 +134,9 @@ flowchart TD
 
 ### What's Your Technical Approach?
 
-The choice between different scraping methods depends on several factors:
+The choice between different scraping methods depends on several factors. Our [scraping tools comparison](/posts/scraping-tools-compared-finding-your-starting-point/) can help you narrow down the options:
+
+Understanding the difference between [static and dynamic websites](/posts/static-vs-dynamic-websites-scraping/) is essential here:
 
 **Static Content** → Basic HTTP requests
 **JavaScript-heavy sites** → Browser automation
@@ -169,7 +174,7 @@ Web scraping is inherently unreliable. Sites go down, structures change, and ant
 - Server errors (5xx responses)
 
 ```mermaid
-graph LR
+graph TD
     A[Request] --> B{Response Status}
     B -->|2xx| C[Parse Data]
     B -->|429| D[Rate Limited]
@@ -228,6 +233,12 @@ class ScrapingInfrastructure:
             raise
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-before-you-scrape-essential-questions-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Data Strategy Questions
 
 ### How Will You Store the Data?
@@ -265,7 +276,7 @@ Raw scraped data is often messy and inconsistent. Plan for:
 
 ```python
 # Data validation example
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from datetime import datetime
 from typing import Optional
 
@@ -276,14 +287,16 @@ class ProductData(BaseModel):
     availability: bool
     scraped_at: datetime
     url: str
-    
-    @validator('price')
+
+    @field_validator('price')
+    @classmethod
     def price_must_be_positive(cls, v):
         if v <= 0:
             raise ValueError('Price must be positive')
         return v
-    
-    @validator('currency')
+
+    @field_validator('currency')
+    @classmethod
     def currency_must_be_valid(cls, v):
         valid_currencies = ['USD', 'EUR', 'GBP', 'JPY']
         if v not in valid_currencies:
@@ -335,6 +348,6 @@ Successful scrapers require ongoing maintenance:
 
 The most successful scraping projects I've worked on had clear answers to these questions before writing the first line of code. They also had stakeholders who understood that scraping is an ongoing process, not a one-time setup.
 
-Remember, the goal isn't just to extract data – it's to extract reliable, accurate, and useful data in a sustainable way. Taking time to ask these questions upfront will save you countless hours of debugging, refactoring, and explaining to stakeholders why your scraper suddenly stopped working.
+Remember, the goal isn't just to extract data – it's to extract reliable, accurate, and useful data in a sustainable way. For further guidance on [choosing the right data extraction solution](/posts/what-questions-to-ask-choosing-data-extraction-solution/), we cover that topic in depth as well. Taking time to ask these questions upfront will save you countless hours of debugging, refactoring, and explaining to stakeholders why your scraper suddenly stopped working.
 
 What's the most important question you think every web scraper should ask before starting a project? Have you experienced situations where better planning could have prevented major issues down the line?

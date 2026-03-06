@@ -5,9 +5,12 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["httpmorph", "tls fingerprinting", "python", "http client", "ja4", "performance", "web scraping", "open source"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-12-16-httpmorph-solving-tls-fingerprinting-with-a-c-native-python-http-client-hero.png
+  alt: "httpmorph: Solving TLS Fingerprinting with a C-Native Python HTTP Client"
 ---
 
-Every scraper developer has hit the wall: your request headers are perfect, your cookies are fresh, your proxy is clean, and you still get blocked. The problem is not in what your code sends. It is in how the underlying TLS library introduces itself to the server. Libraries like `requests` and `httpx` use OpenSSL or Python's `ssl` module, and their TLS handshakes look nothing like a real browser. Anti-bot systems fingerprint these handshakes using techniques like JA3 and JA4, and they can tell the difference between Chrome and a Python script before your request even reaches the application layer.
+Every scraper developer has hit the wall: your request headers are perfect, your cookies are fresh, your proxy is clean, and you still get blocked. The problem is not in what your code sends. It is in how the underlying TLS library introduces itself to the server. Libraries like `requests` and `httpx` use OpenSSL or Python's `ssl` module, and their TLS handshakes look nothing like a real browser. Even tools that excel at [async HTTP for fast data collection](/posts/web-scraping-httpx-async-http-fast-data-collection/) cannot escape this fundamental limitation. Anti-bot systems fingerprint these handshakes using techniques like JA3 and JA4, and they can tell the difference between Chrome and a Python script before your request even reaches the application layer.
 
 httpmorph is an open-source Python HTTP client built from scratch in C that solves this problem directly. Instead of patching over Python's TLS stack, it replaces it entirely with BoringSSL (the same TLS library Chrome uses) and generates perfect JA4 fingerprints matching Chrome versions 127 through 131. It has been gaining traction on GitHub with over 100 stars and is worth looking at for anyone dealing with fingerprint-based blocking.
 
@@ -21,7 +24,7 @@ To understand why httpmorph exists, you need to understand what TLS fingerprinti
 - Signature algorithms
 - ALPN protocols (h2, http/1.1)
 
-Each TLS library produces a distinct combination of these values. OpenSSL, which Python's `ssl` module and `requests` rely on, generates a fingerprint that looks nothing like Chrome's BoringSSL. Anti-bot services like Cloudflare, Akamai, and DataDome maintain databases of known fingerprints and can reject or challenge any connection that does not match a recognized browser.
+Each TLS library produces a distinct combination of these values. OpenSSL, which Python's `ssl` module and `requests` rely on, generates a fingerprint that looks nothing like Chrome's BoringSSL. Anti-bot services like Cloudflare, Akamai, and DataDome maintain databases of known fingerprints and can reject or challenge any connection that does not match a recognized browser. This is part of the [ongoing evolution of web scraping detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) that has made fingerprinting a frontline defense.
 
 ```mermaid
 sequenceDiagram
@@ -102,7 +105,7 @@ print(response.text)         # HTML content
 
 # The response includes TLS fingerprint info
 print(response.tls_version)     # 'TLSv1.3'
-print(response.ja3_fingerprint) # JA4 hash matching Chrome
+print(response.ja4_fingerprint) # JA4 hash matching Chrome
 print(response.http_version)    # '2.0'
 ```
 
@@ -192,10 +195,10 @@ results = asyncio.run(scrape_multiple(urls))
 
 ## Performance
 
-Since the core HTTP engine is written in C, httpmorph avoids the Python interpreter overhead that slows down `requests` and `httpx`. The performance difference is most noticeable in concurrent and high-throughput scenarios.
+Since the core HTTP engine is written in C, httpmorph avoids the Python interpreter overhead that slows down `requests` and `httpx`. If you are weighing whether an HTTP client or a full browser is the right fit, the [comparison between Python requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) covers the broader performance trade-offs. The performance difference is most noticeable in concurrent and high-throughput scenarios.
 
 ```mermaid
-graph LR
+graph TD
     subgraph SEQ["Sequential - Single Request"]
         A["httpmorph: 0.31ms"]
         B["requests: 0.94ms"]
@@ -234,6 +237,12 @@ response3 = session.get('https://api.example.com/products/3')
 print(response1.total_time_us)  # ~95000 (95ms with TLS)
 print(response2.total_time_us)  # ~12000 (12ms reusing connection)
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-httpmorph-solving-tls-fingerprinting-wit-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## How It Compares to Alternatives
 
@@ -303,7 +312,7 @@ httpmorph is a strong fit when:
 - Performance matters because you are making thousands of requests
 - You want zero external Python dependencies
 
-It may not be the right choice if you need a production-hardened, battle-tested library (it is still in alpha), or if your target sites do not use TLS fingerprinting for detection.
+It may not be the right choice if you need a production-hardened, battle-tested library (it is still in alpha), or if your target sites do not use TLS fingerprinting for detection. In cases where full browser emulation is required, [stealth browsers like Camoufox and nodriver](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) may be more appropriate.
 
 ## Installation
 

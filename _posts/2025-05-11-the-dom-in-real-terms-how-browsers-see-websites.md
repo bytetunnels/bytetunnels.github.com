@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["DOM", "browser", "HTML", "parsing", "web scraping", "document object model", "javascript", "elements"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-11-the-dom-in-real-terms-how-browsers-see-websites-hero.png
+  alt: "The DOM in Real Terms: How Browsers See Websites"
 ---
 
 When you visit a website, your browser doesn't just display the raw HTML code. Instead, it transforms that code into something much more sophisticated: the Document Object Model, or DOM. Understanding the DOM is crucial for anyone involved in web scraping because it's literally how browsers "see" and interact with websites.
@@ -13,7 +16,7 @@ Think of the DOM as a living, breathing representation of a webpage that exists 
 
 ## What Exactly Is the DOM?
 
-The DOM is a programming interface that represents HTML and XML documents as a tree structure. Every element, attribute, and piece of text in your HTML becomes a node in this tree. But here's the key difference: the DOM isn't just a copy of your HTML—it's an interpretation of it.
+The DOM is a programming interface that represents HTML and XML documents as a tree structure. Every element, attribute, and piece of text in your HTML becomes a node in this tree. But here's the key difference: the DOM isn't just a copy of your HTML—it's an interpretation of it. If you need a primer on the building blocks, see [HTML basics for scrapers: finding your way around tags](/posts/html-basics-for-scrapers-finding-way-around-tags/).
 
 When a browser encounters HTML like this:
 
@@ -71,7 +74,7 @@ Using the tokens, the browser builds the DOM tree. This is where things get inte
 Even though there's no `<tbody>` tag in the HTML, the browser automatically adds one to the DOM because it's required by HTML standards.
 
 ### 3. JavaScript Execution
-After the initial DOM is built, JavaScript can modify it. Elements can be added, removed, or changed. This is why static HTML scrapers often miss dynamically generated content.
+After the initial DOM is built, JavaScript can modify it. Elements can be added, removed, or changed. This is why static HTML scrapers often miss dynamically generated content. Understanding [how page rendering works](/posts/page-rendering-explained/) helps clarify why timing matters so much.
 
 ```mermaid
 sequenceDiagram
@@ -114,7 +117,7 @@ Different browsers might interpret the same HTML slightly differently, resulting
 
 ## Navigating the DOM Structure
 
-The DOM provides several ways to traverse and access elements, which directly translate to how web scrapers work:
+The DOM provides several ways to traverse and access elements, which directly translate to how web scrapers work. You can target nodes using [CSS selectors](/posts/css-selectors-made-simple/) or [XPath expressions for navigating web pages like a map](/posts/xpath-basics-navigating-web-pages-like-map/):
 
 ### Parent-Child Relationships
 ```javascript
@@ -207,6 +210,12 @@ with sync_playwright() as p:
     text = element.text_content()
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-the-dom-in-real-terms-how-browsers-see-w-1.jpg" alt="The DOM is a living tree — it grows and changes as JavaScript runs." loading="lazy">
+  <figcaption>The DOM is a living tree — it grows and changes as JavaScript runs. <span class="img-credit">Photo by breakermaximus / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## DOM Events and Interactivity
 
 The DOM is also an event-driven system. Elements can respond to user interactions:
@@ -236,7 +245,7 @@ await page.wait_for_timeout(2000); // Wait for content to load
 ```
 
 ### 2. Shadow DOM
-Some modern web components use Shadow DOM, which creates isolated DOM trees:
+Some modern web components use Shadow DOM, which creates isolated DOM trees. This can be a major hurdle—read about [shadow DOM: the silent killer of AI web scraping](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/) for strategies to handle it:
 
 ```javascript
 // Accessing Shadow DOM content
@@ -309,7 +318,6 @@ const observer = new IntersectionObserver((entries) => {
 
 The DOM is the bridge between static HTML and dynamic web experiences. For web scrapers, understanding this bridge means the difference between scraping what you see in the source code and scraping what users actually experience.
 
-Every website interaction, every piece of dynamic content, and every user experience element flows through the DOM. Master it, and you'll understand not just what's happening on the page, but why your scrapers sometimes see different content than you expect.
+Every website interaction, every piece of dynamic content, and every user experience element flows through the DOM. Master it, and you'll understand not just what's happening on the page, but why your scrapers sometimes see different content than you expect. For a more visual walkthrough, see [what is the DOM: a visual explanation for non-developers](/posts/what-is-the-dom-visual-explanation-for-non-developers/).
 
 What's the most surprising DOM behavior you've encountered while scraping? Have you ever found content in the DOM that wasn't in the original HTML source?
-```

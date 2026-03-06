@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["beginner", "tutorial", "python", "requests", "beautifulsoup", "project", "roadmap", "hands-on"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-04-first-scraping-project-practical-roadmap-hero.png
+  alt: "Your First Scraping Project: A Practical Roadmap"
 ---
 
 Building your first web scraping project can feel overwhelming. Between choosing the right tools, understanding website structures, and writing code that actually works, there's a lot to consider. This practical roadmap will guide you through creating a complete scraping project from start to finish, using real-world examples and best practices.
@@ -25,6 +28,7 @@ Once you know what you want, identify the best sources. Not all websites are cre
 - Have relatively simple HTML structures
 - Don't require complex authentication
 - Have reasonable loading times
+- Respect any restrictions outlined in their robots.txt — learn more about [whether robots.txt is legally binding](/posts/is-robots-txt-legally-binding-scraping-law-explained/)
 
 ```mermaid
 flowchart TD
@@ -51,7 +55,7 @@ flowchart TD
 
 ## Setting Up Your Development Environment
 
-A proper development environment saves countless hours later. Here's what you'll need for our example project:
+Before choosing your stack, consider whether you need a full browser or a simple HTTP client. Our [Python Requests vs. Selenium comparison](/posts/python-requests-vs-selenium-speed-performance-comparison/) can help you decide. A proper development environment saves countless hours later. Here's what you'll need for our example project:
 
 ```python
 # requirements.txt
@@ -59,7 +63,6 @@ requests==2.31.0
 beautifulsoup4==4.12.2
 lxml==4.9.3
 pandas==2.0.3
-time==built-in
 ```
 
 Create a virtual environment to keep dependencies isolated:
@@ -218,7 +221,7 @@ def scrape_all_pages(self, max_pages=None):
 
 ## Data Processing and Storage
 
-Raw scraped data often needs cleaning and transformation before it's useful:
+Raw scraped data often needs cleaning and transformation before it's useful. For quick text extraction tasks, [regex can be surprisingly effective without a full parser](/posts/regex-for-web-scraping-extracting-data-without-parser/).
 
 ```python
 def clean_and_process_data(self, raw_data):
@@ -253,6 +256,12 @@ def save_data(self, data, filename='books_data.csv'):
     print(f"Data saved to {filename}")
     print(f"Total records: {len(df)}")
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-first-scraping-project-practical-roadmap-1.jpg" alt="Every expert started with a first script that probably didn't work." loading="lazy">
+  <figcaption>Every expert started with a first script that probably didn't work. <span class="img-credit">Photo by Thành Đỗ / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Error Handling and Robustness
 

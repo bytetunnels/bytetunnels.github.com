@@ -5,17 +5,20 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web scraping", "terminology", "beginner guide", "definitions", "fundamentals", "glossary"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-10-web-scraping-terms-explained-hero.png
+  alt: "Web Scraping Terms Explained: A Plain-Language Guide"
 ---
 
 Starting your web scraping journey feels like entering a new country where everyone speaks a different language. Terms like "headless browsers," "rate limiting," and "xpath selectors" get thrown around casually, leaving newcomers scratching their heads. Let's break down these mysterious terms into plain English so you can navigate web scraping conversations with confidence.
 
 ## Core Web Scraping Concepts
 
-**Web Scraping** is the process of automatically extracting data from websites using software programs. Think of it as having a robot that visits websites and copies information for you, much faster and more accurately than doing it manually.
+**Web Scraping** is the process of automatically extracting data from websites using software programs. Think of it as having a robot that visits websites and copies information for you, much faster and more accurately than doing it manually. For a deeper introduction, see [web scraping explained: what, why, and how](/posts/web-scraping-explained-what-why-how/).
 
 **Data Extraction** refers to the specific act of pulling useful information from the raw HTML, JSON, or other data formats you encounter. It's like finding needles in a haystack, but your program knows exactly where to look.
 
-**Crawling** involves systematically browsing through multiple pages of a website, following links from one page to another. A web crawler is like a methodical explorer mapping out an entire website's structure.
+**Crawling** involves systematically browsing through multiple pages of a website, following links from one page to another. A web crawler is like a methodical explorer mapping out an entire website's structure. These two concepts are closely related but distinct—learn more about [scraping vs crawling and their differences](/posts/scraping-vs-crawling-differences/).
 
 ```mermaid
 graph TD
@@ -32,9 +35,9 @@ graph TD
 
 ## HTML and Data Selection
 
-**DOM (Document Object Model)** represents the structure of a webpage as a tree of elements. When you inspect a webpage's source code, you're looking at the DOM. It's like the blueprint of a house - it shows how everything is organized and connected.
+**DOM (Document Object Model)** represents the structure of a webpage as a tree of elements. When you inspect a webpage's source code, you're looking at [the DOM—how browsers see websites](/posts/the-dom-in-real-terms-how-browsers-see-websites/). It's like the blueprint of a house - it shows how everything is organized and connected.
 
-**CSS Selectors** are patterns used to target specific elements on a webpage. They work like addresses for HTML elements. For example, `.product-title` targets all elements with the class "product-title."
+**CSS Selectors** are patterns used to target specific elements on a webpage. They work like addresses for HTML elements. For example, `.product-title` targets all elements with the class "product-title." Our guide on [CSS selectors made simple](/posts/css-selectors-made-simple/) covers this in detail.
 
 ```python
 # CSS selector examples
@@ -43,7 +46,7 @@ soup.select('#main-content')  # Element with ID 'main-content'
 soup.select('div.product h2')  # h2 tags inside div with class 'product'
 ```
 
-**XPath** is another way to navigate and select elements in HTML documents, using a path-like syntax similar to file system navigation. It's more powerful than CSS selectors but also more complex.
+**XPath** is another way to navigate and select elements in HTML documents, using a path-like syntax similar to file system navigation. It's more powerful than CSS selectors but also more complex. See [XPath basics: navigating web pages like a map](/posts/xpath-basics-navigating-web-pages-like-map/) for a hands-on introduction.
 
 ```python
 # XPath examples
@@ -55,7 +58,7 @@ driver.find_element(By.XPATH, "//a[contains(text(), 'Next Page')]")  # Link cont
 
 ## Browser Automation Technologies
 
-**Headless Browsers** run without a graphical user interface. They process web pages just like regular browsers but invisibly, making them perfect for automated tasks. Think of them as invisible browsers working behind the scenes.
+**Headless Browsers** run without a graphical user interface. They process web pages just like regular browsers but invisibly, making them perfect for automated tasks. Think of them as invisible browsers working behind the scenes. Learn more about [headless vs headed browser automation](/posts/headless-vs-headed-browser-automation/) and when to use each mode.
 
 **Selenium** is a automation framework that controls web browsers programmatically. It can click buttons, fill forms, and navigate websites just like a human would, but much faster and without getting tired.
 
@@ -131,6 +134,12 @@ graph TD
 
 **Robots.txt** is a file that tells web crawlers which parts of a website they should or shouldn't access. It's like a "Do Not Enter" sign for bots, though it's more of a suggestion than a law.
 
+
+<figure>
+  <img src="/assets/img/inline-web-scraping-terms-explained-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Proxy and Privacy Tools
 
 **Proxies** act as intermediaries between your scraping program and target websites, hiding your real IP address. They're like wearing a mask at a masquerade ball - your identity remains hidden.
@@ -154,7 +163,7 @@ response = requests.get('https://target-site.com', proxies=proxies)
 
 **Parsing** means analyzing and interpreting data to extract meaningful information. It's like reading a letter and understanding its contents rather than just seeing random characters.
 
-**Regular Expressions (Regex)** are patterns used to match and extract specific text from strings. They're extremely powerful for cleaning and processing scraped data.
+**Regular Expressions (Regex)** are patterns used to match and extract specific text from strings. They're extremely powerful for cleaning and processing scraped data. Our [regex for beginners: pattern matching](/posts/regex-for-beginners-pattern-matching/) guide is a great place to start.
 
 ```python
 import re

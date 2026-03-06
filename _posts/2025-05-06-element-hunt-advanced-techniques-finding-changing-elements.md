@@ -5,6 +5,9 @@ categories: ["Browser Automation"]
 tags: ["dynamic elements", "element selectors", "xpath", "css selectors", "playwright", "selenium", "dom changes", "web scraping"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-06-element-hunt-advanced-techniques-finding-changing-elements-hero.png
+  alt: "The Element Hunt: Advanced Techniques for Finding Changing Elements"
 ---
 
 Modern web applications are masters of disguise. Elements appear, disappear, shift positions, and change their attributes faster than a magician's sleight of hand. One moment your scraper is successfully extracting data, the next it's throwing "Element not found" errors because that same element now has a different ID, class, or structure altogether.
@@ -37,7 +40,7 @@ The foundation of hunting changing elements lies in building selectors that can 
 
 ### Attribute-Based Hunting
 
-Data attributes specifically designed for testing or automation tend to be more stable than styling-related classes or dynamically generated IDs:
+Data attributes specifically designed for testing or automation tend to be more stable than styling-related classes or dynamically generated IDs. For a comprehensive reference on writing resilient selectors, check out our [CSS selectors cheat sheet for web scraping](/posts/css-selectors-web-scraping-practical-cheat-sheet/).
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -96,7 +99,7 @@ def find_by_relationships(page):
 
 ## Advanced XPath Techniques
 
-XPath provides powerful capabilities for creating flexible selectors that can adapt to changing DOM structures:
+XPath provides powerful capabilities for creating flexible selectors that can adapt to changing DOM structures. If you are weighing which approach to use, our [XPath vs. CSS selectors comparison](/posts/xpath-vs-css-selectors-performance-readability-compared/) covers performance and readability trade-offs in detail.
 
 ```python
 def advanced_xpath_selectors(driver):
@@ -211,9 +214,15 @@ async def playwright_smart_waiting(page):
     stable_price = await wait_for_stable_element()
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-element-hunt-advanced-techniques-finding-1.jpg" alt="XPath navigates documents the way a map navigates terrain." loading="lazy">
+  <figcaption>XPath navigates documents the way a map navigates terrain. <span class="img-credit">Photo by Саша Алалыкин / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Handling Framework-Specific Challenges
 
-Different JavaScript frameworks present unique challenges for element hunting. Understanding these patterns helps build more reliable scrapers.
+Different JavaScript frameworks present unique challenges for element hunting. Understanding these patterns helps build more reliable scrapers. One often-overlooked obstacle is the [Shadow DOM, which can silently hide elements](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/) from standard selectors entirely.
 
 ### React Applications
 

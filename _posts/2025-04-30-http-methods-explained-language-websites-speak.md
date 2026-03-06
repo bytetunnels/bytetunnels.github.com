@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["http", "methods", "get", "post", "put", "delete", "web scraping", "requests", "api", "rest"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-30-http-methods-explained-language-websites-speak-hero.png
+  alt: "HTTP Methods Explained: The Language Websites Speak"
 ---
 
 When you click a link, submit a form, or upload a file on a website, you're actually speaking a specific language that browsers and servers understand perfectly. This language consists of HTTP methods - standardized verbs that tell a web server exactly what action you want to perform. As a web scraper, understanding these methods is like learning the grammar of web communication.
@@ -48,7 +51,7 @@ response = requests.get('https://api.example.com/products', params=params)
 
 GET requests append parameters to the URL as query strings, making them visible in browser history and server logs. This transparency is perfect for bookmarkable pages and cacheable resources, but it also means sensitive information shouldn't be sent via GET.
 
-For web scrapers, GET requests are your primary tool for fetching webpage content, API data, and downloadable files. However, modern websites often implement anti-bot measures that specifically target repetitive GET requests, so you'll need to vary your approach with proper headers, delays, and rotation strategies.
+For web scrapers, GET requests are your primary tool for fetching webpage content, API data, and downloadable files. If you need to send many GET requests at once, [httpx with async support](/posts/web-scraping-httpx-async-http-fast-data-collection/) can handle concurrent connections far more efficiently than synchronous calls. However, modern websites often implement anti-bot measures that specifically target repetitive GET requests, so you'll need to vary your approach with proper headers, delays, and rotation strategies.
 
 ## POST: The Data Submitter
 
@@ -140,6 +143,12 @@ response = requests.delete('https://api.example.com/users/123')
 headers = {'Authorization': 'Bearer your-token-here'}
 response = requests.delete('https://api.example.com/posts/456', headers=headers)
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-http-methods-explained-language-websites-1.jpg" alt="HTTP is the language every scraper must speak fluently." loading="lazy">
+  <figcaption>HTTP is the language every scraper must speak fluently. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## HEAD: The Metadata Checker
 
@@ -246,7 +255,7 @@ class APIClient:
 
 Different HTTP methods trigger different server-side behaviors and monitoring systems. Some websites implement stricter rate limiting on POST requests since they typically involve state changes. Others might flag unusual patterns like excessive HEAD requests as potential reconnaissance behavior.
 
-Understanding these patterns helps you design scrapers that blend in with normal user behavior. For instance, a typical user session might involve several GET requests to browse pages, occasional POST requests for searches or form submissions, and very few PUT, DELETE, or PATCH requests.
+Understanding these patterns helps you design scrapers that blend in with normal user behavior. For instance, a typical user session might involve several GET requests to browse pages, occasional POST requests for searches or form submissions, and very few PUT, DELETE, or PATCH requests. For a deeper look at how tool choice affects speed and stealth, check out our [Python Requests vs. Selenium performance comparison](/posts/python-requests-vs-selenium-speed-performance-comparison/).
 
 ## Browser Automation and HTTP Methods
 

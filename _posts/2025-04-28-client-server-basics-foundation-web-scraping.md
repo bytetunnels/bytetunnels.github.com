@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["client-server", "http", "requests", "web scraping basics", "networking", "protocols", "web architecture"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-28-client-server-basics-foundation-web-scraping-hero.png
+  alt: "Client-Server Basics: The Foundation of All Web Scraping"
 ---
 
 Every web scraping operation begins with understanding a fundamental concept that governs how the internet works: the client-server architecture. Whether you're extracting product data from an e-commerce site or gathering news articles from multiple sources, you're essentially mimicking the same communication pattern that happens billions of times every day across the web.
@@ -176,9 +179,15 @@ Sessions enable you to:
 - Access user-specific content
 - Navigate multi-step processes
 
+
+<figure>
+  <img src="/assets/img/inline-client-server-basics-foundation-web-scra-1.jpg" alt="HTTP is the language every scraper must speak fluently." loading="lazy">
+  <figcaption>HTTP is the language every scraper must speak fluently. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Connection Persistence and Performance
 
-Modern web scrapers can benefit significantly from understanding connection persistence. HTTP/1.1 introduced persistent connections, allowing multiple requests to reuse the same TCP connection, reducing overhead and improving performance.
+Modern web scrapers can benefit significantly from understanding connection persistence. If you need to process many pages concurrently, [async HTTP clients like httpx](/posts/web-scraping-httpx-async-http-fast-data-collection/) can dramatically improve throughput. HTTP/1.1 introduced persistent connections, allowing multiple requests to reuse the same TCP connection, reducing overhead and improving performance.
 
 ```python
 import requests
@@ -192,7 +201,7 @@ session = requests.Session()
 retry_strategy = Retry(
     total=3,
     status_forcelist=[429, 500, 502, 503, 504],
-    method_whitelist=["HEAD", "GET", "OPTIONS"],
+    allowed_methods=["HEAD", "GET", "OPTIONS"],
     backoff_factor=1
 )
 
@@ -253,6 +262,8 @@ Simple HTTP clients like the requests library excel at:
 - API interactions
 - Static content extraction
 - High-volume data collection
+
+For a detailed breakdown of when to use lightweight HTTP clients versus full browser automation, see our [comparison of Python Requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/).
 
 Browser automation tools (Selenium, Playwright, Puppeteer) are necessary when:
 - Content is generated dynamically with JavaScript

@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["html", "parsing", "dom", "xpath", "css-selectors", "web-scraping", "elements", "attributes", "beautifulsoup"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-01-html-basics-for-scrapers-finding-way-around-tags-hero.png
+  alt: "HTML Basics for Scrapers: Finding Your Way Around Tags"
 ---
 
 When you first dive into web scraping, HTML can feel like a foreign language filled with cryptic symbols and nested structures. But here's the truth: mastering HTML fundamentals is your gateway to becoming an efficient scraper. Every piece of data you want to extract lives within HTML elements, and understanding how to navigate this markup language will determine whether you spend minutes or hours trying to grab that elusive piece of information.
@@ -86,7 +89,7 @@ graph TD
 
 ## CSS Selectors: Your Navigation Compass
 
-CSS selectors provide an intuitive way to target HTML elements. They're often the first tool scrapers reach for because they mirror how web developers style pages. Let's explore the most powerful selector patterns for scraping.
+CSS selectors provide an intuitive way to target HTML elements. They're often the first tool scrapers reach for because they mirror how web developers style pages. For a handy reference of the selectors you will use most often, see our [CSS selectors cheat sheet for web scraping](/posts/css-selectors-web-scraping-practical-cheat-sheet/). Let's explore the most powerful selector patterns for scraping.
 
 **Basic Selectors:**
 - `h1` - Targets all h1 elements
@@ -196,6 +199,12 @@ flowchart TD
     G --> K[Parent: /parent::*]
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-html-basics-for-scrapers-finding-way-aro-1.jpg" alt="The DOM is a living tree — it grows and changes as JavaScript runs." loading="lazy">
+  <figcaption>The DOM is a living tree — it grows and changes as JavaScript runs. <span class="img-credit">Photo by breakermaximus / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Common HTML Patterns and Anti-Patterns
 
 Real-world websites often follow predictable patterns that you can exploit for efficient scraping. Recognizing these patterns helps you write more robust scrapers that work across similar sites.
@@ -284,6 +293,8 @@ def extract_json_data(soup):
 - Script tags containing JSON data for hydration
 - React/Vue component mount points
 
+Another modern challenge is the [Shadow DOM, which can silently break your scraping selectors](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/) by encapsulating elements inside isolated DOM trees.
+
 ## Practical Scraping Strategies
 
 Armed with HTML knowledge, you can develop systematic approaches to tackle any scraping target. Here's a methodology that works across different site types:
@@ -314,7 +325,7 @@ def analyze_page_structure(url):
     common_classes = Counter(all_classes).most_common(10)
     
     # Step 3: Identify data-rich elements
-    data_elements = soup.find_all(attrs={'data-': True})
+    data_elements = soup.find_all(lambda tag: any(attr.startswith('data-') for attr in tag.attrs))
     
     return {
         'main_containers': len(main_containers),

@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["page rendering", "DOM", "javascript", "browser automation", "web scraping", "rendering process", "CSR", "SSR"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-07-page-rendering-explained-hero.png
+  alt: "Page Rendering Explained: What Happens When a Site Loads"
 ---
 
 When you navigate to a website, a complex orchestration of events unfolds behind the scenes before you see the final rendered page. Understanding this process isn't just academic curiosity—it's crucial for effective web scraping and data extraction. The difference between a successful scrape and a failed one often lies in knowing exactly when and how content becomes available on a page.
@@ -113,7 +116,7 @@ fetch('/api/data')
     });
 ```
 
-For scrapers, this means the content you want won't be available immediately after the initial HTML loads. You need to wait for JavaScript execution to complete.
+For scrapers, this means the content you want won't be available immediately after the initial HTML loads. You need to wait for JavaScript execution to complete. This is the core reason why choosing between [Python Requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) depends on how the target site renders its content.
 
 ### Server-Side Rendering (SSR) with Hydration
 
@@ -186,6 +189,12 @@ def scrape_infinite_scroll(driver):
             break
         last_height = new_height
 ```
+
+
+<figure>
+  <img src="/assets/img/inline-page-rendering-explained-1.jpg" alt="The DOM is a living tree — it grows and changes as JavaScript runs." loading="lazy">
+  <figcaption>The DOM is a living tree — it grows and changes as JavaScript runs. <span class="img-credit">Photo by breakermaximus / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
 
 ## Network Requests and AJAX Calls
 
@@ -287,7 +296,7 @@ def get_consistent_browser():
 
 ## Handling Single Page Applications (SPAs)
 
-SPAs present unique challenges because they manipulate the URL and content without traditional page loads:
+SPAs present unique challenges because they manipulate the URL and content without traditional page loads. An additional complication arises when SPA components use the [Shadow DOM to encapsulate their markup](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/), making elements invisible to regular selectors.
 
 ```python
 def scrape_spa_navigation():
@@ -355,7 +364,8 @@ Understanding rendering allows you to optimize scraper performance by disabling 
 
 ```python
 def create_optimized_browser():
-    return sync_playwright().chromium.launch(
+    pw = sync_playwright().start()
+    return pw.chromium.launch(
         args=[
             '--disable-javascript',  # Only if JS isn't needed
             '--disable-images',      # Skip image loading

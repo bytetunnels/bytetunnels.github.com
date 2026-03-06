@@ -5,6 +5,9 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["web scraping", "data extraction", "automation", "python", "requests", "beautiful soup", "fundamentals"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-04-26-web-scraping-explained-what-why-how-hero.png
+  alt: "Web Scraping Explained: The What, Why and How"
 ---
 
 Web scraping has become an essential skill in our data-driven world. Whether you're a business analyst gathering competitive intelligence, a researcher collecting data for analysis, or a developer building applications that need real-time information, understanding web scraping opens up a universe of possibilities.
@@ -38,7 +41,7 @@ Consider the challenge of monitoring prices across dozens of online retailers fo
 
 ## Essential Tools and Technologies
 
-The web scraping ecosystem offers numerous tools, each with its strengths and ideal use cases. Python remains the most popular language for web scraping due to its simplicity and extensive library ecosystem.
+The web scraping ecosystem offers numerous tools, each with its strengths and ideal use cases. Python remains the most popular language for web scraping due to its simplicity and extensive library ecosystem. For a detailed side-by-side look at the major frameworks, check out our [Playwright vs Puppeteer vs Selenium vs Scrapy mega comparison](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/).
 
 ### Basic HTTP Requests
 
@@ -63,7 +66,7 @@ if response.status_code == 200:
         print(title.get_text().strip())
 ```
 
-This approach works well for static websites where content is directly embedded in the HTML. However, modern web applications often load content dynamically using JavaScript, requiring more sophisticated tools.
+This approach works well for static websites where content is directly embedded in the HTML. However, modern web applications often load content dynamically using JavaScript, requiring more sophisticated tools. Understanding [when to use Python requests versus a full browser like Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) is one of the first decisions every scraper faces.
 
 ### Browser Automation
 
@@ -174,6 +177,12 @@ def get_with_random_ua(url):
     return requests.get(url, headers=headers)
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-web-scraping-explained-what-why-how-1.jpg" alt="Web scraping is the bridge between the visible web and usable data." loading="lazy">
+  <figcaption>Web scraping is the bridge between the visible web and usable data. <span class="img-credit">Photo by Google DeepMind / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Data Quality and Validation
 
 Raw scraped data often requires cleaning and validation before it's useful. Websites may include extra whitespace, inconsistent formatting, or placeholder content:
@@ -236,7 +245,7 @@ def scrape_multiple_pages(base_url, page_count):
 
 Web scraping operates in a complex legal landscape. While scraping publicly available data is generally acceptable, you must respect robots.txt files, terms of service, and applicable laws. The key principles include obtaining data only from public sources, not overwhelming target servers with excessive requests, and respecting intellectual property rights.
 
-Always check a website's robots.txt file (usually found at domain.com/robots.txt) to understand any scraping restrictions the site owner has specified. This file indicates which parts of the site should not be accessed by automated tools.
+Always check a website's robots.txt file (usually found at domain.com/robots.txt) to understand any scraping restrictions the site owner has specified. This file indicates which parts of the site should not be accessed by automated tools. For a deeper look at the legal weight these files carry, see our breakdown of [whether robots.txt is legally binding](/posts/is-robots-txt-legally-binding-scraping-law-explained/).
 
 ## Building Your First Scraper
 

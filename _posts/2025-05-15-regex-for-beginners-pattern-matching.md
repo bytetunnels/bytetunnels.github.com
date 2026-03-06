@@ -5,11 +5,14 @@ categories: ["Web Scraping Fundamentals"]
 tags: ["regex", "pattern matching", "data extraction", "text processing", "python", "javascript", "web scraping"]
 mermaid: true
 author: arman
+image:
+  path: /assets/img/2025-05-15-regex-for-beginners-pattern-matching-hero.png
+  alt: "Regex for Beginners: Pattern Matching for Web Data"
 ---
 
 Regular expressions, commonly known as regex, are powerful pattern-matching tools that every web scraper should master. When you're extracting data from web pages, you'll frequently encounter situations where you need to find specific patterns within text, validate data formats, or clean extracted content. Regex provides an elegant solution to these challenges.
 
-Think of regex as a search language for text patterns. Instead of looking for exact matches, you define patterns that describe what you're looking for. This makes regex incredibly versatile for web scraping tasks like extracting email addresses, phone numbers, prices, or any structured data from HTML content.
+Think of regex as a search language for text patterns. Instead of looking for exact matches, you define patterns that describe what you're looking for. This makes regex incredibly versatile for [web scraping tasks](/posts/web-scraping-terms-explained/) like extracting email addresses, phone numbers, prices, or any structured data from HTML content.
 
 ## Understanding Basic Regex Components
 
@@ -81,7 +84,7 @@ print(matches)  # ['admin'] - only matches the standalone word
 Regex provides predefined character classes for common patterns. These shortcuts make your patterns more readable and maintainable.
 
 ```mermaid
-graph LR
+graph TD
     A[Common Character Classes] --> B["\\d - Digits"]
     A --> C["\\w - Word Characters"]
     A --> D["\\s - Whitespace"]
@@ -160,7 +163,7 @@ if match:
 
 ## Practical Web Scraping Patterns
 
-Let's explore common regex patterns used in web scraping scenarios:
+Let's explore common [regex patterns used in web scraping](/posts/regex-for-web-scraping-extracting-data-without-parser/) scenarios:
 
 ```python
 import re
@@ -196,9 +199,15 @@ print(f"Prices: {prices}")
 print(f"Ratings: {ratings}")
 ```
 
+
+<figure>
+  <img src="/assets/img/inline-regex-for-beginners-pattern-matching-1.jpg" alt="Patterns are everywhere — regex helps you find the ones that matter." loading="lazy">
+  <figcaption>Patterns are everywhere — regex helps you find the ones that matter. <span class="img-credit">Photo by Memet Öz / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
+</figure>
+
 ## Advanced Techniques
 
-Lookahead and lookbehind assertions allow you to match patterns based on what comes before or after, without including those parts in the match:
+[Lookahead and lookbehind assertions](/posts/regex-lookahead-web-scrapers-advanced-pattern-matching/) allow you to match patterns based on what comes before or after, without including those parts in the match:
 
 ```python
 import re
@@ -270,7 +279,7 @@ print(f"Compiled: {compiled_time:.4f}s")
 
 ## Real-World Scraping Example
 
-Here's a practical example of using regex to extract structured data from a scraped webpage:
+Here's a practical example of [building a web scraper with regex](/posts/building-web-scraper-with-regex-practical-patterns-pitfalls/) to extract structured data from a scraped webpage:
 
 ```python
 import re
@@ -364,6 +373,6 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-Mastering regex opens up powerful possibilities for data extraction and text processing in your web scraping projects. The patterns and techniques covered here form the foundation for handling complex data extraction scenarios you'll encounter in real-world scraping tasks.
+Mastering regex opens up powerful possibilities for data extraction and text processing in your web scraping projects. The patterns and techniques covered here form the foundation for handling complex data extraction scenarios you'll encounter in real-world scraping tasks. For a deeper dive into matching email addresses specifically, see our guide on [email regex patterns for reliable extraction](/posts/email-regex-patterns-web-scraping-reliable-extraction/).
 
 What specific data extraction challenges are you facing in your web scraping projects? Share your tricky regex problems in the comments, and let's solve them together!
