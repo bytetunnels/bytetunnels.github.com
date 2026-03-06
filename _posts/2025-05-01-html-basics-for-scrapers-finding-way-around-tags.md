@@ -187,16 +187,16 @@ flowchart TD
     A[XPath Query]
     A --> B{Element Type}
 
-    B -->|Tag| C[//div]
+    B -->|Tag| C["//div"]
     B -->|Class| D["//div[@class='item']"]
     B -->|Text| E["//span[text()='Total']"]
     B -->|Position| F["//tr[position()>1]"]
 
     G[Navigation]
-    G --> H[Child: /child]
-    G --> I[Descendant: //descendant]
-    G --> J[Following: /following-sibling]
-    G --> K[Parent: /parent::*]
+    G --> H["Child: /child"]
+    G --> I["Descendant: //descendant"]
+    G --> J["Following: /following-sibling"]
+    G --> K["Parent: /parent::*"]
 ```
 
 

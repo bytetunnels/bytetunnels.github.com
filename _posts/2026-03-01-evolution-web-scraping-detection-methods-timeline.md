@@ -19,36 +19,36 @@ This post traces the full arc of web scraping detection from 2000 to 2026, cover
 ```mermaid
 timeline
     title Evolution of Web Scraping Detection
-    section Era 1: The Simple Days
+    section Era 1 - The Simple Days
         2000-2003 : User-Agent string checks
                   : IP rate limiting
                   : robots.txt honor system
-        2004-2008 : Basic CAPTCHA (distorted text)
+        2004-2008 : Basic CAPTCHA - distorted text
                   : Referer header validation
                   : Session token checks
-    section Era 2: The Arms Race Begins
+    section Era 2 - The Arms Race Begins
         2009-2011 : Google acquires reCAPTCHA
                   : JavaScript challenge pages
                   : Honeypot traps
         2012-2015 : Browser fingerprinting basics
                   : Akamai Bot Manager launch
-                  : reCAPTCHA v2 (checkbox)
-    section Era 3: Sophisticated Fingerprinting
+                  : reCAPTCHA v2 - checkbox
+    section Era 3 - Sophisticated Fingerprinting
         2016-2017 : navigator.webdriver detection
                   : Canvas fingerprinting
                   : WebGL fingerprinting
-        2018-2020 : TLS/JA3 fingerprinting
+        2018-2020 : TLS and JA3 fingerprinting
                   : Cloudflare Bot Management
-                  : DataDome, PerimeterX emerge
-                  : reCAPTCHA v3 (invisible)
-    section Era 4: Behavioral Analysis
+                  : DataDome and PerimeterX emerge
+                  : reCAPTCHA v3 - invisible scoring
+    section Era 4 - Behavioral Analysis
         2021-2022 : Mouse movement analysis
                   : Keystroke dynamics
                   : Multi-signal correlation
         2023-2024 : Cloudflare Turnstile
                   : hCaptcha behavioral scoring
                   : Scroll pattern analysis
-    section Era 5: AI-Powered Detection
+    section Era 5 - AI-Powered Detection
         2025 : ML session pattern models
              : Cloudflare AI Labyrinth
              : Real-time behavioral scoring
