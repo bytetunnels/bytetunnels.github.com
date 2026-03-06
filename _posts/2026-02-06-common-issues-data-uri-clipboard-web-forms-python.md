@@ -212,12 +212,6 @@ def paste_image_via_event(page, selector: str, file_path: str, mime_type: str):
     )
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-common-issues-data-uri-clipboard-web-for-1.jpg" alt="Forms are the web's input mechanism — and automating them requires precision." loading="lazy">
-  <figcaption>Forms are the web's input mechanism — and automating them requires precision. <span class="img-credit">Photo by Tima Miroshnichenko / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Pasting Images Into Web Forms With Playwright
 
 Playwright provides `page.set_input_files()` for standard file inputs. This is the most reliable way to upload files and should be your first choice whenever the form uses a `<input type="file">` element.

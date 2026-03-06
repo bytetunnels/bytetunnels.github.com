@@ -186,12 +186,6 @@ scrapeWithPuppeteer("https://example.com");
 
 Notice the structural difference. The Selenium version makes separate calls for each element and each attribute. The Puppeteer version uses `page.evaluate()` to run a single JavaScript function inside the browser and returns all the data at once. This is why Puppeteer is faster for data extraction -- fewer round-trips, less serialization overhead.
 
-
-<figure>
-  <img src="/assets/img/inline-selenium-vs-puppeteer-definitive-compari-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
-  <figcaption>Selenium adds a translation layer between your code and the browser — Puppeteer removes it. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Stealth and Detection Avoidance
 
 Both Selenium and Puppeteer are [detectable by default](/posts/playwright-vs-selenium-stealth-which-evades-detection-better/). Anti-bot systems look for browser fingerprint anomalies that automation tools introduce: missing APIs, inconsistent property values, and the presence of automation-specific variables like `navigator.webdriver`. These [detection methods have evolved significantly](/posts/evolution-web-scraping-detection-methods-timeline/) over the years.

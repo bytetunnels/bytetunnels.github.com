@@ -373,12 +373,6 @@ The key difference from OpenAI: setting `tool_choice` to a specific tool name fo
 
 The `clean_schema` function strips Pydantic-specific metadata like `title` fields from the JSON Schema. Claude's tool use works with standard JSON Schema, and the extra Pydantic metadata can occasionally confuse the model about what is expected.
 
-
-<figure>
-  <img src="/assets/img/inline-schema-driven-scraping-llms-pydantic-zod-2.jpg" alt="Natural language understanding gives scrapers a new kind of intelligence." loading="lazy">
-  <figcaption>Natural language understanding gives scrapers a new kind of intelligence. <span class="img-credit">Photo by Pixabay / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Handling Extraction Errors
 
 Three categories of errors come up consistently in schema-driven extraction.

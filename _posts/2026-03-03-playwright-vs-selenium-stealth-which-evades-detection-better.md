@@ -411,12 +411,6 @@ print(f"Selenium Chrome UA: {ua}")
 
 For TLS fingerprinting purposes, using `channel="chrome"` in Playwright levels the playing field. Both tools then use the same browser binary and produce identical TLS fingerprints.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-vs-selenium-stealth-which-eva-2.jpg" alt="Stealth is not a feature you install — it is a stack of patches that must be maintained as detection evolves." loading="lazy">
-  <figcaption>Stealth is not a feature you install — it is a stack of patches that must be maintained as detection evolves. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Behavioral Detection: Playwright's Subtle Advantage
 
 Beyond static fingerprints, anti-bot systems analyze how your automation interacts with the page. This is where the tools diverge in interesting ways.

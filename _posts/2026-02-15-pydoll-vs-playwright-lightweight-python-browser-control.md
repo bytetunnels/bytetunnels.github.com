@@ -267,12 +267,6 @@ async with async_playwright() as p:
 
 Playwright's route API is more ergonomic, with glob pattern matching and a clean handler interface. Pydoll's approach is more raw but gives you access to every CDP network event.
 
-
-<figure>
-  <img src="/assets/img/inline-pydoll-vs-playwright-lightweight-python--1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Stealth and Detection
 
 This is where Pydoll has a genuine architectural advantage.

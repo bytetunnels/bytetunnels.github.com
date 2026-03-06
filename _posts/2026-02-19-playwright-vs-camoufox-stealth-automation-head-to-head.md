@@ -315,12 +315,6 @@ with Camoufox(
     print(content)
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-vs-camoufox-stealth-automatio-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Modern tooling makes browser control accessible to every developer. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Can You Use Both?
 
 Yes, and this is often the smartest approach. Use Playwright for the 90% of your automation that does not require stealth, and switch to Camoufox for the protected targets.

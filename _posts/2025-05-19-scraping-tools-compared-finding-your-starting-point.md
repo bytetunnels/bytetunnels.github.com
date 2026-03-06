@@ -309,12 +309,6 @@ response = requests.post(
 data = response.json()
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-scraping-tools-compared-finding-your-sta-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
-  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Practical Implementation Strategy
 
 Starting your web scraping journey requires a methodical approach:

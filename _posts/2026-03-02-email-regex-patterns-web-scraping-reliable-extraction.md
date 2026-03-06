@@ -391,12 +391,6 @@ print(check_reversed_emails(text))
 # ['user@example.com']
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-email-regex-patterns-web-scraping-reliab-2.jpg" alt="A well-crafted pattern can extract data that no parser could reach." loading="lazy">
-  <figcaption>A well-crafted pattern can extract data that no parser could reach. <span class="img-credit">Photo by Berna / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## De-duplication and Normalization
 
 After extraction, you will usually have duplicates and inconsistent casing. Email addresses are case-insensitive in the domain part (and conventionally in the local part for most providers), so normalization matters.

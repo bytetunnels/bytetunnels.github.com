@@ -178,12 +178,6 @@ def handle_response(response: requests.Response) -> bool:
         return False
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-responsible-scraper-etiquette-best-pract-1.jpg" alt="Responsible scraping starts with respecting the ecosystem you depend on." loading="lazy">
-  <figcaption>Responsible scraping starts with respecting the ecosystem you depend on. <span class="img-credit">Photo by Thirdman / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Data Usage and Storage Ethics
 
 Responsible scraping extends beyond the collection process to how you use and store the gathered data. Just because data is publicly accessible doesn't mean it's free to use for any purpose. Consider these principles:

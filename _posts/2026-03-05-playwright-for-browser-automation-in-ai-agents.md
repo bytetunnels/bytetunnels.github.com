@@ -501,12 +501,6 @@ The **Healer** executes the generated test suite and automatically repairs faili
 
 These three agents can run independently or in a continuous loop: plan, generate, run, heal, repeat. The shift is from writing test code to describing test intent.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-for-browser-automation-in-ai--2.jpg" alt="MCP snapshots cost 4x more tokens than CLI snapshots for the same page." loading="lazy">
-  <figcaption>MCP snapshots cost 4x more tokens than CLI snapshots for the same page. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Async Execution and Concurrent Page Management
 
 AI agents often need to interact with multiple pages or tabs simultaneously. A research agent might check several sources in parallel. A monitoring agent might track multiple dashboards. Playwright's async API handles this naturally.

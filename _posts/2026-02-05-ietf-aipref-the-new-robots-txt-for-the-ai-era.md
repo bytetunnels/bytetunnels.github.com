@@ -338,12 +338,6 @@ content = scraper.scrape("https://example.com/articles/latest")
 scraper.report()
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-ietf-aipref-the-new-robots-txt-for-the-a-1.jpg" alt="Responsible scraping starts with respecting the ecosystem you depend on." loading="lazy">
-  <figcaption>Responsible scraping starts with respecting the ecosystem you depend on. <span class="img-credit">Photo by Thirdman / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Implementing AIPREF on Your Own Site
 
 If you run a website and want to set AI preferences for your content, the following configurations show how to set it up on common web servers.

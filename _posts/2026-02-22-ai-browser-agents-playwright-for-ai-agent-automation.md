@@ -231,12 +231,6 @@ graph TD
     style E fill:#fce4ec
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-ai-browser-agents-playwright-for-ai-agen-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## The Accessibility Tree Approach
 
 The accessibility tree is how most AI agents observe web pages through Playwright. It is the structured, semantic representation that browsers maintain for screen readers. Instead of raw HTML tags and attributes, the tree contains labeled elements with roles (button, textbox, link), names (the text label associated with each element), and states (checked, expanded, disabled).

@@ -307,12 +307,6 @@ for req in captured_requests:
 
 Now you know the exact URL and payload format. You can replay these requests with `requests` and skip the browser for future runs.
 
-
-<figure>
-  <img src="/assets/img/inline-extracting-data-behind-forms-submitting--1.jpg" alt="Forms are the web's input mechanism — and automating them requires precision." loading="lazy">
-  <figcaption>Forms are the web's input mechanism — and automating them requires precision. <span class="img-credit">Photo by Tima Miroshnichenko / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Putting It Together
 
 A complete scraping pipeline combines the patterns shown above: use a `requests.Session` for cookie persistence, fetch the form page to extract the CSRF token, submit with the token included, parse results, then loop through pages by incrementing the page parameter and checking for a "next page" link. Add `time.sleep()` between requests and set a `User-Agent` header for politeness.

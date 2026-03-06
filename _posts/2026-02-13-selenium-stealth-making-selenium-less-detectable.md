@@ -257,12 +257,6 @@ Typical output looks like this:
 
 The difference in `plugins_count`, `chrome_exists`, and `navigator.webdriver` is what gets you past basic detection systems.
 
-
-<figure>
-  <img src="/assets/img/inline-selenium-stealth-making-selenium-less-de-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
-  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Limitations
 
 selenium-stealth has practical limits you should be aware of before committing to it:

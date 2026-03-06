@@ -145,13 +145,6 @@ elif result["status"] == "ok":
     print(f"Content retrieved: {len(result['content'])} chars")
 ```
 
-
-
-<figure>
-  <img src="/assets/img/inline-microsofts-content-marketplace-from-scra-1.jpg" alt="The law doesn't deal in absolutes — context decides everything." loading="lazy">
-  <figcaption>The law doesn't deal in absolutes — context decides everything. <span class="img-credit">Photo by www.kaboompics.com / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Checking for AI Preference Signals
 
 With the IETF AIPREF working group developing standards, forward-thinking scrapers should already be checking for AI-specific directives. While the formal standard is still in development, several publishers have started using draft headers and robots.txt extensions to signal their preferences.

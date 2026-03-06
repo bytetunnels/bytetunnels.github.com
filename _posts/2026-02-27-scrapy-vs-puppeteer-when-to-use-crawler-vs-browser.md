@@ -99,12 +99,6 @@ graph TD
 
 These numbers are rough estimates for a typical product listing scrape, but they illustrate the gap. Scrapy is not just faster -- it operates in a different performance class entirely.
 
-
-<figure>
-  <img src="/assets/img/inline-scrapy-vs-puppeteer-when-to-use-crawler--1.jpg" alt="Crawling at scale requires a framework built for the job." loading="lazy">
-  <figcaption>Crawling at scale requires a framework built for the job. <span class="img-credit">Photo by Rafael Minguet Delgado / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Code Comparison: Scraping the Same Data
 
 Let us scrape product names and prices from a hypothetical static e-commerce page using both tools. This comparison highlights the structural differences in how you write code for each.

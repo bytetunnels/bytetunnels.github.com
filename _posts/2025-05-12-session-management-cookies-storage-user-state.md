@@ -158,11 +158,6 @@ async function manageStorage(page) {
 
 In Selenium, the same approach works via `driver.execute_script()` -- iterate over `localStorage` or `sessionStorage` keys and call `getItem()` to read values, or `setItem()` to write them.
 
-<figure>
-  <img src="/assets/img/inline-session-management-cookies-storage-user--1.jpg" alt="Cookies are small, but they carry the weight of authentication." loading="lazy">
-  <figcaption>Cookies are small, but they carry the weight of authentication. <span class="img-credit">Photo by hello aesthe / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Advanced Session Persistence Strategies
 
 For complex applications, you'll need more sophisticated session management strategies that handle multiple storage types and maintain state across browser restarts.

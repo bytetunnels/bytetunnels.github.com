@@ -483,12 +483,6 @@ def decode_mixed(raw_bytes, primary='utf-8', fallback='latin-1'):
     return '\n'.join(decoded_lines)
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-character-encoding-detection-automated-t-2.jpg" alt="The web speaks many languages — your scraper needs to understand all of them." loading="lazy">
-  <figcaption>The web speaks many languages — your scraper needs to understand all of them. <span class="img-credit">Photo by Stefan G / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Handling Detection Failures
 
 Encoding detection is probabilistic. It will sometimes fail, return low confidence scores, or pick the wrong encoding. A robust scraper needs fallback strategies.

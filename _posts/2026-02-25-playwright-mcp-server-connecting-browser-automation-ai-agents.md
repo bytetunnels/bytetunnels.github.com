@@ -321,12 +321,6 @@ For most automation tasks, `browser_snapshot` is the better choice. It is cheape
 
 A practical rule: start with snapshots, fall back to screenshots only when the snapshot does not provide enough information.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-mcp-server-connecting-browser-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Modern tooling makes browser control accessible to every developer. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Real-World Use Cases
 
 ### AI-Powered Web Research

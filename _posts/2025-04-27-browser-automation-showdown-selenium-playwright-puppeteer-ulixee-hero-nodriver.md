@@ -245,12 +245,6 @@ const Hero = require('@ulixee/hero');
 - **Performance**: Human emulation adds overhead
 - **Newer Tool**: Smaller community and ecosystem
 
-
-<figure>
-  <img src="/assets/img/inline-browser-automation-showdown-selenium-pla-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
-  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Nodriver: The Undetectable Python Solution
 
 Nodriver represents the cutting edge of Python browser automation, focusing on being completely invisible to anti-bot systems.

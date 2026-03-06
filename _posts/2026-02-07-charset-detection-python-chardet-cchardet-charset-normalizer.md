@@ -424,12 +424,6 @@ def get_with_encoding_fix(url: str) -> str:
     return response.text
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-charset-detection-python-chardet-ccharde-2.jpg" alt="The web speaks many languages — your scraper needs to understand all of them." loading="lazy">
-  <figcaption>The web speaks many languages — your scraper needs to understand all of them. <span class="img-credit">Photo by Stefan G / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Practical Scraping Pattern
 
 In a real scraping pipeline, you want to detect encoding before passing content to an HTML parser. Here is a robust pattern that handles the common cases.

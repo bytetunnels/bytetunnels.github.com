@@ -397,12 +397,6 @@ Camoufox is significantly newer. Its ecosystem is focused:
 
 If you need to run 500 browser instances across a Selenium Grid with Java bindings and integrate with Jenkins, Selenium is the only realistic choice. If you need one browser instance that can visit a site protected by Cloudflare or DataDome without being blocked, Camoufox is the better tool.
 
-
-<figure>
-  <img src="/assets/img/inline-camoufox-vs-selenium-anti-detection-appr-2.jpg" alt="Anti-detection is as much about consistency as it is about spoofing." loading="lazy">
-  <figcaption>Anti-detection is as much about consistency as it is about spoofing. <span class="img-credit">Photo by Mikhail Nilov / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Migration Difficulty
 
 Selenium and Camoufox use entirely different APIs. There is no adapter library, no compatibility layer, and no gradual migration path. Moving from one to the other means rewriting your browser interaction code.

@@ -227,12 +227,6 @@ asyncio.run(check_plugins())
 
 This returns real Chrome plugins like "PDF Viewer" and "Chrome PDF Viewer" rather than an empty list.
 
-
-<figure>
-  <img src="/assets/img/inline-nodriver-bot-detection-how-well-does-it--1.jpg" alt="Staying undetected requires understanding what detection systems look for." loading="lazy">
-  <figcaption>Staying undetected requires understanding what detection systems look for. <span class="img-credit">Photo by Maxim Landolfi / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## What Nodriver Does Not Handle
 
 Here is where the picture changes. Modern detection goes far beyond checking `navigator.webdriver`. The advanced fingerprinting layers are where nodriver's "clean Chrome" approach runs out of answers.

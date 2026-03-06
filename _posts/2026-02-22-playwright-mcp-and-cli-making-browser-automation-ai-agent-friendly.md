@@ -232,12 +232,6 @@ success = run_healer("./tests/generated")
 
 The Healer addresses one of the biggest pain points in [browser automation](/posts/selenium-vs-puppeteer-definitive-comparison-web-scraping/): maintenance. Selectors break, page layouts shift, and timing changes. An automated agent that can diagnose and fix these issues reduces the ongoing cost of maintaining large test suites.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-mcp-and-cli-making-browser-au-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Connecting It All: AI Agent to Browser via MCP
 
 Here is a practical example showing how to configure a complete pipeline where an AI agent uses MCP to drive Playwright for a scraping task.

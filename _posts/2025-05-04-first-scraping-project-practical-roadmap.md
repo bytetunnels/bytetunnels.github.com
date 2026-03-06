@@ -257,12 +257,6 @@ def save_data(self, data, filename='books_data.csv'):
     print(f"Total records: {len(df)}")
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-first-scraping-project-practical-roadmap-1.jpg" alt="Every expert started with a first script that probably didn't work." loading="lazy">
-  <figcaption>Every expert started with a first script that probably didn't work. <span class="img-credit">Photo by Thành Đỗ / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Error Handling and Robustness
 
 Professional scraping projects must handle various error conditions gracefully:

@@ -291,12 +291,6 @@ print(packet.response.body)
 
 The `listen` API is useful for capturing API responses that load data on a page, which is a common scraping pattern. But it is a listener, not an interceptor --- you observe traffic rather than modify it.
 
-
-<figure>
-  <img src="/assets/img/inline-drissionpage-vs-playwright-new-challenge-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Documentation and Community
 
 This is where Playwright pulls decisively ahead. Playwright's documentation is comprehensive, available in English, and covers every API method with examples. The community is massive, with thousands of Stack Overflow answers, blog posts, tutorials, and active GitHub discussions.

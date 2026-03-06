@@ -331,12 +331,6 @@ The 70B parameter Llama models can handle simple extraction tasks -- flat schema
 
 The main advantage is cost at extreme scale. If you are extracting data from millions of pages per month, self-hosting a Llama 70B model on your own GPUs can reduce per-page costs by an order of magnitude compared to API calls. The trade-off is infrastructure complexity and lower accuracy on edge cases.
 
-
-<figure>
-  <img src="/assets/img/inline-best-llm-structured-data-extraction-html-2.jpg" alt="Natural language understanding gives scrapers a new kind of intelligence." loading="lazy">
-  <figcaption>Natural language understanding gives scrapers a new kind of intelligence. <span class="img-credit">Photo by Pixabay / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Cost Comparison
 
 The numbers below assume a typical e-commerce product page that has been pruned to approximately 3,000 input tokens, with roughly 500 output tokens per extraction. Pricing reflects published rates as of early 2026.

@@ -434,12 +434,6 @@ if __name__ == "__main__":
 
 The `send_keys()` method types text into the element character by character, simulating real keyboard input. This is important for sites that listen for keypress events to trigger autocomplete or validation.
 
-
-<figure>
-  <img src="/assets/img/inline-getting-started-nodriver-python-installa-2.jpg" alt="The less a browser looks automated, the better it performs against detection." loading="lazy">
-  <figcaption>The less a browser looks automated, the better it performs against detection. <span class="img-credit">Photo by Rafael Rendon / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Complete Example: Scrape Headlines from Example.com
 
 Let us put everything together into a complete, practical script. This example navigates to example.com, extracts all the text content, and demonstrates the full workflow of a simple scraping task.

@@ -274,12 +274,6 @@ if __name__ == "__main__":
     print(f"\nTotal changes detected: {len(results)}")
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-sessionstorage-monitoring-watching-dynam-1.jpg" alt="Browsers are the universal interface to the web — and to its data." loading="lazy">
-  <figcaption>Browsers are the universal interface to the web — and to its data. <span class="img-credit">Photo by cottonbro studio / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Polling Interval Trade-offs
 
 The polling interval is a balancing act between responsiveness and overhead.

@@ -463,12 +463,6 @@ Why use BS4 for the parsing step instead of Selenium's `find_element` methods? S
 - **BS4 handles edge cases better.** Getting text content, navigating siblings, extracting attributes -- BS4's API is designed for this. Selenium's API is designed for interaction (clicking, typing), not data extraction.
 - **You can close the browser immediately.** Once you have `page_source`, the browser is no longer needed. This frees up the RAM and CPU sooner.
 
-
-<figure>
-  <img src="/assets/img/inline-beautifulsoup-vs-selenium-choosing-right-2.jpg" alt="Static parsing is fast, lightweight, and perfect for well-structured pages." loading="lazy">
-  <figcaption>Static parsing is fast, lightweight, and perfect for well-structured pages. <span class="img-credit">Photo by Tahir Xəlfəquliyev / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Decision Flowchart
 
 Use this flowchart to decide which tool fits your scraping task:

@@ -202,12 +202,6 @@ with sync_playwright() as p:
     browser.close()
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-shadow-dom-the-silent-killer-of-ai-web-s-1.jpg" alt="Shadow DOM hides content from traditional selectors — by design." loading="lazy">
-  <figcaption>Shadow DOM hides content from traditional selectors — by design. <span class="img-credit">Photo by Robert Nagy / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Playwright's Built-In Shadow DOM Piercing
 
 [Playwright has a notable advantage](/posts/playwright-for-browser-automation-in-ai-agents/) over other automation tools here. Its `locator` API can automatically pierce shadow DOM boundaries. When you use `page.locator()`, Playwright traverses into open shadow roots by default.

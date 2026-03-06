@@ -185,12 +185,6 @@ def simulate_user_interactions():
         driver.quit()
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-getting-started-with-selenium-first-auto-1.jpg" alt="Selenium pioneered browser automation and remains widely used today." loading="lazy">
-  <figcaption>Selenium pioneered browser automation and remains widely used today. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Browser Configuration and Options
 
 Different browsers offer various configuration options, including [headless vs headed modes](/posts/headless-vs-headed-browser-automation/). Chrome provides extensive customization capabilities:

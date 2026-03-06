@@ -143,12 +143,6 @@ async def dump_session_storage(url):
 data = asyncio.run(dump_session_storage("https://example.com/app"))
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-scraping-sessionstorage-extracting-ephem-1.jpg" alt="Browsers are the universal interface to the web — and to its data." loading="lazy">
-  <figcaption>Browsers are the universal interface to the web — and to its data. <span class="img-credit">Photo by cottonbro studio / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Reading All sessionStorage in Selenium
 
 Selenium uses `driver.execute_script()` for JavaScript evaluation. The syntax is slightly different, but the principle is the same.

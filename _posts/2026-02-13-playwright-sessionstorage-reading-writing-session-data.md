@@ -392,12 +392,6 @@ scrape_with_onboarding_skip("https://example.com/app")
 
 The specific key names and values vary by application. The discovery step from the key enumeration section is how you identify what to set. Run the scraper once without pre-setting anything, complete the onboarding manually in headed mode, then dump sessionStorage to see what the app wrote.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-sessionstorage-reading-writin-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Modern tooling makes browser control accessible to every developer. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## sessionStorage vs Playwright's storage_state()
 
 Playwright provides a `storage_state()` method on the browser context that serializes cookies and localStorage to a JSON file. This is the standard way to persist browser state between sessions.

@@ -221,12 +221,6 @@ with sync_playwright() as p:
 
 Notice the differences. Scrapy never opens a browser -- it works directly with the HTML response. Selenium uses `find_element` and `.text`. Puppeteer evaluates JavaScript in the page context with `$$eval`. Playwright uses its locator API with auto-waiting built in.
 
-
-<figure>
-  <img src="/assets/img/inline-playwright-vs-puppeteer-vs-selenium-vs-s-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Scrapy processes hundreds of thousands of pages where browser tools would choke on the memory. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## The Mega-Comparison Table
 
 | Dimension | Scrapy | Selenium | Puppeteer | Playwright |

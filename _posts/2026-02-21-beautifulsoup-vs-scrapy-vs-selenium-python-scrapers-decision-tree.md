@@ -373,12 +373,6 @@ with ThreadPoolExecutor(max_workers=4) as executor:
 
 Each call launches and destroys a browser. Even with pooling, the overhead is enormous compared to HTTP requests.
 
-
-<figure>
-  <img src="/assets/img/inline-beautifulsoup-vs-scrapy-vs-selenium-pyth-2.jpg" alt="Static parsing is fast, lightweight, and perfect for well-structured pages." loading="lazy">
-  <figcaption>Static parsing is fast, lightweight, and perfect for well-structured pages. <span class="img-credit">Photo by Tahir Xəlfəquliyev / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Speed Benchmarks
 
 Raw speed for scraping 100 static HTML pages (approximate, typical hardware):

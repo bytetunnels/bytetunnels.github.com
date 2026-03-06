@@ -176,12 +176,6 @@ If you do collect data from travel sites, limit yourself to information that is 
 
 Even with publicly available data, you should still respect robots.txt directives and rate limits.
 
-
-<figure>
-  <img src="/assets/img/inline-bypassing-anti-bot-travel-sites-without--2.jpg" alt="Evasion is a strategy game played at the protocol level." loading="lazy">
-  <figcaption>Evasion is a strategy game played at the protocol level. <span class="img-credit">Photo by Dmitry Demidov / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Technical Challenges Unique to Travel Scraping
 
 Even if you have a legitimate reason to collect travel data (and have confirmed it is legally permissible in your situation), the technical challenges are substantial.
@@ -251,12 +245,6 @@ Consumer protection organizations monitoring price discrimination, hidden fees, 
 ### Price Transparency Initiatives
 
 Regulatory bodies or authorized consumer advocacy groups working to improve pricing transparency in travel markets may collect pricing data as part of their mandate. The EU's focus on pricing transparency for airlines has created some structured requirements for price display that implicitly require data collection.
-
-
-<figure>
-  <img src="/assets/img/inline-bypassing-anti-bot-travel-sites-without--3.jpg" alt="Each layer of defense forces scrapers to adapt or fail." loading="lazy">
-  <figcaption>Each layer of defense forces scrapers to adapt or fail. <span class="img-credit">Photo by Joaquin Carfagna / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
 
 ## When Scraping Is Not Appropriate
 

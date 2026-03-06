@@ -388,12 +388,6 @@ The same pattern works in Node.js --- create an array of init scripts and call `
 
 This manual approach gives you exactly the same result as the plugins for the patches you include. You can add or remove individual overrides, update them when detection methods change, and avoid depending on third-party packages that may not keep pace with Playwright releases. For a broader overview of these techniques in context, see [stealth scraping techniques](/posts/stealth-scraping-techniques-flying-under-radar/).
 
-
-<figure>
-  <img src="/assets/img/inline-undetected-playwright-vs-playwright-stea-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Modern tooling makes browser control accessible to every developer. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## When Plugins Are Not Enough
 
 Both `playwright-stealth` and `undetected-playwright` patch JavaScript properties. That is only one layer of detection. Modern anti-bot systems go deeper.

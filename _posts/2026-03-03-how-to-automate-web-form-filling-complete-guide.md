@@ -222,12 +222,6 @@ if newsletter.is_selected():
 driver.find_element(By.CSS_SELECTOR, 'input[name="plan"][value="premium"]').click()
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-how-to-automate-web-form-filling-complet-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>The nativeSetter trick bypasses React's synthetic event system to set date values directly. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Date Pickers
 
 Date pickers are one of the trickiest form elements to automate. Some accept direct text input, while others use JavaScript-powered calendar widgets that refuse typed input entirely.
@@ -498,12 +492,6 @@ except:
     for err in errors:
         print(f"Server error: {err.text}")
 ```
-
-
-<figure>
-  <img src="/assets/img/inline-how-to-automate-web-form-filling-complet-2.jpg" alt="Modern tooling makes browser control accessible to every developer." loading="lazy">
-  <figcaption>Network interception captures the actual API payload after form submission — more reliable than scraping the confirmation page. <span class="img-credit">Photo by MASUD GAANWALA / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
 
 ## CAPTCHA Considerations
 

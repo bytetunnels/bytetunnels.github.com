@@ -209,12 +209,6 @@ browser = p.chromium.launch(
 )
 ```
 
-
-<figure>
-  <img src="/assets/img/inline-anti-bot-evasion-playwright-techniques-t-1.jpg" alt="Browser automation turns repetitive tasks into reliable scripts." loading="lazy">
-  <figcaption>Browser automation turns repetitive tasks into reliable scripts. <span class="img-credit">Photo by ThisIsEngineering / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Step 5: Randomize Timing with Human-Like Delays
 
 Bots click buttons the instant they appear. Humans do not. Detection systems measure the time between page load and first interaction, the interval between clicks, and the consistency of those intervals. Perfectly uniform timing is a dead giveaway.

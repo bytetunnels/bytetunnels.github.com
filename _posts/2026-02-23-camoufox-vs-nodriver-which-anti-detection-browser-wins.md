@@ -175,12 +175,6 @@ This is not just a branding difference. The choice of browser engine has real co
 - **Extensions ecosystem.** If your scraping workflow depends on Chrome extensions (for example, CAPTCHA solving services that provide Chrome extensions), nodriver supports loading them natively.
 - **Market share alignment.** Chrome holds roughly 65% of global browser market share. When you scrape with Chrome, your browser fingerprint blends in with the majority of web traffic. Firefox sits around 3%, which can actually stand out on sites that factor browser popularity into their risk scoring.
 
-
-<figure>
-  <img src="/assets/img/inline-camoufox-vs-nodriver-which-anti-detectio-1.jpg" alt="Firefox's architecture offers unique advantages for fingerprint resistance." loading="lazy">
-  <figcaption>Firefox's architecture offers unique advantages for fingerprint resistance. <span class="img-credit">Photo by Caio / <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a></span></figcaption>
-</figure>
-
 ## Performance Characteristics
 
 ### Nodriver's Async Advantage
