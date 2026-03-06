@@ -490,7 +490,7 @@ The specific features matter less than the approach: instead of human analysts w
 
 [Cloudflare AI Labyrinth](/posts/cloudflare-ai-labyrinth-how-honeypot-pages-are-trapping-scrapers/), launched in early 2025, represents a philosophical shift from detection to deception. Instead of blocking suspected bots, it redirects them into an infinite maze of AI-generated pages. These pages have realistic HTML structure, plausible text content, and internal links that lead deeper into the labyrinth. A scraper following links four or more levels deep is almost certainly a bot -- real humans rarely click that far into unfamiliar content.
 
-The genius of the approach is that scrapers do not know they have been caught. They continue burning compute and bandwidth on worthless content while their behavioral patterns are logged and used to improve detection across Cloudflare's entire network. We covered AI Labyrinth in detail in a [previous post](/2026/02/03/cloudflare-ai-labyrinth-how-honeypot-pages-are-trapping-scrapers/).
+The genius of the approach is that scrapers do not know they have been caught. They continue burning compute and bandwidth on worthless content while their behavioral patterns are logged and used to improve detection across Cloudflare's entire network. We covered AI Labyrinth in detail in a [previous post](/posts/cloudflare-ai-labyrinth-how-honeypot-pages-are-trapping-scrapers/).
 
 ### Real-Time Behavioral Scoring
 

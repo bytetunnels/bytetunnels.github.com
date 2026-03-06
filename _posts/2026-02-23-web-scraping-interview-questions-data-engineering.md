@@ -900,7 +900,7 @@ Beyond knowing the technical answers, interviewers evaluate how you think about 
 
 **Understand the data pipeline.** Scraping is rarely the end goal. The data feeds into something -- a database, a dashboard, an ML model, a search index. Show that you think about data quality, deduplication, schema validation, and delivery to downstream consumers.
 
-**Practice with real sites.** Sites like [books.toscrape.com](http://books.toscrape.com), [quotes.toscrape.com](http://quotes.toscrape.com), and [httpbin.org](https://httpbin.org) are built specifically for scraping practice. Use them to build sample projects you can discuss in the interview.
+**Practice with real sites.** Sites like [books.toscrape.com](https://books.toscrape.com), [quotes.toscrape.com](https://quotes.toscrape.com), and [httpbin.org](https://httpbin.org) are built specifically for scraping practice. Use them to build sample projects you can discuss in the interview.
 
 ## Final Thoughts
 
