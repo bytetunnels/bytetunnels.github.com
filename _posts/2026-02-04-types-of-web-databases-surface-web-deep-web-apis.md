@@ -6,7 +6,7 @@ tags: ["web databases", "surface web", "deep web", "apis", "data sources", "web 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-04-types-of-web-databases-surface-web-deep-web-apis-hero.png
+  path: /assets/img/2026-02-04-types-of-web-databases-surface-web-deep-web-apis-hero.jpg
   alt: "Types of Web Databases: Surface Web, Deep Web, and APIs"
 ---
 

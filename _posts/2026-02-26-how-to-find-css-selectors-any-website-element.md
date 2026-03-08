@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["css selectors", "devtools", "web scraping", "tutorial", "chrome", "inspect element"]
 author: arman
 image:
-  path: /assets/img/2026-02-26-how-to-find-css-selectors-any-website-element-hero.png
+  path: /assets/img/2026-02-26-how-to-find-css-selectors-any-website-element-hero.jpg
   alt: "How to Find CSS Selectors for Any Website Element"
 ---
 

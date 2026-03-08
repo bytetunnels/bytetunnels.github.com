@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["nodriver", "click", "element interaction", "python", "browser automation", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-02-10-nodriver-click-handling-page-click-element-interaction-hero.png
+  path: /assets/img/2026-02-10-nodriver-click-handling-page-click-element-interaction-hero.jpg
   alt: "Nodriver Click Handling: page.click and Element Interaction"
 ---
 

@@ -6,7 +6,7 @@ tags: ["xpath", "web scraping", "html parsing", "selenium", "data extraction", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-03-xpath-basics-navigating-web-pages-like-map-hero.png
+  path: /assets/img/2025-05-03-xpath-basics-navigating-web-pages-like-map-hero.jpg
   alt: "XPath Basics: Navigating Web Pages Like a Map"
 ---
 

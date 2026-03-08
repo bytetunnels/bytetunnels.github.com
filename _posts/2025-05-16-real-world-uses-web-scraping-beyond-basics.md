@@ -6,7 +6,7 @@ tags: ["applications", "business intelligence", "market research", "e-commerce",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-16-real-world-uses-web-scraping-beyond-basics-hero.png
+  path: /assets/img/2025-05-16-real-world-uses-web-scraping-beyond-basics-hero.jpg
   alt: "Real-World Uses for Web Scraping: Beyond the Basics"
 ---
 

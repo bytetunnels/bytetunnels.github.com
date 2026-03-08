@@ -6,7 +6,7 @@ tags: ["web data", "data types", "structured data", "unstructured data", "json",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-12-types-of-web-data-field-guide-hero.png
+  path: /assets/img/2025-05-12-types-of-web-data-field-guide-hero.jpg
   alt: "Types of Web Data You'll Encounter: A Field Guide"
 ---
 

@@ -6,7 +6,7 @@ tags: ["javascript", "dynamic content", "spa", "ajax", "playwright", "selenium",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-30-taming-dynamic-websites-browser-automation-javascript-hero.png
+  path: /assets/img/2025-04-30-taming-dynamic-websites-browser-automation-javascript-hero.jpg
   alt: "Taming Dynamic Websites: How Browser Automation Handles JavaScript"
 ---
 

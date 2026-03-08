@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["selenium", "stealth", "selenium-stealth", "anti-detection", "python", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-13-selenium-stealth-making-selenium-less-detectable-hero.png
+  path: /assets/img/2026-02-13-selenium-stealth-making-selenium-less-detectable-hero.jpg
   alt: "selenium-stealth: Making Selenium Less Detectable"
 ---
 

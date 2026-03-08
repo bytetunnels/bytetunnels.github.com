@@ -6,7 +6,7 @@ tags: ["travel", "anti-bot", "scraping", "hotels", "flights", "responsible", "le
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-16-bypassing-anti-bot-travel-sites-without-violating-tos-hero.png
+  path: /assets/img/2026-02-16-bypassing-anti-bot-travel-sites-without-violating-tos-hero.jpg
   alt: "Scraping Travel Sites: Navigating Anti-Bot Protections Responsibly"
 ---
 

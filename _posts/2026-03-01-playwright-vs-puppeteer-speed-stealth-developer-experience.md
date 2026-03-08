@@ -6,7 +6,7 @@ tags: ["playwright", "puppeteer", "comparison", "speed", "stealth", "developer e
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-01-playwright-vs-puppeteer-speed-stealth-developer-experience-hero.png
+  path: /assets/img/2026-03-01-playwright-vs-puppeteer-speed-stealth-developer-experience-hero.jpg
   alt: "Playwright vs Puppeteer: Speed, Stealth, and Developer Experience Compared"
 ---
 

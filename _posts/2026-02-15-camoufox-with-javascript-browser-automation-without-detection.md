@@ -6,7 +6,7 @@ tags: ["camoufox", "javascript", "nodejs", "browser automation", "stealth", "ant
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-15-camoufox-with-javascript-browser-automation-without-detection-hero.png
+  path: /assets/img/2026-02-15-camoufox-with-javascript-browser-automation-without-detection-hero.jpg
   alt: "Camoufox with JavaScript: Browser Automation Without Detection"
 ---
 

@@ -6,7 +6,7 @@ tags: ["element identification", "css selectors", "xpath", "dom navigation", "sc
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-14-identifying-scrapable-elements-hero.png
+  path: /assets/img/2025-05-14-identifying-scrapable-elements-hero.jpg
   alt: "Identifying Scrapable Elements: Finding Needles in Haystacks"
 ---
 

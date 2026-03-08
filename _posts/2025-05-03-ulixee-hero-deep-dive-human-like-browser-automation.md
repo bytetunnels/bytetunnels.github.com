@@ -6,7 +6,7 @@ tags: ["ulixee", "hero", "browser automation", "stealth scraping", "human simula
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-03-ulixee-hero-deep-dive-human-like-browser-automation-hero.png
+  path: /assets/img/2025-05-03-ulixee-hero-deep-dive-human-like-browser-automation-hero.jpg
   alt: "Ulixee Hero Deep Dive: The Human-Like Browser Automation Platform"
 ---
 

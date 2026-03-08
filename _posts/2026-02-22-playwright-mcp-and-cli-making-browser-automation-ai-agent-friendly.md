@@ -6,7 +6,7 @@ tags: ["playwright", "mcp", "browser automation", "ai agents", "testing", "model
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-22-playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly-hero.png
+  path: /assets/img/2026-02-22-playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly-hero.jpg
   alt: "Playwright MCP and CLI: Making Browser Automation AI-Agent Friendly"
 ---
 

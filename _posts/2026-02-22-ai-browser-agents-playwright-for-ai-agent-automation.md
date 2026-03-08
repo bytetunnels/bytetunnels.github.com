@@ -6,7 +6,7 @@ tags: ["ai agents", "playwright", "browser automation", "llm", "browser use", "s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-22-ai-browser-agents-playwright-for-ai-agent-automation-hero.png
+  path: /assets/img/2026-02-22-ai-browser-agents-playwright-for-ai-agent-automation-hero.jpg
   alt: "AI Browser Agents: Playwright for AI Agent Automation"
 ---
 

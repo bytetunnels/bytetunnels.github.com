@@ -6,7 +6,7 @@ tags: ["character encoding", "utf-8", "text processing", "unicode", "data extrac
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-08-character-encodings-handling-text-hero.png
+  path: /assets/img/2025-05-08-character-encodings-handling-text-hero.jpg
   alt: "Character Encodings in Plain English: Handling Text Properly"
 ---
 

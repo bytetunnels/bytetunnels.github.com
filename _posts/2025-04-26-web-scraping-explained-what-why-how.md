@@ -6,7 +6,7 @@ tags: ["web scraping", "data extraction", "automation", "python", "requests", "b
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-26-web-scraping-explained-what-why-how-hero.png
+  path: /assets/img/2025-04-26-web-scraping-explained-what-why-how-hero.jpg
   alt: "Web Scraping Explained: The What, Why and How"
 ---
 

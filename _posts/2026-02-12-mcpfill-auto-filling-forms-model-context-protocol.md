@@ -6,7 +6,7 @@ tags: ["mcpfill", "mcp", "model context protocol", "forms", "ai", "automation", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-12-mcpfill-auto-filling-forms-model-context-protocol-hero.png
+  path: /assets/img/2026-02-12-mcpfill-auto-filling-forms-model-context-protocol-hero.jpg
   alt: "MCPFill: Auto-Filling Forms with Model Context Protocol"
 ---
 

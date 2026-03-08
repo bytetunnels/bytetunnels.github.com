@@ -6,7 +6,7 @@ tags: ["selenium", "playwright", "puppeteer", "ulixee hero", "nodriver", "browse
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-27-browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver-hero.png
+  path: /assets/img/2025-04-27-browser-automation-showdown-selenium-playwright-puppeteer-ulixee-hero-nodriver-hero.jpg
   alt: "Browser Automation Showdown: Selenium vs Playwright vs Puppeteer vs Ulixee Hero vs Nodriver"
 ---
 

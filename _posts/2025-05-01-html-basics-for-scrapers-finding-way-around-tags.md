@@ -6,7 +6,7 @@ tags: ["html", "parsing", "dom", "xpath", "css-selectors", "web-scraping", "elem
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-01-html-basics-for-scrapers-finding-way-around-tags-hero.png
+  path: /assets/img/2025-05-01-html-basics-for-scrapers-finding-way-around-tags-hero.jpg
   alt: "HTML Basics for Scrapers: Finding Your Way Around Tags"
 ---
 

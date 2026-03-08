@@ -6,7 +6,7 @@ tags: ["anti-bot", "e-commerce", "scraping", "cloudflare", "datadome", "comparis
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-23-surviving-anti-bot-updates-ecommerce-sites-tool-comparison-hero.png
+  path: /assets/img/2026-02-23-surviving-anti-bot-updates-ecommerce-sites-tool-comparison-hero.jpg
   alt: "Surviving Anti-Bot Updates on E-Commerce Sites: Tool Comparison"
 ---
 

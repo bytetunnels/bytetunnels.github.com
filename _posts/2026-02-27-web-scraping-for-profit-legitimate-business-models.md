@@ -6,7 +6,7 @@ tags: ["web scraping", "business", "profit", "data", "entrepreneurship", "legiti
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-27-web-scraping-for-profit-legitimate-business-models-hero.png
+  path: /assets/img/2026-02-27-web-scraping-for-profit-legitimate-business-models-hero.jpg
   alt: "Web Scraping for Profit: Legitimate Business Models"
 ---
 

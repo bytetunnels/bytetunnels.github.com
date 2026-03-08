@@ -6,7 +6,7 @@ tags: ["shadow dom", "web components", "browser automation", "ai scraping", "dom
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-27-shadow-dom-the-silent-killer-of-ai-web-scraping-hero.png
+  path: /assets/img/2026-02-27-shadow-dom-the-silent-killer-of-ai-web-scraping-hero.jpg
   alt: "Shadow DOM: The Silent Killer of AI Web Scraping"
 ---
 

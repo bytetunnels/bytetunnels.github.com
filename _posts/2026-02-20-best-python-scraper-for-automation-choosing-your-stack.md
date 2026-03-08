@@ -6,7 +6,7 @@ tags: ["python", "scraper", "automation", "requests", "scrapy", "playwright", "s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-20-best-python-scraper-for-automation-choosing-your-stack-hero.png
+  path: /assets/img/2026-02-20-best-python-scraper-for-automation-choosing-your-stack-hero.jpg
   alt: "Best Python Scraper for Automation: Choosing Your Stack"
 ---
 

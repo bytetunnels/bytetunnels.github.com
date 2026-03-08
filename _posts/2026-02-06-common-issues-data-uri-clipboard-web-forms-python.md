@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["data uri", "clipboard", "web forms", "python", "automation", "file upload", "base64"]
 author: arman
 image:
-  path: /assets/img/2026-02-06-common-issues-data-uri-clipboard-web-forms-python-hero.png
+  path: /assets/img/2026-02-06-common-issues-data-uri-clipboard-web-forms-python-hero.jpg
   alt: "Common Issues with Data URI from Clipboard in Web Forms (Python)"
 ---
 

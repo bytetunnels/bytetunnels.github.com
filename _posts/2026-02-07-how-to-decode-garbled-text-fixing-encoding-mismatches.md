@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["encoding", "garbled text", "mojibake", "python", "utf-8", "latin-1", "text processing"]
 author: arman
 image:
-  path: /assets/img/2026-02-07-how-to-decode-garbled-text-fixing-encoding-mismatches-hero.png
+  path: /assets/img/2026-02-07-how-to-decode-garbled-text-fixing-encoding-mismatches-hero.jpg
   alt: "How to Decode Garbled Text: Fixing Encoding Mismatches"
 ---
 

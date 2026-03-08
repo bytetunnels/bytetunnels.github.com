@@ -6,7 +6,7 @@ tags: ["selenium", "webdriver", "python", "browser automation", "web scraping", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-29-getting-started-with-selenium-first-automated-browser-hero.png
+  path: /assets/img/2025-04-29-getting-started-with-selenium-first-automated-browser-hero.jpg
   alt: "Getting Started with Selenium: Your First Automated Browser Session"
 ---
 

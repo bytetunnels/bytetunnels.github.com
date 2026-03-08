@@ -6,7 +6,7 @@ tags: ["text encoding", "web scraping", "utf-8", "unicode", "python", "problems"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-06-text-encoding-issues-web-scraping-common-problems-fixes-hero.png
+  path: /assets/img/2026-02-06-text-encoding-issues-web-scraping-common-problems-fixes-hero.jpg
   alt: "Text Encoding Issues in Web Scraping: Common Problems and Fixes"
 ---
 

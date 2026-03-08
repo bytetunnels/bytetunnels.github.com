@@ -5,7 +5,7 @@ categories: ["Web Scraping"]
 tags: ["httpx", "python", "async", "http client", "web scraping", "performance", "aiohttp"]
 author: arman
 image:
-  path: /assets/img/2026-02-15-web-scraping-httpx-async-http-fast-data-collection-hero.png
+  path: /assets/img/2026-02-15-web-scraping-httpx-async-http-fast-data-collection-hero.jpg
   alt: "Web Scraping with HTTPX: Async HTTP for Fast Data Collection"
 ---
 

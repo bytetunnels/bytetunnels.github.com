@@ -6,7 +6,7 @@ tags: ["web scraping", "web crawling", "data extraction", "automation", "fundame
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-05-scraping-vs-crawling-differences-hero.png
+  path: /assets/img/2025-05-05-scraping-vs-crawling-differences-hero.jpg
   alt: "Scraping vs. Crawling: Important Differences Explained"
 ---
 

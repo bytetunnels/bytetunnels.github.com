@@ -6,7 +6,7 @@ tags: ["bot traffic", "web scraping", "industry trends", "proxies", "ai crawling
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-25-the-ai-bot-traffic-explosion-what-1-bot-per-31-humans-means-for-the-web-hero.png
+  path: /assets/img/2026-02-25-the-ai-bot-traffic-explosion-what-1-bot-per-31-humans-means-for-the-web-hero.jpg
   alt: "The AI Bot Traffic Explosion: What 1 Bot per 31 Humans Means for the Web"
 ---
 

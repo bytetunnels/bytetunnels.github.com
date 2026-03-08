@@ -6,7 +6,7 @@ tags: ["dom", "document object model", "beginner", "html", "browser", "tutorial"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-04-what-is-the-dom-visual-explanation-for-non-developers-hero.png
+  path: /assets/img/2026-02-04-what-is-the-dom-visual-explanation-for-non-developers-hero.jpg
   alt: "What Is the DOM? A Visual Explanation for Non-Developers"
 ---
 

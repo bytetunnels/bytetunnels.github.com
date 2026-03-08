@@ -6,7 +6,7 @@ tags: ["beautifulsoup", "scrapy", "selenium", "python", "comparison", "decision 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-21-beautifulsoup-vs-scrapy-vs-selenium-python-scrapers-decision-tree-hero.png
+  path: /assets/img/2026-02-21-beautifulsoup-vs-scrapy-vs-selenium-python-scrapers-decision-tree-hero.jpg
   alt: "BeautifulSoup vs Scrapy vs Selenium: A Python Scraper's Decision Tree"
 ---
 

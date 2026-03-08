@@ -6,7 +6,7 @@ tags: ["playwright", "stealth", "undetected-playwright", "playwright-stealth", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-16-undetected-playwright-vs-playwright-stealth-which-plugin-hero.png
+  path: /assets/img/2026-02-16-undetected-playwright-vs-playwright-stealth-which-plugin-hero.jpg
   alt: "undetected-playwright vs playwright-stealth: Which Plugin to Use?"
 ---
 

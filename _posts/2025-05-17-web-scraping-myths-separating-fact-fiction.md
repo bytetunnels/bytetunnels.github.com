@@ -6,7 +6,7 @@ tags: ["web scraping", "myths", "legal issues", "ethics", "misconceptions", "fac
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-17-web-scraping-myths-separating-fact-fiction-hero.png
+  path: /assets/img/2025-05-17-web-scraping-myths-separating-fact-fiction-hero.jpg
   alt: "Web Scraping Myths: Separating Fact from Fiction"
 ---
 

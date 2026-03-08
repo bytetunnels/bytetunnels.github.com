@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["css selectors", "python", "beautifulsoup", "lxml", "parsel", "selectolax", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-11-css-selectors-python-libraries-usage-patterns-hero.png
+  path: /assets/img/2026-02-11-css-selectors-python-libraries-usage-patterns-hero.jpg
   alt: "CSS Selectors in Python: Libraries and Usage Patterns"
 ---
 

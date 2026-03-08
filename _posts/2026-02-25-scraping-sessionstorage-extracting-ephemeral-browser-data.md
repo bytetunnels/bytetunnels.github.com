@@ -6,7 +6,7 @@ tags: ["sessionstorage", "scraping", "browser automation", "javascript", "python
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-25-scraping-sessionstorage-extracting-ephemeral-browser-data-hero.png
+  path: /assets/img/2026-02-25-scraping-sessionstorage-extracting-ephemeral-browser-data-hero.jpg
   alt: "Scraping sessionStorage: Extracting Ephemeral Browser Data"
 ---
 

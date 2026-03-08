@@ -6,7 +6,7 @@ tags: ["pydoll", "playwright", "comparison", "python", "browser automation", "li
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-15-pydoll-vs-playwright-lightweight-python-browser-control-hero.png
+  path: /assets/img/2026-02-15-pydoll-vs-playwright-lightweight-python-browser-control-hero.jpg
   alt: "Pydoll vs Playwright: Lightweight Python Browser Control Compared"
 ---
 

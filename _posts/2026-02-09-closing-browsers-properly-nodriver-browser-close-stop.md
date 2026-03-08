@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["nodriver", "browser close", "cleanup", "python", "browser automation", "best practices"]
 author: arman
 image:
-  path: /assets/img/2026-02-09-closing-browsers-properly-nodriver-browser-close-stop-hero.png
+  path: /assets/img/2026-02-09-closing-browsers-properly-nodriver-browser-close-stop-hero.jpg
   alt: "Closing Browsers Properly in Nodriver: browser.close() and browser.stop()"
 ---
 

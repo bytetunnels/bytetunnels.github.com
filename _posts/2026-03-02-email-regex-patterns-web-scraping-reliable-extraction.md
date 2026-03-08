@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["regex", "email", "web scraping", "python", "data extraction", "pattern matching"]
 author: arman
 image:
-  path: /assets/img/2026-03-02-email-regex-patterns-web-scraping-reliable-extraction-hero.png
+  path: /assets/img/2026-03-02-email-regex-patterns-web-scraping-reliable-extraction-hero.jpg
   alt: "Email Regex Patterns for Web Scraping: Reliable Extraction"
 ---
 

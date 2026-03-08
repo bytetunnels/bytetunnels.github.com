@@ -6,7 +6,7 @@ tags: ["scrapy", "puppeteer", "comparison", "crawler", "browser automation", "we
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-27-scrapy-vs-puppeteer-when-to-use-crawler-vs-browser-hero.png
+  path: /assets/img/2026-02-27-scrapy-vs-puppeteer-when-to-use-crawler-vs-browser-hero.jpg
   alt: "Scrapy vs Puppeteer: When to Use a Crawler vs a Browser"
 ---
 

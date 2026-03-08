@@ -6,7 +6,7 @@ tags: ["web scraping", "planning", "ethics", "legal", "strategy", "fundamentals"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-18-before-you-scrape-essential-questions-hero.png
+  path: /assets/img/2025-05-18-before-you-scrape-essential-questions-hero.jpg
   alt: "Before You Scrape: Essential Questions to Ask"
 ---
 

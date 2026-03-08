@@ -6,7 +6,7 @@ tags: ["xpath", "css selectors", "comparison", "performance", "web scraping", "p
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-26-xpath-vs-css-selectors-performance-readability-compared-hero.png
+  path: /assets/img/2026-02-26-xpath-vs-css-selectors-performance-readability-compared-hero.jpg
   alt: "XPath vs CSS Selectors: Performance and Readability Compared"
 ---
 

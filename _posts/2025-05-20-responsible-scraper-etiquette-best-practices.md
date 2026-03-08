@@ -6,7 +6,7 @@ tags: ["web scraping ethics", "robots.txt", "rate limiting", "scraping etiquette
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-20-responsible-scraper-etiquette-best-practices-hero.png
+  path: /assets/img/2025-05-20-responsible-scraper-etiquette-best-practices-hero.jpg
   alt: "The Responsible Scraper: Etiquette and Best Practices"
 ---
 

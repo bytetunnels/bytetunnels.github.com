@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["beautifulsoup", "css selectors", "python", "html parsing", "web scraping", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-02-22-beautifulsoup-css-selectors-python-parsing-made-easy-hero.png
+  path: /assets/img/2026-02-22-beautifulsoup-css-selectors-python-parsing-made-easy-hero.jpg
   alt: "BeautifulSoup CSS Selectors: Python Parsing Made Easy"
 ---
 

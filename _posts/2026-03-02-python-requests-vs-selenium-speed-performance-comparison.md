@@ -6,7 +6,7 @@ tags: ["python", "requests", "selenium", "performance", "speed", "comparison", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-02-python-requests-vs-selenium-speed-performance-comparison-hero.png
+  path: /assets/img/2026-03-02-python-requests-vs-selenium-speed-performance-comparison-hero.jpg
   alt: "Python Requests vs Selenium: Speed and Performance Comparison"
 ---
 

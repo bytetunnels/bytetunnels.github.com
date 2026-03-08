@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["puppeteer", "dropdown", "select", "forms", "javascript", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-02-11-puppeteer-select-dropdown-handling-select-elements-hero.png
+  path: /assets/img/2026-02-11-puppeteer-select-dropdown-handling-select-elements-hero.jpg
   alt: "Puppeteer Select Dropdown: Handling select Elements Programmatically"
 ---
 

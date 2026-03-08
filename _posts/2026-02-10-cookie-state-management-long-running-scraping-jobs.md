@@ -6,7 +6,7 @@ tags: ["cookies", "state management", "scraping", "python", "requests", "session
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-10-cookie-state-management-long-running-scraping-jobs-hero.png
+  path: /assets/img/2026-02-10-cookie-state-management-long-running-scraping-jobs-hero.jpg
   alt: "Cookie State Management for Long-Running Scraping Jobs"
 ---
 

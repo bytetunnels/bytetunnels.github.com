@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["regex", "web scraping", "regular expressions", "python", "data extraction", "pattern matching"]
 author: arman
 image:
-  path: /assets/img/2026-03-04-regex-for-web-scraping-extracting-data-without-parser-hero.png
+  path: /assets/img/2026-03-04-regex-for-web-scraping-extracting-data-without-parser-hero.jpg
   alt: "Regex for Web Scraping: Extracting Data Without a Parser"
 ---
 

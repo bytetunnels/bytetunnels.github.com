@@ -6,7 +6,7 @@ tags: ["selenium", "proxy", "nodejs", "javascript", "web scraping", "ip rotation
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-27-using-proxies-selenium-nodejs-hero.png
+  path: /assets/img/2026-02-27-using-proxies-selenium-nodejs-hero.jpg
   alt: "Using Proxies with Selenium in Node.js"
 ---
 

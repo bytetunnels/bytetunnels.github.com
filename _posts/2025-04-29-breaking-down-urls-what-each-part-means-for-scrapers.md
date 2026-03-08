@@ -6,7 +6,7 @@ tags: ["urls", "web scraping", "anatomy", "fundamentals", "parameters", "endpoin
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-29-breaking-down-urls-what-each-part-means-for-scrapers-hero.png
+  path: /assets/img/2025-04-29-breaking-down-urls-what-each-part-means-for-scrapers-hero.jpg
   alt: "Breaking Down URLs: What Each Part Means for Scrapers"
 ---
 

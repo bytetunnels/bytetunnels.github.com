@@ -6,7 +6,7 @@ tags: ["dynamic elements", "element selectors", "xpath", "css selectors", "playw
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-06-element-hunt-advanced-techniques-finding-changing-elements-hero.png
+  path: /assets/img/2025-05-06-element-hunt-advanced-techniques-finding-changing-elements-hero.jpg
   alt: "The Element Hunt: Advanced Techniques for Finding Changing Elements"
 ---
 

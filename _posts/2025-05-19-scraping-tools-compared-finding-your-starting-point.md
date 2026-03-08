@@ -6,7 +6,7 @@ tags: ["scraping tools", "python", "javascript", "selenium", "playwright", "pupp
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-19-scraping-tools-compared-finding-your-starting-point-hero.png
+  path: /assets/img/2025-05-19-scraping-tools-compared-finding-your-starting-point-hero.jpg
   alt: "Scraping Tools Compared: Finding Your Starting Point"
 ---
 

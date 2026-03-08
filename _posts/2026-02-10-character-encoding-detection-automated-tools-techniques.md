@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["character encoding", "detection", "chardet", "python", "utf-8", "text processing", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-10-character-encoding-detection-automated-tools-techniques-hero.png
+  path: /assets/img/2026-02-10-character-encoding-detection-automated-tools-techniques-hero.jpg
   alt: "Character Encoding Detection: Automated Tools and Techniques"
 ---
 

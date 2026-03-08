@@ -6,7 +6,7 @@ tags: ["ai agents", "automation", "anthropic", "data extraction", "claude", "fil
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-01-31-ai-file-agents-claude-cowork-and-the-new-automation-frontier-hero.png
+  path: /assets/img/2026-01-31-ai-file-agents-claude-cowork-and-the-new-automation-frontier-hero.jpg
   alt: "AI File Agents Are Here: Claude Cowork and the New Automation Frontier"
 ---
 

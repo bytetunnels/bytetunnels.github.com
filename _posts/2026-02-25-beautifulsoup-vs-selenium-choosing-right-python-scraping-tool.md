@@ -6,7 +6,7 @@ tags: ["beautifulsoup", "selenium", "python", "comparison", "web scraping", "htm
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-25-beautifulsoup-vs-selenium-choosing-right-python-scraping-tool-hero.png
+  path: /assets/img/2026-02-25-beautifulsoup-vs-selenium-choosing-right-python-scraping-tool-hero.jpg
   alt: "BeautifulSoup vs Selenium: Choosing the Right Python Scraping Tool"
 ---
 

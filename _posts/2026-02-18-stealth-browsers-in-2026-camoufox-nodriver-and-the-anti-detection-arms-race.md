@@ -6,7 +6,7 @@ tags: ["stealth", "camoufox", "nodriver", "anti-detection", "browser automation"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-18-stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race-hero.png
+  path: /assets/img/2026-02-18-stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race-hero.jpg
   alt: "Stealth Browsers in 2026: Camoufox, Nodriver, and the Anti-Detection Arms Race"
 ---
 

@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["selenium", "element click intercepted", "debugging", "python", "error", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-17-element-click-intercepted-selenium-why-it-happens-how-to-fix-hero.png
+  path: /assets/img/2026-02-17-element-click-intercepted-selenium-why-it-happens-how-to-fix-hero.jpg
   alt: "Element Click Intercepted in Selenium: Why It Happens and How to Fix It"
 ---
 

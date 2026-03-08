@@ -6,7 +6,7 @@ tags: ["detection", "anti-bot", "history", "timeline", "cloudflare", "captcha", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-01-evolution-web-scraping-detection-methods-timeline-hero.png
+  path: /assets/img/2026-03-01-evolution-web-scraping-detection-methods-timeline-hero.jpg
   alt: "Evolution of Web Scraping Detection Methods: A Timeline"
 ---
 

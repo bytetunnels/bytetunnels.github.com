@@ -6,7 +6,7 @@ tags: ["playwright", "selenium", "stealth", "anti-detection", "bot detection", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-03-playwright-vs-selenium-stealth-which-evades-detection-better-hero.png
+  path: /assets/img/2026-03-03-playwright-vs-selenium-stealth-which-evades-detection-better-hero.jpg
   alt: "Playwright vs Selenium for Stealth: Which Evades Detection Better?"
 ---
 

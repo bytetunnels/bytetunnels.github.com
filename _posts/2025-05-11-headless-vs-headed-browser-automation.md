@@ -6,7 +6,7 @@ tags: ["headless", "browser", "selenium", "playwright", "puppeteer", "performanc
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-11-headless-vs-headed-browser-automation-hero.png
+  path: /assets/img/2025-05-11-headless-vs-headed-browser-automation-hero.jpg
   alt: "Headless vs Headed: When to Show the Browser and When to Hide It"
 ---
 

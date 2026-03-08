@@ -6,7 +6,7 @@ tags: ["robots.txt", "standards", "ethics", "web scraping", "legal", "ietf", "ai
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-05-ietf-aipref-the-new-robots-txt-for-the-ai-era-hero.png
+  path: /assets/img/2026-02-05-ietf-aipref-the-new-robots-txt-for-the-ai-era-hero.jpg
   alt: "IETF AIPREF: The New robots.txt for the AI Era"
 ---
 

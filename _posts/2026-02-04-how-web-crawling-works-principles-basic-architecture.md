@@ -6,7 +6,7 @@ tags: ["web crawling", "crawler", "spider", "architecture", "tutorial", "beginne
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-04-how-web-crawling-works-principles-basic-architecture-hero.png
+  path: /assets/img/2026-02-04-how-web-crawling-works-principles-basic-architecture-hero.jpg
   alt: "How Web Crawling Works: Principles and Basic Architecture"
 ---
 

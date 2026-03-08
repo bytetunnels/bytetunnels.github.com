@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["regex", "lookahead", "lookbehind", "advanced", "web scraping", "python", "pattern matching"]
 author: arman
 image:
-  path: /assets/img/2026-02-16-regex-lookahead-web-scrapers-advanced-pattern-matching-hero.png
+  path: /assets/img/2026-02-16-regex-lookahead-web-scrapers-advanced-pattern-matching-hero.jpg
   alt: "Regex Lookahead in Web Scrapers: Advanced Pattern Matching"
 ---
 

@@ -6,7 +6,7 @@ tags: ["httpmorph", "tls fingerprinting", "python", "http client", "ja4", "perfo
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-12-16-httpmorph-solving-tls-fingerprinting-with-a-c-native-python-http-client-hero.png
+  path: /assets/img/2025-12-16-httpmorph-solving-tls-fingerprinting-with-a-c-native-python-http-client-hero.jpg
   alt: "httpmorph: Solving TLS Fingerprinting with a C-Native Python HTTP Client"
 ---
 

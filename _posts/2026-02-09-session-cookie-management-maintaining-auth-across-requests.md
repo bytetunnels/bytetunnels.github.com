@@ -6,7 +6,7 @@ tags: ["session", "cookies", "authentication", "python", "requests", "web scrapi
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-09-session-cookie-management-maintaining-auth-across-requests-hero.png
+  path: /assets/img/2026-02-09-session-cookie-management-maintaining-auth-across-requests-hero.jpg
   alt: "Session Cookie Management: Maintaining Auth Across Requests"
 ---
 

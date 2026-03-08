@@ -6,7 +6,7 @@ tags: ["css selectors", "web scraping", "dom", "xpath", "data extraction", "html
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-02-css-selectors-made-simple-hero.png
+  path: /assets/img/2025-05-02-css-selectors-made-simple-hero.jpg
   alt: "CSS Selectors Made Simple: Picking Data with Precision"
 ---
 

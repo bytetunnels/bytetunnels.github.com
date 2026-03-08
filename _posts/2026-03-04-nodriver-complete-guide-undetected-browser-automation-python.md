@@ -6,7 +6,7 @@ tags: ["nodriver", "python", "undetected", "browser automation", "web scraping",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-04-nodriver-complete-guide-undetected-browser-automation-python-hero.png
+  path: /assets/img/2026-03-04-nodriver-complete-guide-undetected-browser-automation-python-hero.jpg
   alt: "Nodriver Complete Guide: Undetected Browser Automation in Python"
 ---
 

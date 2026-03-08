@@ -6,7 +6,7 @@ tags: ["session persistence", "login", "authentication", "cookies", "automation"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-08-user-session-persistence-keeping-logins-alive-automation-hero.png
+  path: /assets/img/2026-02-08-user-session-persistence-keeping-logins-alive-automation-hero.jpg
   alt: "User Session Persistence: Keeping Logins Alive in Automation"
 ---
 

@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["regex", "web scraping", "python", "patterns", "data extraction", "regular expressions", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-03-04-building-web-scraper-with-regex-practical-patterns-pitfalls-hero.png
+  path: /assets/img/2026-03-04-building-web-scraper-with-regex-practical-patterns-pitfalls-hero.jpg
   alt: "Building a Web Scraper with Regex: Practical Patterns and Pitfalls"
 ---
 

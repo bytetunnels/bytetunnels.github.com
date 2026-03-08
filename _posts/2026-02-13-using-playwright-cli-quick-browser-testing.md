@@ -6,7 +6,7 @@ tags: ["playwright", "cli", "command line", "testing", "browser", "codegen", "sc
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-13-using-playwright-cli-quick-browser-testing-hero.png
+  path: /assets/img/2026-02-13-using-playwright-cli-quick-browser-testing-hero.jpg
   alt: "Using Playwright CLI for Quick Browser Testing"
 ---
 

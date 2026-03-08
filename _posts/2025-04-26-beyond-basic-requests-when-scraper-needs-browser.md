@@ -6,7 +6,7 @@ tags: ["web scraping", "browser automation", "javascript", "dynamic content", "s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-26-beyond-basic-requests-when-scraper-needs-browser-hero.png
+  path: /assets/img/2025-04-26-beyond-basic-requests-when-scraper-needs-browser-hero.jpg
   alt: "Beyond Basic Requests: When Your Scraper Needs a Real Browser"
 ---
 

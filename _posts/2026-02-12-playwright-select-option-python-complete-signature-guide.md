@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["playwright", "select_option", "python", "dropdowns", "forms", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-02-12-playwright-select-option-python-complete-signature-guide-hero.png
+  path: /assets/img/2026-02-12-playwright-select-option-python-complete-signature-guide-hero.jpg
   alt: "Playwright select_option in Python: The Complete Signature Guide"
 ---
 

@@ -6,7 +6,7 @@ tags: ["robots.txt", "legal", "web scraping", "law", "CFAA", "copyright", "ethic
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-01-is-robots-txt-legally-binding-scraping-law-explained-hero.png
+  path: /assets/img/2026-03-01-is-robots-txt-legally-binding-scraping-law-explained-hero.jpg
   alt: "Is robots.txt Legally Binding? Scraping Law Explained"
 ---
 

@@ -5,7 +5,7 @@ categories: ["Ethics and Legal"]
 tags: ["legal", "myths", "web scraping", "law", "court cases", "CFAA", "copyright", "terms of service"]
 author: arman
 image:
-  path: /assets/img/2026-02-13-legal-myths-web-scraping-what-courts-actually-say-hero.png
+  path: /assets/img/2026-02-13-legal-myths-web-scraping-what-courts-actually-say-hero.jpg
   alt: "Legal Myths About Web Scraping: What the Courts Actually Say"
 ---
 

@@ -6,7 +6,7 @@ tags: ["playwright", "wait_for_selector", "python", "dynamic content", "web scra
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-16-playwright-wait-for-selector-python-waiting-elements-reliably-hero.png
+  path: /assets/img/2026-02-16-playwright-wait-for-selector-python-waiting-elements-reliably-hero.jpg
   alt: "Playwright wait_for_selector in Python: Waiting for Elements Reliably"
 ---
 

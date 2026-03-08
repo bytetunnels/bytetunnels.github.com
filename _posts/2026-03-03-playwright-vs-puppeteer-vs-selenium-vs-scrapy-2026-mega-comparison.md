@@ -6,7 +6,7 @@ tags: ["playwright", "puppeteer", "selenium", "scrapy", "comparison", "web scrap
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-03-playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison-hero.png
+  path: /assets/img/2026-03-03-playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison-hero.jpg
   alt: "Playwright vs Puppeteer vs Selenium vs Scrapy: The 2026 Mega-Comparison"
 ---
 

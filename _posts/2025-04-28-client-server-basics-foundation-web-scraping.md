@@ -6,7 +6,7 @@ tags: ["client-server", "http", "requests", "web scraping basics", "networking",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-28-client-server-basics-foundation-web-scraping-hero.png
+  path: /assets/img/2025-04-28-client-server-basics-foundation-web-scraping-hero.jpg
   alt: "Client-Server Basics: The Foundation of All Web Scraping"
 ---
 

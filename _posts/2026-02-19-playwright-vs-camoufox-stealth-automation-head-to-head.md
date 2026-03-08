@@ -6,7 +6,7 @@ tags: ["playwright", "camoufox", "comparison", "stealth", "anti-detection", "fir
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-19-playwright-vs-camoufox-stealth-automation-head-to-head-hero.png
+  path: /assets/img/2026-02-19-playwright-vs-camoufox-stealth-automation-head-to-head-hero.jpg
   alt: "Playwright vs Camoufox: Stealth Automation Head-to-Head"
 ---
 

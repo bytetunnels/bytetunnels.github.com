@@ -6,7 +6,7 @@ tags: ["data extraction", "choosing tools", "evaluation", "web scraping", "decis
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-05-what-questions-to-ask-choosing-data-extraction-solution-hero.png
+  path: /assets/img/2026-02-05-what-questions-to-ask-choosing-data-extraction-solution-hero.jpg
   alt: "What Questions to Ask When Choosing a Data Extraction Solution"
 ---
 

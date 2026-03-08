@@ -6,7 +6,7 @@ tags: ["puppeteer", "playwright", "mcp", "model context protocol", "ai", "browse
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-19-puppeteer-mcp-vs-playwright-mcp-model-context-protocol-browsers-hero.png
+  path: /assets/img/2026-02-19-puppeteer-mcp-vs-playwright-mcp-model-context-protocol-browsers-hero.jpg
   alt: "Puppeteer MCP vs Playwright MCP: Model Context Protocol for Browsers"
 ---
 

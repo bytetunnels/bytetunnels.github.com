@@ -6,7 +6,7 @@ tags: ["beautifulsoup", "playwright", "comparison", "python", "static", "dynamic
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-20-beautifulsoup-vs-playwright-static-parsing-vs-browser-automation-hero.png
+  path: /assets/img/2026-02-20-beautifulsoup-vs-playwright-static-parsing-vs-browser-automation-hero.jpg
   alt: "BeautifulSoup vs Playwright: Static Parsing vs Browser Automation"
 ---
 

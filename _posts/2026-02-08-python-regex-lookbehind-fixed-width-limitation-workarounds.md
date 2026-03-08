@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["regex", "python", "lookbehind", "fixed-width", "workaround", "pattern matching"]
 author: arman
 image:
-  path: /assets/img/2026-02-08-python-regex-lookbehind-fixed-width-limitation-workarounds-hero.png
+  path: /assets/img/2026-02-08-python-regex-lookbehind-fixed-width-limitation-workarounds-hero.jpg
   alt: "Python Regex Lookbehind Fixed-Width Limitation: Workarounds"
 ---
 

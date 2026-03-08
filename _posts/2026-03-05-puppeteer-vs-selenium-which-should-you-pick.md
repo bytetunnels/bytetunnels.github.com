@@ -6,7 +6,7 @@ tags: ["puppeteer", "selenium", "comparison", "web scraping", "browser automatio
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-05-puppeteer-vs-selenium-which-should-you-pick-hero.png
+  path: /assets/img/2026-03-05-puppeteer-vs-selenium-which-should-you-pick-hero.jpg
   alt: "Puppeteer vs Selenium: Which Should You Pick in 2026?"
 ---
 

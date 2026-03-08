@@ -6,7 +6,7 @@ tags: ["camoufox", "nodriver", "comparison", "anti-detection", "stealth", "web s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-23-camoufox-vs-nodriver-which-anti-detection-browser-wins-hero.png
+  path: /assets/img/2026-02-23-camoufox-vs-nodriver-which-anti-detection-browser-wins-hero.jpg
   alt: "Camoufox vs Nodriver: Which Anti-Detection Browser Wins?"
 ---
 

@@ -6,7 +6,7 @@ tags: ["puppeteer", "alternatives", "playwright", "selenium", "nodriver", "brows
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-04-top-puppeteer-alternatives-what-to-use-instead-hero.png
+  path: /assets/img/2026-03-04-top-puppeteer-alternatives-what-to-use-instead-hero.jpg
   alt: "Top Puppeteer Alternatives in 2026: What to Use Instead"
 ---
 

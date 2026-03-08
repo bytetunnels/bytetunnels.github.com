@@ -6,7 +6,7 @@ tags: ["industry", "market", "trends", "2026", "web scraping", "business", "data
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-10-web-scraping-industry-2026-market-size-trends-hero.png
+  path: /assets/img/2026-02-10-web-scraping-industry-2026-market-size-trends-hero.jpg
   alt: "The Web Scraping Industry in 2026: Market Size and Trends"
 ---
 

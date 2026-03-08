@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["puppeteer", "networkidle", "page loading", "javascript", "web scraping", "waiting"]
 author: arman
 image:
-  path: /assets/img/2026-02-12-puppeteer-networkidle-explained-when-page-is-done-loading-hero.png
+  path: /assets/img/2026-02-12-puppeteer-networkidle-explained-when-page-is-done-loading-hero.jpg
   alt: "Puppeteer networkidle Explained: When Your Page Is Done Loading"
 ---
 

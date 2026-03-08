@@ -6,7 +6,7 @@ tags: ["nodriver", "zendriver", "comparison", "undetected", "chrome", "python", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-14-nodriver-vs-zendriver-picking-right-undetected-chrome-wrapper-hero.png
+  path: /assets/img/2026-02-14-nodriver-vs-zendriver-picking-right-undetected-chrome-wrapper-hero.jpg
   alt: "Nodriver vs Zendriver: Picking the Right Undetected Chrome Wrapper"
 ---
 

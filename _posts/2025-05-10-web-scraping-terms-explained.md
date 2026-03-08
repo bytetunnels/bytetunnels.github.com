@@ -6,7 +6,7 @@ tags: ["web scraping", "terminology", "beginner guide", "definitions", "fundamen
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-10-web-scraping-terms-explained-hero.png
+  path: /assets/img/2025-05-10-web-scraping-terms-explained-hero.jpg
   alt: "Web Scraping Terms Explained: A Plain-Language Guide"
 ---
 

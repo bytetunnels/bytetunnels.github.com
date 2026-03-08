@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["nodriver", "python", "tutorial", "getting started", "browser automation", "beginner"]
 author: arman
 image:
-  path: /assets/img/2026-03-03-getting-started-nodriver-python-installation-first-script-hero.png
+  path: /assets/img/2026-03-03-getting-started-nodriver-python-installation-first-script-hero.jpg
   alt: "Getting Started with Nodriver in Python: Installation to First Script"
 ---
 

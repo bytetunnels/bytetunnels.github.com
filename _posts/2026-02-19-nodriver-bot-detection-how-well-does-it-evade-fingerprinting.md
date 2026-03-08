@@ -6,7 +6,7 @@ tags: ["nodriver", "bot detection", "fingerprinting", "stealth", "anti-detection
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-19-nodriver-bot-detection-how-well-does-it-evade-fingerprinting-hero.png
+  path: /assets/img/2026-02-19-nodriver-bot-detection-how-well-does-it-evade-fingerprinting-hero.jpg
   alt: "Nodriver Bot Detection: How Well Does It Evade Fingerprinting?"
 ---
 

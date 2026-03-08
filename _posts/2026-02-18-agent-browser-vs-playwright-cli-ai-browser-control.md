@@ -6,7 +6,7 @@ tags: ["agent-browser", "playwright cli", "ai", "browser control", "mcp", "compa
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-18-agent-browser-vs-playwright-cli-ai-browser-control-hero.png
+  path: /assets/img/2026-02-18-agent-browser-vs-playwright-cli-ai-browser-control-hero.jpg
   alt: "agent-browser vs Playwright CLI: Which Gives AI Better Browser Control?"
 ---
 

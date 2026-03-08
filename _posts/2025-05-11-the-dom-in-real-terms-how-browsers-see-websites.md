@@ -6,7 +6,7 @@ tags: ["DOM", "browser", "HTML", "parsing", "web scraping", "document object mod
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-11-the-dom-in-real-terms-how-browsers-see-websites-hero.png
+  path: /assets/img/2025-05-11-the-dom-in-real-terms-how-browsers-see-websites-hero.jpg
   alt: "The DOM in Real Terms: How Browsers See Websites"
 ---
 

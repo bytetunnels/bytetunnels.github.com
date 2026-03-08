@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["playwright", "user agent", "python", "web scraping", "headers", "browser automation"]
 author: arman
 image:
-  path: /assets/img/2026-02-14-changing-user-agents-playwright-why-and-how-hero.png
+  path: /assets/img/2026-02-14-changing-user-agents-playwright-why-and-how-hero.jpg
   alt: "Changing User Agents in Playwright: Why and How"
 ---
 

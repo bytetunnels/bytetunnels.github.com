@@ -6,7 +6,7 @@ tags: ["playwright", "puppeteer", "browser automation", "web scraping", "stealth
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-02-playwright-puppeteer-extra-modern-browser-control-hero.png
+  path: /assets/img/2025-05-02-playwright-puppeteer-extra-modern-browser-control-hero.jpg
   alt: "Playwright and Puppeteer Extra: Modern Browser Control with Enhanced Capabilities"
 ---
 

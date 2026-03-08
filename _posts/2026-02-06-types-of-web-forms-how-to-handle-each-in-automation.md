@@ -6,7 +6,7 @@ tags: ["forms", "web forms", "types", "automation", "playwright", "selenium", "t
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-06-types-of-web-forms-how-to-handle-each-in-automation-hero.png
+  path: /assets/img/2026-02-06-types-of-web-forms-how-to-handle-each-in-automation-hero.jpg
   alt: "Types of Web Forms and How to Handle Each in Automation"
 ---
 

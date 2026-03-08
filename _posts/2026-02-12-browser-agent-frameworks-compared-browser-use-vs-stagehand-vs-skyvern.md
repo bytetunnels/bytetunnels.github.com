@@ -6,7 +6,7 @@ tags: ["browser agents", "browser use", "stagehand", "skyvern", "playwright", "a
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-12-browser-agent-frameworks-compared-browser-use-vs-stagehand-vs-skyvern-hero.png
+  path: /assets/img/2026-02-12-browser-agent-frameworks-compared-browser-use-vs-stagehand-vs-skyvern-hero.jpg
   alt: "Browser Agent Frameworks Compared: Browser Use vs Stagehand vs Skyvern"
 ---
 

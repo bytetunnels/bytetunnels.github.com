@@ -6,7 +6,7 @@ tags: ["camoufox", "selenium", "comparison", "anti-detection", "stealth", "web s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-14-camoufox-vs-selenium-anti-detection-approaches-compared-hero.png
+  path: /assets/img/2026-02-14-camoufox-vs-selenium-anti-detection-approaches-compared-hero.jpg
   alt: "Camoufox vs Selenium: Anti-Detection Approaches Compared"
 ---
 

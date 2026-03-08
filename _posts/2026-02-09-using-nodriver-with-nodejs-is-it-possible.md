@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["nodriver", "nodejs", "javascript", "python", "browser automation", "alternatives"]
 author: arman
 image:
-  path: /assets/img/2026-02-09-using-nodriver-with-nodejs-is-it-possible-hero.png
+  path: /assets/img/2026-02-09-using-nodriver-with-nodejs-is-it-possible-hero.jpg
   alt: "Using Nodriver with Node.js: Is It Possible?"
 ---
 

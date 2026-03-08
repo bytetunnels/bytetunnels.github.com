@@ -6,7 +6,7 @@ tags: ["selenium", "puppeteer", "comparison", "web scraping", "browser automatio
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-05-selenium-vs-puppeteer-definitive-comparison-web-scraping-hero.png
+  path: /assets/img/2026-03-05-selenium-vs-puppeteer-definitive-comparison-web-scraping-hero.jpg
   alt: "Selenium vs Puppeteer: The Definitive Comparison for Web Scraping"
 ---
 

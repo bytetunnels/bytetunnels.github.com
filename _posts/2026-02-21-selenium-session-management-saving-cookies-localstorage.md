@@ -6,7 +6,7 @@ tags: ["selenium", "session management", "cookies", "localstorage", "python", "a
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-21-selenium-session-management-saving-cookies-localstorage-hero.png
+  path: /assets/img/2026-02-21-selenium-session-management-saving-cookies-localstorage-hero.jpg
   alt: "Selenium Session Management: Saving Cookies and localStorage"
 ---
 

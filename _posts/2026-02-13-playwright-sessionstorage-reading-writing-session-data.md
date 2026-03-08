@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["playwright", "sessionstorage", "python", "session data", "browser automation", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-13-playwright-sessionstorage-reading-writing-session-data-hero.png
+  path: /assets/img/2026-02-13-playwright-sessionstorage-reading-writing-session-data-hero.jpg
   alt: "Playwright sessionStorage: Reading and Writing Session Data"
 ---
 

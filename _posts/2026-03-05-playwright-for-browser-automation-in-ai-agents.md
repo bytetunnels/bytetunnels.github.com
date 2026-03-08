@@ -6,7 +6,7 @@ tags: ["playwright", "ai agents", "browser automation", "mcp", "accessibility tr
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-05-playwright-for-browser-automation-in-ai-agents-hero.png
+  path: /assets/img/2026-03-05-playwright-for-browser-automation-in-ai-agents-hero.jpg
   alt: "Playwright for Browser Automation in AI Agents: From Accessibility Trees to Agent Loops"
 ---
 

@@ -6,7 +6,7 @@ tags: ["crawl4ai", "python", "web scraping", "open source", "ai crawling", "data
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-07-crawl4ai-v08-crash-recovery-prefetch-mode-and-whats-new-hero.png
+  path: /assets/img/2026-02-07-crawl4ai-v08-crash-recovery-prefetch-mode-and-whats-new-hero.jpg
   alt: "Crawl4AI v0.8: Crash Recovery, Prefetch Mode, and What's New"
 ---
 

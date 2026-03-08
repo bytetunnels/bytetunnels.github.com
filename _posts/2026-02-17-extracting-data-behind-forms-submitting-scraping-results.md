@@ -6,7 +6,7 @@ tags: ["forms", "data extraction", "web scraping", "python", "playwright", "requ
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-17-extracting-data-behind-forms-submitting-scraping-results-hero.png
+  path: /assets/img/2026-02-17-extracting-data-behind-forms-submitting-scraping-results-hero.jpg
   alt: "Extracting Data Behind Forms: Submitting and Scraping Results"
 ---
 

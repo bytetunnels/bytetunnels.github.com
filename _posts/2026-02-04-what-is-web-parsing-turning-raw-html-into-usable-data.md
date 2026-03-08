@@ -6,7 +6,7 @@ tags: ["web parsing", "html", "data extraction", "beginner", "beautifulsoup", "l
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-04-what-is-web-parsing-turning-raw-html-into-usable-data-hero.png
+  path: /assets/img/2026-02-04-what-is-web-parsing-turning-raw-html-into-usable-data-hero.jpg
   alt: "What Is Web Parsing? Turning Raw HTML into Usable Data"
 ---
 

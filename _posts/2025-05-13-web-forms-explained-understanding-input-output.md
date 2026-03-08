@@ -6,7 +6,7 @@ tags: ["web forms", "form inputs", "form outputs", "html forms", "form data", "w
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-13-web-forms-explained-understanding-input-output-hero.png
+  path: /assets/img/2025-05-13-web-forms-explained-understanding-input-output-hero.jpg
   alt: "Web Forms Explained: Understanding Input and Output"
 ---
 

@@ -6,7 +6,7 @@ tags: ["llm", "pydantic", "zod", "structured output", "schema", "data extraction
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-01-schema-driven-scraping-llms-pydantic-zod-structured-output-hero.png
+  path: /assets/img/2026-03-01-schema-driven-scraping-llms-pydantic-zod-structured-output-hero.jpg
   alt: "Schema-Driven Scraping with LLMs: Pydantic, Zod, and Structured Output"
 ---
 

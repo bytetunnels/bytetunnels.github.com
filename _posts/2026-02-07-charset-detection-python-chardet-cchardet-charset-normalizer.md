@@ -6,7 +6,7 @@ tags: ["charset", "chardet", "cchardet", "charset-normalizer", "python", "encodi
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-07-charset-detection-python-chardet-cchardet-charset-normalizer-hero.png
+  path: /assets/img/2026-02-07-charset-detection-python-chardet-cchardet-charset-normalizer-hero.jpg
   alt: "Charset Detection in Python: chardet, cchardet, and charset-normalizer"
 ---
 

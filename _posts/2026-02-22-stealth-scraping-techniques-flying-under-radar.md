@@ -6,7 +6,7 @@ tags: ["stealth", "scraping", "anti-detection", "techniques", "web scraping", "f
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-22-stealth-scraping-techniques-flying-under-radar-hero.png
+  path: /assets/img/2026-02-22-stealth-scraping-techniques-flying-under-radar-hero.jpg
   alt: "Stealth Scraping Techniques: Flying Under the Radar"
 ---
 

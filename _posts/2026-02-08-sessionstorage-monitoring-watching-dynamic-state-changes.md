@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["sessionstorage", "monitoring", "javascript", "browser automation", "playwright", "dynamic content"]
 author: arman
 image:
-  path: /assets/img/2026-02-08-sessionstorage-monitoring-watching-dynamic-state-changes-hero.png
+  path: /assets/img/2026-02-08-sessionstorage-monitoring-watching-dynamic-state-changes-hero.jpg
   alt: "sessionStorage Monitoring: Watching for Dynamic State Changes"
 ---
 

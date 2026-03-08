@@ -6,7 +6,7 @@ tags: ["session management", "cookies", "localStorage", "sessionStorage", "brows
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-12-session-management-cookies-storage-user-state-hero.png
+  path: /assets/img/2025-05-12-session-management-cookies-storage-user-state-hero.jpg
   alt: "Session Management: Keeping Track of Cookies, Storage, and User State"
 ---
 

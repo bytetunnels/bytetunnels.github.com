@@ -6,7 +6,7 @@ tags: ["llm", "data extraction", "html", "structured data", "gpt-4", "claude", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-02-best-llm-structured-data-extraction-html-2026-hero.png
+  path: /assets/img/2026-03-02-best-llm-structured-data-extraction-html-2026-hero.jpg
   alt: "Best LLM for Structured Data Extraction from HTML in 2026"
 ---
 

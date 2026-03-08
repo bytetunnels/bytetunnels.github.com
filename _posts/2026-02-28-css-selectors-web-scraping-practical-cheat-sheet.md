@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["css selectors", "web scraping", "cheat sheet", "python", "javascript", "beautifulsoup", "playwright"]
 author: arman
 image:
-  path: /assets/img/2026-02-28-css-selectors-web-scraping-practical-cheat-sheet-hero.png
+  path: /assets/img/2026-02-28-css-selectors-web-scraping-practical-cheat-sheet-hero.jpg
   alt: "CSS Selectors for Web Scraping: A Practical Cheat Sheet"
 ---
 

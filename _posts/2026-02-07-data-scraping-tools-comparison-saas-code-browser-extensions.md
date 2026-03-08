@@ -6,7 +6,7 @@ tags: ["tools", "comparison", "saas", "code", "browser extensions", "web scrapin
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-07-data-scraping-tools-comparison-saas-code-browser-extensions-hero.png
+  path: /assets/img/2026-02-07-data-scraping-tools-comparison-saas-code-browser-extensions-hero.jpg
   alt: "Data Scraping Tools Comparison: SaaS vs Code vs Browser Extensions"
 ---
 

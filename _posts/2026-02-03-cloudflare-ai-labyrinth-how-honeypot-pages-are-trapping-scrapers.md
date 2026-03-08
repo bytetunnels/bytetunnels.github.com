@@ -6,7 +6,7 @@ tags: ["anti-bot", "cloudflare", "web scraping", "bot detection", "ai labyrinth"
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-03-cloudflare-ai-labyrinth-how-honeypot-pages-are-trapping-scrapers-hero.png
+  path: /assets/img/2026-02-03-cloudflare-ai-labyrinth-how-honeypot-pages-are-trapping-scrapers-hero.jpg
   alt: "Cloudflare AI Labyrinth: How Honeypot Pages Are Trapping Scrapers"
 ---
 

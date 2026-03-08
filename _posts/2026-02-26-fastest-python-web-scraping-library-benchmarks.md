@@ -6,7 +6,7 @@ tags: ["python", "performance", "benchmarks", "requests", "httpx", "aiohttp", "s
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-26-fastest-python-web-scraping-library-benchmarks-hero.png
+  path: /assets/img/2026-02-26-fastest-python-web-scraping-library-benchmarks-hero.jpg
   alt: "Fastest Python Web Scraping Library: Benchmarks and Recommendations"
 ---
 

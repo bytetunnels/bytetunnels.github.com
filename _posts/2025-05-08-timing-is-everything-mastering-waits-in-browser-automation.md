@@ -6,7 +6,7 @@ tags: ["waits", "timing", "selenium", "playwright", "puppeteer", "async", "synch
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-08-timing-is-everything-mastering-waits-in-browser-automation-hero.png
+  path: /assets/img/2025-05-08-timing-is-everything-mastering-waits-in-browser-automation-hero.jpg
   alt: "Timing is Everything: Mastering Waits in Browser Automation"
 ---
 

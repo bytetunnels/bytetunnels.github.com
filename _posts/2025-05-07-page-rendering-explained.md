@@ -6,7 +6,7 @@ tags: ["page rendering", "DOM", "javascript", "browser automation", "web scrapin
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-07-page-rendering-explained-hero.png
+  path: /assets/img/2025-05-07-page-rendering-explained-hero.jpg
   alt: "Page Rendering Explained: What Happens When a Site Loads"
 ---
 

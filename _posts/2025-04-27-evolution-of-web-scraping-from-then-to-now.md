@@ -6,7 +6,7 @@ tags: ["web scraping", "history", "evolution", "automation", "data extraction", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-27-evolution-of-web-scraping-from-then-to-now-hero.png
+  path: /assets/img/2025-04-27-evolution-of-web-scraping-from-then-to-now-hero.jpg
   alt: "The Evolution of Web Scraping: From Then to Now"
 ---
 

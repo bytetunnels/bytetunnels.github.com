@@ -6,7 +6,7 @@ tags: ["playwright", "mcp", "model context protocol", "ai agents", "browser auto
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-25-playwright-mcp-server-connecting-browser-automation-ai-agents-hero.png
+  path: /assets/img/2026-02-25-playwright-mcp-server-connecting-browser-automation-ai-agents-hero.jpg
   alt: "Playwright MCP Server: Connecting Browser Automation to AI Agents"
 ---
 

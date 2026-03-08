@@ -6,7 +6,7 @@ tags: ["rate limiting", "user agent", "rotation", "responsible scraping", "best 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-19-how-to-configure-rate-limiting-user-agent-rotation-responsibly-hero.png
+  path: /assets/img/2026-02-19-how-to-configure-rate-limiting-user-agent-rotation-responsibly-hero.jpg
   alt: "How to Configure Rate Limiting and User-Agent Rotation Responsibly"
 ---
 

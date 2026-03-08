@@ -6,7 +6,7 @@ tags: ["form automation", "playwright", "selenium", "puppeteer", "web scraping",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-09-form-filling-automation-simple-inputs-complex-multi-step-hero.png
+  path: /assets/img/2025-05-09-form-filling-automation-simple-inputs-complex-multi-step-hero.jpg
   alt: "Form Filling Automation: From Simple Inputs to Complex Multi-Step Forms"
 ---
 

@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["puppeteer", "playwright", "migration", "javascript", "tutorial", "browser automation"]
 author: arman
 image:
-  path: /assets/img/2026-02-17-migrating-puppeteer-to-playwright-step-by-step-guide-hero.png
+  path: /assets/img/2026-02-17-migrating-puppeteer-to-playwright-step-by-step-guide-hero.jpg
   alt: "Migrating from Puppeteer to Playwright: A Step-by-Step Guide"
 ---
 

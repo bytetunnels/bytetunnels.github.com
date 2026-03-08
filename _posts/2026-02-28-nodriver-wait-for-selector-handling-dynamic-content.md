@@ -5,7 +5,7 @@ categories: ["Browser Automation"]
 tags: ["nodriver", "python", "wait_for_selector", "dynamic content", "async", "web scraping"]
 author: arman
 image:
-  path: /assets/img/2026-02-28-nodriver-wait-for-selector-handling-dynamic-content-hero.png
+  path: /assets/img/2026-02-28-nodriver-wait-for-selector-handling-dynamic-content-hero.jpg
   alt: "Nodriver wait_for_selector: Handling Dynamic Content"
 ---
 

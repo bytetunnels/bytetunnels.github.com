@@ -6,7 +6,7 @@ tags: ["static websites", "dynamic websites", "javascript", "dom", "scraping tec
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-06-static-vs-dynamic-websites-scraping-hero.png
+  path: /assets/img/2025-05-06-static-vs-dynamic-websites-scraping-hero.jpg
   alt: "Static vs. Dynamic Websites: Why It Matters for Scraping"
 ---
 

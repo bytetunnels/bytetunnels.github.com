@@ -6,7 +6,7 @@ tags: ["drissionpage", "playwright", "comparison", "python", "browser automation
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-18-drissionpage-vs-playwright-new-challenger-browser-automation-hero.png
+  path: /assets/img/2026-02-18-drissionpage-vs-playwright-new-challenger-browser-automation-hero.jpg
   alt: "DrissionPage vs Playwright: A New Challenger in Browser Automation"
 ---
 

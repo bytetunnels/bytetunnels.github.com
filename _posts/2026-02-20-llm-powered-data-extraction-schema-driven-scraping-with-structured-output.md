@@ -6,7 +6,7 @@ tags: ["llm", "data extraction", "json schema", "python", "javascript", "structu
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-20-llm-powered-data-extraction-schema-driven-scraping-with-structured-output-hero.png
+  path: /assets/img/2026-02-20-llm-powered-data-extraction-schema-driven-scraping-with-structured-output-hero.jpg
   alt: "LLM-Powered Data Extraction: Schema-Driven Scraping with Structured Output"
 ---
 

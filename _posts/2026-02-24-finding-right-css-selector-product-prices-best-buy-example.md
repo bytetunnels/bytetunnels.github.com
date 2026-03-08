@@ -5,7 +5,7 @@ categories: ["Data Extraction"]
 tags: ["css selectors", "price scraping", "web scraping", "best buy", "e-commerce", "tutorial"]
 author: arman
 image:
-  path: /assets/img/2026-02-24-finding-right-css-selector-product-prices-best-buy-example-hero.png
+  path: /assets/img/2026-02-24-finding-right-css-selector-product-prices-best-buy-example-hero.jpg
   alt: "Finding the Right CSS Selector for Product Prices (Best Buy Example)"
 ---
 

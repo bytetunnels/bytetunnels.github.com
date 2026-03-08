@@ -6,7 +6,7 @@ tags: ["selenium", "chromedriver", "headless", "setup", "python", "javascript", 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-11-setting-up-headless-chromedriver-eliminating-browser-window-hero.png
+  path: /assets/img/2026-02-11-setting-up-headless-chromedriver-eliminating-browser-window-hero.jpg
   alt: "Setting Up Headless ChromeDriver: Eliminating Browser Window Dependencies"
 ---
 

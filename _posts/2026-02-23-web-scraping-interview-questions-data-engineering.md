@@ -5,7 +5,7 @@ categories: ["Web Scraping"]
 tags: ["interview questions", "web scraping", "data engineering", "career", "python", "preparation"]
 author: arman
 image:
-  path: /assets/img/2026-02-23-web-scraping-interview-questions-data-engineering-hero.png
+  path: /assets/img/2026-02-23-web-scraping-interview-questions-data-engineering-hero.jpg
   alt: "Web Scraping Interview Questions: Prepare for Data Engineering Roles"
 ---
 

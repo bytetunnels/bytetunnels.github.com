@@ -6,7 +6,7 @@ tags: ["playwright", "cookies", "session management", "http", "web scraping", "p
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-23-playwright-cookie-management-http-level-scraping-hero.png
+  path: /assets/img/2026-02-23-playwright-cookie-management-http-level-scraping-hero.jpg
   alt: "Playwright Cookie Management for HTTP-Level Scraping"
 ---
 

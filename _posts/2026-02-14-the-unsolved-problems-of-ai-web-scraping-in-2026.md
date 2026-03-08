@@ -6,7 +6,7 @@ tags: ["web scraping", "ai", "challenges", "industry trends", "unsolved problems
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-14-the-unsolved-problems-of-ai-web-scraping-in-2026-hero.png
+  path: /assets/img/2026-02-14-the-unsolved-problems-of-ai-web-scraping-in-2026-hero.jpg
   alt: "The Unsolved Problems of AI Web Scraping in 2026"
 ---
 

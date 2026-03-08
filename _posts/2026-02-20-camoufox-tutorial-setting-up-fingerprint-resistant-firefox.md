@@ -6,7 +6,7 @@ tags: ["camoufox", "tutorial", "fingerprint", "stealth", "firefox", "anti-detect
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-20-camoufox-tutorial-setting-up-fingerprint-resistant-firefox-hero.png
+  path: /assets/img/2026-02-20-camoufox-tutorial-setting-up-fingerprint-resistant-firefox-hero.jpg
   alt: "Camoufox Tutorial: Setting Up a Fingerprint-Resistant Firefox"
 ---
 

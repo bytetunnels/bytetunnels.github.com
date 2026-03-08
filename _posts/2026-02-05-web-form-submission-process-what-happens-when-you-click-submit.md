@@ -6,7 +6,7 @@ tags: ["web forms", "submission", "http", "post", "get", "tutorial", "beginner"]
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-05-web-form-submission-process-what-happens-when-you-click-submit-hero.png
+  path: /assets/img/2026-02-05-web-form-submission-process-what-happens-when-you-click-submit-hero.jpg
   alt: "Web Form Submission Process: What Happens When You Click Submit"
 ---
 

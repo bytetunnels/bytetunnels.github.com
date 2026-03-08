@@ -6,7 +6,7 @@ tags: ["http", "methods", "get", "post", "put", "delete", "web scraping", "reque
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-04-30-http-methods-explained-language-websites-speak-hero.png
+  path: /assets/img/2025-04-30-http-methods-explained-language-websites-speak-hero.jpg
   alt: "HTTP Methods Explained: The Language Websites Speak"
 ---
 

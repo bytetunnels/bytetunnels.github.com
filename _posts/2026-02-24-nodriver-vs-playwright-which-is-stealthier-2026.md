@@ -6,7 +6,7 @@ tags: ["nodriver", "playwright", "stealth", "comparison", "anti-detection", "web
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-24-nodriver-vs-playwright-which-is-stealthier-2026-hero.png
+  path: /assets/img/2026-02-24-nodriver-vs-playwright-which-is-stealthier-2026-hero.jpg
   alt: "Nodriver vs Playwright: Which Is Stealthier in 2026?"
 ---
 

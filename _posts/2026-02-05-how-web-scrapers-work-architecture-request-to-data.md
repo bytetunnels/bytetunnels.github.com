@@ -6,7 +6,7 @@ tags: ["web scraping", "architecture", "how it works", "tutorial", "beginner", "
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-05-how-web-scrapers-work-architecture-request-to-data-hero.png
+  path: /assets/img/2026-02-05-how-web-scrapers-work-architecture-request-to-data-hero.jpg
   alt: "How Web Scrapers Work: Architecture from Request to Data"
 ---
 

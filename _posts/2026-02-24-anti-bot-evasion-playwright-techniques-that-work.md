@@ -6,7 +6,7 @@ tags: ["playwright", "anti-bot", "evasion", "stealth", "web scraping", "detectio
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-24-anti-bot-evasion-playwright-techniques-that-work-hero.png
+  path: /assets/img/2026-02-24-anti-bot-evasion-playwright-techniques-that-work-hero.jpg
   alt: "Anti-Bot Evasion with Playwright: Techniques That Actually Work"
 ---
 

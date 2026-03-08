@@ -6,7 +6,7 @@ tags: ["localstorage", "scraping", "browser automation", "javascript", "python",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-28-scraping-localstorage-accessing-client-side-storage-hero.png
+  path: /assets/img/2026-02-28-scraping-localstorage-accessing-client-side-storage-hero.jpg
   alt: "Scraping localStorage: Accessing Client-Side Storage"
 ---
 

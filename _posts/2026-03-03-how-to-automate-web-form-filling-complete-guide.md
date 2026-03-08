@@ -6,7 +6,7 @@ tags: ["form filling", "automation", "web forms", "playwright", "selenium", "pyt
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-03-03-how-to-automate-web-form-filling-complete-guide-hero.png
+  path: /assets/img/2026-03-03-how-to-automate-web-form-filling-complete-guide-hero.jpg
   alt: "How to Automate Web Form Filling: A Complete Guide"
 ---
 

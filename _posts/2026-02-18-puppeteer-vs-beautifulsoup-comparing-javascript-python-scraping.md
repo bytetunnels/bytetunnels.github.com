@@ -6,7 +6,7 @@ tags: ["puppeteer", "beautifulsoup", "comparison", "javascript", "python", "web 
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-18-puppeteer-vs-beautifulsoup-comparing-javascript-python-scraping-hero.png
+  path: /assets/img/2026-02-18-puppeteer-vs-beautifulsoup-comparing-javascript-python-scraping-hero.jpg
   alt: "Puppeteer vs BeautifulSoup: Comparing JavaScript and Python Scraping"
 ---
 

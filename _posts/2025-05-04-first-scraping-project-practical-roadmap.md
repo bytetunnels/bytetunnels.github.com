@@ -6,7 +6,7 @@ tags: ["beginner", "tutorial", "python", "requests", "beautifulsoup", "project",
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-04-first-scraping-project-practical-roadmap-hero.png
+  path: /assets/img/2025-05-04-first-scraping-project-practical-roadmap-hero.jpg
   alt: "Your First Scraping Project: A Practical Roadmap"
 ---
 

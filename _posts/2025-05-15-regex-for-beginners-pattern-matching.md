@@ -6,7 +6,7 @@ tags: ["regex", "pattern matching", "data extraction", "text processing", "pytho
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2025-05-15-regex-for-beginners-pattern-matching-hero.png
+  path: /assets/img/2025-05-15-regex-for-beginners-pattern-matching-hero.jpg
   alt: "Regex for Beginners: Pattern Matching for Web Data"
 ---
 

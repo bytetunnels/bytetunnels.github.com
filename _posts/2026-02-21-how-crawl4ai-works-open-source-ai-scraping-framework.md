@@ -6,7 +6,7 @@ tags: ["crawl4ai", "ai", "scraping", "open source", "python", "llm", "web crawli
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-21-how-crawl4ai-works-open-source-ai-scraping-framework-hero.png
+  path: /assets/img/2026-02-21-how-crawl4ai-works-open-source-ai-scraping-framework-hero.jpg
   alt: "How Crawl4ai Works: The Open-Source AI Scraping Framework"
 ---
 

@@ -6,7 +6,7 @@ tags: ["legal", "licensing", "microsoft", "data economy", "web scraping", "conte
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-10-microsofts-content-marketplace-from-scraping-to-licensing-hero.png
+  path: /assets/img/2026-02-10-microsofts-content-marketplace-from-scraping-to-licensing-hero.jpg
   alt: "Microsoft's Content Marketplace: From Scraping to Licensing"
 ---
 

@@ -6,7 +6,7 @@ tags: ["ai agents", "browser automation", "google chrome", "gemini", "auto brows
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-01-29-google-chrome-auto-browse-what-it-means-for-web-scraping-hero.png
+  path: /assets/img/2026-01-29-google-chrome-auto-browse-what-it-means-for-web-scraping-hero.jpg
   alt: "Google Chrome Auto Browse: What It Means for Web Scraping"
 ---
 

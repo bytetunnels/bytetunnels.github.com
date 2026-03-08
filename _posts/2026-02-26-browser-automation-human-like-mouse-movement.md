@@ -6,7 +6,7 @@ tags: ["mouse movement", "human-like", "anti-detection", "stealth", "browser aut
 mermaid: true
 author: arman
 image:
-  path: /assets/img/2026-02-26-browser-automation-human-like-mouse-movement-hero.png
+  path: /assets/img/2026-02-26-browser-automation-human-like-mouse-movement-hero.jpg
   alt: "Browser Automation with Human-Like Mouse Movement"
 ---
 
