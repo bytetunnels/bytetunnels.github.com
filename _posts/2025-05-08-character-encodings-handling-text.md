@@ -68,7 +68,7 @@ flowchart TD
 
 ## Common Encoding Challenges and Solutions
 
-The most frequent issue you'll encounter is the dreaded "UTF-8 decode error" or seeing [replacement characters](/posts/some-characters-could-not-be-decoded-fixing-replacement-character-errors/) () in your scraped data. This usually happens when your code assumes UTF-8 encoding but receives data in a different format.
+The most frequent issue you'll encounter is the dreaded "UTF-8 decode error" or seeing [replacement characters](/posts/2026-02-06-some-characters-could-not-be-decoded-fixing-replacement-character-errors/) () in your scraped data. This usually happens when your code assumes UTF-8 encoding but receives data in a different format.
 
 Here's how to handle encoding detection and conversion properly in Python:
 

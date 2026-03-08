@@ -29,7 +29,7 @@ garbled = utf8_bytes.decode('latin-1')
 print(garbled)           # Ã©
 ```
 
-The same thing happens in the other direction. If content was encoded as Latin-1 but decoded as UTF-8, you get a different kind of corruption -- often [replacement characters](/posts/some-characters-could-not-be-decoded-fixing-replacement-character-errors/) or decode errors.
+The same thing happens in the other direction. If content was encoded as Latin-1 but decoded as UTF-8, you get a different kind of corruption -- often [replacement characters](/posts/2026-02-06-some-characters-could-not-be-decoded-fixing-replacement-character-errors/) or decode errors.
 
 ## Common Mojibake Patterns and What They Mean
 
