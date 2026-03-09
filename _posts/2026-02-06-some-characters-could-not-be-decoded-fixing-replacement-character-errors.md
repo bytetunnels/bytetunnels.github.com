@@ -6,7 +6,7 @@ tags: ["encoding", "replacement character", "unicode", "python", "text processin
 author: arman
 image:
   path: /assets/img/2026-02-06-some-characters-could-not-be-decoded-fixing-replacement-character-errors-hero.jpg
-  alt: "\"
+  alt: "Fixing Replacement Character Errors"
 ---
 
 You are scraping a page or reading a file, and the output is peppered with diamonds: `�`. Or maybe your logs print a warning like "some characters could not be decoded, and were replaced with replacement character." That diamond is U+FFFD, the official Unicode replacement character. It appears whenever a decoder encounters a byte sequence that is invalid for the encoding it was told to use. The data is not necessarily corrupt -- your program is just interpreting the bytes with the wrong codebook. Once you understand what causes the substitution and how Python's codec machinery works, fixing it is straightforward.
