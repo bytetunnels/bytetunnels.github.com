@@ -554,7 +554,7 @@ def batch_detect(directory: str, output_csv: str):
 
 All three libraries can produce incorrect results, especially with short inputs or single-byte encodings that share large portions of their character maps. Here are the most common failure modes.
 
-**Short text (under 100 bytes):** Statistical models need enough data to distinguish encodings. With very short inputs, you may end up with [replacement character errors](/posts/2026-02-06-some-characters-could-not-be-decoded-fixing-replacement-character-errors/) if the wrong encoding is chosen. A five-word sentence in French could be valid UTF-8, ISO-8859-1, Windows-1252, or ISO-8859-15.
+**Short text (under 100 bytes):** Statistical models need enough data to distinguish encodings. With very short inputs, you may end up with [replacement character errors](/posts/some-characters-could-not-be-decoded-fixing-replacement-character-errors/) if the wrong encoding is chosen. A five-word sentence in French could be valid UTF-8, ISO-8859-1, Windows-1252, or ISO-8859-15.
 
 ```python
 from charset_normalizer import detect
