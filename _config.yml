@@ -44,6 +44,16 @@ social:
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/armanhossain
 
+# Author bio surfaced to LLMs and search agents
+author_bio: >-
+  Arman Hossain is a web scraping and data extraction engineer who writes
+  practical, code-first guides on browser automation, anti-bot evasion, and
+  data pipelines. Available for consulting, contract work, and collaborations.
+
+# Content license used in JSON-LD and the per-post Markdown frontmatter
+license: "https://creativecommons.org/licenses/by/4.0/"
+license_name: "CC BY 4.0"
+
 # Site Verification Settings
 webmaster_verifications:
   google: # fill in your Google verification code

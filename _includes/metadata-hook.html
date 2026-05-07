@@ -1,1 +1,52 @@
-<!-- A placeholder to allow defining custom metadata -->
+<!-- LLM and crawler metadata enhancements -->
+
+<!-- Permissive snippet/preview signals for AI search and SERP features -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+<!-- AI / LLM training and usage declaration (allow indexing, training, and citation) -->
+<meta name="ai-content-declaration" content="indexable, trainable, citable">
+<meta name="content-usage" content="ai-training=allow; ai-search=allow; ai-summary=allow">
+
+<!-- Author and contact discovery -->
+<meta name="author" content="{{ site.social.name }}">
+<meta name="reply-to" content="{{ site.social.email }}">
+<link rel="author" href="{{ '/about/' | absolute_url }}">
+<link rel="me" href="mailto:{{ site.social.email }}">
+{%- for link in site.social.links -%}
+  <link rel="me" href="{{ link }}">
+{%- endfor -%}
+
+{%- if page.tags.size > 0 or page.categories.size > 0 -%}
+  {%- assign keyword_list = page.categories | concat: page.tags | uniq -%}
+  <meta name="keywords" content="{{ keyword_list | join: ', ' }}">
+{%- endif -%}
+
+{%- if page.layout == 'post' -%}
+  {%- if page.last_modified_at -%}
+    <meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">
+  {%- endif -%}
+  {%- for category in page.categories -%}
+    <meta property="article:section" content="{{ category }}">
+  {%- endfor -%}
+  {%- for tag in page.tags -%}
+    <meta property="article:tag" content="{{ tag }}">
+  {%- endfor -%}
+
+  <!-- Raw-Markdown alternate for LLM crawlers -->
+  {%- assign md_slug = page.url | replace_first: '/posts/', '' | remove: '/' -%}
+  {%- assign md_url = '/posts/' | append: md_slug | append: '.md' | absolute_url -%}
+  <link rel="alternate" type="text/markdown" title="Raw Markdown source" href="{{ md_url }}">
+  <meta name="md:url" content="{{ md_url }}">
+{%- endif -%}
+
+{%- if page.url == '/about/' -%}
+  <!-- About page is also the contact page -->
+  <link rel="contact" href="mailto:{{ site.social.email }}">
+{%- endif -%}
+
+<!-- LLM-friendly site-wide content discovery (https://llmstxt.org) -->
+<link rel="alternate" type="text/plain" title="LLM-friendly site index" href="{{ '/llms.txt' | absolute_url }}">
+<link rel="alternate" type="text/plain" title="LLM-friendly full post index" href="{{ '/llms-full.txt' | absolute_url }}">
+
+<!-- Enhanced JSON-LD: BlogPosting, BreadcrumbList, Person, Organization, Blog, ContactPoint, ContactPage -->
+{%- include extra-jsonld.html -%}

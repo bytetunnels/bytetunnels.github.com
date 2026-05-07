@@ -1,0 +1,243 @@
+{%- comment -%}
+  Enhanced JSON-LD for LLM crawlers and AI search.
+  These supplement (do not replace) the schema emitted by jekyll-seo-tag.
+  Multiple JSON-LD blocks are valid per spec; consumers merge them.
+{%- endcomment -%}
+
+{%- assign site_logo = site.avatar | absolute_url -%}
+{%- assign site_license = site.license | default: 'https://creativecommons.org/licenses/by/4.0/' -%}
+{%- assign org_email = site.social.email -%}
+{%- assign about_url = '/about/' | absolute_url -%}
+
+{%- comment -%} Reusable ContactPoint definition {%- endcomment -%}
+{%- capture contact_point -%}
+{
+  "@type": "ContactPoint",
+  "contactType": "customer support",
+  "email": "{{ org_email }}",
+  "availableLanguage": ["English"],
+  "areaServed": "Worldwide"
+}
+{%- endcapture -%}
+
+{%- if page.layout == 'post' -%}
+  {%- assign words = content | strip_html | number_of_words -%}
+  {%- assign post_url = page.url | absolute_url -%}
+  {%- assign md_slug = page.url | replace_first: '/posts/', '' | remove: '/' -%}
+  {%- assign md_url = '/posts/' | append: md_slug | append: '.md' | absolute_url -%}
+  {%- if page.image -%}
+    {%- assign img_src = page.image.path | default: page.image -%}
+    {%- unless img_src contains '://' -%}
+      {%- assign img_src = img_src | absolute_url -%}
+    {%- endunless -%}
+  {%- endif -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | strip_html | jsonify }},
+  {% if page.description %}"description": {{ page.description | strip_html | strip_newlines | jsonify }},
+  {% endif %}"url": {{ post_url | jsonify }},
+  "mainEntityOfPage": { "@type": "WebPage", "@id": {{ post_url | jsonify }} },
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+  "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+  "inLanguage": {{ site.lang | default: 'en' | jsonify }},
+  "wordCount": {{ words }},
+  "isAccessibleForFree": true,
+  "license": {{ site_license | jsonify }},
+  {% if page.tags.size > 0 %}"keywords": {{ page.tags | jsonify }},
+  {% endif %}{% if page.categories.size > 0 %}"articleSection": {{ page.categories | jsonify }},
+  {% endif %}{% if img_src %}"image": {
+    "@type": "ImageObject",
+    "url": {{ img_src | jsonify }}{% if page.image.alt %},
+    "caption": {{ page.image.alt | jsonify }}{% endif %}
+  },
+  {% endif %}"speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["h1", "h2", ".post-content > p:first-of-type"]
+  },
+  "author": {
+    "@type": "Person",
+    "name": {{ site.social.name | jsonify }},
+    "email": {{ org_email | jsonify }},
+    "url": {{ about_url | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | jsonify }},
+    "url": {{ '/' | absolute_url | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ site_logo | jsonify }}
+    },
+    "email": {{ org_email | jsonify }},
+    "contactPoint": {{ contact_point }}
+  },
+  "encoding": [
+    {
+      "@type": "MediaObject",
+      "encodingFormat": "text/html",
+      "contentUrl": {{ post_url | jsonify }}
+    },
+    {
+      "@type": "MediaObject",
+      "encodingFormat": "text/markdown",
+      "contentUrl": {{ md_url | jsonify }}
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ '/' | absolute_url | jsonify }}
+    }{% if page.categories.first %},
+    {%- assign cat_slug = page.categories[0] | downcase | replace: ' ', '-' -%}
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ page.categories | first | jsonify }},
+      "item": {{ '/categories/' | append: cat_slug | append: '/' | absolute_url | jsonify }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ page.title | strip_html | jsonify }},
+      "item": {{ post_url | jsonify }}
+    }{% else %},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ page.title | strip_html | jsonify }},
+      "item": {{ post_url | jsonify }}
+    }{% endif %}
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- if page.layout == 'home' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": {{ site.title | jsonify }},
+  "description": {{ site.description | strip_newlines | jsonify }},
+  "url": {{ '/' | absolute_url | jsonify }},
+  "inLanguage": {{ site.lang | default: 'en' | jsonify }},
+  "license": {{ site_license | jsonify }},
+  "author": {
+    "@type": "Person",
+    "name": {{ site.social.name | jsonify }},
+    "email": {{ org_email | jsonify }},
+    "url": {{ about_url | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | jsonify }},
+    "url": {{ '/' | absolute_url | jsonify }},
+    "email": {{ org_email | jsonify }},
+    "logo": { "@type": "ImageObject", "url": {{ site_logo | jsonify }} },
+    "contactPoint": {{ contact_point }}
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ site.title | jsonify }},
+  "url": {{ '/' | absolute_url | jsonify }},
+  "logo": {{ site_logo | jsonify }},
+  "description": {{ site.description | strip_newlines | jsonify }},
+  "email": {{ org_email | jsonify }},
+  "founder": {
+    "@type": "Person",
+    "name": {{ site.social.name | jsonify }},
+    "email": {{ org_email | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }}
+  },
+  "sameAs": {{ site.social.links | jsonify }},
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": {{ org_email | jsonify }},
+      "availableLanguage": ["English"],
+      "areaServed": "Worldwide"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "professional inquiry",
+      "email": {{ org_email | jsonify }},
+      "availableLanguage": ["English"],
+      "areaServed": "Worldwide"
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- if page.url == '/about/' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["ProfilePage", "ContactPage"],
+  "url": {{ page.url | absolute_url | jsonify }},
+  "name": "About & Contact",
+  "description": {{ site.author_bio | default: site.description | strip_newlines | jsonify }},
+  "mainEntity": {
+    "@type": "Person",
+    "name": {{ site.social.name | jsonify }},
+    "email": {{ org_email | jsonify }},
+    "url": {{ page.url | absolute_url | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }},
+    "jobTitle": "Web Scraping & Data Extraction Engineer",
+    "description": {{ site.author_bio | default: site.description | strip_newlines | jsonify }},
+    "knowsAbout": [
+      "web scraping",
+      "browser automation",
+      "data extraction",
+      "anti-bot evasion",
+      "Playwright",
+      "Puppeteer",
+      "Selenium",
+      "data pipelines",
+      "AI agents"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": {{ site.title | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }}
+    },
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "contactType": "professional inquiry",
+        "email": {{ org_email | jsonify }},
+        "availableLanguage": ["English"],
+        "areaServed": "Worldwide"
+      },
+      {
+        "@type": "ContactPoint",
+        "contactType": "consulting",
+        "email": {{ org_email | jsonify }},
+        "availableLanguage": ["English"],
+        "areaServed": "Worldwide"
+      }
+    ]
+  }
+}
+</script>
+{%- endif -%}

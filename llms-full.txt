@@ -1,0 +1,29 @@
+---
+permalink: /llms-full.txt
+sitemap: false
+layout: null
+---
+# {{ site.title }} — Full Post Index
+
+> {{ site.description | strip_newlines }}
+
+Author: {{ site.social.name }} <{{ site.social.email }}>
+Site: {{ site.url }}{{ site.baseurl }}
+Total posts: {{ site.posts | size }}
+Last build: {{ site.time | date: '%Y-%m-%d' }}
+
+This file lists every post on the site with its title, publication date, categories, tags, and summary. It is intended as a comprehensive index for LLM crawlers, retrieval systems, and search agents. For the curated entry point, see /llms.txt.
+
+Contact: {{ site.social.email }} (preferred). About / contact page: {{ '/about/' | absolute_url }}. License: {{ site.license_name | default: 'CC BY 4.0' }} ({{ site.license | default: 'https://creativecommons.org/licenses/by/4.0/' }}).
+
+{% assign all_posts = site.posts | sort: "date" | reverse %}{% for post in all_posts %}{% assign md_slug = post.url | replace_first: '/posts/', '' | remove: '/' %}
+## {{ post.title | strip_html | strip_newlines }}
+
+URL: {{ post.url | absolute_url }}
+Markdown: {{ '/posts/' | append: md_slug | append: '.md' | absolute_url }}
+Date: {{ post.date | date: '%Y-%m-%d' }}
+{% if post.categories.size > 0 %}Categories: {{ post.categories | join: ', ' }}
+{% endif %}{% if post.tags.size > 0 %}Tags: {{ post.tags | join: ', ' }}
+{% endif %}
+{% if post.description %}{{ post.description | strip_html | strip_newlines }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 400 }}{% endif %}
+{% endfor %}

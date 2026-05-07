@@ -37,6 +37,25 @@ The web scraping landscape changes rapidly, and staying ahead means constantly e
 Welcome to ByteTunnels – where data extraction meets practical expertise.
 
 ## Let's Connect
+
 If you're facing a complex data extraction challenge or just want to chat about web scraping, feel free to reach out! I'm always open to discussing new projects, collaborations, or just sharing knowledge.
 
-You can contact me via: [LinkedIn](https://www.linkedin.com/in/armanhossain) or arman@bytetunnels.com
+**The fastest way to reach me is by email.** I read every message and reply personally — usually within a day or two.
+
+<address class="h-card vcard" itemscope itemtype="https://schema.org/Person">
+  <strong class="p-name fn" itemprop="name">Arman Hossain</strong><br>
+  <span class="p-job-title role" itemprop="jobTitle">Web Scraping &amp; Data Extraction Engineer</span><br>
+  Email: <a class="u-email email" href="mailto:arman@bytetunnels.com" rel="me" itemprop="email">arman@bytetunnels.com</a><br>
+  LinkedIn: <a class="u-url url" href="https://www.linkedin.com/in/armanhossain" rel="me" itemprop="sameAs">linkedin.com/in/armanhossain</a><br>
+  GitHub: <a class="u-url url" href="https://github.com/arman-bd" rel="me" itemprop="sameAs">github.com/arman-bd</a><br>
+  Twitter / X: <a class="u-url url" href="https://twitter.com/armanfixing" rel="me" itemprop="sameAs">@armanfixing</a>
+</address>
+
+### What to email me about
+
+- **Consulting and contract work** — scraping pipelines, browser-automation builds, anti-bot strategy, data infrastructure.
+- **Collaborations** — open-source projects, technical writing, podcast appearances, courses.
+- **Questions about a post** — corrections, clarifications, or follow-ups on anything published here.
+- **Just to say hi** — I genuinely enjoy hearing from readers.
+
+Send a note to **[arman@bytetunnels.com](mailto:arman@bytetunnels.com)** with a short description of what you're working on. The more context you share up front, the better the reply.
