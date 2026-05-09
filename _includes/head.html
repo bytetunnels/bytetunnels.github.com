@@ -120,6 +120,9 @@
         {% include analytics/{{ platform }}.html %}
       {% endif %}
     {% endfor %}
+
+    <!-- Live chat -->
+    {% include tawk.html %}
   {% endif %}
 
   {% include metadata-hook.html %}
