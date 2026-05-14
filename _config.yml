@@ -87,6 +87,10 @@ analytics:
 pageviews:
   provider: # now only supports 'goatcounter'
 
+# Contact widget settings (floating "Hire me" form)
+contact:
+  endpoint: https://form.bytetunnels.com/contact # accepts POST { name, email, description }
+
 # Prefer color scheme setting.
 #
 # Note: Keep empty will follow the system prefer color by default,
