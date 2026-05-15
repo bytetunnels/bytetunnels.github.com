@@ -24,6 +24,23 @@
 
   /* Lift the theme's back-to-top button above the Hire me FAB and Calendly badge */
   #back-to-top { bottom: 154px !important; }
+
+  /* Mobile: place Drop a message FAB on the left, side-by-side with Calendly badge */
+  @media (max-width: 640px) {
+    .bt-contact-fab {
+      left: 16px;
+      right: auto;
+      bottom: 20px;
+      padding: 14px 18px;
+      border-radius: 28px;
+      line-height: 1.15;
+      align-items: center;
+      text-align: left;
+      max-width: 150px;
+      white-space: normal;
+    }
+    #back-to-top { bottom: 84px !important; }
+  }
   .bt-contact-fab.is-visible { display: inline-flex; }
   .bt-contact-fab:hover {
     transform: translateY(-2px);
