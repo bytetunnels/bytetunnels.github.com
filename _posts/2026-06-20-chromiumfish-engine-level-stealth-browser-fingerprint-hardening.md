@@ -89,7 +89,7 @@ It loops: read the page's interactive elements, send them to your LLM (any OpenA
 
 <figure>
   <img src="/assets/img/2026-06-20-chromiumfish-agent-demo.gif" alt="ChromiumFish's native agent completing a live search task" loading="lazy">
-  <figcaption>The native agent working a live task — cyan box on the current target, red dot at each click, typed in key by key at human speed.</figcaption>
+  <figcaption>The native agent working a live task — cyan box on the current target, red dot at each click, typed in key by key at human speed. Sped up 4× for the demo.</figcaption>
 </figure>
 
 The detail I use the most: a finished run returns a **replayable plan.** Hand that plan back next time and it re-runs the flow deterministically, only waking the LLM when something has shifted and needs repair. Solve a flow once, replay it cheaply forever.
