@@ -83,7 +83,8 @@ layout: compress
 
     {% include_cached search-loader.html lang=lang %}
 
-    {% include contact-widget.html %}
+    {% comment %} Contact modal disabled {% endcomment %}
+    {% comment %} {% include contact-widget.html %} {% endcomment %}
     {% include calendly-badge.html %}
   </body>
 </html>
