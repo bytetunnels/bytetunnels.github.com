@@ -1,5 +1,5 @@
 ---
-title: "A Proxy Provider With Device-Type Targeting"
+title: "Massive: The Proxy Provider With Device-Type Targeting"
 description: "Massive lets you pick whether a request exits from a desktop, a phone, or a smart TV. Why that dropdown is rarer than it looks."
 date: 2026-08-07 10:00:00 +0000
 categories: ["Web Scraping"]
