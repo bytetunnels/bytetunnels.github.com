@@ -18,9 +18,9 @@ Quick FYI before we go on: this is not an affiliate post. No referral link, no c
 
 ## Why almost nobody has this dropdown
 
-Geo targeting is a lookup. An IP is a key, MaxMind sells you the value. Any reseller can buy a pool from an aggregator, join it against a commercial GeoIP database, and ship a dashboard full of city and ZIP dropdowns without knowing one true thing about where those addresses came from.
+Geo targeting is a lookup. An IP is a key, and the value is something you buy off the shelf. Any reseller can grab a pool from an aggregator, join it against a commercial GeoIP database, and ship a dashboard full of city and ZIP dropdowns without knowing one true thing about where those addresses came from.
 
-Device class does not work like that. There is no database you can buy that says "this IP is a Samsung TV". That fact exists in exactly one place: the moment the device opted in. If you were not there for that moment, you simply do not have it.
+Device class does not work like that. There is no database you can buy that says "this IP is somebody's living-room TV". That fact exists in exactly one place: the moment the device opted in. If you were not there for that moment, you simply do not have it.
 
 Which makes the dropdown less a feature and more a side effect. Massive can sell device targeting because they built the supply chain themselves and were standing there when each device joined. You can only sell what you can see.
 
