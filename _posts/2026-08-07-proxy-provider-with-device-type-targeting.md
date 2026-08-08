@@ -51,8 +51,6 @@ Values are `common`, `mobile`, and `tv`, comma-separated if any of several will 
 
 Mobile is the practical one. Your phone User-Agent stops contradicting the desktop fibre line it exits from, which is one less thing for your [fingerprint](/posts/chromiumfish-engine-level-stealth-browser-fingerprint-hardening/) to explain away. And you get served the mobile DOM instead of the desktop template. That second part alone killed a whole category of "the selector works locally but not in production" bugs for me.
 
-But TV is the one that stuck with me. Smart TVs and set-top boxes were a segment I had written off completely. Want to see how an ad actually runs on a smart TV, or what a streaming catalogue shows in the living-room app instead of the web player? You could not do it before. Not because the tools were bad, but because nobody could sell you a TV to exit from. Now someone can. The pool is small and probably slow, and it does not matter. Impossible to possible is the jump that counts.
-
 ## The part worth generalising
 
 Next time you are [sizing up a provider](/posts/what-questions-to-ask-choosing-data-extraction-solution/), ask what device your exit node is. Most of the market cannot answer. Try it, the silence is informative.
