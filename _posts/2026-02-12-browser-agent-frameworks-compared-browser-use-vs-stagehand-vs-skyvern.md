@@ -464,7 +464,7 @@ flowchart TD
 - You need fine-grained debugging and deterministic test coverage
 - You want to minimize LLM API costs by limiting AI calls
 
-### Choose Skyvern when:
+### Choose [Skyvern](https://www.skyvern.com/) when:
 - Your primary use case involves complex forms and data entry
 - You need a no-code option for non-technical team members
 - Visual page understanding matters more than DOM structure
