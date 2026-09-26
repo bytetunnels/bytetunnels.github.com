@@ -16,43 +16,56 @@ Three frameworks stand out in this space: Browser Use, Stagehand, and Skyvern. E
 
 ## The Three Architectural Philosophies
 
-The core design philosophy behind each framework shapes everything: what tasks the tool handles well, where it struggles, and how it fits into an existing automation stack.
+Two questions make the differences easier to understand: **who chooses the next step, and how does the tool understand the page?** These simplified diagrams show the workflow patterns used in this comparison. The tools' capabilities overlap, so treat these as starting points for understanding them.
+
+### 1. Browser Use: the agent chooses the steps
+
+[Browser Use](https://github.com/browser-use/browser-use) starts with a goal you describe in natural language. The agent reads the page, chooses an action, and checks what happened. It repeats that loop as it works toward the goal.
 
 ```mermaid
-graph TD
-    subgraph "Browser Use"
-        A1[LLM Reasoning Loop] --> A2[Observe Page State]
-        A2 --> A3[Decide Next Action]
-        A3 --> A4[Execute via Browser]
-        A4 --> A5[Reassess Results]
-        A5 --> A2
-    end
-
-    subgraph "Stagehand"
-        B1[Playwright Script] --> B2{Ambiguous Task?}
-        B2 -->|Yes| B3[Natural Language AI Command]
-        B2 -->|No| B4[Standard Playwright Code]
-        B3 --> B5[Return to Script Flow]
-        B4 --> B5
-    end
-
-    subgraph "Skyvern"
-        C1[Task Description] --> C2[LLM Interprets Page]
-        C2 --> C3[Computer Vision Analysis]
-        C3 --> C4[Combined Action Plan]
-        C4 --> C5[Execute and Verify Visually]
-    end
-
-    style A1 fill:#e6f3ff
-    style B1 fill:#f0ffe6
-    style C1 fill:#fff0e6
+flowchart TD
+    accTitle: Browser Use agent loop
+    accDescr: A user supplies a goal. The agent reads the page, chooses an action, and checks the result before reading the page again.
+    A["Your goal"] --> B["Read the page"]
+    B --> C["Choose the next action"]
+    C --> D["Act and check"]
+    D -->|Repeat| B
 ```
 
-Browser Use is agent-first. An LLM sits in a continuous reasoning loop, observing the page, deciding what to do next, executing the action, and reassessing the result. The AI drives everything.
+**Example:** You ask it to find three laptops under $1,000. The agent decides which filters to use, which products to open, and when it has enough information.
 
-Stagehand is deterministic-first. You write standard Playwright scripts and only hand off to AI when the task is ambiguous. The developer stays in control of the overall flow.
+### 2. Stagehand: your script decides where AI helps
 
-Skyvern is visual-first. It combines LLMs with computer vision to understand pages the way a human would, making it strong for [form-heavy workflows](/posts/how-to-automate-web-form-filling-complete-guide/) where visual layout matters more than DOM structure, even when pages rely on [shadow DOM](/posts/shadow-dom-the-silent-killer-of-ai-web-scraping/).
+[Stagehand](https://github.com/browserbase/stagehand) lets you mix browser code with natural-language actions. In this scripted approach, you define the sequence and choose which steps use AI. Each step returns control to your script.
+
+```mermaid
+flowchart TD
+    accTitle: Stagehand scripted workflow
+    accDescr: A developer's script chooses an AI step or a coded step, then continues the scripted workflow.
+    A["Your script"] --> B{"Use AI?"}
+    B -->|Yes| C["AI step"]
+    B -->|No| D["Code step"]
+    C --> E["Continue script"]
+    D --> E
+```
+
+**Example:** Your code opens a billing page, an AI command finds the right download button, and your code handles the downloaded file.
+
+### 3. Skyvern: visual context guides the actions
+
+[Skyvern](https://www.skyvern.com/) combines language-model reasoning with computer vision to interpret the page and interact with its controls. This is useful for [form-heavy workflows](/posts/how-to-automate-web-form-filling-complete-guide/), where a field's label and position help explain what belongs in it.
+
+```mermaid
+flowchart TD
+    accTitle: Skyvern visual workflow
+    accDescr: A task and its input data guide visual page interpretation. Skyvern identifies controls, acts, and checks the result before continuing.
+    A["Your task and data"] --> B["Read the page visually"]
+    B --> C["Find fields and controls"]
+    C --> D["Act and check"]
+    D -->|Repeat| B
+```
+
+**Example:** You provide the details for an insurance quote. Skyvern uses the page's visual context to match those details to fields and work through the form.
 
 ## Browser Use: The Agent-First Approach
 
