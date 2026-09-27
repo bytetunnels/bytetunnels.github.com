@@ -571,22 +571,39 @@ node render-and-extract.js && python process-data.py
 
 Use this flowchart to decide which tool fits your situation:
 
+**Pages that require JavaScript**
+
 ```mermaid
 graph TD
     A[Start: Need to<br>scrape a website] --> B{Does the page<br>require JavaScript<br>to load data?}
     B -->|Yes| C{Do you need<br>browser interaction?<br>Clicks, scrolls, forms}
-    B -->|No| D{What language<br>does your team use?}
     C -->|Yes| E[Use Puppeteer<br>Full browser control]
     C -->|No| F{Is your team<br>JavaScript or Python?}
     F -->|JavaScript| G[Use Puppeteer<br>Render then extract]
     F -->|Python| H[Consider Playwright<br>Python bindings]
+```
+
+**Static pages with Python**
+
+```mermaid
+graph TD
+    A[Start: Need to<br>scrape a website] --> B{Does the page<br>require JavaScript<br>to load data?}
+    B -->|No| D{What language<br>does your team use?}
     D -->|Python| I[Use BeautifulSoup<br>Fast and simple]
-    D -->|JavaScript| J{Is speed<br>critical?}
-    J -->|Yes| K[Use Cheerio<br>Node.js HTML parser]
-    J -->|No| L[Puppeteer works<br>but is overkill]
     I --> M{Need to process<br>data after scraping?}
     M -->|Yes| N[BS4 + pandas<br>Python data pipeline]
     M -->|No| O[BS4 + requests<br>Minimal setup]
+```
+
+**Static pages with JavaScript**
+
+```mermaid
+graph TD
+    A[Start: Need to<br>scrape a website] --> B{Does the page<br>require JavaScript<br>to load data?}
+    B -->|No| D{What language<br>does your team use?}
+    D -->|JavaScript| J{Is speed<br>critical?}
+    J -->|Yes| K[Use Cheerio<br>Node.js HTML parser]
+    J -->|No| L[Puppeteer works<br>but is overkill]
 ```
 
 ## Alternatives That Bridge the Gap

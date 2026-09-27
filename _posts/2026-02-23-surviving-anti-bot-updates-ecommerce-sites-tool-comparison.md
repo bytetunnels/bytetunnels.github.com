@@ -38,12 +38,12 @@ graph TD
     E -->|Human-like| D
     E -->|Bot-like| F
 
-    style A fill:#e6e6e6
-    style B fill:#ffcccc
-    style C fill:#ffffcc
-    style D fill:#99ff99
-    style E fill:#ccffcc
-    style F fill:#ff9999
+    style A fill:#e6e6e6,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#99ff99,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ff9999,color:#1f2328
 ```
 
 The key insight is that each layer is independently updateable. A vendor might push new fingerprint checks at the JS challenge layer without touching the edge layer. This means partial breakage: your scraper might pass three out of four checks but fail the one that changed.
@@ -252,18 +252,18 @@ The main risk is when anti-bot vendors start specifically fingerprinting the Cam
 ### Resilience Summary
 
 ```mermaid
-graph TD
-    U["Anti-Bot Update Deployed"] --> R["Requests / HTTPX<br>Already broken<br>No JS execution"]
-    U --> S["Selenium<br>Breaks immediately<br>WebDriver artifacts"]
-    U --> P["Playwright + Stealth<br>Breaks on major updates<br>JS patches lag behind"]
-    U --> N["Nodriver<br>Survives most updates<br>No driver artifacts"]
-    U --> C["Camoufox<br>Survives nearly all updates<br>Engine-level stealth"]
+graph LR
+    U["Anti-Bot Update Deployed"] --> R["Requests / HTTPX<br/>Already broken<br/>No JS execution"]
+    U --> S["Selenium<br/>Breaks immediately<br/>WebDriver artifacts"]
+    U --> P["Playwright + Stealth<br/>Breaks on major updates<br/>JS patches lag behind"]
+    U --> N["Nodriver<br/>Survives most updates<br/>No driver artifacts"]
+    U --> C["Camoufox<br/>Survives nearly all<br/>updates<br/>Engine-level stealth"]
 
-    style R fill:#ff9999
-    style S fill:#ffcccc
-    style P fill:#ffffcc
-    style N fill:#ccffcc
-    style C fill:#99ff99
+    style R fill:#ff9999,color:#1f2328
+    style S fill:#ffcccc,color:#1f2328
+    style P fill:#ffffcc,color:#1f2328
+    style N fill:#ccffcc,color:#1f2328
+    style C fill:#99ff99,color:#1f2328
 ```
 
 ## Monitoring Strategies: Detect Blocks Before They Cost You Data
@@ -583,14 +583,14 @@ A production e-commerce scraper should combine multiple strategies into a system
 
 ```mermaid
 graph TD
-    A["Target URL"] --> B{"Structured Data<br>Available?"}
-    B -->|Yes| C["Extract JSON-LD<br>No anti-bot risk"]
-    B -->|No| D{"API Endpoint<br>Discovered?"}
-    D -->|Yes| E["Call API with<br>session cookies"]
-    D -->|No| F{"Protection<br>Level?"}
-    F -->|None| G["HTTP Client<br>requests / httpx"]
-    F -->|Basic| H["Playwright + Stealth"]
-    F -->|Strong| I["Nodriver or Camoufox"]
+    A["Target URL"] --> B{"Structured Data<br/>Available?"}
+    B -->|Yes| C["Extract JSON-LD No<br/>anti-bot risk"]
+    B -->|No| D{"API Endpoint<br/>Discovered?"}
+    D -->|Yes| E["Call API with<br/>session cookies"]
+    D -->|No| F{"Protection Level?"}
+    F -->|None| G["HTTP Client<br/>requests / httpx"]
+    F -->|Basic| H["Playwright +<br/>Stealth"]
+    F -->|Strong| I["Nodriver or<br/>Camoufox"]
 
     C --> J["Validate Data"]
     E --> J
@@ -599,15 +599,15 @@ graph TD
     I --> J
 
     J -->|Valid| K["Store Results"]
-    J -->|Invalid| L["Escalate to<br>Next Strategy"]
+    J -->|Invalid| L["Escalate to Next<br/>Strategy"]
     L --> D
 
-    style C fill:#99ff99
-    style E fill:#ccffcc
-    style G fill:#ffffcc
-    style H fill:#ffddaa
-    style I fill:#ffcccc
-    style K fill:#99ff99
+    style C fill:#99ff99,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style G fill:#ffffcc,color:#1f2328
+    style H fill:#ffddaa,color:#1f2328
+    style I fill:#ffcccc,color:#1f2328
+    style K fill:#99ff99,color:#1f2328
 ```
 
 ### Implementing Graceful Degradation

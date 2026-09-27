@@ -526,7 +526,6 @@ Use this flowchart when starting a new scraping project:
 graph TD
     A[New scraping<br>project] --> B{Is the data in<br>the initial HTML?}
     B -->|Yes| C{How many pages?}
-    B -->|No, needs JS| D{Need user<br>interaction?}
 
     C -->|Under 100| E[BS4 + requests<br>Simple script]
     C -->|100 - 1000| F{Need retries,<br>rate limiting,<br>pipelines?}
@@ -534,6 +533,12 @@ graph TD
 
     F -->|No| H[BS4 + httpx<br>Async script]
     F -->|Yes| G
+```
+
+```mermaid
+graph TD
+    A[New scraping<br>project] --> B{Is the data in<br>the initial HTML?}
+    B -->|No, needs JS| D{Need user<br>interaction?}
 
     D -->|Yes, clicks<br>forms, scrolls| I[Selenium<br>Browser control]
     D -->|No, just<br>rendering| J{How many pages?}

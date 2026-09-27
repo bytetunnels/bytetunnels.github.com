@@ -189,9 +189,9 @@ Educational data collection supports institutional research, student success ini
 graph TD
     A[Research Databases]
     B[Academic Journals]
-    C[Conference Proceedings]
+    C["Conference<br/>Proceedings"]
     D[Preprint Servers]
-    E[Data Collection Layer]
+    E["Data Collection<br/>Layer"]
 
     A --> E
     B --> E
@@ -199,14 +199,14 @@ graph TD
     D --> E
 
     E --> F[Text Processing]
-    E --> G[Metadata Extraction]
+    E --> G["Metadata<br/>Extraction"]
 
     F --> H[Topic Modeling]
     G --> I[Citation Analysis]
 
     H --> J[Research Insights]
     I --> J
-    J --> K[Knowledge Discovery]
+    J --> K["Knowledge<br/>Discovery"]
 ```
 
 

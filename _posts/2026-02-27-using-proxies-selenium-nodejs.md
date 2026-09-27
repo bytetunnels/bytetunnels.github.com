@@ -31,8 +31,8 @@ flowchart TD
     C --> F["Target Website"]
     D --> F
     E --> F
-    style B fill:#ffdddd
-    style F fill:#ddffdd
+    style B fill:#ffdddd,color:#1f2328
+    style F fill:#ddffdd,color:#1f2328
 ```
 
 ## Basic Proxy Setup with Chrome Options
@@ -286,8 +286,8 @@ flowchart TD
     D --> F["SOCKS5 Proxy"]
     E --> G["Target Website"]
     F --> G
-    style D fill:#ffdddd
-    style E fill:#ddffdd
+    style D fill:#ffdddd,color:#1f2328
+    style E fill:#ddffdd,color:#1f2328
 ```
 
 ## Proxy Rotation Between Requests
@@ -621,8 +621,8 @@ flowchart TD
     B -->|"Adds credentials"| C["Upstream Proxy<br>(proxy.service.com:8080)"]
     C -->|"Rotates IPs"| D["Proxy Pool"]
     D --> E["Target Website"]
-    style B fill:#ddffdd
-    style D fill:#ffffdd
+    style B fill:#ddffdd,color:#1f2328
+    style D fill:#ffffdd,color:#1f2328
 ```
 
 ## Quick Reference: Which Method to Use

@@ -62,11 +62,11 @@ graph TD
     K --> N["'Neuromancer'"]
     L --> O["'Snow Crash'"]
 
-    style F fill:#f9f3e3,stroke:#c9a227
-    style I fill:#f9f3e3,stroke:#c9a227
-    style M fill:#f9f3e3,stroke:#c9a227
-    style N fill:#f9f3e3,stroke:#c9a227
-    style O fill:#f9f3e3,stroke:#c9a227
+    style F fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style I fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style M fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style N fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style O fill:#f9f3e3,stroke:#c9a227,color:#1f2328
 ```
 
 The yellow nodes are **text nodes** -- they hold the actual readable content. Everything else is an **element node** that represents an HTML tag. This tree is the DOM.
@@ -160,9 +160,9 @@ graph TD
     B -.- C
     C -.- D
 
-    style B fill:#d4edda,stroke:#28a745
-    style C fill:#d4edda,stroke:#28a745
-    style D fill:#d4edda,stroke:#28a745
+    style B fill:#d4edda,stroke:#28a745,color:#1f2328
+    style C fill:#d4edda,stroke:#28a745,color:#1f2328
+    style D fill:#d4edda,stroke:#28a745,color:#1f2328
 ```
 
 The three `li` elements are children of `ul` and siblings of each other. The dashed lines indicate sibling relationships.
@@ -189,9 +189,9 @@ Suppose you are looking at a product listing page. The HTML might look like this
 The browser turns this into the following DOM tree:
 
 ```mermaid
-graph TD
-    A["div.product-list"] --> B["div.product<br>data-id='101'"]
-    A --> C["div.product<br>data-id='102'"]
+graph LR
+    A["div.product-list"] --> B["div.product<br/>data-id='101'"]
+    A --> C["div.product<br/>data-id='102'"]
 
     B --> D["h2.name"]
     B --> E["span.price"]
@@ -209,12 +209,12 @@ graph TD
     K --> N["'$29.99'"]
     L --> O["'4.2 stars'"]
 
-    style G fill:#f9f3e3,stroke:#c9a227
-    style H fill:#f9f3e3,stroke:#c9a227
-    style I fill:#f9f3e3,stroke:#c9a227
-    style M fill:#f9f3e3,stroke:#c9a227
-    style N fill:#f9f3e3,stroke:#c9a227
-    style O fill:#f9f3e3,stroke:#c9a227
+    style G fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style H fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style I fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style M fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style N fill:#f9f3e3,stroke:#c9a227,color:#1f2328
+    style O fill:#f9f3e3,stroke:#c9a227,color:#1f2328
 ```
 
 To get the price of the second product, you need to navigate: start at `div.product-list`, go to the second `div.product`, find the `span.price` inside it, and read the text node. That navigation is exactly what scraping tools automate for you.
@@ -354,8 +354,8 @@ graph TD
     E --> F["Test it in the<br>browser console"]
     F --> G["Use it in your<br>scraping tool"]
 
-    style A fill:#e8f4fd,stroke:#2196f3
-    style G fill:#d4edda,stroke:#28a745
+    style A fill:#e8f4fd,stroke:#2196f3,color:#1f2328
+    style G fill:#d4edda,stroke:#28a745,color:#1f2328
 ```
 
 This workflow applies no matter what scraping tool you use -- BeautifulSoup, Scrapy, Selenium, Playwright, or any other. The DOM is the common foundation underneath all of them. For more advanced extraction, [LLM-based tools](/posts/best-llm-structured-data-extraction-html-2026/) can now navigate the DOM and pull structured data automatically.

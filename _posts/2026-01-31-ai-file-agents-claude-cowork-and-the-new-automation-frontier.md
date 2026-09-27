@@ -24,19 +24,19 @@ The practical use cases Anthropic highlights include reorganizing a messy downlo
 
 ```mermaid
 graph TD
-    A["User grants folder access"] --> B["Claude reads file contents"]
-    B --> C{"What needs to happen?"}
-    C -->|Clean| D["Parse and restructure data"]
-    C -->|Transform| E["Convert between formats"]
-    C -->|Analyze| F["Extract insights and summarize"]
-    C -->|Organize| G["Rename, sort, and categorize files"]
-    D --> H["Write cleaned files back"]
+    A["User grants folder<br/>access"] --> B["Claude reads file<br/>contents"]
+    B --> C{"What needs to<br/>happen?"}
+    C -->|Clean| D["Parse and restructure<br/>data"]
+    C -->|Transform| E["Convert between<br/>formats"]
+    C -->|Analyze| F["Extract insights and<br/>summarize"]
+    C -->|Organize| G["Rename, sort, and<br/>categorize files"]
+    D --> H["Write cleaned<br/>files back"]
     E --> H
     F --> H
     G --> H
 
-    style A fill:#ffffcc
-    style H fill:#ccffcc
+    style A fill:#ffffcc,color:#1f2328
+    style H fill:#ccffcc,color:#1f2328
 ```
 
 ## The Shift from Cloud to Local
@@ -48,7 +48,7 @@ Cowork works differently. The AI reaches into your local environment. It sees yo
 In most scraping projects, the biggest bottleneck is not the scraping itself. It is the [data pipeline](/posts/llm-powered-data-extraction-schema-driven-scraping-with-structured-output/) that follows. Cleaning malformed CSV files, deduplicating records across multiple scrape runs, normalizing date formats, [extracting structured data](/posts/best-llm-structured-data-extraction-html-2026/) from semi-structured dumps -- these tasks are tedious, repetitive, and exactly the kind of work that a file-based AI agent can handle.
 
 ```mermaid
-graph TD
+graph LR
     subgraph CL["Cloud-Only AI"]
         A1["Copy data to chat"] --> A2["AI processes text"]
         A2 --> A3["Copy result back"]
@@ -56,13 +56,13 @@ graph TD
     end
 
     subgraph LO["Local File Agent"]
-        B1["Point agent at folder"] --> B2["Agent reads files directly"]
-        B2 --> B3["Agent processes in context"]
-        B3 --> B4["Agent writes results to disk"]
+        B1["Point agent at folder"] --> B2["Agent reads files<br/>directly"]
+        B2 --> B3["Agent processes in<br/>context"]
+        B3 --> B4["Agent writes results to<br/>disk"]
     end
 
-    style A4 fill:#ffcccc
-    style B4 fill:#ccffcc
+    style A4 fill:#ffcccc,color:#1f2328
+    style B4 fill:#ccffcc,color:#1f2328
 ```
 
 ## Connecting Scraping to File Processing
@@ -422,11 +422,11 @@ graph TD
     J -.-> E
     J -.-> F
 
-    style A fill:#ccccff
-    style J fill:#ffffcc
-    style G fill:#ccffcc
-    style H fill:#ccffcc
-    style I fill:#ccffcc
+    style A fill:#ccccff,color:#1f2328
+    style J fill:#ffffcc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style H fill:#ccffcc,color:#1f2328
+    style I fill:#ccffcc,color:#1f2328
 ```
 
 The dashed lines from the AI file agent show where tools like Claude Cowork fit in. They do not replace your pipeline. They augment it. When you encounter an edge case your cleaning script does not handle, or when you need a one-off transformation that is not worth scripting, a file agent can step in and handle it conversationally.

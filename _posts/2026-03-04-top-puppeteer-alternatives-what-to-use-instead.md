@@ -284,47 +284,65 @@ For an even more comprehensive breakdown that includes Scrapy and other framewor
 
 Use this flowchart to narrow down the right tool for your use case.
 
+**Browser testing**
+
 ```mermaid
 flowchart TD
-    A["What is your primary goal?"] --> B["Browser testing"]
-    A --> C["Web scraping"]
-    A --> D["General browser automation"]
+    A["What is your primary<br/>goal?"] --> B["Browser testing"]
 
     B --> E{"Need multi-browser?"}
-    E -->|Yes| F["**Playwright** or **Selenium**"]
-    E -->|No, Chrome only| G["**Puppeteer** or **Playwright**"]
+    E -->|Yes| F["<b>Playwright</b> or<br/><b>Selenium</b>"]
+    E -->|No, Chrome only| G["<b>Puppeteer</b> or<br/><b>Playwright</b>"]
 
-    C --> H{"Is the site protected by anti-bot?"}
-    H -->|Yes| I{"What language?"}
-    H -->|No| J{"Need AI-based extraction?"}
+    style F fill:#ccccff,color:#1f2328
+    style G fill:#ccccff,color:#1f2328
+```
 
-    I -->|Python| K["**Nodriver**"]
-    I -->|JavaScript| L["**Puppeteer-Extra** with stealth"]
+**General browser automation**
 
-    J -->|Yes| M["**Crawl4AI**"]
-    J -->|No| N{"What language?"}
-
-    N -->|Python| O["**Playwright** Python"]
-    N -->|JavaScript| P["**Playwright** JS"]
-    N -->|Java or Ruby| Q["**Selenium**"]
+```mermaid
+flowchart TD
+    A --> D["General browser<br/>automation"]
 
     D --> R{"Need cross-browser?"}
-    R -->|Yes| S["**Playwright** or **Selenium**"]
-    R -->|No| T{"Existing Puppeteer codebase?"}
-    T -->|Yes| U["**Keep Puppeteer** or add **puppeteer-extra**"]
-    T -->|No| V["**Playwright**"]
+    R -->|Yes| S["<b>Playwright</b> or<br/><b>Selenium</b>"]
+    R -->|No| T{"Existing Puppeteer<br/>codebase?"}
+    T -->|Yes| U["<b>Keep Puppeteer</b> or<br/>add <b>puppeteer-extra</b>"]
+    T -->|No| V["<b>Playwright</b>"]
 
-    style K fill:#ccffcc
-    style L fill:#ccffcc
-    style M fill:#ccffcc
-    style F fill:#ccccff
-    style G fill:#ccccff
-    style O fill:#ccccff
-    style P fill:#ccccff
-    style Q fill:#ffffcc
-    style S fill:#ccccff
-    style U fill:#ffffcc
-    style V fill:#ccccff
+    style S fill:#ccccff,color:#1f2328
+    style U fill:#ffffcc,color:#1f2328
+    style V fill:#ccccff,color:#1f2328
+    A["What is your primary goal?"]
+```
+
+**Web scraping**
+
+```mermaid
+flowchart TD
+    A --> C["Web scraping"]
+
+    C --> H{"Is the site protected by<br/>anti-bot?"}
+    H -->|Yes| I{"What language?"}
+    H -->|No| J{"Need AI-based<br/>extraction?"}
+
+    I -->|Python| K["<b>Nodriver</b>"]
+    I -->|JavaScript| L["<b>Puppeteer-Extra</b> with<br/>stealth"]
+
+    J -->|Yes| M["<b>Crawl4AI</b>"]
+    J -->|No| N{"What language?"}
+
+    N -->|Python| O["<b>Playwright</b> Python"]
+    N -->|JavaScript| P["<b>Playwright</b> JS"]
+    N -->|Java or Ruby| Q["<b>Selenium</b>"]
+
+    style K fill:#ccffcc,color:#1f2328
+    style L fill:#ccffcc,color:#1f2328
+    style M fill:#ccffcc,color:#1f2328
+    style O fill:#ccccff,color:#1f2328
+    style P fill:#ccccff,color:#1f2328
+    style Q fill:#ffffcc,color:#1f2328
+    A["What is your primary goal?"]
 ```
 
 
@@ -402,4 +420,4 @@ If you are already running Puppeteer in production and it works, **do not migrat
 
 And if your organization standardizes on Selenium across multiple languages and runs distributed test suites on Selenium Grid, **Selenium remains the right tool** for that specific context. It is not the most modern option, but its ecosystem depth is unmatched.
 
-The best Puppeteer alternative is the one that matches your language, your detection requirements, and your project scope. Use the decision flowchart above, pick the tool that fits, and move on to the actual problem you are trying to solve.
+The best Puppeteer alternative is the one that matches your language, your detection requirements, and your project scope. Use the decision flowcharts above, pick the tool that fits, and move on to the actual problem you are trying to solve.

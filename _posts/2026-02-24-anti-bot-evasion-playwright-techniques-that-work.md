@@ -17,11 +17,11 @@ Playwright is one of the best browser automation frameworks available, but it is
 Before jumping into fixes, it helps to understand what you are fighting. Anti-bot systems inspect multiple layers of your browser session simultaneously.
 
 ```mermaid
-graph TD
-    A[Anti-Bot Detection] --> B[JavaScript<br>Properties]
-    A --> C[HTTP<br>Headers]
-    A --> D[Behavioral<br>Signals]
-    A --> E[Fingerprint<br>Consistency]
+graph LR
+    A[Anti-Bot Detection] --> B["JavaScript<br/>Properties"]
+    A --> C["HTTP<br/>Headers"]
+    A --> D["Behavioral<br/>Signals"]
+    A --> E["Fingerprint<br/>Consistency"]
     B --> B1[navigator.webdriver]
     B --> B2[window.chrome]
     B --> B3[navigator.plugins]
@@ -144,14 +144,14 @@ with sync_playwright() as p:
 The stealth package patches the following properties that Playwright normally gets wrong.
 
 ```mermaid
-graph TD
-    A[playwright_stealth<br>Patches] --> B[navigator.webdriver<br>= undefined]
-    A --> C[navigator.plugins<br>populated]
-    A --> D[navigator.languages<br>realistic array]
-    A --> E[window.chrome<br>object present]
-    A --> F[WebGL vendor<br>and renderer]
-    A --> G[iframe<br>contentWindow]
-    A --> H[permissions<br>API behavior]
+graph LR
+    A["playwright_stealth<br/>Patches"] --> B["navigator.webdriver<br/>= undefined"]
+    A --> C["navigator.plugins<br/>populated"]
+    A --> D["navigator.languages<br/>realistic array"]
+    A --> E["window.chrome<br/>object present"]
+    A --> F["WebGL vendor<br/>and renderer"]
+    A --> G["iframe<br/>contentWindow"]
+    A --> H["permissions<br/>API behavior"]
 ```
 
 For Node.js, the equivalent package is `puppeteer-extra-plugin-stealth` used through `playwright-extra`. The patches are similar --- they override `navigator.plugins`, add a fake `window.chrome` object, fix the WebGL renderer string, and normalize the permissions API.
@@ -278,13 +278,13 @@ with sync_playwright() as p:
 The `human_click` function is particularly important. Instead of clicking the exact center of an element every time, it picks a random point within the element bounds. Real users never click dead center --- their clicks scatter naturally across the button surface.
 
 ```mermaid
-graph TD
-    A[Bot Click Pattern] --> B[Exact center<br>every time]
-    A --> C[Zero delay<br>between clicks]
-    A --> D[Uniform interval<br>between actions]
-    E[Human Click Pattern] --> F[Random position<br>within element]
-    E --> G[Variable delay<br>200-800ms]
-    E --> H[Irregular interval<br>between actions]
+graph LR
+    A[Bot Click Pattern] --> B["Exact center<br/>every time"]
+    A --> C["Zero delay<br/>between clicks"]
+    A --> D["Uniform interval<br/>between actions"]
+    E[Human Click Pattern] --> F["Random position<br/>within element"]
+    E --> G["Variable delay<br/>200-800ms"]
+    E --> H["Irregular interval<br/>between actions"]
 ```
 
 ## Step 6: Use Persistent Browser Context

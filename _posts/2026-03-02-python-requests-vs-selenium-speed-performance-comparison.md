@@ -25,7 +25,7 @@ The performance difference between `requests` and Selenium is not a matter of op
 That difference in scope explains every performance number in this post.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph REQUESTS["requests Library"]
         R1["Python Script"] -->|"HTTP GET"| R2["Web Server"]
         R2 -->|"HTML Response<br>(raw bytes)"| R1
@@ -41,8 +41,8 @@ flowchart TD
         S2 -->|"Result"| S1
     end
 
-    style R1 fill:#ddffdd
-    style S3 fill:#ffdddd
+    style R1 fill:#ddffdd,color:#1f2328
+    style S3 fill:#ffdddd,color:#1f2328
 ```
 
 With `requests`, the network round-trip is essentially the entire operation. With Selenium, the network round-trip is just the beginning -- the browser then does a significant amount of work before Selenium reports that the page is ready.
@@ -485,24 +485,24 @@ Use this flowchart to determine which tool fits your scraping task.
 
 ```mermaid
 flowchart TD
-    A["Need to scrape\na website"] --> B{"Is the data visible\nin View Source?"}
-    B -->|"Yes"| C{"Need to scrape\nmany pages?"}
-    B -->|"No"| D{"Can you find\na JSON API\nin DevTools?"}
+    A["Need to scrape\na<br/>website"] --> B{"Is the data visible\nin<br/>View Source?"}
+    B -->|"Yes"| C{"Need to scrape\nmany<br/>pages?"}
+    B -->|"No"| D{"Can you find\na JSON<br/>API\nin DevTools?"}
 
-    D -->|"Yes"| E["Use requests\n+ hit the API directly"]
-    D -->|"No"| F{"Does the site have\naggressive anti-bot\nprotection?"}
+    D -->|"Yes"| E["Use requests\n+ hit the<br/>API directly"]
+    D -->|"No"| F{"Does the site<br/>have\naggressive<br/>anti-bot\nprotection?"}
 
-    F -->|"No"| G["Use Playwright\n(faster than Selenium\nfor JS-rendered pages)"]
-    F -->|"Yes"| H["Use Selenium\nor stealth browser\n(Camoufox, nodriver)"]
+    F -->|"No"| G["Use Playwright\n(faster<br/>than Selenium\nfor<br/>JS-rendered pages)"]
+    F -->|"Yes"| H["Use Selenium\nor stealth<br/>browser\n(Camoufox,<br/>nodriver)"]
 
-    C -->|"Yes"| I["Use requests + Session\nor httpx async"]
-    C -->|"No"| J["Use requests\n+ BeautifulSoup"]
+    C -->|"Yes"| I["Use requests +<br/>Session\nor httpx async"]
+    C -->|"No"| J["Use requests\n+<br/>BeautifulSoup"]
 
-    style E fill:#ddffdd
-    style I fill:#ddffdd
-    style J fill:#ddffdd
-    style G fill:#ffffdd
-    style H fill:#ffdddd
+    style E fill:#ddffdd,color:#1f2328
+    style I fill:#ddffdd,color:#1f2328
+    style J fill:#ddffdd,color:#1f2328
+    style G fill:#ffffdd,color:#1f2328
+    style H fill:#ffdddd,color:#1f2328
 ```
 
 The flowchart captures the general rule: start with the simplest tool that can get the data. `requests` is that tool for static pages and exposed APIs. Selenium (or Playwright) is necessary when JavaScript rendering or browser-level interaction is required. For sites with the most aggressive anti-bot measures, [stealth browsers like Camoufox and nodriver](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) go further -- see our [complete nodriver guide](/posts/nodriver-complete-guide-undetected-browser-automation-python/) and [getting started tutorial](/posts/getting-started-nodriver-python-installation-first-script/) to get up and running quickly. There are also [browser agent frameworks](/posts/browser-agent-frameworks-compared-browser-use-vs-stagehand-vs-skyvern/) that add AI-driven navigation on top of these browser tools, and [alternatives to Puppeteer](/posts/top-puppeteer-alternatives-what-to-use-instead/) worth considering if you work across languages. The middle-ground tools like `httpx` help when you need `requests`-level simplicity with better concurrency.

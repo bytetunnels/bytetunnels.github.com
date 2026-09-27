@@ -39,25 +39,25 @@ The ChromeDriver binary itself contains identifiable strings. Some anti-bot syst
 Selenium-controlled browsers also produce HTTP header patterns that differ from normal browsers. The `Accept-Language`, `Accept-Encoding`, and `User-Agent` headers may be missing, truncated, or ordered differently than a real browser would send them. Sophisticated fingerprinting services aggregate these signals and score each session.
 
 ```mermaid
-graph TD
-    A["Selenium + ChromeDriver"] --> B["navigator.webdriver = true"]
+graph LR
+    A["Selenium + ChromeDriver"] --> B["navigator.webdriver =<br/>true"]
     A --> C["cdc_ variables in DOM"]
-    A --> D["ChromeDriver binary markers"]
-    A --> E["Automation command-line flags"]
+    A --> D["ChromeDriver binary<br/>markers"]
+    A --> E["Automation command-line<br/>flags"]
     A --> F["Atypical HTTP headers"]
-    B --> G["Detected by<br>anti-bot system"]
+    B --> G["Detected by<br/>anti-bot system"]
     C --> G
     D --> G
     E --> G
     F --> G
 
-    style A fill:#f8d7da
-    style G fill:#f8d7da
-    style B fill:#fff3cd
-    style C fill:#fff3cd
-    style D fill:#fff3cd
-    style E fill:#fff3cd
-    style F fill:#fff3cd
+    style A fill:#f8d7da,color:#1f2328
+    style G fill:#f8d7da,color:#1f2328
+    style B fill:#fff3cd,color:#1f2328
+    style C fill:#fff3cd,color:#1f2328
+    style D fill:#fff3cd,color:#1f2328
+    style E fill:#fff3cd,color:#1f2328
+    style F fill:#fff3cd,color:#1f2328
 ```
 
 Every one of these signals is a separate detection vector, and many anti-bot services check all of them simultaneously.
@@ -71,24 +71,24 @@ There are no JavaScript shims to discover. When a detection script probes `navig
 Camoufox also handles the fingerprint consistency problem that trips up most spoofing tools. When you change a User-Agent string to claim you are running macOS but your `navigator.platform` still says Linux, detection scripts catch the mismatch. Camoufox generates internally consistent fingerprint sets where every value --- platform, OS, screen resolution, GPU renderer, timezone, locale --- aligns correctly.
 
 ```mermaid
-graph TD
-    A["Camoufox Engine"] --> B["C++ modified Firefox"]
-    B --> C["navigator.webdriver = false<br>(compiled, not patched)"]
-    B --> D["Consistent fingerprints<br>(OS, platform, GPU aligned)"]
-    B --> E["Real Firefox TLS signature"]
-    B --> F["No automation flags<br>in process or DOM"]
-    C --> G["Passes anti-bot checks"]
+graph LR
+    A["Camoufox Engine"] --> B["C++ modified<br/>Firefox"]
+    B --> C["navigator.webdriver =<br/>false<br/>(compiled, not patched)"]
+    B --> D["Consistent fingerprints<br/>(OS, platform, GPU<br/>aligned)"]
+    B --> E["Real Firefox TLS<br/>signature"]
+    B --> F["No automation flags<br/>in process or DOM"]
+    C --> G["Passes anti-bot<br/>checks"]
     D --> G
     E --> G
     F --> G
 
-    style A fill:#d4edda
-    style B fill:#d4edda
-    style G fill:#d4edda
-    style C fill:#cce5ff
-    style D fill:#cce5ff
-    style E fill:#cce5ff
-    style F fill:#cce5ff
+    style A fill:#d4edda,color:#1f2328
+    style B fill:#d4edda,color:#1f2328
+    style G fill:#d4edda,color:#1f2328
+    style C fill:#cce5ff,color:#1f2328
+    style D fill:#cce5ff,color:#1f2328
+    style E fill:#cce5ff,color:#1f2328
+    style F fill:#cce5ff,color:#1f2328
 ```
 
 Out of the box, with zero configuration, Camoufox passes detection checks that would flag a vanilla Selenium setup instantly.
@@ -99,27 +99,27 @@ Modern anti-bot systems operate across multiple detection layers. The following 
 
 ```mermaid
 graph TD
-    L1["Layer 1: TLS Fingerprint"] --> L2["Layer 2: Automation Flags"]
-    L2 --> L3["Layer 3: JavaScript API Probing"]
-    L3 --> L4["Layer 4: Canvas / WebGL / Fonts"]
-    L4 --> L5["Layer 5: Behavioral Analysis"]
+    L1["Layer 1: TLS Fingerprint"] --> L2["Layer 2: Automation<br/>Flags"]
+    L2 --> L3["Layer 3: JavaScript API<br/>Probing"]
+    L3 --> L4["Layer 4: Canvas / WebGL<br/>/ Fonts"]
+    L4 --> L5["Layer 5: Behavioral<br/>Analysis"]
 
-    L1 -.- S1["Selenium: Real Chrome TLS<br>Camoufox: Real Firefox TLS"]
-    L2 -.- S2["Selenium: Flags exposed<br>Camoufox: No flags"]
-    L3 -.- S3["Selenium: webdriver=true, cdc_ vars<br>Camoufox: Clean APIs"]
-    L4 -.- S4["Selenium: Default fingerprints<br>Camoufox: Spoofed at engine level"]
-    L5 -.- S5["Selenium: No built-in evasion<br>Camoufox: No built-in evasion"]
+    L1 -.- S1["Selenium: Real Chrome<br/>TLS<br/>Camoufox: Real Firefox<br/>TLS"]
+    L2 -.- S2["Selenium: Flags exposed<br/>Camoufox: No flags"]
+    L3 -.- S3["Selenium:<br/>webdriver=true, cdc_<br/>vars<br/>Camoufox: Clean APIs"]
+    L4 -.- S4["Selenium: Default<br/>fingerprints<br/>Camoufox: Spoofed at<br/>engine level"]
+    L5 -.- S5["Selenium: No built-in<br/>evasion<br/>Camoufox: No built-in<br/>evasion"]
 
-    style L1 fill:#e2e3e5
-    style L2 fill:#e2e3e5
-    style L3 fill:#e2e3e5
-    style L4 fill:#e2e3e5
-    style L5 fill:#e2e3e5
-    style S1 fill:#f0f0f0
-    style S2 fill:#f0f0f0
-    style S3 fill:#f0f0f0
-    style S4 fill:#f0f0f0
-    style S5 fill:#f0f0f0
+    style L1 fill:#e2e3e5,color:#1f2328
+    style L2 fill:#e2e3e5,color:#1f2328
+    style L3 fill:#e2e3e5,color:#1f2328
+    style L4 fill:#e2e3e5,color:#1f2328
+    style L5 fill:#e2e3e5,color:#1f2328
+    style S1 fill:#f0f0f0,color:#1f2328
+    style S2 fill:#f0f0f0,color:#1f2328
+    style S3 fill:#f0f0f0,color:#1f2328
+    style S4 fill:#f0f0f0,color:#1f2328
+    style S5 fill:#f0f0f0,color:#1f2328
 ```
 
 Both tools use real browser engines, so TLS fingerprints are genuine. As the [evolution of web scraping detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) shows, both also lack built-in behavioral evasion --- neither simulates human-like mouse movement or typing patterns natively. The critical difference is in layers two through four, where Selenium fails by default and Camoufox succeeds by design.
@@ -355,21 +355,21 @@ Selenium supports multiple browser engines --- Chrome, Firefox, Edge, Safari ---
 Camoufox is Firefox-based exclusively. It communicates over a WebSocket connection using the Playwright protocol, which is faster for command batching and event streaming. However, Firefox generally uses more memory than Chrome, and Camoufox's fingerprint modifications add a small overhead to startup time.
 
 ```mermaid
-graph TD
+graph LR
     subgraph "Selenium Command Path"
-        A["Python Script"] -->|"HTTP request"| B["ChromeDriver<br>(separate process)"]
+        A["Python Script"] -->|"HTTP request"| B["ChromeDriver<br/>(separate process)"]
         B -->|"DevTools Protocol"| C["Chrome Browser"]
     end
 
     subgraph "Camoufox Command Path"
-        D["Python Script"] -->|"WebSocket"| E["Modified Firefox<br>(direct connection)"]
+        D["Python Script"] -->|"WebSocket"| E["Modified Firefox<br/>(direct connection)"]
     end
 
-    style A fill:#f8d7da
-    style B fill:#f8d7da
-    style C fill:#f8d7da
-    style D fill:#d4edda
-    style E fill:#d4edda
+    style A fill:#f8d7da,color:#1f2328
+    style B fill:#f8d7da,color:#1f2328
+    style C fill:#f8d7da,color:#1f2328
+    style D fill:#d4edda,color:#1f2328
+    style E fill:#d4edda,color:#1f2328
 ```
 
 Selenium's extra hop through ChromeDriver adds measurable latency. For scraping tasks that make thousands of small interactions, Camoufox's direct connection is noticeably faster. For tasks that mostly wait for page loads, the difference is negligible.
@@ -455,14 +455,14 @@ graph TD
     F -->|"Yes"| G["Selenium with Grid"]
     F -->|"No"| H["Either tool works"]
 
-    style A fill:#e2e3e5
-    style B fill:#f8d7da
-    style C fill:#e2e3e5
-    style D fill:#d4edda
-    style E fill:#fff3cd
-    style F fill:#e2e3e5
-    style G fill:#f8d7da
-    style H fill:#f0f0f0
+    style A fill:#e2e3e5,color:#1f2328
+    style B fill:#f8d7da,color:#1f2328
+    style C fill:#e2e3e5,color:#1f2328
+    style D fill:#d4edda,color:#1f2328
+    style E fill:#fff3cd,color:#1f2328
+    style F fill:#e2e3e5,color:#1f2328
+    style G fill:#f8d7da,color:#1f2328
+    style H fill:#f0f0f0,color:#1f2328
 ```
 
 ## Combining Both Tools

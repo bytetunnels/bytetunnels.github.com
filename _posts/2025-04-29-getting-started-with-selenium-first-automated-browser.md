@@ -25,14 +25,14 @@ graph TB
     C --> D[Actual Browser<br/>Chrome/Firefox]
     D --> E[Web Server]
     E --> F[Target Website]
-    
+
     subgraph "Your System"
         A
         B
         C
         D
     end
-    
+
     subgraph "Remote"
         E
         F
@@ -286,7 +286,7 @@ driver = webdriver.Firefox(service=service, options=firefox_options)
 Browser automation is resource-intensive [compared to simple HTTP requests](/posts/python-requests-vs-selenium-speed-performance-comparison/). Here's how to optimize performance:
 
 ```mermaid
-graph TD
+graph LR
     A[Performance Optimization]
 
     A --> B[Resource Management]

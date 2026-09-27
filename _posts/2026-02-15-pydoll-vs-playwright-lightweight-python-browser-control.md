@@ -56,22 +56,24 @@ The fundamental difference is the number of layers between your Python code and 
 ```mermaid
 graph TD
     subgraph Pydoll
-        A["Python Code"] --> B["Pydoll Library<br>(asyncio)"]
-        B --> C["WebSocket<br>Connection"]
-        C --> D["Chrome<br>(CDP)"]
+        direction TB
+        A["Python Code"] --> B["Pydoll Library<br/>(asyncio)"]
+        B --> C["WebSocket<br/>Connection"]
+        C --> D["Chrome<br/>(CDP)"]
     end
 
     subgraph Playwright
-        E["Python Code"] --> F["Playwright<br>Python Binding"]
-        F --> G["Node.js<br>Server Process"]
-        G --> H["Browser-Specific<br>Protocol"]
-        H --> I["Chromium / Firefox<br>/ WebKit"]
+        direction TB
+        E["Python Code"] --> F["Playwright<br/>Python Binding"]
+        F --> G["Node.js<br/>Server Process"]
+        G --> H["Browser-Specific<br/>Protocol"]
+        H --> I["Chromium / Firefox<br/>/ WebKit"]
     end
 
-    style A fill:#ccffcc
-    style D fill:#ccffcc
-    style E fill:#cce5ff
-    style I fill:#cce5ff
+    style A fill:#ccffcc,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#cce5ff,color:#1f2328
+    style I fill:#cce5ff,color:#1f2328
 ```
 
 Pydoll has two hops: your code to the library, the library to Chrome over CDP. Playwright has four: your code to the Python binding, the binding to the Node.js server, the server to the browser protocol layer, and then the browser itself. Those extra layers buy you multi-browser support, auto-waiting, and a polished API, but they also add overhead, startup time, and complexity when debugging.
@@ -283,10 +285,10 @@ graph TD
     H --> I["Automation flags<br>present"]
     I --> J["Needs stealth plugins<br>to evade"]
 
-    style A fill:#ccffcc
-    style E fill:#ccffcc
-    style F fill:#ffcccc
-    style J fill:#ffcccc
+    style A fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ffcccc,color:#1f2328
+    style J fill:#ffcccc,color:#1f2328
 ```
 
 ### Pydoll's Natural Stealth
@@ -399,10 +401,10 @@ graph TD
     I --> J["~500+ MB browsers"]
     J --> K["Ready to run"]
 
-    style C fill:#ccffcc
-    style D fill:#ccffcc
-    style H fill:#ffffcc
-    style J fill:#ffcccc
+    style C fill:#ccffcc,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style H fill:#ffffcc,color:#1f2328
+    style J fill:#ffcccc,color:#1f2328
 ```
 
 At runtime, Pydoll launches Chrome and connects over a single WebSocket. Playwright starts a Node.js server process alongside the browser. On resource-constrained systems --- containers, CI runners, small VPS instances --- this difference matters.

@@ -345,13 +345,13 @@ graph TD
     C --> F["Network Log"]
     C --> G["Console Output"]
 
-    style A fill:#e8f4fd
-    style B fill:#e8f4fd
-    style C fill:#d4edda
-    style D fill:#fff3cd
-    style E fill:#fff3cd
-    style F fill:#fff3cd
-    style G fill:#fff3cd
+    style A fill:#e8f4fd,color:#1f2328
+    style B fill:#e8f4fd,color:#1f2328
+    style C fill:#d4edda,color:#1f2328
+    style D fill:#fff3cd,color:#1f2328
+    style E fill:#fff3cd,color:#1f2328
+    style F fill:#fff3cd,color:#1f2328
+    style G fill:#fff3cd,color:#1f2328
 ```
 
 For CI environments, you can configure tracing to only capture on failure, which avoids the performance overhead on passing tests:
@@ -459,9 +459,9 @@ graph TD
     B -->|"MCP Server"| D["Multi-step tool calls<br>~114K tokens"]
     B -->|"CLI Commands"| E["Single shell command<br>~27K tokens"]
 
-    style E fill:#d4edda
-    style C fill:#ffcccc
-    style D fill:#fff3cd
+    style E fill:#d4edda,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style D fill:#fff3cd,color:#1f2328
 ```
 
 An agent can run `playwright screenshot` to visually inspect a page, `playwright codegen` to generate interaction code it can then execute, or chain CLI commands together for multi-step workflows. Each command is a single subprocess call with structured output, rather than a multi-turn conversation managing browser state.

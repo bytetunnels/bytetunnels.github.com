@@ -26,12 +26,12 @@ graph TD
     C --> E["Playwright Python Client"]
     C --> F["Any Playwright Client"]
 
-    style A fill:#ccffcc
-    style B fill:#ccffcc
-    style C fill:#ffffcc
-    style D fill:#cce5ff
-    style E fill:#cce5ff
-    style F fill:#cce5ff
+    style A fill:#ccffcc,color:#1f2328
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#cce5ff,color:#1f2328
+    style E fill:#cce5ff,color:#1f2328
+    style F fill:#cce5ff,color:#1f2328
 ```
 
 The key insight: Camoufox's stealth properties live in the browser binary, not in the client library. The client is just a remote control. Swapping the remote control from Python to Node.js does not affect the browser's fingerprint.
@@ -362,6 +362,14 @@ graph TD
     D -->|"ws:// endpoint<br>printed to stdout"| A
     A -->|"firefox.connect(ws)"| D
 
+    style A fill:#cce5ff,color:#1f2328
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+```
+
+```mermaid
+graph LR
     subgraph "Camoufox Browser"
         C --> E["Context 1<br>(isolated cookies)"]
         C --> F["Context 2<br>(isolated cookies)"]
@@ -372,13 +380,11 @@ graph TD
     F --> I["Page"]
     G --> J["Page"]
 
-    style A fill:#cce5ff
-    style B fill:#ccffcc
-    style C fill:#ccffcc
-    style D fill:#ffffcc
-    style E fill:#f0f0f0
-    style F fill:#f0f0f0
-    style G fill:#f0f0f0
+    style C fill:#ccffcc,color:#1f2328
+    style E fill:#f0f0f0,color:#1f2328
+    style F fill:#f0f0f0,color:#1f2328
+    style G fill:#f0f0f0,color:#1f2328
+    C["Camoufox Binary<br>(Custom Firefox)"]
 ```
 
 The Node.js process is the orchestrator. It spawns Python only to launch the browser, then communicates exclusively over WebSocket. The Python process is dormant after startup --- it just keeps the browser alive.
@@ -471,11 +477,11 @@ graph TD
     C --> D["DOM Query + Extraction<br>5-50ms"]
     D --> E["WebSocket Protocol<br>0.1-1ms per message"]
 
-    style A fill:#ff9999
-    style B fill:#ffcc99
-    style C fill:#ffff99
-    style D fill:#ccff99
-    style E fill:#99ff99
+    style A fill:#ff9999,color:#1f2328
+    style B fill:#ffcc99,color:#1f2328
+    style C fill:#ffff99,color:#1f2328
+    style D fill:#ccff99,color:#1f2328
+    style E fill:#99ff99,color:#1f2328
 ```
 
 Network and rendering dominate every page load. The WebSocket transport between your Node.js client and the local Camoufox browser is negligible by comparison. You will not see measurable performance differences between using Camoufox from Python versus from Node.js.
@@ -501,29 +507,31 @@ If your goal is stealth browser automation in JavaScript, you have two main opti
 ```mermaid
 graph TD
     subgraph "Camoufox + Node.js"
-        A["JavaScript patches?<br>None"] --> B["Detection scripts probe<br>for JS overrides"]
+        direction TB
+        A["JavaScript patches?<br/>None"] --> B["Detection scripts probe<br/>for JS overrides"]
         B --> C["Nothing to find"]
         C --> D["Passes"]
     end
 
-    style A fill:#ccffcc
-    style B fill:#ffffcc
-    style C fill:#ccffcc
-    style D fill:#99ff99
+    style A fill:#ccffcc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style D fill:#99ff99,color:#1f2328
 ```
 
 ```mermaid
 graph TD
     subgraph "puppeteer-extra-stealth"
-        E["JavaScript patches?<br>Yes, many"] --> F["Detection scripts probe<br>for JS overrides"]
+        direction TB
+        E["JavaScript patches?<br/>Yes, many"] --> F["Detection scripts probe<br/>for JS overrides"]
         F --> G["Inconsistencies found"]
         G --> H["Flagged or blocked"]
     end
 
-    style E fill:#ffcccc
-    style F fill:#ffffcc
-    style G fill:#ffcccc
-    style H fill:#ff9999
+    style E fill:#ffcccc,color:#1f2328
+    style F fill:#ffffcc,color:#1f2328
+    style G fill:#ffcccc,color:#1f2328
+    style H fill:#ff9999,color:#1f2328
 ```
 
 The fundamental difference is where stealth lives. Camoufox's protections are compiled into the browser binary. There is no JavaScript shim layer for detection scripts to find. Puppeteer-stealth and its descendants work by hooking into JavaScript APIs, which means a sufficiently sophisticated detection script can identify the hooks.

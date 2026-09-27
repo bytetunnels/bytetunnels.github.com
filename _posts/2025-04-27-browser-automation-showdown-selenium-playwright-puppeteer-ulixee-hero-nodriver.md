@@ -24,13 +24,13 @@ graph TD
     D --> E[Specialized Tools]
     E --> F[Ulixee Hero]
     E --> G[Nodriver]
-    
-    style A fill:#ffcccc
-    style B fill:#ccffcc
-    style C fill:#ccccff
-    style D fill:#ffffcc
-    style F fill:#ffccff
-    style G fill:#ccffff
+
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ccccff,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style F fill:#ffccff,color:#1f2328
+    style G fill:#ccffff,color:#1f2328
 ```
 
 ## Selenium: The Pioneer That Refuses to Quit
@@ -321,12 +321,12 @@ graph TB
         D[Ulixee Hero<br/>Medium Performance<br/>Low Detection]
         E[Nodriver<br/>Medium Performance<br/>Very Low Detection]
     end
-    
-    style A fill:#ccffcc
-    style B fill:#ccffcc
-    style C fill:#ffcccc
-    style D fill:#ffffcc
-    style E fill:#ccffff
+
+    style A fill:#ccffcc,color:#1f2328
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ccffff,color:#1f2328
 ```
 
 ## Choosing the Right Tool for Your Project
@@ -373,8 +373,8 @@ Your choice depends on several critical factors:
 Based on testing across various scenarios:
 
 ```mermaid
-graph TD
-    SR[Speed Rankings pages/minute]
+graph LR
+    SR["Speed Rankings<br/>pages/minute"]
 
     SR --> P[Puppeteer: 45-60]
     SR --> PL[Playwright: 40-55]

@@ -19,7 +19,7 @@ This post compares Playwright and Puppeteer across the dimensions that matter mo
 Both libraries communicate with browsers through the Chrome DevTools Protocol. Puppeteer connects directly to a Chromium instance over a WebSocket, sending CDP commands and receiving events. Playwright adds an intermediate server layer -- the Playwright Server -- that sits between your code and the browser. This server translates Playwright's own protocol into browser-specific commands, which is how Playwright supports multiple browser engines through a single API.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph PUPPETEER["Puppeteer Architecture"]
         A["Your Script"] -->|"CDP over WebSocket"| B["Chromium"]
     end
@@ -31,8 +31,8 @@ flowchart TD
         D -->|"Browser-specific protocol"| G["WebKit"]
     end
 
-    style PUPPETEER fill:#e6f3ff
-    style PLAYWRIGHT fill:#e6ffe6
+    style PUPPETEER fill:#e6f3ff,color:#1f2328
+    style PLAYWRIGHT fill:#e6ffe6,color:#1f2328
 ```
 
 This architectural difference has real consequences. Puppeteer's direct CDP connection means zero translation overhead for Chrome-specific work. If you need raw access to CDP domains like `Network`, `Runtime`, or `DOM`, Puppeteer gives you an unmediated pipe. Playwright's server layer adds a thin abstraction, but that abstraction is what enables it to drive Firefox and WebKit with the same script.
@@ -295,6 +295,11 @@ flowchart TD
         A --> G["Multi-browser Binaries"]
     end
 
+    style PW fill:#e6ffe6,color:#1f2328
+```
+
+```mermaid
+flowchart TD
     subgraph PP["Puppeteer Ecosystem"]
         H["puppeteer"] --> I["Core Library"]
         H --> J["Chrome/Chromium Binary"]
@@ -303,8 +308,7 @@ flowchart TD
         K --> N["Your Debugging Tools"]
     end
 
-    style PW fill:#e6ffe6
-    style PP fill:#e6f3ff
+    style PP fill:#e6f3ff,color:#1f2328
 ```
 
 For scraping specifically, Playwright's codegen tool deserves special mention. When you need to figure out the right selectors and interaction sequence for a complex site, recording it in a browser is far faster than writing code from scratch. Playwright's tooling story extends further with [MCP and CLI integrations that make it AI-agent-friendly](/posts/playwright-mcp-and-cli-making-browser-automation-ai-agent-friendly/). Puppeteer has no equivalent.

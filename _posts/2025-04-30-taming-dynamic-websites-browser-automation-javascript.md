@@ -23,7 +23,7 @@ sequenceDiagram
     participant Client as Browser
     participant Server as Web Server
     participant API as API Endpoint
-    
+
     Client->>Server: Initial page request
     Server-->>Client: HTML with JS framework
     Client->>Client: Execute JavaScript
@@ -273,9 +273,9 @@ const data = await response.json();
 Browser automation can be resource-intensive. Here are strategies to optimize performance:
 
 ```mermaid
-graph TD
+graph LR
     A[Optimize Performance] --> B[Disable Images]
-    A --> C[Block Unnecessary Resources]
+    A --> C["Block Unnecessary<br/>Resources"]
     A --> D[Use Headless Mode]
     A --> E[Manage Browser Instances]
     A --> F[Implement Smart Waiting]

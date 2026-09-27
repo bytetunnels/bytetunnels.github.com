@@ -15,25 +15,25 @@ Every web scraping journey begins with a URL. These seemingly simple strings of 
 When I first started scraping, I treated URLs like magic incantations. Copy, paste, run script, hope for the best. But URLs aren't magic—they're structured, predictable, and incredibly informative once you know how to read them. Each component serves a specific purpose and reveals crucial information about the target system.
 
 ```mermaid
-graph TD
+graph LR
     A[Complete URL] --> B[Protocol]
     A --> C[Domain]
     A --> D[Path]
     A --> E[Query Parameters]
     A --> F[Fragment]
-    
+
     B --> B1[http://]
     B --> B2[https://]
     B --> B3[ftp://]
-    
+
     C --> C1[Subdomain]
     C --> C2[Main Domain]
     C --> C3[Top-level Domain]
-    
+
     D --> D1[Root Path /]
     D --> D2[Nested Paths]
     D --> D3[File Extensions]
-    
+
     E --> E1[Key-Value Pairs]
     E --> E2[Multiple Parameters]
     E --> E3[Encoded Values]
@@ -147,13 +147,13 @@ Path analysis helps predict other endpoints. If `/api/v1/users/123` returns user
 Query parameters are where URLs become truly powerful for scrapers. They control filtering, sorting, pagination, and data format—essentially everything you need to customize your data extraction.
 
 ```mermaid
-graph TB
+graph LR
     A[Query Parameters] --> B[Pagination]
     A --> C[Filtering]
     A --> D[Sorting]
     A --> E[Format Control]
     A --> F[Authentication]
-    
+
     B --> B1["?page=1&limit=50"]
     C --> C1["?category=electronics&price_min=100"]
     D --> D1["?sort_by=date&order=desc"]

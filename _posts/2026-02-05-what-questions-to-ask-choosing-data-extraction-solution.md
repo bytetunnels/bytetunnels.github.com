@@ -92,9 +92,9 @@ flowchart TD
     D -->|"Yes"| E["Call API directly<br>with HTTP client"]
     D -->|"No"| F["Use browser<br>automation tool"]
 
-    style C fill:#ccffcc
-    style E fill:#ccffcc
-    style F fill:#ffcccc
+    style C fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ffcccc,color:#1f2328
 ```
 
 Choosing a browser-based tool when you do not need one adds 10-50x overhead per page. The [performance gap between requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) illustrates this clearly. Choosing an HTTP-only tool when you need rendering means you get empty results. Get this question right early.
@@ -192,10 +192,10 @@ flowchart TD
     F -->|"No"| G["Open-source +<br>proxy service"]
     F -->|"Yes"| H["Managed service<br>or custom infra"]
 
-    style D fill:#ffffcc
-    style E fill:#ccffcc
-    style G fill:#ffffcc
-    style H fill:#ffcccc
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style G fill:#ffffcc,color:#1f2328
+    style H fill:#ffcccc,color:#1f2328
 ```
 
 ## Question 9: What Are the Legal and Ethical Considerations?
@@ -247,6 +247,8 @@ Think about the delivery format from the start, not as an afterthought. A tool t
 
 Answering these ten questions maps you to a general approach. The following diagram captures the most common decision paths.
 
+**Choose by data type**
+
 ```mermaid
 flowchart TD
     START["Start: Define your<br>extraction requirements"] --> Q1{"What type<br>of data?"}
@@ -255,28 +257,51 @@ flowchart TD
     Q1 -->|"PDFs/Files"| PDF["Use document<br>parsing libraries"]
     Q1 -->|"Images"| OCR["Use OCR or<br>Vision APIs"]
 
+    style PDF fill:#cce5ff,color:#1f2328
+    style OCR fill:#cce5ff,color:#1f2328
+```
+
+**HTML and JSON: fewer than 1,000 pages**
+
+```mermaid
+flowchart TD
     Q2 -->|"Small<br>< 1K pages"| Q3{"JS rendering<br>needed?"}
-    Q2 -->|"Medium<br>1K-100K"| Q4{"Anti-bot<br>protection?"}
-    Q2 -->|"Large<br>100K+"| INFRA["Distributed<br>infrastructure<br>required"]
 
     Q3 -->|"No"| SIMPLE["Simple HTTP<br>client + parser"]
     Q3 -->|"Yes"| BROWSER["Browser automation<br>tool"]
 
+    style SIMPLE fill:#ccffcc,color:#1f2328
+    style BROWSER fill:#ffffcc,color:#1f2328
+    Q2{"Volume?"}
+```
+
+**HTML and JSON: 1,000–100,000 pages**
+
+```mermaid
+flowchart TD
+    Q2 -->|"Medium<br>1K-100K"| Q4{"Anti-bot<br>protection?"}
+
     Q4 -->|"None/Basic"| FRAMEWORK["Scraping framework<br>+ basic proxies"]
     Q4 -->|"Moderate/Aggressive"| STEALTH["Anti-detect browser<br>+ premium proxies"]
+
+    style FRAMEWORK fill:#ccffcc,color:#1f2328
+    style STEALTH fill:#ffcccc,color:#1f2328
+    Q2{"Volume?"}
+```
+
+**HTML and JSON: more than 100,000 pages**
+
+```mermaid
+flowchart TD
+    Q2 -->|"Large<br>100K+"| INFRA["Distributed<br>infrastructure<br>required"]
 
     INFRA --> Q5{"Budget?"}
     Q5 -->|"Have budget"| MANAGED["Managed scraping<br>service"]
     Q5 -->|"Build in-house"| CUSTOM["Custom distributed<br>system"]
 
-    style SIMPLE fill:#ccffcc
-    style BROWSER fill:#ffffcc
-    style FRAMEWORK fill:#ccffcc
-    style STEALTH fill:#ffcccc
-    style MANAGED fill:#ffffcc
-    style CUSTOM fill:#ffcccc
-    style PDF fill:#cce5ff
-    style OCR fill:#cce5ff
+    style MANAGED fill:#ffffcc,color:#1f2328
+    style CUSTOM fill:#ffcccc,color:#1f2328
+    Q2{"Volume?"}
 ```
 
 ## Tool Recommendations by Scenario

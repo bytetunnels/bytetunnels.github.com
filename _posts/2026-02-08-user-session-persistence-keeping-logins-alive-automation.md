@@ -340,15 +340,15 @@ driver.get("https://example.com/dashboard")
 The profile approach has one major advantage: it captures everything, including HttpOnly cookies, service workers, and IndexedDB data that manual extraction would miss. The downside is that profile directories are large (hundreds of megabytes), browser-version-specific, and not easily portable between machines.
 
 ```mermaid
-graph TD
-    A[Session Persistence<br>Methods] --> B[Storage State<br>JSON file]
-    A --> C[Manual Cookie<br>Export/Import]
-    A --> D[Pickle Session<br>Object]
-    A --> E[Chrome Profile<br>Directory]
-    B --> F[Lightweight<br>Portable<br>Playwright only]
-    C --> G[Works everywhere<br>Misses HttpOnly<br>in some cases]
-    D --> H[Python-specific<br>Simple<br>No browser needed]
-    E --> I[Complete state<br>Heavy<br>Not portable]
+graph LR
+    A["Session Persistence<br/>Methods"] --> B["Storage State<br/>JSON file"]
+    A --> C["Manual Cookie<br/>Export/Import"]
+    A --> D["Pickle Session<br/>Object"]
+    A --> E["Chrome Profile<br/>Directory"]
+    B --> F["Lightweight<br/>Portable<br/>Playwright only"]
+    C --> G["Works everywhere<br/>Misses HttpOnly<br/>in some cases"]
+    D --> H["Python-specific<br/>Simple<br/>No browser needed"]
+    E --> I["Complete state<br/>Heavy<br/>Not portable"]
 ```
 
 ## Detecting Expired Sessions

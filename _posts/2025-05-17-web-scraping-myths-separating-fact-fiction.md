@@ -23,16 +23,23 @@ graph TD
     A[Web Scraping Activity] --> B{Public Data?}
     B -->|Yes| C{Respects robots.txt?}
     B -->|No| D[Potential Legal Issues]
+    C -->|No| F["Gray Area - Depends on<br/>Context"]
+    D --> K["Authentication Bypass -<br/>High Risk"]
+```
+
+```mermaid
+graph TD
+    A[Web Scraping Activity] --> B{Public Data?}
+    B -->|Yes| C{Respects robots.txt?}
     C -->|Yes| E{Reasonable Request Rate?}
-    C -->|No| F[Gray Area - Depends on Context]
+    C -->|No| F["Gray Area - Depends on<br/>Context"]
     E -->|Yes| G{Commercial Use?}
-    E -->|No| H[Likely Server Strain Issues]
+    E -->|No| H["Likely Server Strain<br/>Issues"]
     G -->|Research/Personal| I[Generally Legal]
     G -->|Commercial| J[Check Terms of Service]
-    D --> K[Authentication Bypass - High Risk]
-    J --> L{Competes with Business Model?}
+    J --> L{"Competes with Business<br/>Model?"}
     L -->|No| M[Likely Acceptable]
-    L -->|Yes| N[Potential Legal Challenge]
+    L -->|Yes| N["Potential Legal<br/>Challenge"]
 ```
 
 The key is understanding that scraping becomes problematic when it:
@@ -99,7 +106,7 @@ Some people believe that modern anti-bot systems like Cloudflare, Captcha, or de
 **The Truth:** While anti-bot measures have become more sophisticated, they're not impenetrable. The key is understanding that it's an arms race, not an absolute barrier.
 
 ```mermaid
-graph TD
+graph LR
     A[Anti-Bot Measure] --> B[Rate Limiting]
     A --> C[Captcha Challenges]
     A --> D[Device Fingerprinting]
@@ -190,13 +197,13 @@ Some believe that the prevalence of APIs eliminates the need for web scraping.
 ```mermaid
 graph TB
     A[Data Access Needs] --> B{API Available?}
-    B -->|Yes| C{API Provides Needed Data?}
+    B -->|Yes| C{"API Provides Needed<br/>Data?"}
     B -->|No| D[Web Scraping Required]
     C -->|Yes| E{Rate Limits Acceptable?}
     C -->|No| F[Combine API + Scraping]
     E -->|Yes| G[Use API]
-    E -->|No| H[Consider Scraping Alternative]
-    F --> I[Use API for Structured Data]
+    E -->|No| H["Consider Scraping<br/>Alternative"]
+    F --> I["Use API for Structured<br/>Data"]
     F --> J[Scrape for Missing Data]
 ```
 

@@ -23,7 +23,7 @@ Agent-browser frameworks give the LLM a reasoning loop. The AI observes the page
 Playwright CLI takes the opposite approach. The AI issues discrete commands -- navigate here, click this, extract that -- and receives structured responses. The AI still makes decisions, but within a tighter, more predictable interface.
 
 ```mermaid
-graph TD
+graph LR
     subgraph AB["Agent-Browser Approach"]
         A1["Human provides goal"] --> A2["LLM observes page state"]
         A2 --> A3["LLM decides next action"]
@@ -41,8 +41,8 @@ graph TD
         B5 --> B2
     end
 
-    style AB fill:#e6f3ff
-    style PC fill:#f0ffe6
+    style AB fill:#e6f3ff,color:#1f2328
+    style PC fill:#f0ffe6,color:#1f2328
 ```
 
 The architectural difference has practical consequences. Agent-browsers are more autonomous but consume more tokens and are harder to debug. Playwright CLI is more predictable but requires the AI to handle more of the planning itself.
@@ -163,11 +163,11 @@ graph TD
     D -->|"Feeds observations"| B
     E -->|"Executes in browser"| C
 
-    style A fill:#e6e6ff
-    style B fill:#ffe6e6
-    style C fill:#e6ffe6
-    style D fill:#fff3e6
-    style E fill:#f3e6ff
+    style A fill:#e6e6ff,color:#1f2328
+    style B fill:#ffe6e6,color:#1f2328
+    style C fill:#e6ffe6,color:#1f2328
+    style D fill:#fff3e6,color:#1f2328
+    style E fill:#f3e6ff,color:#1f2328
 ```
 
 Stagehand from Browserbase takes a middle path. It extends the Playwright API with AI-powered methods that you call when you need them, keeping deterministic control for the parts of your workflow that are predictable.
@@ -289,10 +289,10 @@ graph TD
     C --> E["Autonomous execution<br>Built-in error recovery<br>Higher token cost"]
     D --> F["Predictable execution<br>Manual error handling<br>Lower token cost"]
 
-    style C fill:#e6f3ff
-    style D fill:#f0ffe6
-    style E fill:#ffe6e6
-    style F fill:#e6ffe6
+    style C fill:#e6f3ff,color:#1f2328
+    style D fill:#f0ffe6,color:#1f2328
+    style E fill:#ffe6e6,color:#1f2328
+    style F fill:#e6ffe6,color:#1f2328
 ```
 
 ## Token Efficiency Comparison
@@ -469,9 +469,9 @@ graph TD
     I -->|"Python"| G
     I -->|"JavaScript"| H
 
-    style E fill:#f0ffe6
-    style G fill:#e6f3ff
-    style H fill:#fff3e6
+    style E fill:#f0ffe6,color:#1f2328
+    style G fill:#e6f3ff,color:#1f2328
+    style H fill:#fff3e6,color:#1f2328
 ```
 
 ## The Convergence
@@ -491,11 +491,11 @@ graph TD
 
     E --> F["Browser<br>(Chromium, Firefox, WebKit)"]
 
-    style A fill:#ffe6e6
-    style C fill:#f0ffe6
-    style D fill:#e6f3ff
-    style E fill:#e6e6e6
-    style F fill:#fff3e6
+    style A fill:#ffe6e6,color:#1f2328
+    style C fill:#f0ffe6,color:#1f2328
+    style D fill:#e6f3ff,color:#1f2328
+    style E fill:#e6e6e6,color:#1f2328
+    style F fill:#fff3e6,color:#1f2328
 ```
 
 Playwright CLI and MCP are the low-level interface. Agent-browser frameworks are the high-level interface. You can mix them. An agent could use Playwright CLI for predictable parts of a workflow and hand off to Browser Use for the parts that require exploration.

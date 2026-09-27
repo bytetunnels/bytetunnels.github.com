@@ -21,15 +21,16 @@ The architectural difference between Scrapy and Puppeteer is not a detail -- it 
 ```mermaid
 graph TD
     subgraph SCRAPY["Scrapy Architecture"]
-        A["Scrapy Engine"] --> B["Scheduler<br>(Request Queue)"]
-        B --> C["Downloader<br>(HTTP Client)"]
+        direction TB
+        A["Scrapy Engine"] --> B["Scheduler<br/>(Request Queue)"]
+        B --> C["Downloader<br/>(HTTP Client)"]
         C -->|"Raw HTTP"| D["Web Server"]
         D -->|"HTML Response"| C
-        C --> E["Spider<br>(Parse Logic)"]
-        E --> F["Item Pipeline<br>(Clean + Store)"]
+        C --> E["Spider<br/>(Parse Logic)"]
+        E --> F["Item Pipeline<br/>(Clean + Store)"]
     end
 
-    style SCRAPY fill:#e6f3ff
+    style SCRAPY fill:#e6f3ff,color:#1f2328
 ```
 
 Scrapy operates at the HTTP layer. For a deeper look at [how web crawling works](/posts/how-web-crawling-works-principles-basic-architecture/), see our architecture guide. Its engine coordinates a scheduler that queues requests, a downloader that sends them, spiders that parse responses, and pipelines that process extracted data. There is no browser, no rendering engine, no JavaScript interpreter. Scrapy sees exactly what `curl` would see -- the raw HTML returned by the server.
@@ -37,14 +38,15 @@ Scrapy operates at the HTTP layer. For a deeper look at [how web crawling works]
 ```mermaid
 graph TD
     subgraph PUPPETEER["Puppeteer Architecture"]
+        direction TB
         G["Node.js Script"] -->|"DevTools Protocol"| H["Chrome / Chromium"]
         H -->|"HTTP Requests"| I["Web Server"]
         I -->|"HTML + JS + CSS"| H
-        H -->|"Renders DOM"| J["Full Page<br>(JavaScript Executed)"]
+        H -->|"Renders DOM"| J["Full Page<br/>(JavaScript Executed)"]
         J -->|"Data Extracted"| G
     end
 
-    style PUPPETEER fill:#e6ffe6
+    style PUPPETEER fill:#e6ffe6,color:#1f2328
 ```
 
 Puppeteer launches a real Chromium browser and controls it over the Chrome DevTools Protocol. When you navigate to a page, Chrome does everything a normal browser does: fetches HTML, downloads CSS and JavaScript, executes scripts, renders the DOM, fires event listeners, and makes XHR/fetch calls. Puppeteer then lets you query that fully rendered page.
@@ -93,8 +95,8 @@ graph TD
     B -->|"Static HTML"| C["Scrapy<br>~15 minutes<br>~200 MB RAM"]
     B -->|"JS-Rendered"| D["Puppeteer<br>~4 hours<br>~4 GB RAM"]
 
-    style C fill:#c8e6c9
-    style D fill:#ffcdd2
+    style C fill:#c8e6c9,color:#1f2328
+    style D fill:#ffcdd2,color:#1f2328
 ```
 
 These numbers are rough estimates for a typical product listing scrape, but they illustrate the gap. Scrapy is not just faster -- it operates in a different performance class entirely.
@@ -401,9 +403,9 @@ graph TD
     D -->|"No"| F
     D -->|"Yes"| G["Use Scrapy + Playwright<br>(scrapy-playwright)"]
 
-    style E fill:#c8e6c9
-    style F fill:#bbdefb
-    style G fill:#fff9c4
+    style E fill:#c8e6c9,color:#1f2328
+    style F fill:#bbdefb,color:#1f2328
+    style G fill:#fff9c4,color:#1f2328
 ```
 
 ```mermaid
@@ -416,8 +418,8 @@ graph TD
     M -->|"Yes"| J
     M -->|"No"| L
 
-    style J fill:#bbdefb
-    style L fill:#c8e6c9
+    style J fill:#bbdefb,color:#1f2328
+    style L fill:#c8e6c9,color:#1f2328
 ```
 
 ## Comparison Table

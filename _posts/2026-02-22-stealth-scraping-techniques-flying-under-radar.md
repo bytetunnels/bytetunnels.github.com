@@ -603,13 +603,13 @@ graph TD
     F1 -->|No| X
     F1 -->|Yes| G["Request Allowed"]
 
-    style X fill:#ff9999
-    style G fill:#99ff99
-    style B fill:#ffcccc
-    style C fill:#ffe0cc
-    style D fill:#ffffcc
-    style E fill:#e0ffcc
-    style F fill:#ccffcc
+    style X fill:#ff9999,color:#1f2328
+    style G fill:#99ff99,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffe0cc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#e0ffcc,color:#1f2328
+    style F fill:#ccffcc,color:#1f2328
 ```
 
 Each layer narrows the population of requests that pass through. A basic script using Python `requests` with default settings fails at the TLS layer. A script with `curl_cffi` and proper headers passes TLS and HTTP but fails at the browser layer if the site requires JavaScript execution. A headless browser with stealth patches passes the browser layer but may fail behavioral checks if it does not simulate mouse and scroll activity. Only a scraper that addresses every layer can consistently avoid detection on well-protected sites.

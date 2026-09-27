@@ -22,9 +22,9 @@ At the highest level, parsing fits into a simple three-step flow:
 graph TD
     A["Raw HTML<br>Tags, attributes, text<br>all mixed together"] --> B["Parser<br>Reads HTML and builds<br>a navigable tree"]
     B --> C["Structured Data<br>JSON, CSV, database rows<br>ready for analysis"]
-    style A fill:#f9f,stroke:#333
-    style B fill:#bbf,stroke:#333
-    style C fill:#bfb,stroke:#333
+    style A fill:#f9f,stroke:#333,color:#1f2328
+    style B fill:#bbf,stroke:#333,color:#1f2328
+    style C fill:#bfb,stroke:#333,color:#1f2328
 ```
 
 You start with raw HTML that looks like this:
@@ -490,10 +490,10 @@ graph TD
     A["Web Scraping<br>The full process"] --> B["Fetching<br>Download the HTML<br>from the server"]
     B --> C["Parsing<br>Extract structured data<br>from the HTML"]
     C --> D["Storage<br>Save data to CSV,<br>JSON, or database"]
-    style A fill:#ffd,stroke:#333
-    style B fill:#ddf,stroke:#333
-    style C fill:#fdf,stroke:#333
-    style D fill:#dfd,stroke:#333
+    style A fill:#ffd,stroke:#333,color:#1f2328
+    style B fill:#ddf,stroke:#333,color:#1f2328
+    style C fill:#fdf,stroke:#333,color:#1f2328
+    style D fill:#dfd,stroke:#333,color:#1f2328
 ```
 
 **Scraping** is the entire workflow: deciding what data you want, fetching the web pages, parsing the content, cleaning the data, and storing the results.

@@ -40,11 +40,11 @@ graph TD
     D -->|"Accessibility snapshot<br>or screenshot"| C
     C -->|"Sends observation"| B
 
-    style A fill:#e8eaf6
-    style B fill:#e3f2fd
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
-    style E fill:#fce4ec
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e3f2fd,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style D fill:#fff3e0,color:#1f2328
+    style E fill:#fce4ec,color:#1f2328
 ```
 
 The flow is cyclical. The agent observes the page state through Playwright, sends that state to the LLM, the LLM decides what action to take, the agent controller executes that action through Playwright, and the cycle repeats until the goal is achieved or the agent decides to stop.
@@ -68,10 +68,10 @@ graph TD
     C -->|"Accessibility snapshot"| B
     B -->|"MCP response"| A
 
-    style A fill:#e8eaf6
-    style B fill:#e3f2fd
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e3f2fd,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style D fill:#fff3e0,color:#1f2328
 ```
 
 The agent does not write Playwright code. It calls high-level tools like `browser_navigate`, `browser_click`, and `browser_snapshot`. The MCP server handles element resolution, waiting, and error recovery.
@@ -224,11 +224,11 @@ graph TD
     C["Skyvern<br>Visual reasoning"] -->|"LLM + Computer Vision"| D
     D --> E["Browser"]
 
-    style A fill:#e8eaf6
-    style B fill:#e8f5e9
-    style C fill:#fff3e0
-    style D fill:#f3e5f5
-    style E fill:#fce4ec
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e8f5e9,color:#1f2328
+    style C fill:#fff3e0,color:#1f2328
+    style D fill:#f3e5f5,color:#1f2328
+    style E fill:#fce4ec,color:#1f2328
 ```
 
 ## The Accessibility Tree Approach
@@ -464,8 +464,8 @@ graph TD
     D["Screenshot<br>1,000 - 4,000 tokens"] -.->|"Alternative path<br>for visual pages"| E["LLM"]
     C --> E
 
-    style C fill:#d4edda
-    style A fill:#f8d7da
+    style C fill:#d4edda,color:#1f2328
+    style A fill:#f8d7da,color:#1f2328
 ```
 
 The token cost compounds across the agent loop. If the agent takes 10 actions and observes the page after each one, the total observation cost is 10 times the per-snapshot cost. At 2,000 tokens per accessibility snapshot, that is 20,000 tokens for observations alone. At 20,000 tokens per raw HTML dump, the same workflow costs 200,000 tokens just for page state -- likely exceeding the context window before the task is complete.
@@ -511,8 +511,8 @@ graph TD
     H -->|"No"| B
     H -->|"Yes"| I["Return Data"]
 
-    style D fill:#d4edda
-    style E fill:#e3f2fd
+    style D fill:#d4edda,color:#1f2328
+    style E fill:#e3f2fd,color:#1f2328
 ```
 
 Playwright sits at the center of this ecosystem. Whether agents call it through MCP, generate code that uses its API, or operate through frameworks that wrap it with AI logic, the underlying browser automation engine is the same. Understanding how Playwright exposes page state through accessibility trees, how tool definitions map to browser actions, and where the token cost bottlenecks are -- that is the foundation for building AI browser agents that actually work in production.

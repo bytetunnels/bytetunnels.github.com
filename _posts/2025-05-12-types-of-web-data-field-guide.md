@@ -302,7 +302,7 @@ async def monitor_websocket_data(uri):
 ```
 
 ```mermaid
-graph TD
+graph LR
     A[Web Data Types]
 
     A --> B[Structured]

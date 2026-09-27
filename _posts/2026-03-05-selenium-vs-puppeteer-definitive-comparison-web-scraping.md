@@ -23,18 +23,18 @@ The single biggest difference between Selenium and Puppeteer is how they communi
 **Puppeteer** uses the Chrome DevTools Protocol (CDP) directly. Your script connects to the browser over a WebSocket and issues CDP commands with no intermediary. This is the same protocol that Chrome DevTools uses when you open the inspector panel -- and it works equally well for tasks like [automating web form filling](/posts/how-to-automate-web-form-filling-complete-guide/).
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph SELENIUM["Selenium Architecture"]
-        A1["Python / Java / C# Script"] -->|"HTTP Request"| A2["WebDriver Binary<br>(ChromeDriver)"]
-        A2 -->|"Browser-Specific<br>Commands"| A3["Chrome / Firefox<br>/ Safari / Edge"]
+        A1["Python / Java / C#<br/>Script"] -->|"HTTP Request"| A2["WebDriver Binary<br/>(ChromeDriver)"]
+        A2 -->|"Browser-Specific<br>Commands"| A3["Chrome / Firefox<br/>/ Safari / Edge"]
     end
 
     subgraph PUPPETEER["Puppeteer Architecture"]
-        B1["JavaScript / TypeScript<br>Script"] -->|"WebSocket<br>(Direct CDP)"| B2["Chromium Browser"]
+        B1["JavaScript / TypeScript<br/>Script"] -->|"WebSocket<br>(Direct CDP)"| B2["Chromium Browser"]
     end
 
-    style A2 fill:#ffdddd
-    style B1 fill:#ddffdd
+    style A2 fill:#ffdddd,color:#1f2328
+    style B1 fill:#ddffdd,color:#1f2328
 ```
 
 The WebDriver layer in Selenium is not just a relay -- it performs protocol translation, manages sessions, and handles cross-browser differences. That abstraction is what gives Selenium its multi-browser support, but it comes at a latency cost. Every command round-trips through the driver binary before reaching the browser.
@@ -69,21 +69,21 @@ Puppeteer is measurably faster than Selenium for most scraping operations. The p
 ```mermaid
 graph TD
     subgraph SPEED["Relative Speed per Operation"]
-        direction TB
+        direction LR
         S1["Browser Launch"] --- S2["Selenium: ~1000ms"]
         S1 --- S3["Puppeteer: ~400ms"]
         S4["Element Query"] --- S5["Selenium: ~15-25ms"]
         S4 --- S6["Puppeteer: ~5-10ms"]
-        S7["Bulk Data Extract<br>(100 elements)"] --- S8["Selenium: ~1500-2500ms"]
-        S7 --- S9["Puppeteer: ~200-400ms"]
+        S7["Bulk Data Extract<br/>(100 elements)"] --- S8["Selenium:<br/>~1500-2500ms"]
+        S7 --- S9["Puppeteer:<br/>~200-400ms"]
     end
 
-    style S3 fill:#ddffdd
-    style S6 fill:#ddffdd
-    style S9 fill:#ddffdd
-    style S2 fill:#ffdddd
-    style S5 fill:#ffdddd
-    style S8 fill:#ffdddd
+    style S3 fill:#ddffdd,color:#1f2328
+    style S6 fill:#ddffdd,color:#1f2328
+    style S9 fill:#ddffdd,color:#1f2328
+    style S2 fill:#ffdddd,color:#1f2328
+    style S5 fill:#ffdddd,color:#1f2328
+    style S8 fill:#ffdddd,color:#1f2328
 ```
 
 The largest gap appears in bulk data extraction. (For a deeper look at how Selenium's overhead compares to lightweight HTTP clients, see our [Python Requests vs Selenium speed comparison](/posts/python-requests-vs-selenium-speed-performance-comparison/).) When scraping 100 elements from a page, Selenium typically calls `find_elements` followed by individual `text` or `get_attribute` calls for each element -- potentially hundreds of WebDriver round-trips. Puppeteer can extract everything in a single `page.evaluate()` call that runs entirely inside the browser.
@@ -273,14 +273,14 @@ For most web scraping tasks, Chromium-only support is not a problem -- you are e
 Selenium Grid lets you distribute scraping tasks across multiple machines and browsers in parallel. You set up a hub that receives WebDriver requests and routes them to registered nodes running different browser configurations.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Scraping Scripts"] --> B["Selenium Grid Hub"]
     B --> C["Node 1: Chrome"]
     B --> D["Node 2: Chrome"]
     B --> E["Node 3: Firefox"]
     B --> F["Node 4: Edge"]
 
-    style B fill:#e6e6ff
+    style B fill:#e6e6ff,color:#1f2328
 ```
 
 This is a mature solution for running scraping workloads at scale. Docker images for Selenium Grid are officially maintained, and the infrastructure is well understood. For large-scale scraping operations that need horizontal scaling, Selenium Grid provides a ready-made distributed execution layer.
@@ -412,11 +412,11 @@ flowchart TD
     Q4 -->|"Yes"| PUP2["Use Puppeteer"]
     Q4 -->|"No"| SEL3["Use Selenium<br>(or consider Playwright)"]
 
-    style SEL1 fill:#ddddff
-    style SEL2 fill:#ddddff
-    style SEL3 fill:#ddddff
-    style PUP1 fill:#ddffdd
-    style PUP2 fill:#ddffdd
+    style SEL1 fill:#ddddff,color:#1f2328
+    style SEL2 fill:#ddddff,color:#1f2328
+    style SEL3 fill:#ddddff,color:#1f2328
+    style PUP1 fill:#ddffdd,color:#1f2328
+    style PUP2 fill:#ddffdd,color:#1f2328
 ```
 
 ### Choose Selenium When

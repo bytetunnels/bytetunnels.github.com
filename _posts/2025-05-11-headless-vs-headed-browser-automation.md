@@ -38,7 +38,7 @@ However, some websites implement detection mechanisms that specifically target h
 The performance difference between headless and headed browsers can be substantial, particularly when running multiple instances or processing large datasets.
 
 ```mermaid
-graph TD
+graph LR
     A[Browser Mode Decision]
 
     A --> B[Headless]
@@ -46,7 +46,7 @@ graph TD
 
     B --> D[Faster Execution]
     B --> E[Lower Memory Usage]
-    B --> F[Better Server Performance]
+    B --> F["Better Server<br/>Performance"]
 
     C --> G[Visual Debugging]
     C --> H[Better Anti-Detection]
@@ -121,16 +121,16 @@ If you're new to the space, [getting started with Selenium and your first automa
 Modern websites employ sophisticated bot detection systems that can identify headless browsers through various fingerprinting techniques. Some detection methods specifically target headless browsers by checking for:
 
 ```mermaid
-flowchart TD
-    A[Website Bot Detection] --> B[Check User Agent]
-    A --> C[Detect Headless Properties]
-    A --> D[Analyze Mouse Movements]
-    A --> E[Monitor Timing Patterns]
-    
+flowchart LR
+    A["Website Bot<br/>Detection"] --> B[Check User Agent]
+    A --> C["Detect Headless<br/>Properties"]
+    A --> D["Analyze Mouse<br/>Movements"]
+    A --> E["Monitor Timing<br/>Patterns"]
+
     C --> F[navigator.webdriver]
-    C --> G[window.outerHeight === 0]
-    C --> H[Missing window.chrome]
-    
+    C --> G["window.outerHeight<br/>=== 0"]
+    C --> H["Missing<br/>window.chrome"]
+
     B --> I[Block Request]
     F --> I
     G --> I
@@ -191,18 +191,18 @@ def stealth_headless_setup():
 When scaling your scraping operations, the choice between headless and headed becomes crucial for resource management. Headed browsers consume significantly more system resources, limiting the number of concurrent instances you can run.
 
 ```mermaid
-graph TB
+graph LR
     A[Scaling Strategy] --> B[Headless Mode]
     A --> C[Headed Mode]
-    
+
     B --> D[High Concurrency]
-    B --> E[Lower Resource Usage]
+    B --> E["Lower Resource<br/>Usage"]
     B --> F[Server-Friendly]
-    
-    C --> G[Limited Concurrency]
-    C --> H[Higher Resource Usage]
-    C --> I[Desktop Environment Required]
-    
+
+    C --> G["Limited<br/>Concurrency"]
+    C --> H["Higher Resource<br/>Usage"]
+    C --> I["Desktop Environment<br/>Required"]
+
     D --> J[100+ Instances]
     G --> K[10-20 Instances]
 ```

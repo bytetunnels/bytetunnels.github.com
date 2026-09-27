@@ -43,22 +43,22 @@ That said, courts have treated robots.txt as a relevant signal when evaluating s
 No single law governs web scraping. Instead, several overlapping legal frameworks determine whether a particular scraping activity is lawful. Understanding these frameworks is essential because robots.txt violations are never the primary claim -- they are evidence used to support claims under one or more of these theories.
 
 ```mermaid
-graph TD
-    A["Web Scraping Legal Frameworks"] --> B["Computer Fraud & Abuse Act (CFAA)"]
+graph LR
+    A["Web Scraping Legal<br/>Frameworks"] --> B["Computer Fraud & Abuse<br/>Act (CFAA)"]
     A --> C["Copyright Law"]
-    A --> D["Contract Law (Terms of Service)"]
+    A --> D["Contract Law (Terms of<br/>Service)"]
     A --> E["Trespass to Chattels"]
     A --> F["State Privacy Laws"]
     A --> G["EU: GDPR"]
     A --> H["EU: Database Directive"]
 
-    B --> B1["Unauthorized access to computers"]
-    C --> C1["Reproduction of protected expression"]
-    D --> D1["Breach of website Terms of Service"]
-    E --> E1["Interference with computer systems"]
-    F --> F1["CCPA, state-level regulations"]
-    G --> G1["Personal data processing rules"]
-    H --> H1["Sui generis database rights"]
+    B --> B1["Unauthorized access to<br/>computers"]
+    C --> C1["Reproduction of<br/>protected expression"]
+    D --> D1["Breach of website Terms<br/>of Service"]
+    E --> E1["Interference with<br/>computer systems"]
+    F --> F1["CCPA, state-level<br/>regulations"]
+    G --> G1["Personal data processing<br/>rules"]
+    H --> H1["Sui generis database<br/>rights"]
 ```
 
 Each of these frameworks asks different questions. The CFAA asks whether you accessed a computer without authorization. Copyright law asks whether you reproduced protected expression. Contract law asks whether you agreed to and then violated terms of service. Trespass to chattels asks whether your scraping materially interfered with the website's servers. Privacy laws ask whether you collected personal data in violation of applicable regulations.
@@ -132,13 +132,13 @@ Ignoring robots.txt is not itself illegal, but it can significantly increase you
 If you create an account on a website and agree to its Terms of Service, you may be entering a contractual relationship. Many ToS explicitly prohibit automated access, scraping, or data collection. Ignoring robots.txt while also violating a ToS you agreed to creates a breach of contract claim. The robots.txt violation becomes evidence that you knew your access was unwanted and proceeded anyway.
 
 ```mermaid
-graph TD
-    A["Ignoring robots.txt alone"] --> B["Not illegal by itself"]
-    A --> C["Combined with ToS violation"] --> D["Breach of contract risk"]
-    A --> E["Combined with authentication bypass"] --> F["CFAA risk"]
-    A --> G["Combined with server damage"] --> H["Trespass to chattels"]
-    A --> I["Combined with copyright infringement"] --> J["Copyright liability"]
-    A --> K["Combined with personal data collection"] --> L["Privacy law violations"]
+graph LR
+    A["Ignoring robots.txt<br/>alone"] --> B["Not illegal by itself"]
+    A --> C["Combined with ToS<br/>violation"] --> D["Breach of contract risk"]
+    A --> E["Combined with<br/>authentication bypass"] --> F["CFAA risk"]
+    A --> G["Combined with server<br/>damage"] --> H["Trespass to chattels"]
+    A --> I["Combined with copyright<br/>infringement"] --> J["Copyright liability"]
+    A --> K["Combined with personal<br/>data collection"] --> L["Privacy law violations"]
 ```
 
 ### Accessing Authenticated or Private Content
@@ -350,17 +350,23 @@ The trend is toward more regulation, not less. Scrapers who build their practice
 
 ```mermaid
 graph TD
-    A["Is robots.txt a law?"] -->|"No"| B["It is a voluntary protocol (RFC 9309)"]
-    B --> C["Does ignoring it have legal consequences?"]
-    C -->|"Potentially yes"| D["It serves as evidence in legal disputes"]
-    D --> E["Evidence of bad faith"]
-    D --> F["Evidence of willful disregard"]
-    D --> G["Evidence that access was unwanted"]
-    C -->|"Depends on context"| H["What data are you scraping?"]
-    H --> I["Public facts: Lower risk"]
-    H --> J["Personal data: GDPR/privacy risk"]
-    H --> K["Copyrighted content: Copyright risk"]
-    H --> L["Authenticated content: CFAA risk"]
+    A["Is robots.txt a<br/>law?"] -->|"No"| B["It is a voluntary<br/>protocol (RFC 9309)"]
+    B --> C["Does ignoring it have<br/>legal consequences?"]
+    C -->|"Potentially yes"| D["It serves as evidence in<br/>legal disputes"]
+    D --> E["Evidence of bad<br/>faith"]
+    D --> F["Evidence of willful<br/>disregard"]
+    D --> G["Evidence that access was<br/>unwanted"]
+```
+
+```mermaid
+graph TD
+    A["Is robots.txt a<br/>law?"] -->|"No"| B["It is a voluntary<br/>protocol (RFC 9309)"]
+    B --> C["Does ignoring it have<br/>legal consequences?"]
+    C -->|"Depends on context"| H["What data are you<br/>scraping?"]
+    H --> I["Public facts:<br/>Lower risk"]
+    H --> J["Personal data:<br/>GDPR/privacy risk"]
+    H --> K["Copyrighted content:<br/>Copyright risk"]
+    H --> L["Authenticated content:<br/>CFAA risk"]
 ```
 
 Robots.txt is not a law. It is not a contract. It is not enforceable on its own. But it is a well-established convention that courts recognize as a signal of intent. Ignoring it does not automatically make your scraping illegal, but it can make a bad legal position worse and a defensible position harder to defend.

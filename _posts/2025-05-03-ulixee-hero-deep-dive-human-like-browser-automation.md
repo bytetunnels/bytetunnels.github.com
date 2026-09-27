@@ -21,21 +21,31 @@ The Hero platform consists of multiple components working together to create an 
 ```mermaid
 graph TD
     A[Hero Client] --> B[Hero Core Engine]
-    B --> C[Modified Chromium Browser]
-    B --> D[Human Emulation Layer]
-    B --> E[Session Replay System]
-    
-    D --> F[Mouse Movement Simulation]
-    D --> G[Typing Pattern Emulation]
-    D --> H[Reaction Time Modeling]
-    
-    E --> I[DOM Recording]
-    E --> J[Network Activity Tracking]
-    E --> K[User Interaction Logging]
-    
-    C --> L[Stealth Fingerprint]
+    B --> C["Modified Chromium<br/>Browser"]
+
+    C --> L["Stealth<br/>Fingerprint"]
     C --> M[Real User Agent]
-    C --> N[Native WebGL Context]
+    C --> N["Native WebGL<br/>Context"]
+```
+
+```mermaid
+graph TD
+    A[Hero Client] --> B[Hero Core Engine]
+    B --> D["Human Emulation<br/>Layer"]
+
+    D --> F["Mouse Movement<br/>Simulation"]
+    D --> G["Typing Pattern<br/>Emulation"]
+    D --> H["Reaction Time<br/>Modeling"]
+```
+
+```mermaid
+graph TD
+    A[Hero Client] --> B[Hero Core Engine]
+    B --> E["Session Replay<br/>System"]
+
+    E --> I[DOM Recording]
+    E --> J["Network Activity<br/>Tracking"]
+    E --> K["User Interaction<br/>Logging"]
 ```
 
 Unlike other automation tools that layer detection evasion on top of existing browser controls, Hero rebuilds the automation experience from scratch. This means every mouse movement, keyboard input, and navigation action goes through Hero's human emulation layer before reaching the actual browser.
@@ -259,22 +269,22 @@ graph TD
     A[Action Execution] --> B{Success?}
     B -->|Yes| C[Continue Flow]
     B -->|No| D[Error Classification]
-    
+
     D --> E[Network Error]
     D --> F[Element Not Found]
     D --> G[Timeout Error]
     D --> H[Detection Error]
-    
+
     E --> I[Retry with Backoff]
     F --> J[Wait and Retry]
     G --> K[Extend Timeout]
     H --> L[Switch Profile]
-    
+
     I --> M{Max Retries?}
     J --> M
     K --> M
     L --> M
-    
+
     M -->|No| A
     M -->|Yes| N[Graceful Fallback]
 ```

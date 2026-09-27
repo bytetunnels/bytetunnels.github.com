@@ -17,24 +17,24 @@ The [web scraping industry](/posts/web-scraping-industry-2026-market-size-trends
 Before diving into individual tools, it helps to see how these categories relate to each other. The fundamental trade-off is between ease of use and control. As you move from browser extensions to SaaS platforms to code libraries, the learning curve increases but so does your ability to handle complex, large-scale scraping jobs.
 
 ```mermaid
-flowchart TD
-    A["Data Scraping Tools"] --> B["SaaS Platforms<br>(No-Code / Low-Code)"]
-    A --> C["Code Libraries<br>(Developer Tools)"]
-    A --> D["Browser Extensions<br>(Point and Click)"]
+flowchart LR
+    A["Data Scraping Tools"] --> B["SaaS Platforms<br/>(No-Code / Low-Code)"]
+    A --> C["Code Libraries<br/>(Developer Tools)"]
+    A --> D["Browser Extensions<br/>(Point and Click)"]
 
     B --> B1["Apify"]
     B --> B2["ScrapingBee"]
     B --> B3["Octoparse"]
 
-    C --> C1["Python<br>Scrapy, BeautifulSoup,<br>Playwright, requests"]
-    C --> C2["JavaScript<br>Puppeteer, Playwright,<br>Cheerio"]
+    C --> C1["Python<br/>Scrapy, BeautifulSoup,<br/>Playwright, requests"]
+    C --> C2["JavaScript<br/>Puppeteer, Playwright,<br/>Cheerio"]
 
-    D --> D1["Web Scraper<br>(Chrome Extension)"]
+    D --> D1["Web Scraper<br/>(Chrome Extension)"]
     D --> D2["Instant Data Scraper"]
 
-    style B fill:#d4edda
-    style C fill:#cce5ff
-    style D fill:#fff3cd
+    style B fill:#d4edda,color:#1f2328
+    style C fill:#cce5ff,color:#1f2328
+    style D fill:#fff3cd,color:#1f2328
 ```
 
 Each category has tools that range from simple to sophisticated. A SaaS platform like Apify can be as simple as clicking "run" on a pre-built scraper or as complex as deploying custom code to their cloud. Similarly, a browser extension like Web Scraper supports surprisingly elaborate multi-page workflows if you take the time to configure its sitemap feature. The categories are not rigid walls -- they are regions on a spectrum.
@@ -116,8 +116,8 @@ flowchart TD
     H --> B
     G -->|"No"| I["Export data<br>to CSV / Excel"]
 
-    style D fill:#d4edda
-    style E fill:#d4edda
+    style D fill:#d4edda,color:#1f2328
+    style E fill:#d4edda,color:#1f2328
 ```
 
 Octoparse offers a free tier with limited features and up to 10,000 records per export. Paid plans start at $89/month and include cloud execution, scheduling, and IP rotation. The visual approach works well for straightforward scraping tasks but can become unwieldy for complex sites with heavy JavaScript or unconventional page structures.
@@ -352,24 +352,24 @@ The right tool depends on who you are, what you are scraping, and how often you 
 
 ```mermaid
 flowchart TD
-    A["What is your<br>technical skill level?"] --> B{"Can you<br>write code?"}
+    A["What is your<br/>technical skill level?"] --> B{"Can you<br/>write code?"}
 
-    B -->|"No"| C{"How much data<br>do you need?"}
-    C -->|"Small: a few<br>pages, one time"| D["Browser Extension<br>Web Scraper, Instant Data Scraper"]
-    C -->|"Large: thousands<br>of pages, recurring"| E["SaaS Platform<br>Apify, Octoparse"]
+    B -->|"No"| C{"How much data<br/>do you need?"}
+    C -->|"Small: a few<br>pages, one time"| D["Browser Extension<br/>Web Scraper, Instant<br/>Data Scraper"]
+    C -->|"Large: thousands<br>of pages, recurring"| E["SaaS Platform<br/>Apify, Octoparse"]
 
-    B -->|"Yes"| F{"What scale<br>do you need?"}
-    F -->|"Small to medium:<br>under 10K pages/day"| G{"Do you want to<br>manage infrastructure?"}
-    G -->|"Yes"| H["Code Libraries<br>Scrapy, Playwright, etc."]
-    G -->|"No"| I["SaaS Platform<br>Apify, ScrapingBee"]
+    B -->|"Yes"| F{"What scale<br/>do you need?"}
+    F -->|"Small to medium:<br>under 10K pages/day"| G{"Do you want to<br/>manage infrastructure?"}
+    G -->|"Yes"| H["Code Libraries<br/>Scrapy, Playwright, etc."]
+    G -->|"No"| I["SaaS Platform<br/>Apify, ScrapingBee"]
 
-    F -->|"Large: over<br>10K pages/day"| J["Code Libraries<br>with proxy provider"]
+    F -->|"Large: over<br>10K pages/day"| J["Code Libraries<br/>with proxy provider"]
 
-    style D fill:#fff3cd
-    style E fill:#d4edda
-    style H fill:#cce5ff
-    style I fill:#d4edda
-    style J fill:#cce5ff
+    style D fill:#fff3cd,color:#1f2328
+    style E fill:#d4edda,color:#1f2328
+    style H fill:#cce5ff,color:#1f2328
+    style I fill:#d4edda,color:#1f2328
+    style J fill:#cce5ff,color:#1f2328
 ```
 
 **Non-technical users** should start with browser extensions for small, one-off tasks. If the data need is recurring or involves thousands of pages, move to a SaaS platform like Octoparse (visual, no-code) or Apify (broader ecosystem with pre-built scrapers).
@@ -433,26 +433,29 @@ The trade-off is engineering time. Building and maintaining a crawler at this sc
 ```mermaid
 flowchart TD
     subgraph SCALE1["100 pages/day"]
-        A1["Browser Extension<br>$0 + manual time"] ~~~ A2["SaaS<br>$49-89/month"] ~~~ A3["Code<br>$5-20/month"]
+        direction TB
+        A1["Browser Extension<br/>$0 + manual time"] ~~~ A2["SaaS<br/>$49-89/month"] ~~~ A3["Code<br/>$5-20/month"]
     end
 
     subgraph SCALE2["10K pages/day"]
-        B1["SaaS<br>$150-500/month"] ~~~ B2["Code<br>$50-150/month"]
+        direction TB
+        B1["SaaS<br/>$150-500/month"] ~~~ B2["Code<br/>$50-150/month"]
     end
 
     subgraph SCALE3["1M pages/day"]
-        C1["SaaS<br>$3,000-10,000+/month"] ~~~ C2["Code<br>$500-2,000/month"]
+        direction TB
+        C1["SaaS<br/>$3,000-10,000+/month"] ~~~ C2["Code<br/>$500-2,000/month"]
     end
 
     SCALE1 --> SCALE2 --> SCALE3
 
-    style A1 fill:#fff3cd
-    style A2 fill:#d4edda
-    style A3 fill:#cce5ff
-    style B1 fill:#d4edda
-    style B2 fill:#cce5ff
-    style C1 fill:#d4edda
-    style C2 fill:#cce5ff
+    style A1 fill:#fff3cd,color:#1f2328
+    style A2 fill:#d4edda,color:#1f2328
+    style A3 fill:#cce5ff,color:#1f2328
+    style B1 fill:#d4edda,color:#1f2328
+    style B2 fill:#cce5ff,color:#1f2328
+    style C1 fill:#d4edda,color:#1f2328
+    style C2 fill:#cce5ff,color:#1f2328
 ```
 
 ## Hybrid Approaches Worth Considering

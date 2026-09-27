@@ -17,7 +17,7 @@ Web forms come in many shapes, and each type requires a different automation str
 Before diving into code, it helps to see the landscape. Web forms fall into several distinct categories based on their structure, behavior, and submission mechanism.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Web Forms"] --> B["Simple Forms"]
     A --> C["Login Forms"]
     A --> D["Multi-Step Wizards"]
@@ -27,14 +27,14 @@ flowchart TD
     A --> H["Multi-Part Forms"]
     A --> I["Rich Text Editors"]
 
-    B --> B1["Contact forms<br>Search bars<br>Newsletter signups"]
-    C --> C1["Username + Password<br>CAPTCHA / 2FA<br>OAuth redirects"]
-    D --> D1["Next/Previous buttons<br>Step validation<br>Progress indicators"]
-    E --> E1["Conditional fields<br>Dependent dropdowns<br>Show/hide logic"]
-    F --> F1["File input elements<br>Drag-and-drop zones<br>Multiple file uploads"]
-    G --> G1["No page reload<br>Inline results<br>Fetch / XHR submission"]
-    H --> H1["Tabbed sections<br>Accordion panels<br>Partial saves"]
-    I --> I1["CKEditor<br>TinyMCE<br>Quill"]
+    B --> B1["Contact forms<br/>Search bars<br/>Newsletter signups"]
+    C --> C1["Username + Password<br/>CAPTCHA / 2FA<br/>OAuth redirects"]
+    D --> D1["Next/Previous buttons<br/>Step validation<br/>Progress indicators"]
+    E --> E1["Conditional fields<br/>Dependent dropdowns<br/>Show/hide logic"]
+    F --> F1["File input elements<br/>Drag-and-drop zones<br/>Multiple file uploads"]
+    G --> G1["No page reload<br/>Inline results<br/>Fetch / XHR submission"]
+    H --> H1["Tabbed sections<br/>Accordion panels<br/>Partial saves"]
+    I --> I1["CKEditor<br/>TinyMCE<br/>Quill"]
 ```
 
 Each category has its own quirks. Let us go through them one at a time.
@@ -182,10 +182,10 @@ The critical pattern is the `wait_for_selector` call between each step. Without 
 Dynamic forms show or hide fields based on what you select in other fields. Picking "Business" from an account type dropdown might reveal a "Company Name" field. Selecting "Other" from a list might show a free-text input. These forms use JavaScript to manipulate the DOM in real time.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Select Account Type"] -->|"Personal"| B["Show: Name, Email"]
-    A -->|"Business"| C["Show: Name, Email,<br>Company, Tax ID"]
-    A -->|"Non-Profit"| D["Show: Name, Email,<br>Organization, EIN"]
+    A -->|"Business"| C["Show: Name, Email,<br/>Company, Tax ID"]
+    A -->|"Non-Profit"| D["Show: Name, Email,<br/>Organization, EIN"]
 ```
 
 The automation challenge is that you must trigger the condition before you can interact with the dependent field. And you need to wait for the field to actually appear in the DOM.

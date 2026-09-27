@@ -167,27 +167,27 @@ Pseudo-selectors add another layer of precision, allowing you to target elements
 ```
 
 ```mermaid
-graph TD
+graph LR
     A[HTML Document] --> B[.container]
     B --> C[".product-item:first-child"]
     B --> D[".product-item:nth-child(2)"]
     B --> E[".product-item:last-child"]
-    
+
     C --> C1[.title]
     C --> C2[.price]
     C --> C3[.btn-buy]
-    
+
     D --> D1[.title]
     D --> D2[.price]
     D --> D3[.btn-buy]
-    
+
     E --> E1[.title]
     E --> E2[.price]
     E --> E3[.btn-buy]
-    
-    style C fill:#e1f5fe
-    style D fill:#f3e5f5
-    style E fill:#e8f5e8
+
+    style C fill:#e1f5fe,color:#1f2328
+    style D fill:#f3e5f5,color:#1f2328
+    style E fill:#e8f5e8,color:#1f2328
 ```
 
 Here's how to leverage these for complex data extraction:
@@ -323,18 +323,26 @@ graph TD
     A --> B{Complexity Level}
 
     B -->|Simple| C[CSS Selectors]
-    B -->|Complex| D[Consider XPath]
 
     C --> C1[✓ Faster execution]
     C --> C2[✓ Easier to read]
-    C --> C3[✓ Better browser support]
+    C --> C3["✓ Better browser<br/>support"]
 
-    D --> D1[✓ Text content matching]
-    D --> D2[✓ Parent navigation]
-    D --> D3[✓ Complex conditions]
+    style C fill:#e8f5e8,color:#1f2328
+```
 
-    style C fill:#e8f5e8
-    style D fill:#fff3cd
+```mermaid
+graph TD
+    A[Selection Task]
+    A --> B{Complexity Level}
+
+    B -->|Complex| D[Consider XPath]
+
+    D --> D1["✓ Text content<br/>matching"]
+    D --> D2["✓ Parent<br/>navigation"]
+    D --> D3["✓ Complex<br/>conditions"]
+
+    style D fill:#fff3cd,color:#1f2328
 ```
 
 Use CSS selectors when:

@@ -79,9 +79,9 @@ flowchart TD
     L -->|"Yes"| N["Search Engine<br>(GDS Query)"]
     N --> O["Results Returned"]
 
-    style D fill:#ffcccc
-    style M fill:#fff3cc
-    style O fill:#ccffcc
+    style D fill:#ffcccc,color:#1f2328
+    style M fill:#fff3cc,color:#1f2328
+    style O fill:#ccffcc,color:#1f2328
 ```
 
 Our [timeline of web scraping detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) traces how these layers developed over the years. Each layer adds cost and complexity for automated access. Passing the TLS fingerprint check does not mean you are through -- you still face JavaScript challenges, behavioral analysis, CAPTCHAs, and rate limits. This defense-in-depth approach means that even if you solve one layer, the next one catches you.
@@ -155,7 +155,7 @@ flowchart TD
     L --> N
     M --> N
 
-    style N fill:#ccffcc
+    style N fill:#ccffcc,color:#1f2328
 ```
 
 ### Affiliate Programs
@@ -275,21 +275,21 @@ Companies that specialize in travel data analytics offer historical pricing data
 The US Department of Transportation publishes airline pricing and performance data through the Bureau of Transportation Statistics. This includes fare data (DB1B), on-time performance, and route-level statistics. Similar data is available from aviation authorities in other countries.
 
 ```mermaid
-flowchart TD
-    A["Travel Data Need"] --> B{"Use Case"}
-    B -->|"Current Prices"| C["Official APIs<br>Affiliate Programs"]
-    B -->|"Historical Analysis"| D["BTS / ARC / OAG<br>Licensed Datasets"]
-    B -->|"Market Overview"| E["Metasearch APIs<br>(Skyscanner, Kiwi)"]
-    B -->|"Academic Research"| F["Direct Data Requests<br>to Airlines / Hotels"]
-    B -->|"Competitive Intel"| G["Licensed Data<br>Providers"]
+flowchart LR
+    A["Travel<br/>Data Need"] --> B{"Use Case"}
+    B -->|"Current Prices"| C["Official APIs<br/>Affiliate Programs"]
+    B -->|"Historical<br/>Analysis"| D["BTS / ARC / OAG<br/>Licensed Datasets"]
+    B -->|"Market Overview"| E["Metasearch APIs<br/>(Skyscanner, Kiwi)"]
+    B -->|"Academic<br/>Research"| F["Direct Data Requests<br/>to Airlines / Hotels"]
+    B -->|"Competitive Intel"| G["Licensed Data<br/>Providers"]
 
-    C --> H["Structured, Real-time<br>Authorized Access"]
+    C --> H["Structured,<br/>Real-time<br/>Authorized Access"]
     D --> H
     E --> H
     F --> H
     G --> H
 
-    style H fill:#ccffcc
+    style H fill:#ccffcc,color:#1f2328
 ```
 
 ### Open Data Sources

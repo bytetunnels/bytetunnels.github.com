@@ -31,26 +31,37 @@ Once you know what you want, identify the best sources. Not all websites are cre
 - Respect any restrictions outlined in their robots.txt — learn more about [whether robots.txt is legally binding](/posts/is-robots-txt-legally-binding-scraping-law-explained/)
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[Project Planning] --> B[Define Objectives]
-    A --> C[Target Analysis]
-    A --> D[Technical Assessment]
-    
+
     B --> E[What data do you need?]
     B --> F[How will you use it?]
-    B --> G[How often do you need updates?]
-    
-    C --> H[Identify data sources]
-    C --> I[Evaluate site complexity]
+    B --> G["How often do you need<br/>updates?"]
+```
+
+```mermaid
+flowchart LR
+    A --> C[Target Analysis]
+
+    C --> H["Identify data<br/>sources"]
+    C --> I["Evaluate site<br/>complexity"]
     C --> J[Check robots.txt]
-    
-    D --> K[Choose tools and libraries]
-    D --> L[Design data structure]
-    D --> M[Plan error handling]
-    
+
+    A["Project Planning"]
+```
+
+```mermaid
+flowchart TD
+    A --> D["Technical<br/>Assessment"]
+
+    D --> K["Choose tools and<br/>libraries"]
+    D --> L["Design data<br/>structure"]
+    D --> M["Plan error<br/>handling"]
+
     K --> N[Start Development]
     L --> N
     M --> N
+    A["Project Planning"]
 ```
 
 ## Setting Up Your Development Environment
@@ -336,24 +347,24 @@ if __name__ == "__main__":
 As your project grows, performance becomes crucial:
 
 ```mermaid
-graph TD
+graph LR
     A[Performance Optimization] --> B[Concurrent Requests]
     A --> C[Efficient Parsing]
     A --> D[Memory Management]
     A --> E[Caching Strategies]
-    
+
     B --> F[Threading]
     B --> G[Async/Await]
     B --> H[Process Pools]
-    
+
     C --> I[Selective Parsing]
     C --> J[CSS Selectors]
     C --> K[XPath Expressions]
-    
+
     D --> L[Streaming Downloads]
     D --> M[Batch Processing]
     D --> N[Data Chunking]
-    
+
     E --> O[Response Caching]
     E --> P[Session Reuse]
     E --> Q[Local Storage]

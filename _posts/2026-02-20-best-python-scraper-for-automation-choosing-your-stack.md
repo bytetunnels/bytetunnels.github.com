@@ -17,24 +17,24 @@ There is no single "best Python scraper." The question collapses the moment you 
 The Python scraping ecosystem has matured into distinct tiers. Each tier adds capability but also adds complexity, resource usage, and setup time. The key insight is that you should always start at the simplest tier that can handle your target, and only escalate when you hit a wall.
 
 ```mermaid
-graph TD
-    A["Python Scraping Stacks"] --> B["Tier 1: HTTP Client + Parser<br>(requests, httpx, aiohttp)"]
-    A --> C["Tier 2: Crawl Framework<br>(Scrapy)"]
-    A --> D["Tier 3: Browser Automation<br>(Playwright, Selenium)"]
-    A --> E["Tier 4: Stealth Browsers<br>(nodriver, Camoufox)"]
-    A --> F["Tier 5: AI-Powered<br>(Crawl4ai, LLM + browser)"]
+graph LR
+    A["Python Scraping Stacks"] --> B["Tier 1: HTTP Client +<br/>Parser<br/>(requests, httpx,<br/>aiohttp)"]
+    A --> C["Tier 2: Crawl Framework<br/>(Scrapy)"]
+    A --> D["Tier 3: Browser<br/>Automation<br/>(Playwright, Selenium)"]
+    A --> E["Tier 4: Stealth Browsers<br/>(nodriver, Camoufox)"]
+    A --> F["Tier 5: AI-Powered<br/>(Crawl4ai, LLM +<br/>browser)"]
 
-    B --> B1["Best for: static HTML,<br>REST APIs, RSS feeds"]
-    C --> C1["Best for: large crawls,<br>multi-domain, pipelines"]
-    D --> D1["Best for: JS-rendered pages,<br>SPAs, interaction flows"]
-    E --> E1["Best for: anti-bot protected<br>sites, stealth requirements"]
-    F --> F1["Best for: unstructured data,<br>schema-driven extraction"]
+    B --> B1["Best for: static HTML,<br/>REST APIs, RSS feeds"]
+    C --> C1["Best for: large crawls,<br/>multi-domain, pipelines"]
+    D --> D1["Best for: JS-rendered<br/>pages,<br/>SPAs, interaction flows"]
+    E --> E1["Best for: anti-bot<br/>protected<br/>sites, stealth<br/>requirements"]
+    F --> F1["Best for: unstructured<br/>data,<br/>schema-driven extraction"]
 
-    style B fill:#ddeeff
-    style C fill:#ddffdd
-    style D fill:#ffeedd
-    style E fill:#ffdddd
-    style F fill:#f0ddff
+    style B fill:#ddeeff,color:#1f2328
+    style C fill:#ddffdd,color:#1f2328
+    style D fill:#ffeedd,color:#1f2328
+    style E fill:#ffdddd,color:#1f2328
+    style F fill:#f0ddff,color:#1f2328
 ```
 
 ## Tier 1: requests + BeautifulSoup
@@ -449,15 +449,28 @@ pip install playwright openai
 
 Use this flowchart to pick your starting stack based on your actual requirements.
 
+**Static pages**
+
 ```mermaid
 graph TD
     A["What are you scraping?"] --> B{"Does the page<br>need JavaScript<br>to render?"}
     B -->|No| C{"How many<br>pages?"}
-    B -->|Yes| D{"Is the site<br>bot-protected?"}
 
     C -->|"< 100"| E["requests +<br>BeautifulSoup"]
     C -->|"100 - 10,000"| F["httpx async +<br>lxml"]
     C -->|"> 10,000"| G["Scrapy"]
+
+    style E fill:#ddeeff,color:#1f2328
+    style F fill:#ddeeff,color:#1f2328
+    style G fill:#ddffdd,color:#1f2328
+```
+
+**Pages that require JavaScript**
+
+```mermaid
+graph TD
+    A["What are you scraping?"] --> B{"Does the page<br>need JavaScript<br>to render?"}
+    B -->|Yes| D{"Is the site<br>bot-protected?"}
 
     D -->|No| H["Playwright"]
     D -->|Yes| I{"What type of<br>detection?"}
@@ -465,16 +478,20 @@ graph TD
     I -->|"TLS / basic checks"| J["nodriver"]
     I -->|"Deep fingerprinting"| K["Camoufox"]
 
+    style H fill:#ffeedd,color:#1f2328
+    style J fill:#ffdddd,color:#1f2328
+    style K fill:#ffdddd,color:#1f2328
+```
+
+**Unpredictable page structure**
+
+```mermaid
+graph TD
     A --> L{"Is the page<br>structure<br>unpredictable?"}
     L -->|Yes| M["Crawl4ai or<br>LLM + Playwright"]
 
-    style E fill:#ddeeff
-    style F fill:#ddeeff
-    style G fill:#ddffdd
-    style H fill:#ffeedd
-    style J fill:#ffdddd
-    style K fill:#ffdddd
-    style M fill:#f0ddff
+    style M fill:#f0ddff,color:#1f2328
+    A["What are you scraping?"]
 ```
 
 ## Common Stack Combinations
@@ -658,11 +675,6 @@ Here is the practical rule: open the page in your browser, right-click "View Pag
 ```mermaid
 graph TD
     A["Check: Is data in<br>View Page Source?"] -->|Yes| B["Use HTTP client<br>(requests, httpx)"]
-    A -->|No| C["Check: Does<br>Playwright work?"]
-    C -->|Yes| D["Use Playwright"]
-    C -->|"Blocked"| E["Check: What type<br>of detection?"]
-    E -->|"TLS / automation flags"| F["Use nodriver"]
-    E -->|"Fingerprint analysis"| G["Use Camoufox"]
     A -->|"Structure is<br>unpredictable"| H["Use Crawl4ai or<br>LLM extraction"]
 
     B --> I["Scale: many pages?"]
@@ -670,14 +682,27 @@ graph TD
     I -->|"Yes, async needed"| K["Switch to httpx async"]
     I -->|No| L["Stay with requests"]
 
-    style B fill:#ddeeff
-    style D fill:#ffeedd
-    style F fill:#ffdddd
-    style G fill:#ffdddd
-    style H fill:#f0ddff
-    style J fill:#ddffdd
-    style K fill:#ddeeff
-    style L fill:#ddeeff
+    style B fill:#ddeeff,color:#1f2328
+    style H fill:#f0ddff,color:#1f2328
+    style J fill:#ddffdd,color:#1f2328
+    style K fill:#ddeeff,color:#1f2328
+    style L fill:#ddeeff,color:#1f2328
+```
+
+```mermaid
+graph TD
+    A -->|No| C["Check: Does<br>Playwright work?"]
+    C -->|Yes| D["Use Playwright"]
+    C -->|"Blocked"| E["Check: What type<br>of detection?"]
+    E -->|"TLS / automation flags"| F["Use nodriver"]
+    E -->|"Fingerprint analysis"| G["Use Camoufox"]
+    A -->|"Structure is<br>unpredictable"| H["Use Crawl4ai or<br>LLM extraction"]
+
+    style D fill:#ffeedd,color:#1f2328
+    style F fill:#ffdddd,color:#1f2328
+    style G fill:#ffdddd,color:#1f2328
+    style H fill:#f0ddff,color:#1f2328
+    A["Check: Is data in<br>View Page Source?"]
 ```
 
 Every scraping tool exists because a simpler tool could not handle a specific class of problem. Understand what each tool adds, and you will never over-engineer or under-engineer your scraper again.

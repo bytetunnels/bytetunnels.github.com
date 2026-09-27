@@ -26,10 +26,10 @@ graph TD
     C --> G[Anti-Bot Flags Session]
     F --> H[Anti-Bot Sees<br>Normal Browser]
 
-    style C fill:#ff9999
-    style G fill:#ff9999
-    style F fill:#99ff99
-    style H fill:#99ff99
+    style C fill:#ff9999,color:#1f2328
+    style G fill:#ff9999,color:#1f2328
+    style F fill:#99ff99,color:#1f2328
+    style H fill:#99ff99,color:#1f2328
 ```
 
 The difference between plugins comes down to what they patch, how they inject those patches, and how well they keep up with [evolving detection methods](/posts/evolution-web-scraping-detection-methods-timeline/).
@@ -393,25 +393,25 @@ This manual approach gives you exactly the same result as the plugins for the pa
 Both `playwright-stealth` and `undetected-playwright` patch JavaScript properties. That is only one layer of detection. Modern anti-bot systems go deeper.
 
 ```mermaid
-graph TD
-    A[What Stealth<br>Plugins Patch] --> B["JS Properties:<br>webdriver, chrome,<br>plugins, permissions"]
-    A --> C["Launch Args:<br>AutomationControlled"]
+graph LR
+    A["What Stealth<br/>Plugins Patch"] --> B["JS Properties:<br/>webdriver, chrome,<br/>plugins, permissions"]
+    A --> C["Launch Args:<br/>AutomationControlled"]
 
-    D[What Stealth<br>Plugins Miss] --> E["TLS Fingerprint:<br>JA3/JA4 hash"]
-    D --> F["Canvas/WebGL:<br>consistent fingerprint"]
-    D --> G["Behavioral:<br>mouse, scroll, timing"]
-    D --> H["Font Enumeration:<br>system font lists"]
-    D --> I["Audio Context:<br>oscillator fingerprint"]
+    D["What Stealth<br/>Plugins Miss"] --> E["TLS Fingerprint:<br/>JA3/JA4 hash"]
+    D --> F["Canvas/WebGL:<br/>consistent fingerprint"]
+    D --> G["Behavioral:<br/>mouse, scroll, timing"]
+    D --> H["Font Enumeration:<br/>system font lists"]
+    D --> I["Audio Context:<br/>oscillator fingerprint"]
 
-    style A fill:#99ff99
-    style B fill:#99ff99
-    style C fill:#99ff99
-    style D fill:#ff9999
-    style E fill:#ff9999
-    style F fill:#ff9999
-    style G fill:#ff9999
-    style H fill:#ff9999
-    style I fill:#ff9999
+    style A fill:#99ff99,color:#1f2328
+    style B fill:#99ff99,color:#1f2328
+    style C fill:#99ff99,color:#1f2328
+    style D fill:#ff9999,color:#1f2328
+    style E fill:#ff9999,color:#1f2328
+    style F fill:#ff9999,color:#1f2328
+    style G fill:#ff9999,color:#1f2328
+    style H fill:#ff9999,color:#1f2328
+    style I fill:#ff9999,color:#1f2328
 ```
 
 If you are hitting anti-bot walls that stealth plugins cannot solve, it is time to look at tools that work at a deeper level. The [stealth browser ecosystem in 2026](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) covers the full landscape of these options:
@@ -456,24 +456,30 @@ Choosing between these tools depends on your language, your targets, and how ser
 
 ```mermaid
 graph TD
-    A[Which tool<br>should I use?] --> B{What language?}
-    B -->|Python| C{How tough is<br>the anti-bot?}
-    B -->|Node.js| D{How tough is<br>the anti-bot?}
+    A["Which tool<br/>should I use?"] --> B{What language?}
+    B -->|Python| C{"How tough is<br/>the anti-bot?"}
 
-    C -->|Basic checks only| E["undetected-playwright<br>or manual patches"]
-    C -->|Moderate:<br>Cloudflare basic| F["Manual patches +<br>realistic fingerprint config"]
-    C -->|Advanced:<br>DataDome, PerimeterX| G["Camoufox or<br>Nodriver"]
+    C -->|Basic checks only| E["undetected-playwright<br/>or manual patches"]
+    C -->|Moderate:<br>Cloudflare basic| F["Manual patches +<br/>realistic fingerprint<br/>config"]
+    C -->|Advanced:<br>DataDome, PerimeterX| G["Camoufox or<br/>Nodriver"]
 
-    D -->|Basic checks only| H["playwright-extra +<br>stealth plugin"]
-    D -->|Moderate:<br>Cloudflare basic| I["playwright-extra +<br>stealth + custom config"]
-    D -->|Advanced:<br>DataDome, PerimeterX| J["Consider Puppeteer<br>with rebrowser-patches<br>or switch to Camoufox"]
+    style E fill:#cce5ff,color:#1f2328
+    style F fill:#cce5ff,color:#1f2328
+    style G fill:#ffffcc,color:#1f2328
+```
 
-    style E fill:#cce5ff
-    style F fill:#cce5ff
-    style G fill:#ffffcc
-    style H fill:#cce5ff
-    style I fill:#cce5ff
-    style J fill:#ffffcc
+```mermaid
+graph TD
+    A["Which tool<br/>should I use?"] --> B{What language?}
+    B -->|Node.js| D{"How tough is<br/>the anti-bot?"}
+
+    D -->|Basic checks only| H["playwright-extra +<br/>stealth plugin"]
+    D -->|Moderate:<br>Cloudflare basic| I["playwright-extra +<br/>stealth + custom config"]
+    D -->|Advanced:<br>DataDome, PerimeterX| J["Consider Puppeteer<br/>with rebrowser-patches<br/>or switch to Camoufox"]
+
+    style H fill:#cce5ff,color:#1f2328
+    style I fill:#cce5ff,color:#1f2328
+    style J fill:#ffffcc,color:#1f2328
 ```
 
 ### For Python Projects

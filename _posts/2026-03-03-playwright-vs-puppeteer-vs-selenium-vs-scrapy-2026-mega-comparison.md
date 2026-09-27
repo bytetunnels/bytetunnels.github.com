@@ -19,33 +19,42 @@ Before comparing features, it helps to understand how each tool actually works u
 ```mermaid
 flowchart TD
     subgraph NO_BROWSER["No Browser Required"]
+        direction TB
         SCRAPY["Scrapy"]
         SCRAPY -->|"HTTP requests"| SERVER["Target Server"]
         SERVER -->|"Raw HTML"| SCRAPY
         SCRAPY -->|"CSS / XPath selectors"| DATA["Extracted Data"]
     end
 
+    style NO_BROWSER fill:#e8f5e9,color:#1f2328
+```
+
+```mermaid
+flowchart TD
     subgraph BROWSER_TOOLS["Browser-Based Tools"]
+        direction TB
         subgraph SEL["Selenium"]
+            direction TB
             SEL_CLIENT["Selenium Client"] -->|"WebDriver Protocol"| SEL_DRIVER["Browser Driver"]
             SEL_DRIVER -->|"Controls"| SEL_BROWSER["Any Browser"]
-        end
+    end
 
         subgraph PUP["Puppeteer"]
+            direction TB
             PUP_CLIENT["Puppeteer Client"] -->|"CDP"| PUP_BROWSER["Chrome / Chromium"]
-        end
+    end
 
         subgraph PW["Playwright"]
-            PW_CLIENT["Playwright Client"] -->|"CDP + Custom Protocol"| PW_BROWSERS["Chrome / Firefox / WebKit"]
-        end
+            direction TB
+            PW_CLIENT["Playwright Client"] -->|"CDP + Custom Protocol"| PW_BROWSERS["Chrome / Firefox /<br/>WebKit"]
+    end
     end
 
     SEL_BROWSER --> TARGET["Target Site"]
     PUP_BROWSER --> TARGET
     PW_BROWSERS --> TARGET
 
-    style NO_BROWSER fill:#e8f5e9
-    style BROWSER_TOOLS fill:#e3f2fd
+    style BROWSER_TOOLS fill:#e3f2fd,color:#1f2328
 ```
 
 **Scrapy** operates at the HTTP layer. It sends requests, receives HTML, and parses it -- no DOM rendering, no JavaScript execution. For simple targets, you can even [extract data with regex alone](/posts/regex-for-web-scraping-extracting-data-without-parser/) and skip a parser entirely. This makes Scrapy extremely fast but blind to any content that requires a browser to appear.
@@ -103,28 +112,47 @@ graph TD
     subgraph PERF["Relative Speed by Task Type"]
         direction LR
         subgraph STATIC["Static HTML Extraction"]
-            S1["1. Scrapy -- 10x-50x faster"]
-            S2["2. Playwright / Puppeteer"]
+            direction LR
+            S1["1. Scrapy -- 10x-50x<br/>faster"]
+            S2["2. Playwright /<br/>Puppeteer"]
             S3["3. Selenium"]
-        end
-
-        subgraph JSRENDER["JS-Rendered Content"]
-            J1["1. Puppeteer -- slight edge"]
-            J2["2. Playwright -- near identical"]
-            J3["3. Selenium -- 1.5x-3x slower"]
-        end
-
-        subgraph INTERACT["Complex Interactions"]
-            I1["1. Playwright -- best auto-wait"]
-            I2["2. Puppeteer"]
-            I3["3. Selenium"]
-            I4["4. Scrapy -- not applicable"]
-        end
     end
 
-    style STATIC fill:#e8f5e9
-    style JSRENDER fill:#e3f2fd
-    style INTERACT fill:#fff3e0
+    end
+
+    style STATIC fill:#e8f5e9,color:#1f2328
+```
+
+```mermaid
+graph TD
+    subgraph PERF["Relative Speed by Task Type"]
+        direction LR
+        subgraph JSRENDER["JS-Rendered Content"]
+            direction LR
+            J1["1. Puppeteer -- slight<br/>edge"]
+            J2["2. Playwright -- near<br/>identical"]
+            J3["3. Selenium -- 1.5x-3x<br/>slower"]
+    end
+
+    end
+
+    style JSRENDER fill:#e3f2fd,color:#1f2328
+```
+
+```mermaid
+graph TD
+    subgraph PERF["Relative Speed by Task Type"]
+        direction LR
+        subgraph INTERACT["Complex Interactions"]
+            direction LR
+            I1["1. Playwright -- best<br/>auto-wait"]
+            I2["2. Puppeteer"]
+            I3["3. Selenium"]
+            I4["4. Scrapy -- not<br/>applicable"]
+    end
+    end
+
+    style INTERACT fill:#fff3e0,color:#1f2328
 ```
 
 **Scrapy** avoids the overhead of launching a browser entirely. For static HTML pages, it can process hundreds of pages per second on modest hardware. Browser-based tools are limited by rendering time, which typically means 1-5 pages per second per browser context.
@@ -246,6 +274,8 @@ Notice the differences. Scrapy never opens a browser -- it works directly with t
 
 Use this flowchart to narrow down your choice based on your specific requirements.
 
+**Static pages**
+
 ```mermaid
 flowchart TD
     START["What are you building?"] --> JS{"Does the target require<br/>JavaScript rendering?"}
@@ -255,6 +285,16 @@ flowchart TD
     VOLUME -->|"No"| SIMPLE{"Simple HTTP<br/>requests sufficient?"}
     SIMPLE -->|"Yes"| SCRAPY
     SIMPLE -->|"No"| PLAYWRIGHT_SIMPLE["Use Playwright"]
+
+    style SCRAPY fill:#e8f5e9,color:#1b5e20
+    style PLAYWRIGHT_SIMPLE fill:#f3e5f5,color:#4a148c
+```
+
+**Pages that require JavaScript**
+
+```mermaid
+flowchart TD
+    START["What are you building?"] --> JS{"Does the target require<br/>JavaScript rendering?"}
 
     JS -->|"Yes"| MULTI_BROWSER{"Do you need<br/>multi-browser support?"}
 
@@ -269,11 +309,9 @@ flowchart TD
     LANG_SINGLE -->|"Python"| PLAYWRIGHT
     LANG_SINGLE -->|"Java / C#"| SELENIUM
 
-    style SCRAPY fill:#e8f5e9,color:#1b5e20
     style SELENIUM fill:#fff3e0,color:#e65100
     style PUPPETEER fill:#e3f2fd,color:#0d47a1
     style PLAYWRIGHT fill:#f3e5f5,color:#4a148c
-    style PLAYWRIGHT_SIMPLE fill:#f3e5f5,color:#4a148c
 ```
 
 ## Practical Recommendations by Use Case

@@ -69,6 +69,7 @@ httpmorph takes a different approach than most fingerprinting solutions. Instead
 ```mermaid
 graph TD
     subgraph HM["httpmorph Architecture"]
+        direction TB
         A["Python API Layer"] --> B["Cython Bindings"]
         B --> C["C HTTP Engine"]
         C --> D["BoringSSL - TLS"]
@@ -77,14 +78,22 @@ graph TD
         C --> G["Buffer Pool"]
     end
 
+    style HM fill:#f9f9f9,color:#1f2328
+```
+
+```mermaid
+graph LR
     subgraph FP["Fingerprint Matching"]
-        D --> H["JA4 Fingerprint - Chrome Match"]
-        E --> I["Akamai H2 Fingerprint - Chrome Match"]
-        A --> J["HTTP Headers - Chrome Match"]
+        direction LR
+        D --> H["JA4 Fingerprint - Chrome<br/>Match"]
+        E --> I["Akamai H2 Fingerprint -<br/>Chrome Match"]
+        A --> J["HTTP Headers - Chrome<br/>Match"]
     end
 
-    style HM fill:#f9f9f9
-    style FP fill:#e6f3ff
+    style FP fill:#e6f3ff,color:#1f2328
+    A["Python API Layer"]
+    D["BoringSSL - TLS"]
+    E["nghttp2 - HTTP/2"]
 ```
 
 Because BoringSSL is the same library Chrome uses for its TLS stack, the JA4 fingerprint that httpmorph produces is identical to a real Chrome browser. This is not an approximation or a best-effort match. It is the same library generating the same handshake with the same cipher suite ordering, the same extensions, and the same elliptic curve preferences.
@@ -211,8 +220,8 @@ graph TD
         F["httpx: 804 req/s"]
     end
 
-    style A fill:#ccffcc
-    style D fill:#ccffcc
+    style A fill:#ccffcc,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
 ```
 
 For local and concurrent workloads, httpmorph is roughly 3x faster than `requests` in sequential mode and 6.5x faster in concurrent mode. The advantage comes from the C implementation eliminating per-request Python overhead, connection pooling that reuses TLS sessions, and the native async I/O engine.
@@ -289,19 +298,19 @@ response = session.get('https://example.com')
 
 ```mermaid
 flowchart TD
-    A["Need to scrape a protected site?"] --> B{"Is TLS fingerprinting blocking you?"}
+    A["Need to scrape a<br/>protected site?"] --> B{"Is TLS fingerprinting<br/>blocking you?"}
     B -->|No| C["Use requests or httpx"]
     B -->|Yes| D{"Need HTTP/2 support?"}
     D -->|No| E["curl_cffi may suffice"]
-    D -->|Yes| F{"Need maximum performance?"}
+    D -->|Yes| F{"Need maximum<br/>performance?"}
     F -->|No| G["tls-client or curl_cffi"]
     F -->|Yes| H["httpmorph"]
 
-    B -->|"Not sure"| I["Check with tls.peet.ws or ja4db"]
+    B -->|"Not sure"| I["Check with tls.peet.ws<br/>or ja4db"]
     I --> B
 
-    style C fill:#e6ffe6
-    style H fill:#e6f0ff
+    style C fill:#e6ffe6,color:#1f2328
+    style H fill:#e6f0ff,color:#1f2328
 ```
 
 httpmorph is a strong fit when:

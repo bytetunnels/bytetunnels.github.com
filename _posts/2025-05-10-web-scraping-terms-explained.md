@@ -28,9 +28,9 @@ graph TD
     D --> E{More URLs?}
     E -->|Yes| B
     E -->|No| F[Complete]
-    
-    style A fill:#e1f5fe
-    style F fill:#e8f5e8
+
+    style A fill:#e1f5fe,color:#1f2328
+    style F fill:#e8f5e8,color:#1f2328
 ```
 
 ## HTML and Data Selection
@@ -109,7 +109,7 @@ response = requests.get('https://example.com', headers=headers)
 **Rate Limiting** controls how many requests you can make within a specific time period. Websites use this to prevent overload from automated requests. It's like a bouncer controlling how many people enter a club per minute.
 
 ```mermaid
-graph TD
+graph LR
     A[Request 1]
     C[Request 2]
     E[Request 3]
@@ -120,10 +120,10 @@ graph TD
     E --> F["✓ Allowed"]
     G --> H["⚠ Rate Limited"]
 
-    style B fill:#e8f5e8
-    style D fill:#e8f5e8
-    style F fill:#e8f5e8
-    style H fill:#ffebee
+    style B fill:#e8f5e8,color:#1f2328
+    style D fill:#e8f5e8,color:#1f2328
+    style F fill:#e8f5e8,color:#1f2328
+    style H fill:#ffebee,color:#1f2328
 ```
 
 **CAPTCHA** challenges verify that the user is human by presenting puzzles that are easy for humans but difficult for bots to solve.
@@ -209,9 +209,9 @@ graph TD
     C --> F[Results]
     D --> F
     E --> F
-    
-    style A fill:#e1f5fe
-    style F fill:#e8f5e8
+
+    style A fill:#e1f5fe,color:#1f2328
+    style F fill:#e8f5e8,color:#1f2328
 ```
 
 ## Error Handling and Debugging

@@ -26,6 +26,7 @@ flowchart TD
     D --> E["Capture Response"]
 
     subgraph FILL["Fill Each Field"]
+        direction TB
         B1["Text Inputs"] --> B2["Dropdowns"]
         B2 --> B3["Checkboxes / Radios"]
         B3 --> B4["Date Pickers"]

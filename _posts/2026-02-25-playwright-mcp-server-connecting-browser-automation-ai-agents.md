@@ -29,10 +29,10 @@ graph TD
     C -->|"Structured result"| B
     B -->|"MCP response"| A
 
-    style A fill:#e8eaf6
-    style B fill:#e3f2fd
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e3f2fd,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style D fill:#fff3e0,color:#1f2328
 ```
 
 For browser automation, this means the AI agent does not need to know the Playwright API. It does not need to construct selectors, manage browser lifecycle, or handle navigation timing. It calls tools like `browser_navigate` and `browser_click`, and the MCP server handles the underlying complexity.
@@ -266,14 +266,14 @@ graph TD
     F --> G["Agent reads snapshot,<br>identifies product price"]
     G --> H["Agent returns:<br>'The price is $49.99'"]
 
-    style A fill:#fff3e0
-    style B fill:#e8eaf6
-    style C fill:#e3f2fd
-    style D fill:#e3f2fd
-    style E fill:#e3f2fd
-    style F fill:#e3f2fd
-    style G fill:#e8eaf6
-    style H fill:#e8f5e9
+    style A fill:#fff3e0,color:#1f2328
+    style B fill:#e8eaf6,color:#1f2328
+    style C fill:#e3f2fd,color:#1f2328
+    style D fill:#e3f2fd,color:#1f2328
+    style E fill:#e3f2fd,color:#1f2328
+    style F fill:#e3f2fd,color:#1f2328
+    style G fill:#e8eaf6,color:#1f2328
+    style H fill:#e8f5e9,color:#1f2328
 ```
 
 Each tool call is a synchronous operation from the agent's perspective. The agent sends a tool call, the MCP server executes the corresponding Playwright action, waits for it to complete, and returns the result. The agent then decides what to do next based on the result.
@@ -286,9 +286,9 @@ graph TD
     B --> C["Act<br>(browser_click, browser_type, etc.)"]
     C --> A
 
-    style A fill:#e8f5e9
-    style B fill:#e8eaf6
-    style C fill:#fff3e0
+    style A fill:#e8f5e9,color:#1f2328
+    style B fill:#e8eaf6,color:#1f2328
+    style C fill:#fff3e0,color:#1f2328
 ```
 
 ## Token Efficiency: Snapshots vs Screenshots
@@ -300,7 +300,7 @@ The `browser_snapshot` tool returns the accessibility tree as structured text. F
 The `browser_screenshot` tool returns a PNG image. Images are expensive in terms of tokens. A single screenshot can cost 1,000 to 5,000 tokens depending on resolution, and the model has to interpret visual layout rather than reading structured data.
 
 ```mermaid
-graph TD
+graph LR
     subgraph SNAP["Accessibility Snapshot"]
         A["Structured text"] --> B["~500-2,000 tokens"]
         B --> C["Precise element refs"]
@@ -309,12 +309,12 @@ graph TD
 
     subgraph SCREEN["Screenshot"]
         E["PNG image"] --> F["~1,000-5,000 tokens"]
-        F --> G["Visual interpretation needed"]
+        F --> G["Visual interpretation<br/>needed"]
         G --> H["Slower, less precise"]
     end
 
-    style SNAP fill:#e8f5e9
-    style SCREEN fill:#ffebee
+    style SNAP fill:#e8f5e9,color:#1f2328
+    style SCREEN fill:#ffebee,color:#1f2328
 ```
 
 For most automation tasks, `browser_snapshot` is the better choice. It is cheaper, faster, and gives the agent actionable element references. Screenshots make sense when you need to verify visual layout, check CSS rendering, or when the accessibility tree is missing information (which happens with poorly structured pages or Shadow DOM content).
@@ -416,7 +416,7 @@ The MCP server manages a single browser session. If you need parallel browsing o
 The `@playwright/mcp` server and the direct `npx playwright` CLI serve different purposes. The MCP server is designed for AI agent integration -- it exposes individual browser actions as tools that an LLM can call. The CLI is designed for direct terminal usage and scripted workflows.
 
 ```mermaid
-graph TD
+graph LR
     subgraph MCP_PATH["MCP Server Path"]
         M1["AI Agent"] --> M2["MCP Protocol"]
         M2 --> M3["Individual tool calls"]
@@ -429,8 +429,8 @@ graph TD
         C3 --> C4["Structured output"]
     end
 
-    style MCP_PATH fill:#e3f2fd
-    style CLI_PATH fill:#e8f5e9
+    style MCP_PATH fill:#e3f2fd,color:#1f2328
+    style CLI_PATH fill:#e8f5e9,color:#1f2328
 ```
 
 The CLI approach reduces token consumption dramatically. Where the MCP server might require 10 round trips and 30,000 tokens to navigate a page, extract data, and return results, the CLI can accomplish the same task in a single command with structured output, consuming roughly 4x fewer tokens.

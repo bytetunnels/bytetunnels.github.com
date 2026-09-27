@@ -205,7 +205,7 @@ sequenceDiagram
     participant Browser
     participant Server
     participant API
-    
+
     Browser->>Server: Initial HTML Request
     Server-->>Browser: HTML Response
     Browser->>Browser: Parse HTML, Execute JS

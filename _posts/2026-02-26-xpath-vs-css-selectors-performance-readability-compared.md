@@ -31,9 +31,9 @@ graph TD
     J --> K["p.intro"]
     J --> L["p"]
 
-    style A fill:#e6f3ff
-    style F fill:#ffe6e6
-    style G fill:#ffe6e6
+    style A fill:#e6f3ff,color:#1f2328
+    style F fill:#ffe6e6,color:#1f2328
+    style G fill:#ffe6e6,color:#1f2328
 ```
 
 This difference in philosophy drives everything else -- syntax complexity, readability, and the features each language supports.
@@ -101,9 +101,9 @@ graph TD
     E -.->|"../span[@class='label']<br>Sibling via parent"| D
     D -.->|"ancestor::div[@class='product-card']<br>Navigate up"| A
 
-    style D fill:#ffe6e6
-    style E fill:#e6ffe6
-    style A fill:#e6f3ff
+    style D fill:#ffe6e6,color:#1f2328
+    style E fill:#e6ffe6,color:#1f2328
+    style A fill:#e6f3ff,color:#1f2328
 ```
 
 ### Select Attributes Directly and Navigate Siblings
@@ -192,15 +192,16 @@ benchmark("BeautifulSoup (lxml parser)",
 ```mermaid
 graph TD
     subgraph PERF["Performance Ranking<br>(lower is better)"]
-        A["lxml + XPath<br>~0.4-0.5 ms"] --> B["lxml + cssselect<br>~0.5-0.6 ms"]
-        B --> C["BeautifulSoup + lxml<br>~5 ms"]
-        C --> D["BeautifulSoup + html.parser<br>~8 ms"]
+        direction TB
+        A["lxml + XPath<br/>~0.4-0.5 ms"] --> B["lxml + cssselect<br/>~0.5-0.6 ms"]
+        B --> C["BeautifulSoup + lxml<br/>~5 ms"]
+        C --> D["BeautifulSoup +<br/>html.parser<br/>~8 ms"]
     end
 
-    style A fill:#e6ffe6
-    style B fill:#e6ffe6
-    style C fill:#fff3e6
-    style D fill:#ffe6e6
+    style A fill:#e6ffe6,color:#1f2328
+    style B fill:#e6ffe6,color:#1f2328
+    style C fill:#fff3e6,color:#1f2328
+    style D fill:#ffe6e6,color:#1f2328
 ```
 
 Key takeaways:
@@ -333,8 +334,8 @@ graph TD
     E -->|"Yes"| X
     E -->|"No"| G["Use CSS Selectors"]
 
-    style X fill:#ffe6e6
-    style G fill:#e6ffe6
+    style X fill:#ffe6e6,color:#1f2328
+    style G fill:#e6ffe6,color:#1f2328
 ```
 
 **Reach for XPath when you need:**

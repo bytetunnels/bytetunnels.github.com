@@ -26,9 +26,9 @@ flowchart TD
     D --> E[Extract Desired Data]
     E --> F["Clean & Structure Data"]
     F --> G[Store/Process Data]
-    
-    style A fill:#e1f5fe
-    style G fill:#e8f5e8
+
+    style A fill:#e1f5fe,color:#1f2328
+    style G fill:#e8f5e8,color:#1f2328
 ```
 
 The process typically involves several key steps. First, your scraping program sends an HTTP request to the target website, mimicking what your browser does when you visit a page. The server responds with HTML content, which your program then parses to locate and extract the specific data you need. Finally, this raw data is cleaned, structured, and stored in a format suitable for your intended use.
@@ -119,11 +119,11 @@ graph TD
     E --> I[Article Content]
     E --> J[Data Tables]
 
-    style A fill:#fff3e0
-    style E fill:#e8f5e8
-    style H fill:#e3f2fd
-    style I fill:#e3f2fd
-    style J fill:#e3f2fd
+    style A fill:#fff3e0,color:#1f2328
+    style E fill:#e8f5e8,color:#1f2328
+    style H fill:#e3f2fd,color:#1f2328
+    style I fill:#e3f2fd,color:#1f2328
+    style J fill:#e3f2fd,color:#1f2328
 ```
 
 Most websites organize content using semantic HTML elements and CSS classes. Product listings might use consistent class names like `product-card` or `item-container`. Understanding these patterns allows you to write more robust scrapers that can adapt to minor layout changes.
@@ -332,7 +332,7 @@ sequenceDiagram
     participant S as Scraper
     participant W as Website
     participant D as Database
-    
+
     S->>W: HTTP Request (Page 1)
     W->>S: HTML Response
     S->>S: Parse and Extract Data
@@ -344,7 +344,7 @@ sequenceDiagram
     W->>S: HTML Response
     S->>S: Parse and Extract Data
     S->>D: Store Products
-    
+
     Note over S: Continue for remaining pages
 ```
 

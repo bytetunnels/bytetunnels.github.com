@@ -268,17 +268,17 @@ Understanding how the trap works is only half the picture. You also need practic
 
 ```mermaid
 flowchart TD
-    A["Start: Need to scrape a Cloudflare-protected site"] --> B["Step 1: Define target URLs explicitly"]
-    B --> C["Step 2: Respect robots.txt and crawl-delay"]
-    C --> D["Step 3: Enable link depth tracking"]
-    D --> E["Step 4: Validate content against known patterns"]
-    E --> F{"Content matches expectations?"}
+    A["Start: Need to scrape a<br/>Cloudflare-protected<br/>site"] --> B["Step 1: Define target<br/>URLs explicitly"]
+    B --> C["Step 2: Respect<br/>robots.txt and<br/>crawl-delay"]
+    C --> D["Step 3: Enable link<br/>depth tracking"]
+    D --> E["Step 4: Validate content<br/>against known patterns"]
+    E --> F{"Content matches<br/>expectations?"}
     F -->|Yes| G["Process and store data"]
-    F -->|No| H["Flag as potential labyrinth"]
+    F -->|No| H["Flag as potential<br/>labyrinth"]
     H --> I{"Depth > threshold?"}
-    I -->|Yes| J["Stop following links from this branch"]
-    I -->|No| K["Log warning and proceed cautiously"]
-    G --> L["Step 5: Monitor scraping metrics"]
+    I -->|Yes| J["Stop following links<br/>from this branch"]
+    I -->|No| K["Log warning and proceed<br/>cautiously"]
+    G --> L["Step 5: Monitor scraping<br/>metrics"]
     J --> L
     K --> E
     L --> M{"Anomalies detected?"}

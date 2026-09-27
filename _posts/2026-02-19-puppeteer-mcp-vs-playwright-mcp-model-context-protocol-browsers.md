@@ -29,12 +29,12 @@ graph TD
     C -->|"Tool result"| B
     B --> F["Agent Response"]
 
-    style A fill:#f3e5f5
-    style B fill:#e8eaf6
-    style C fill:#e3f2fd
-    style D fill:#e8f5e9
-    style E fill:#fff3e0
-    style F fill:#fce4ec
+    style A fill:#f3e5f5,color:#1f2328
+    style B fill:#e8eaf6,color:#1f2328
+    style C fill:#e3f2fd,color:#1f2328
+    style D fill:#e8f5e9,color:#1f2328
+    style E fill:#fff3e0,color:#1f2328
+    style F fill:#fce4ec,color:#1f2328
 ```
 
 The power of this pattern is interchangeability. In theory, any MCP-compatible AI agent can connect to any MCP server. In practice, the quality of the server implementation matters enormously.
@@ -132,7 +132,7 @@ These servers use the Chrome DevTools Protocol (CDP) through Puppeteer to contro
 The architectural differences between the two are worth understanding. They affect performance, reliability, and what the AI agent can do.
 
 ```mermaid
-graph TD
+graph LR
     subgraph Playwright MCP
         PA["AI Agent"] -->|"MCP"| PB["@playwright/mcp"]
         PB -->|"Playwright API"| PC["Playwright Engine"]
@@ -147,16 +147,16 @@ graph TD
         QC -->|"CDP"| QD["Chrome / Chromium"]
     end
 
-    style PA fill:#e8eaf6
-    style PB fill:#e3f2fd
-    style PC fill:#e8f5e9
-    style PD fill:#fff3e0
-    style PE fill:#fff3e0
-    style PF fill:#fff3e0
-    style QA fill:#e8eaf6
-    style QB fill:#e3f2fd
-    style QC fill:#e8f5e9
-    style QD fill:#fff3e0
+    style PA fill:#e8eaf6,color:#1f2328
+    style PB fill:#e3f2fd,color:#1f2328
+    style PC fill:#e8f5e9,color:#1f2328
+    style PD fill:#fff3e0,color:#1f2328
+    style PE fill:#fff3e0,color:#1f2328
+    style PF fill:#fff3e0,color:#1f2328
+    style QA fill:#e8eaf6,color:#1f2328
+    style QB fill:#e3f2fd,color:#1f2328
+    style QC fill:#e8f5e9,color:#1f2328
+    style QD fill:#fff3e0,color:#1f2328
 ```
 
 Playwright MCP goes through the Playwright engine, which adds its own layer of abstraction on top of the browser protocols. This layer provides automatic waiting, smart element resolution, and cross-browser compatibility. Puppeteer MCP talks more directly to Chrome through CDP, which gives it lower-level access but requires more explicit handling of timing and state.
@@ -222,13 +222,13 @@ graph TD
     C --> F["~1,500 tokens<br>(vision model)"]
     D --> G["~20,000 tokens"]
 
-    style A fill:#ffebee
-    style B fill:#e8f5e9
-    style C fill:#fff3e0
-    style D fill:#ffebee
-    style E fill:#e8f5e9
-    style F fill:#fff3e0
-    style G fill:#ffebee
+    style A fill:#ffebee,color:#1f2328
+    style B fill:#e8f5e9,color:#1f2328
+    style C fill:#fff3e0,color:#1f2328
+    style D fill:#ffebee,color:#1f2328
+    style E fill:#e8f5e9,color:#1f2328
+    style F fill:#fff3e0,color:#1f2328
+    style G fill:#ffebee,color:#1f2328
 ```
 
 Puppeteer MCP implementations that rely on screenshots consume fewer text tokens but require a multimodal model to interpret. Those that return raw HTML or DOM content can consume tokens rapidly. Some Puppeteer MCP implementations have added accessibility tree support, but it is not as mature or well-integrated as Playwright's.
@@ -370,10 +370,10 @@ graph TD
     F -->|"Yes"| G["Puppeteer MCP"]
     F -->|"No"| H["Either works,<br>prefer Playwright"]
 
-    style A fill:#f3e5f5
-    style C fill:#e8f5e9
-    style G fill:#fff3e0
-    style H fill:#e3f2fd
+    style A fill:#f3e5f5,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style G fill:#fff3e0,color:#1f2328
+    style H fill:#e3f2fd,color:#1f2328
 ```
 
 ## The Broader MCP Ecosystem for Browsers

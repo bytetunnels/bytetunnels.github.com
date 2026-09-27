@@ -19,19 +19,19 @@ Every HTTP request your scraper sends consumes resources on the target server: C
 The consequences of skipping rate limiting fall into three categories:
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["No Rate Limiting"] --> B["Server Overload"]
     A --> C["IP Ban"]
     A --> D["Legal Risk"]
 
-    B --> B1["Degraded performance<br>for real users"]
-    B --> B2["Potential downtime<br>or crash"]
+    B --> B1["Degraded performance<br/>for real users"]
+    B --> B2["Potential downtime<br/>or crash"]
 
-    C --> C1["Your IP gets<br>blocked permanently"]
-    C --> C2["CAPTCHAs triggered<br>for all requests"]
+    C --> C1["Your IP gets<br/>blocked permanently"]
+    C --> C2["CAPTCHAs triggered<br/>for all requests"]
 
-    D --> D1["Possible violation of<br>Computer Fraud laws"]
-    D --> D2["Terms of Service<br>breach"]
+    D --> D1["Possible violation of<br/>Computer Fraud laws"]
+    D --> D2["Terms of Service<br/>breach"]
 ```
 
 Being a good internet citizen is reason enough. Sites like travel booking platforms take aggressive countermeasures against unthrottled bots, as we discuss in [bypassing anti-bot on travel sites without violating TOS](/posts/bypassing-anti-bot-travel-sites-without-violating-tos/). But even from a purely selfish perspective, rate limiting keeps your scraper running longer and more reliably. A server that returns clean 200 responses at one request per second is far more useful than one that returns 429s and blocks at fifty requests per second.
@@ -383,20 +383,22 @@ There are two strategies for rotation:
 ```mermaid
 flowchart TD
     subgraph PR["Per-Request Rotation"]
+        direction TB
         A1["Request 1: Chrome"] --> A2["Request 2: Firefox"]
         A2 --> A3["Request 3: Safari"]
         A3 --> A4["Request 4: Edge"]
     end
 
     subgraph PS["Per-Session Rotation"]
-        B1["Session starts: Chrome selected"] --> B2["Request 1: Chrome"]
+        direction TB
+        B1["Session starts: Chrome<br/>selected"] --> B2["Request 1: Chrome"]
         B2 --> B3["Request 2: Chrome"]
         B3 --> B4["Request 3: Chrome"]
         B4 --> B5["Session ends"]
     end
 
-    PR --> C["Looks unnatural:<br>browsers don't switch mid-session"]
-    PS --> D["Looks natural:<br>consistent browser per session"]
+    PR --> C["Looks unnatural:<br/>browsers don't switch<br/>mid-session"]
+    PS --> D["Looks natural:<br/>consistent browser per<br/>session"]
 ```
 
 Per-session rotation is almost always the better choice. Here is a helper class that handles both:
@@ -626,16 +628,16 @@ flowchart TD
     C -->|"Yes"| D["Check Crawl-delay"]
     C -->|"No"| E["Skip this path"]
 
-    D --> F["Set delay >= Crawl-delay"]
-    F --> G["Send request with<br>realistic User-Agent"]
+    D --> F["Set delay >=<br/>Crawl-delay"]
+    F --> G["Send request with<br/>realistic<br/>User-Agent"]
     G --> H{"Response status?"}
 
     H -->|"200 OK"| I["Process and cache"]
-    H -->|"429 Too Many Requests"| J["Back off exponentially"]
+    H -->|"429 Too Many Requests"| J["Back off<br/>exponentially"]
     H -->|"503 Service Unavailable"| J
     H -->|"304 Not Modified"| K["Use cached version"]
 
-    J --> L["Wait per Retry-After<br>or exponential backoff"]
+    J --> L["Wait per<br/>Retry-After or<br/>exponential<br/>backoff"]
     L --> G
 
     I --> M{"More URLs?"}

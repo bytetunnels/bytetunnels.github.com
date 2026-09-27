@@ -172,6 +172,7 @@ scraper.save_to_csv(products)
 ```mermaid
 graph TB
     subgraph "Web Crawling Architecture"
+        direction TB
         A[Seed URLs] --> B[URL Queue]
         B --> C[Fetch Page]
         C --> D[Parse Links]
@@ -181,8 +182,9 @@ graph TB
         C --> G[Store Page Info]
         G --> H[Index/Database]
     end
-    
+
     subgraph "Web Scraping Architecture"
+        direction TB
         I[Target URLs] --> J[Fetch Page]
         J --> K[Parse HTML]
         K --> L[Extract Data]
@@ -216,6 +218,7 @@ The architectural differences reveal their core purposes. Crawlers maintain queu
 ```mermaid
 flowchart TD
     subgraph CP["Crawling Pattern"]
+        direction TB
         CR1[Start URL]
         CR1 --> CR2[Extract Links]
         CR2 --> CR3[Filter & Queue]
@@ -225,6 +228,7 @@ flowchart TD
     end
 
     subgraph SP["Scraping Pattern"]
+        direction TB
         SC1[Known URLs]
         SC1 --> SC2[Target Elements]
         SC2 --> SC3[Extract Data]

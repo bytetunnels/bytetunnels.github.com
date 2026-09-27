@@ -42,11 +42,11 @@ graph TD
     F --> H["Storage<br>(DB / Files)"]
     C -->|"HTTP Response"| D
 
-    style A fill:#e6f3ff
-    style B fill:#fff3e6
-    style C fill:#e6ffe6
-    style D fill:#ffe6e6
-    style H fill:#f0e6ff
+    style A fill:#e6f3ff,color:#1f2328
+    style B fill:#fff3e6,color:#1f2328
+    style C fill:#e6ffe6,color:#1f2328
+    style D fill:#ffe6e6,color:#1f2328
+    style H fill:#f0e6ff,color:#1f2328
 ```
 
 The crawler starts with seed URLs, adds them to a queue, fetches each page, parses the HTML, extracts links and data, filters out duplicates, and feeds new URLs back into the queue. This loop continues until the queue is empty or the crawler reaches a stopping condition.
@@ -204,7 +204,7 @@ def save_page(url, title, links_found):
 The order in which a crawler visits pages matters. The two basic strategies are breadth-first search (BFS) and depth-first search (DFS).
 
 ```mermaid
-graph TD
+graph LR
     subgraph BFS["Breadth-First Search"]
         A1["Page A"] --> B1["Page B"]
         A1 --> C1["Page C"]
@@ -574,7 +574,7 @@ These terms are often used interchangeably, but they describe different activiti
 **Scraping** is about extraction. A scraper targets specific pages and pulls out structured data -- product prices, article text, contact information. Its primary job is to turn unstructured HTML into structured data.
 
 ```mermaid
-graph TD
+graph LR
     A["Web Crawling"] --> B["Goal: Discover pages"]
     A --> C["Output: URLs, raw HTML"]
     A --> D["Follows links broadly"]

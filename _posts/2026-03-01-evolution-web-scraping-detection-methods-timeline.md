@@ -17,44 +17,42 @@ This post traces the full arc of web scraping detection from 2000 to 2026, cover
 ## The Five Eras at a Glance
 
 ```mermaid
-timeline
-    title Evolution of Web Scraping Detection
-    section Era 1 - The Simple Days
-        2000-2003 : User-Agent string checks
-                  : IP rate limiting
-                  : robots.txt honor system
-        2004-2008 : Basic CAPTCHA - distorted text
-                  : Referer header validation
-                  : Session token checks
-    section Era 2 - The Arms Race Begins
-        2009-2011 : Google acquires reCAPTCHA
-                  : JavaScript challenge pages
-                  : Honeypot traps
-        2012-2015 : Browser fingerprinting basics
-                  : Akamai Bot Manager launch
-                  : reCAPTCHA v2 - checkbox
-    section Era 3 - Sophisticated Fingerprinting
-        2016-2017 : navigator.webdriver detection
-                  : Canvas fingerprinting
-                  : WebGL fingerprinting
-        2018-2020 : TLS and JA3 fingerprinting
-                  : Cloudflare Bot Management
-                  : DataDome and PerimeterX emerge
-                  : reCAPTCHA v3 - invisible scoring
-    section Era 4 - Behavioral Analysis
-        2021-2022 : Mouse movement analysis
-                  : Keystroke dynamics
-                  : Multi-signal correlation
-        2023-2024 : Cloudflare Turnstile
-                  : hCaptcha behavioral scoring
-                  : Scroll pattern analysis
-    section Era 5 - AI-Powered Detection
-        2025 : ML session pattern models
-             : Cloudflare AI Labyrinth
-             : Real-time behavioral scoring
-        2026 : Cross-site fingerprint correlation
-             : LLM-powered content traps
-             : Autonomous detection tuning
+flowchart TD
+    accTitle: Evolution of Web Scraping Detection
+    subgraph ERA0["Era 1 - The Simple Days"]
+        direction TB
+        P0["2000-2003<br/>User-Agent string checks<br/>IP rate limiting<br/>robots.txt honor system"]
+        P1["2004-2008<br/>Basic CAPTCHA - distorted text<br/>Referer header validation<br/>Session token checks"]
+    end
+    subgraph ERA1["Era 2 - The Arms Race Begins"]
+        direction TB
+        P2["2009-2011<br/>Google acquires reCAPTCHA<br/>JavaScript challenge pages<br/>Honeypot traps"]
+        P3["2012-2015<br/>Browser fingerprinting basics<br/>Akamai Bot Manager launch<br/>reCAPTCHA v2 - checkbox"]
+    end
+    subgraph ERA2["Era 3 - Sophisticated Fingerprinting"]
+        direction TB
+        P4["2016-2017<br/>navigator.webdriver detection<br/>Canvas fingerprinting<br/>WebGL fingerprinting"]
+        P5["2018-2020<br/>TLS and JA3 fingerprinting<br/>Cloudflare Bot Management<br/>DataDome and PerimeterX emerge<br/>reCAPTCHA v3 - invisible scoring"]
+    end
+    subgraph ERA3["Era 4 - Behavioral Analysis"]
+        direction TB
+        P6["2021-2022<br/>Mouse movement analysis<br/>Keystroke dynamics<br/>Multi-signal correlation"]
+        P7["2023-2024<br/>Cloudflare Turnstile<br/>hCaptcha behavioral scoring<br/>Scroll pattern analysis"]
+    end
+    subgraph ERA4["Era 5 - AI-Powered Detection"]
+        direction TB
+        P8["2025<br/>ML session pattern models<br/>Cloudflare AI Labyrinth<br/>Real-time behavioral scoring"]
+        P9["2026<br/>Cross-site fingerprint<br/>correlation<br/>LLM-powered content traps<br/>Autonomous detection tuning"]
+    end
+    P0 --> P1
+    P1 --> P2
+    P2 --> P3
+    P3 --> P4
+    P4 --> P5
+    P5 --> P6
+    P6 --> P7
+    P7 --> P8
+    P8 --> P9
 ```
 
 ## Era 1: 2000-2008 -- The Simple Days
@@ -427,7 +425,7 @@ The most important development of Era 4 was not any single signal but the correl
 - IP reputation and geolocation (network reputation layer)
 
 ```mermaid
-graph TD
+graph LR
     A[TLS Fingerprint] --> F[Correlation Engine]
     B[JS Environment] --> F
     C[Mouse Behavior] --> F
@@ -439,11 +437,11 @@ graph TD
     H -->|Medium Risk| J[Challenge]
     H -->|High Risk| K[Block]
 
-    style F fill:#ffffcc
-    style H fill:#ffcccc
-    style I fill:#ccffcc
-    style J fill:#ffffcc
-    style K fill:#ffcccc
+    style F fill:#ffffcc,color:#1f2328
+    style H fill:#ffcccc,color:#1f2328
+    style I fill:#ccffcc,color:#1f2328
+    style J fill:#ffffcc,color:#1f2328
+    style K fill:#ffcccc,color:#1f2328
 ```
 
 A visitor with a Chrome TLS fingerprint, Chrome JavaScript environment, but no mouse movements and perfectly timed requests would score as high risk even though each individual layer (except behavior) looked legitimate. The signals had to be internally consistent.
@@ -560,11 +558,11 @@ graph TD
     D --> E[Cost of Scraping Increases]
     E --> A
 
-    style A fill:#ffcccc
-    style B fill:#ff9999
-    style C fill:#ccffcc
-    style D fill:#ffffcc
-    style E fill:#ffccff
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ff9999,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ffccff,color:#1f2328
 ```
 
 Here is a summary of detection methods and their countermeasures across all five eras:

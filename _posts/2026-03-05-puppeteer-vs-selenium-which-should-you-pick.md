@@ -34,10 +34,10 @@ graph TD
     F -->|Python / Java / C#| G[Selenium]
     F -->|JavaScript / TypeScript| H[Puppeteer]
 
-    style C fill:#c8e6c9
-    style E fill:#bbdefb
-    style G fill:#c8e6c9
-    style H fill:#bbdefb
+    style C fill:#c8e6c9,color:#1f2328
+    style E fill:#bbdefb,color:#1f2328
+    style G fill:#c8e6c9,color:#1f2328
+    style H fill:#bbdefb,color:#1f2328
 ```
 
 ## Team and Language Considerations
@@ -255,35 +255,56 @@ In CI/CD pipelines and Docker containers, this driver management historically ca
 
 Use this flowchart to walk through the decision based on your actual requirements.
 
+**Multiple browsers**
+
 ```mermaid
 flowchart TD
     START([Need browser automation]) --> Q1{Multiple browsers required?}
     Q1 -->|Yes| SEL1[Use Selenium]
+
+    SEL1 --> NOTE1[Consider Playwright as<br/>a modern alternative]
+
+    style SEL1 fill:#c8e6c9,color:#1f2328
+    style NOTE1 fill:#fff9c4,color:#1f2328
+```
+
+**Python, Java, C#, or Ruby**
+
+```mermaid
+flowchart TD
+    START([Need browser automation]) --> Q1{Multiple browsers required?}
     Q1 -->|No| Q2{Primary language?}
 
     Q2 -->|Python / Java / C# / Ruby| Q3{Performance critical?}
-    Q2 -->|JavaScript / TypeScript| Q4{Need Selenium Grid<br/>or distributed testing?}
 
     Q3 -->|Yes, high volume| Q5{Team willing to<br/>learn Node.js?}
     Q3 -->|No| SEL2[Use Selenium]
 
-    Q4 -->|Yes| SEL3[Use Selenium]
-    Q4 -->|No| PUP1[Use Puppeteer]
-
     Q5 -->|Yes| PUP2[Use Puppeteer]
     Q5 -->|No| SEL4[Use Selenium]
 
-    SEL1 --> NOTE1[Consider Playwright as<br/>a modern alternative]
+    style SEL2 fill:#c8e6c9,color:#1f2328
+    style SEL4 fill:#c8e6c9,color:#1f2328
+    style PUP2 fill:#bbdefb,color:#1f2328
+```
+
+**JavaScript or TypeScript**
+
+```mermaid
+flowchart TD
+    START([Need browser automation]) --> Q1{Multiple browsers required?}
+    Q1 -->|No| Q2{Primary language?}
+
+    Q2 -->|JavaScript / TypeScript| Q4{Need Selenium Grid<br/>or distributed testing?}
+
+    Q4 -->|Yes| SEL3[Use Selenium]
+    Q4 -->|No| PUP1[Use Puppeteer]
+
     PUP1 --> NOTE2[Consider Playwright if you<br/>need Firefox support later]
 
-    style SEL1 fill:#c8e6c9
-    style SEL2 fill:#c8e6c9
-    style SEL3 fill:#c8e6c9
-    style SEL4 fill:#c8e6c9
-    style PUP1 fill:#bbdefb
-    style PUP2 fill:#bbdefb
-    style NOTE1 fill:#fff9c4
-    style NOTE2 fill:#fff9c4
+    style SEL3 fill:#c8e6c9,color:#1f2328
+    style PUP1 fill:#bbdefb,color:#1f2328
+    style NOTE2 fill:#fff9c4,color:#1f2328
 ```
 
 ## Quick Answer Summary

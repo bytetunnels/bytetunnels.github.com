@@ -393,7 +393,49 @@ main {
 
 /* mermaid */
 .mermaid {
+  --diagram-surface: #ffffff;
+  --diagram-border: #dce5ef;
+  --diagram-grid: #e1e8f0;
+  --diagram-shadow: rgb(32 57 88 / 5%);
+
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  padding: 1rem;
+  border: 1px solid var(--diagram-border);
+  border-radius: 14px;
+  background-color: var(--diagram-surface);
+  background-image: radial-gradient(var(--diagram-grid) 0.7px, transparent 0.7px);
+  background-size: 18px 18px;
+  box-shadow: 0 4px 18px var(--diagram-shadow);
+  scrollbar-color: var(--diagram-border) transparent;
+  scrollbar-width: thin;
   text-align: center;
+
+  svg {
+    display: block;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+  }
+}
+
+html[data-bs-theme='dark'] .mermaid {
+  --diagram-surface: #171e29;
+  --diagram-border: #35455c;
+  --diagram-grid: #2b384b;
+  --diagram-shadow: rgb(0 0 0 / 15%);
+}
+
+@media (max-width: 575px) {
+  .mermaid {
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
 }
 
 /* MathJax */

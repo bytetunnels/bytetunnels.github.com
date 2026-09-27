@@ -80,39 +80,51 @@ Five factors determine which model wins for a given use case.
 ## Model Comparison Overview
 
 ```mermaid
-graph TB
+graph TD
     subgraph CLAUDE["Claude 3.5 / Claude 4 (Anthropic)"]
         C1["Context: 200K tokens"]
-        C2["Structured output: native JSON mode"]
-        C3["Strength: complex nested schemas"]
+        C2["Structured output:<br/>native JSON mode"]
+        C3["Strength: complex nested<br/>schemas"]
         C4["Cost: mid-range"]
     end
 
+    style CLAUDE fill:#ccccff,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph GPT["GPT-4o / GPT-4.1 (OpenAI)"]
         G1["Context: 128K tokens"]
-        G2["Structured output: JSON schema mode"]
-        G3["Strength: strict schema enforcement"]
+        G2["Structured output: JSON<br/>schema mode"]
+        G3["Strength: strict schema<br/>enforcement"]
         G4["Cost: mid-range"]
     end
 
+    style GPT fill:#ccffcc,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph GEMINI["Gemini 2.0 / 2.5 (Google)"]
         GE1["Context: 1M+ tokens"]
-        GE2["Structured output: JSON mode"]
-        GE3["Strength: massive context, low cost"]
+        GE2["Structured output: JSON<br/>mode"]
+        GE3["Strength: massive<br/>context, low cost"]
         GE4["Cost: lowest per token"]
     end
 
+    style GEMINI fill:#ffffcc,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph OPEN["Open Source (Llama, Mistral)"]
-        O1["Context: 32K-128K tokens"]
-        O2["Structured output: varies"]
-        O3["Strength: self-hosted, no API costs"]
-        O4["Cost: infrastructure only"]
+        O1["Context: 32K-128K<br/>tokens"]
+        O2["Structured output:<br/>varies"]
+        O3["Strength: self-hosted,<br/>no API costs"]
+        O4["Cost: infrastructure<br/>only"]
     end
 
-    style CLAUDE fill:#ccccff
-    style GPT fill:#ccffcc
-    style GEMINI fill:#ffffcc
-    style OPEN fill:#ffcccc
+    style OPEN fill:#ffcccc,color:#1f2328
 ```
 
 ## Claude (Anthropic): Best for Complex Schemas
@@ -454,11 +466,11 @@ graph TD
 
     TRAD --> HYBRID["Consider hybrid:<br/>LLM generates selectors,<br/>traditional scraper executes"]
 
-    style TRAD fill:#ccffcc
-    style GPT fill:#ccffcc
-    style CLAUDE fill:#ccccff
-    style GEMINI fill:#ffffcc
-    style HYBRID fill:#ffccff
+    style TRAD fill:#ccffcc,color:#1f2328
+    style GPT fill:#ccffcc,color:#1f2328
+    style CLAUDE fill:#ccccff,color:#1f2328
+    style GEMINI fill:#ffffcc,color:#1f2328
+    style HYBRID fill:#ffccff,color:#1f2328
 ```
 
 **For complex schemas with nested data and ambiguous fields:** Claude 3.5 Sonnet. It handles nuance better than alternatives and the 200K context window means you rarely need to chunk input.

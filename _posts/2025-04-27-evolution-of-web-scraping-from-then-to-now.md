@@ -67,24 +67,15 @@ def modern_basic_scraper(url):
 This era introduced concepts like CSS selectors and XPath expressions, making it easier to target specific elements on web pages. Scrapers became more reliable and maintainable, though they still faced limitations with dynamic content. The [tool landscape](/posts/scraping-tools-compared-finding-your-starting-point/) was rapidly expanding.
 
 ```mermaid
-timeline
-    title Web Scraping Evolution Timeline
-    
-    1990s - Early 2000s : Manual Data Collection
-                        : Basic Pattern Matching
-                        : Simple Regex Scrapers
-    
-    2000s - 2010s      : HTTP Libraries (requests)
-                        : HTML Parsers (BeautifulSoup)
-                        : CSS Selectors & XPath
-    
-    2010s - Present    : Browser Automation
-                        : JavaScript Rendering
-                        : Advanced Anti-Bot Measures
-    
-    Present - Future   : AI-Powered Scraping
-                        : Self-Healing Scrapers
-                        : Ethical Data Collection
+flowchart TD
+    accTitle: Web Scraping Evolution Timeline
+    P0["1990s - Early 2000s<br/>Manual Data Collection<br/>Basic Pattern Matching<br/>Simple Regex Scrapers"]
+    P1["2000s - 2010s<br/>HTTP Libraries (requests)<br/>HTML Parsers (BeautifulSoup)<br/>CSS Selectors & XPath"]
+    P2["2010s - Present<br/>Browser Automation<br/>JavaScript Rendering<br/>Advanced Anti-Bot Measures"]
+    P3["Present - Future<br/>AI-Powered Scraping<br/>Self-Healing Scrapers<br/>Ethical Data Collection"]
+    P0 --> P1
+    P1 --> P2
+    P2 --> P3
 ```
 
 ## The JavaScript Revolution and Dynamic Content
@@ -180,21 +171,25 @@ These modern tools provide:
 As web scraping became more prevalent, websites began implementing increasingly sophisticated anti-bot measures. This sparked an ongoing arms race between scrapers and website protection systems, with the [evolution of detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) accelerating rapidly:
 
 ```mermaid
-graph TD
+graph LR
     A[Website Protection] --> B[CAPTCHA Systems]
     A --> C[Rate Limiting]
     A --> D[Fingerprinting]
     A --> E[Behavioral Analysis]
-    
-    F[Scraper Countermeasures] --> G[Proxy Rotation]
-    F --> H[User-Agent Spoofing]
-    F --> I[Headless Browser Detection Evasion]
-    F --> J[Human-like Behavior Simulation]
-    
+
     B --> K[CAPTCHA Solving Services]
     C --> L[Request Throttling]
-    D --> M[Browser Fingerprint Masking]
-    E --> N[AI-Powered Behavior Mimicking]
+    D --> M["Browser Fingerprint<br/>Masking"]
+    E --> N["AI-Powered Behavior<br/>Mimicking"]
+```
+
+```mermaid
+graph LR
+
+    F[Scraper Countermeasures] --> G[Proxy Rotation]
+    F --> H[User-Agent Spoofing]
+    F --> I["Headless Browser<br/>Detection Evasion"]
+    F --> J["Human-like Behavior<br/>Simulation"]
 ```
 
 Modern scrapers must navigate:
@@ -287,24 +282,24 @@ Several trends are shaping the future of web scraping:
 **Legal and Regulatory Frameworks**: Increasing attention from regulators is pushing the industry toward more transparent and compliant practices.
 
 ```mermaid
-graph TD
+graph LR
     A[Current Web Scraping]
 
     A --> B[AI-Powered Adaptation]
-    A --> C[Self-Healing Capabilities]
+    A --> C["Self-Healing<br/>Capabilities"]
     A --> D[Distributed Architecture]
     A --> E[Enhanced Stealth]
 
-    B --> F[Computer Vision Integration]
-    B --> G[Natural Language Processing]
+    B --> F["Computer Vision<br/>Integration"]
+    B --> G["Natural Language<br/>Processing"]
 
-    C --> H[Automatic Selector Updates]
+    C --> H["Automatic Selector<br/>Updates"]
     C --> I[Layout Change Detection]
 
     D --> J[Cloud-Native Solutions]
     D --> K[Global Proxy Networks]
 
-    E --> L[Advanced Fingerprinting Evasion]
+    E --> L["Advanced Fingerprinting<br/>Evasion"]
     E --> M[Behavioral Mimicry]
 ```
 

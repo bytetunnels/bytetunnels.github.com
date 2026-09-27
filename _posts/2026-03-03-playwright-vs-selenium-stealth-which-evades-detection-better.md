@@ -105,28 +105,35 @@ with sync_playwright() as p:
 Modern anti-bot systems stack multiple detection layers. The following diagram shows which layers catch Selenium and Playwright in their default configurations.
 
 ```mermaid
+graph LR
+    A1["Selenium: Passes (uses<br/>real Chrome)"] -.-> A
+    A2["Playwright: Passes (uses<br/>real Chromium)"] -.-> A
+
+    B1["Selenium: Fails (cdc_<br/>vars, webdriver=true,<br/>missing plugins)"] -.-> B
+    B2["Playwright: Partially<br/>fails (webdriver=true,<br/>automation flags)"] -.-> B
+
+    C1["Selenium: Fails (instant<br/>actions, no mouse<br/>movement)"] -.-> C
+    C2["Playwright: Fails<br/>(instant actions,<br/>deterministic waits)"] -.-> C
+
+    style B1 fill:#ffcccc,color:#1f2328
+    style B2 fill:#ffffcc,color:#1f2328
+    style C1 fill:#ffcccc,color:#1f2328
+    style C2 fill:#ffcccc,color:#1f2328
+    A["Layer 1: HTTP / TLS<br>Fingerprinting"]
+    B["Layer 2: JavaScript API<br>Probing"]
+    C["Layer 3: Behavioral<br>Analysis"]
+```
+
+```mermaid
 graph TD
-    A["Layer 1: HTTP / TLS Fingerprinting"] --> D{"Detection Engine"}
-    B["Layer 2: JavaScript API Probing"] --> D
-    C["Layer 3: Behavioral Analysis"] --> D
+    A["Layer 1: HTTP / TLS<br/>Fingerprinting"] --> D{"Detection Engine"}
+    B["Layer 2: JavaScript API<br/>Probing"] --> D
+    C["Layer 3: Behavioral<br/>Analysis"] --> D
     D -->|Any layer fails| E["Blocked or CAPTCHA"]
     D -->|All layers pass| F["Access Granted"]
 
-    A1["Selenium: Passes (uses real Chrome)"] -.-> A
-    A2["Playwright: Passes (uses real Chromium)"] -.-> A
-
-    B1["Selenium: Fails (cdc_ vars, webdriver=true, missing plugins)"] -.-> B
-    B2["Playwright: Partially fails (webdriver=true, automation flags)"] -.-> B
-
-    C1["Selenium: Fails (instant actions, no mouse movement)"] -.-> C
-    C2["Playwright: Fails (instant actions, deterministic waits)"] -.-> C
-
-    style E fill:#ff9999
-    style F fill:#99ff99
-    style B1 fill:#ffcccc
-    style B2 fill:#ffffcc
-    style C1 fill:#ffcccc
-    style C2 fill:#ffcccc
+    style E fill:#ff9999,color:#1f2328
+    style F fill:#99ff99,color:#1f2328
 ```
 
 Both tools pass the TLS layer because they drive real browser engines. Both fail behavioral analysis by default. Understanding how [detection methods have evolved over time](/posts/evolution-web-scraping-detection-methods-timeline/) explains why these layers exist. The key difference is at the JavaScript probing layer, where Playwright leaks fewer artifacts than Selenium.

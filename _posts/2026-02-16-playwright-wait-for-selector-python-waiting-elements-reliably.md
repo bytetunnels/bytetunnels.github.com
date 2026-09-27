@@ -350,6 +350,13 @@ graph TD
     C -- No --> E[Use locator.wait_for<br>or wait_for_selector]
     B -- No --> F{A page<br>load state?}
     F -- Yes --> G[Use<br>wait_for_load_state]
+```
+
+```mermaid
+graph TD
+    A[What are you<br>waiting for?] --> B{A specific<br>element?}
+    B -- No --> F{A page<br>load state?}
+    F -- Yes --> G[Use<br>wait_for_load_state]
     F -- No --> H{A URL<br>change?}
     H -- Yes --> I[Use<br>wait_for_url]
     H -- No --> J{An API<br>response?}

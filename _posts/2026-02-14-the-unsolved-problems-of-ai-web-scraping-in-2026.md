@@ -31,14 +31,14 @@ graph TD
     H["Authentication Walls"] --> D
     E --> B
 
-    style A fill:#ffcccc
-    style B fill:#ffe6cc
-    style C fill:#ffffcc
-    style D fill:#ccffcc
-    style E fill:#cce6ff
-    style F fill:#e6ccff
-    style G fill:#ffcce6
-    style H fill:#ccffff
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffe6cc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#cce6ff,color:#1f2328
+    style F fill:#e6ccff,color:#1f2328
+    style G fill:#ffcce6,color:#1f2328
+    style H fill:#ccffff,color:#1f2328
 ```
 
 Solving any one of these alone provides only marginal improvement. Real progress will come from solutions that address multiple problems at once.
@@ -184,9 +184,9 @@ graph TD
     G["Behavioral Simulation"] --> A
     H["Smart Proxies"] --> A
 
-    style A fill:#cce6ff
-    style C fill:#ffcccc
-    style D fill:#ffffcc
+    style A fill:#cce6ff,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
 ```
 
 ```javascript
@@ -344,22 +344,34 @@ As more organizations adopt component libraries with shadow DOM encapsulation, t
 LLM-powered scraping remains expensive, and the economics do not scale the way traditional scraping does.
 
 ```mermaid
+graph LR
+    A["Traditional Scraping<br/>Cost"] --> B["Fixed development cost"]
+    A --> C["Near-zero marginal cost<br/>per page"]
+
+    style A fill:#d4edda,color:#1f2328
+```
+
+```mermaid
 graph TD
-    A["Traditional Scraping Cost"] --> B["Fixed development cost"]
-    A --> C["Near-zero marginal cost per page"]
-
-    D["AI-Powered Scraping Cost"] --> E["Lower development cost"]
-    D --> F["Significant marginal cost per page"]
+    D["AI-Powered<br/>Scraping Cost"] --> E["Lower development<br/>cost"]
+    D --> F["Significant marginal<br/>cost per page"]
     F --> G["LLM API calls"]
-    F --> H["Vision model processing"]
-    F --> I["Proxy and browser infra"]
+    F --> H["Vision model<br/>processing"]
+    F --> I["Proxy and browser<br/>infra"]
 
-    J["At 1,000 pages/day"] --> K["AI cost often acceptable"]
-    L["At 100,000 pages/day"] --> M["AI cost becomes prohibitive"]
+    style D fill:#fff3cd,color:#1f2328
+```
 
-    style A fill:#d4edda
-    style D fill:#fff3cd
-    style M fill:#f8d7da
+```mermaid
+graph TD
+    J["At 1,000 pages/day"] --> K["AI cost often<br/>acceptable"]
+```
+
+```mermaid
+graph TD
+    L["At 100,000<br/>pages/day"] --> M["AI cost becomes<br/>prohibitive"]
+
+    style M fill:#f8d7da,color:#1f2328
 ```
 
 ```python

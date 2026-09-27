@@ -26,8 +26,8 @@ flowchart TD
     D --> E["Browser renders results"]
     E --> F["Scraper parses and<br>extracts the data"]
 
-    style A fill:#e6f3ff
-    style F fill:#e6ffe6
+    style A fill:#e6f3ff,color:#1f2328
+    style F fill:#e6ffe6,color:#1f2328
 ```
 
 The key insight is that step B is just an HTTP request. If you can replicate that request -- with the right method, URL, headers, and form data -- you do not need a browser at all.
@@ -148,8 +148,8 @@ flowchart TD
     E -->|"Yes"| F["Return results"]
     E -->|"No"| G["Return 403 Forbidden"]
 
-    style G fill:#ffcccc
-    style F fill:#e6ffe6
+    style G fill:#ffcccc,color:#1f2328
+    style F fill:#e6ffe6,color:#1f2328
 ```
 
 The solution is a two-step process: load the form page to grab the token, then include it in your POST.
@@ -326,9 +326,9 @@ flowchart TD
     B1["POST /search/step2"] --> B
     C1["GET /search/results"] --> C
 
-    style A fill:#e6f3ff
-    style B fill:#e6f3ff
-    style C fill:#e6ffe6
+    style A fill:#e6f3ff,color:#1f2328
+    style B fill:#e6f3ff,color:#1f2328
+    style C fill:#e6ffe6,color:#1f2328
 ```
 
 With `requests`, you parse each step's response for hidden fields (tokens, session IDs) and submit to the next endpoint:
@@ -378,7 +378,7 @@ flowchart TD
 
     F["Your scraper"] -.->|"Skip the form"| C
 
-    style F fill:#e6ffe6
+    style F fill:#e6ffe6,color:#1f2328
 ```
 
 When you find an API behind a form, skip everything else and call the API directly:
@@ -424,9 +424,9 @@ flowchart TD
     C -->|"Yes"| D["Submit via requests.post"]
     C -->|"No"| E["Use Playwright"]
 
-    style B fill:#e6ffe6
-    style D fill:#e6f3ff
-    style E fill:#fff3e6
+    style B fill:#e6ffe6,color:#1f2328
+    style D fill:#e6f3ff,color:#1f2328
+    style E fill:#fff3e6,color:#1f2328
 ```
 
 Start by checking the Network tab in DevTools. If you see an API call, use that -- you get structured JSON instead of HTML, and pagination is usually a query parameter. If you see a standard form POST, replicate it with `requests`. Only reach for Playwright when the form has JavaScript-driven complexity that you cannot bypass. Once you have the raw HTML, an [LLM-based structured data extraction pipeline](/posts/best-llm-structured-data-extraction-html-2026/) can turn messy form results into clean, typed data automatically.

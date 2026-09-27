@@ -84,7 +84,7 @@ print(matches)  # ['admin'] - only matches the standalone word
 Regex provides predefined character classes for common patterns. These shortcuts make your patterns more readable and maintainable.
 
 ```mermaid
-graph TD
+graph LR
     A[Common Character Classes] --> B["\\d - Digits"]
     A --> C["\\w - Word Characters"]
     A --> D["\\s - Whitespace"]

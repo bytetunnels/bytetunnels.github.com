@@ -31,10 +31,10 @@ graph TD
     C --> D["Anti-bot probes<br>scan for inconsistency"]
     D --> E["Detected"]
 
-    style A fill:#ffcccc
-    style B fill:#ffcccc
-    style C fill:#ffcccc
-    style E fill:#ff9999
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style E fill:#ff9999,color:#1f2328
 ```
 
 ChromiumFish, where the disguise is compiled in below where the probes can reach:
@@ -45,9 +45,9 @@ graph TD
     G --> H["Anti-bot probes<br>find a coherent identity"]
     H --> I["Passes"]
 
-    style F fill:#ccffcc
-    style G fill:#ccffcc
-    style I fill:#99ff99
+    style F fill:#ccffcc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style I fill:#99ff99,color:#1f2328
 ```
 
 ## Pushing the Disguise Down Into Chromium

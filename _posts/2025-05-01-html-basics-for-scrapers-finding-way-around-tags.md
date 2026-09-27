@@ -34,11 +34,11 @@ graph TD
     B --> C[h2.product-title]
     B --> D[p.description]
     B --> E[span.price]
-    
+
     F[Attributes] --> G["class='product-container'"]
     F --> H["id='item-123'"]
     F --> I["data-price='29.99'"]
-    
+
     B -.-> F
 ```
 
@@ -72,16 +72,16 @@ In this structure, the `article` element is the parent of `header` and `div.cont
 graph TD
     A[article.blog-post] --> B[header]
     A --> C[div.content]
-    
+
     B --> D[h1]
     B --> E[div.meta]
-    
+
     E --> F[span.author]
     E --> G[time]
-    
+
     C --> H[p]
     C --> I[ul.tags]
-    
+
     I --> J[li: AI]
     I --> K[li: Machine Learning]
     I --> L[li: Python]
@@ -183,7 +183,7 @@ print("All salaries:", all_salaries)  # ['$75,000', '$65,000']
 - `//div[@class="item"]/following-sibling::div` - Next sibling elements
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[XPath Query]
     A --> B{Element Type}
 
@@ -195,7 +195,7 @@ flowchart TD
     G[Navigation]
     G --> H["Child: /child"]
     G --> I["Descendant: //descendant"]
-    G --> J["Following: /following-sibling"]
+    G --> J["Following:<br/>/following-sibling"]
     G --> K["Parent: /parent::*"]
 ```
 
@@ -369,7 +369,7 @@ products = tree.css('.product-item')
 The key is matching your tool choice to your specific needs. For learning and prototyping, BeautifulSoup's readable syntax wins. For production scrapers processing thousands of pages, lxml or selectolax provide the speed you need.
 
 ```mermaid
-graph TD
+graph LR
     A[HTML Parsing Need]
 
     A --> B{Document Size}

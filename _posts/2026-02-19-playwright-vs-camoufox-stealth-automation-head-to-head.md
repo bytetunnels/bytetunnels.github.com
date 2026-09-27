@@ -69,34 +69,34 @@ There is no stealth plugin to install, no init scripts to inject, and no propert
 Modern anti-bot systems operate across multiple detection layers. Each layer probes a different aspect of your browser, and failing any single layer is enough to get blocked or served a CAPTCHA.
 
 ```mermaid
-graph TD
+graph LR
     A["Detection Layer"] --> B["TLS Fingerprint"]
     A --> C["Automation Flags"]
     A --> D["JS API Probing"]
-    A --> E["Canvas / WebGL /<br>Font Fingerprints"]
+    A --> E["Canvas / WebGL /<br/>Font Fingerprints"]
     A --> F["Behavioral Analysis"]
 
-    B --- B1["Playwright: Real Chromium TLS<br>but identifiable as automated"]
-    B --- B2["Camoufox: Real Firefox TLS<br>matches legitimate installs"]
+    B --- B1["Playwright: Real<br/>Chromium TLS<br/>but identifiable as<br/>automated"]
+    B --- B2["Camoufox: Real Firefox<br/>TLS<br/>matches legitimate<br/>installs"]
 
-    C --- C1["Playwright: Sets webdriver flag<br>stealth plugin removes it"]
-    C --- C2["Camoufox: No automation<br>flags exist in the build"]
+    C --- C1["Playwright: Sets<br/>webdriver flag<br/>stealth plugin removes<br/>it"]
+    C --- C2["Camoufox: No automation<br/>flags exist in the build"]
 
-    D --- D1["Playwright: JS overrides<br>can be probed and discovered"]
-    D --- D2["Camoufox: Engine-level values<br>no overrides to discover"]
+    D --- D1["Playwright: JS overrides<br/>can be probed and<br/>discovered"]
+    D --- D2["Camoufox: Engine-level<br/>values<br/>no overrides to discover"]
 
-    E --- E1["Playwright: Hashes match<br>automated Chromium profile"]
-    E --- E2["Camoufox: Hashes match<br>legitimate Firefox profile"]
+    E --- E1["Playwright: Hashes match<br/>automated Chromium<br/>profile"]
+    E --- E2["Camoufox: Hashes match<br/>legitimate Firefox<br/>profile"]
 
-    F --- F1["Playwright: Requires manual<br>human-like scripting"]
-    F --- F2["Camoufox: Built-in<br>humanize mode"]
+    F --- F1["Playwright: Requires<br/>manual<br/>human-like scripting"]
+    F --- F2["Camoufox: Built-in<br/>humanize mode"]
 
-    style A fill:#e6e6e6
-    style B fill:#ffcccc
-    style C fill:#ffe0cc
-    style D fill:#ffffcc
-    style E fill:#ccffcc
-    style F fill:#cce5ff
+    style A fill:#e6e6e6,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffe0cc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#cce5ff,color:#1f2328
 ```
 
 The critical difference is depth. Playwright's stealth plugins operate at the JavaScript layer --- they override properties and intercept API calls. But the underlying browser engine is unmodified. Sophisticated detection systems can compare responses across multiple APIs and discover inconsistencies that JavaScript-level patches cannot fully mask.
@@ -222,14 +222,14 @@ graph TD
     W --> S1
     MF --> S2["Stealth browser<br>engine-level patches"]
 
-    style P fill:#cce5ff
-    style CF fill:#d4edda
-    style C fill:#e6e6e6
-    style FF fill:#e6e6e6
-    style W fill:#e6e6e6
-    style MF fill:#d4edda
-    style S1 fill:#ffe0cc
-    style S2 fill:#ccffcc
+    style P fill:#cce5ff,color:#1f2328
+    style CF fill:#d4edda,color:#1f2328
+    style C fill:#e6e6e6,color:#1f2328
+    style FF fill:#e6e6e6,color:#1f2328
+    style W fill:#e6e6e6,color:#1f2328
+    style MF fill:#d4edda,color:#1f2328
+    style S1 fill:#ffe0cc,color:#1f2328
+    style S2 fill:#ccffcc,color:#1f2328
 ```
 
 In practice, most stealth-critical automation runs on Chromium anyway, because Chrome is the most common browser on the web and blending in with real traffic means looking like Chrome. Camoufox bets on Firefox instead, which is less common but benefits from Firefox's stronger privacy defaults and a detection landscape that is less focused on Firefox fingerprints.
@@ -452,11 +452,11 @@ graph TD
     F -->|Yes| G["Consider [nodriver](/posts/nodriver-bot-detection-how-well-does-it-evade-fingerprinting/)<br>or other Chrome tools"]
     F -->|No| H["Use Camoufox"]
 
-    style A fill:#e6e6e6
-    style C fill:#cce5ff
-    style E fill:#cce5ff
-    style G fill:#ffffcc
-    style H fill:#d4edda
+    style A fill:#e6e6e6,color:#1f2328
+    style C fill:#cce5ff,color:#1f2328
+    style E fill:#cce5ff,color:#1f2328
+    style G fill:#ffffcc,color:#1f2328
+    style H fill:#d4edda,color:#1f2328
 ```
 
 **Choose Playwright when:**

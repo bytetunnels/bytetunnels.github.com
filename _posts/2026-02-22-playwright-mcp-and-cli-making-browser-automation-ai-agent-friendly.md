@@ -79,7 +79,7 @@ While MCP is powerful, it is verbose. Every interaction between the agent and th
 The `@playwright/cli` takes a different approach. Instead of exposing individual browser actions as tools, it provides higher-level commands that batch multiple operations together. The agent can describe a complete workflow in a single command rather than issuing step-by-step instructions.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph MCP["MCP Approach - 114K tokens"]
         A1["Navigate"] --> A2["Wait for load"]
         A2 --> A3["Take snapshot"]
@@ -91,11 +91,11 @@ flowchart TD
     end
 
     subgraph CLI["CLI Approach - 27K tokens"]
-        B1["Run workflow command"] --> B2["Receive structured result"]
+        B1["Run workflow command"] --> B2["Receive structured<br/>result"]
     end
 
-    style MCP fill:#ffcccc
-    style CLI fill:#ccffcc
+    style MCP fill:#ffcccc,color:#1f2328
+    style CLI fill:#ccffcc,color:#1f2328
 ```
 
 ```python
@@ -149,9 +149,9 @@ flowchart TD
     H --> F
     G -->|Yes| I["Stable Test Suite"]
 
-    style B fill:#ccccff
-    style D fill:#ccffcc
-    style F fill:#ffffcc
+    style B fill:#ccccff,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style F fill:#ffffcc,color:#1f2328
 ```
 
 ### The Planner

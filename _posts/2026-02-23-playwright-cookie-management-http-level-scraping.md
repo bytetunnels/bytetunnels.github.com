@@ -223,9 +223,9 @@ The practical pattern of combining cookie loading with a login fallback is shown
 Playwright provides a higher-level persistence mechanism that goes beyond cookies. The `context.storage_state()` method captures both cookies and localStorage origins in a single JSON structure. This is more complete than saving cookies alone because many modern web applications store authentication tokens, user preferences, or cached data in localStorage alongside their session cookies.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[context.storage_state] --> B[Cookies]
-    A --> C[localStorage Origins]
+    A --> C["localStorage<br/>Origins"]
     B --> D[Session cookies]
     B --> E[Auth tokens]
     B --> F[Tracking cookies]
@@ -363,13 +363,13 @@ The key detail at the end is re-saving the storage state after scraping. Many se
 Cookie scope catches people off guard when they inject cookies manually. The domain and path attributes determine which requests the cookie attaches to, and getting them wrong means your injected cookies silently fail to appear on the requests that need them.
 
 ```mermaid
-flowchart TD
-    A[Cookie: domain=.example.com<br>path=/] --> B[Sent to example.com/anything]
-    A --> C[Sent to api.example.com/anything]
-    A --> D[Sent to sub.example.com/anything]
+flowchart LR
+    A["Cookie:<br/>domain=.example.com<br/>path=/"] --> B["Sent to<br/>example.com/anything"]
+    A --> C["Sent to<br/>api.example.com/anything"]
+    A --> D["Sent to<br/>sub.example.com/anything"]
 
-    E[Cookie: domain=api.example.com<br>path=/v2] --> F[Sent to api.example.com/v2/users]
-    E --> G[Sent to api.example.com/v2/data]
+    E["Cookie:<br/>domain=api.example.com<br/>path=/v2"] --> F["Sent to<br/>api.example.com/v2/users"]
+    E --> G["Sent to<br/>api.example.com/v2/data"]
     E -.->|NOT sent| H[api.example.com/v1/users]
     E -.->|NOT sent| I[example.com/v2/users]
 ```

@@ -96,28 +96,28 @@ The same pattern applies in Selenium: use `driver.get_cookies()` to save and `dr
 Modern web applications increasingly use localStorage and sessionStorage for client-side state management. These storage mechanisms aren't automatically sent with HTTP requests like cookies, but they're crucial for maintaining application state.
 
 ```mermaid
-graph TB
+graph LR
     A[Web Application] --> B[Storage Types]
     B --> C[Cookies]
     B --> D[localStorage]
     B --> E[sessionStorage]
     B --> F[IndexedDB]
-    
-    C --> C1[Sent with every request]
+
+    C --> C1["Sent with every<br/>request"]
     C --> C2[Domain specific]
     C --> C3[Expiration dates]
-    
-    D --> D1[Persists until cleared]
-    D --> D2[Larger storage limit]
-    D --> D3[Not sent automatically]
-    
+
+    D --> D1["Persists until<br/>cleared"]
+    D --> D2["Larger storage<br/>limit"]
+    D --> D3["Not sent<br/>automatically"]
+
     E --> E1[Session only]
     E --> E2[Tab specific]
-    E --> E3[Cleared on tab close]
-    
-    F --> F1[Complex data structures]
+    E --> E3["Cleared on tab<br/>close"]
+
+    F --> F1["Complex data<br/>structures"]
     F --> F2[Async operations]
-    F --> F3[Large storage capacity]
+    F --> F3["Large storage<br/>capacity"]
 ```
 
 ### Accessing Browser Storage
@@ -344,19 +344,19 @@ async function scrapeWithSessionManagement() {
 For long-term session persistence, managing browser profiles and contexts becomes crucial. Our guide on [user session persistence and keeping logins alive in automation](/posts/user-session-persistence-keeping-logins-alive-automation/) dives deeper into these strategies.
 
 ```mermaid
-graph TD
+graph LR
     A[Browser Instance] --> B[Context 1]
     A --> C[Context 2]
     A --> D[Context N]
-    
+
     B --> B1[Session A]
     B --> B2[Cookies A]
     B --> B3[Storage A]
-    
+
     C --> C1[Session B]
     C --> C2[Cookies B]
     C --> C3[Storage B]
-    
+
     D --> D1[Session N]
     D --> D2[Cookies N]
     D --> D3[Storage N]

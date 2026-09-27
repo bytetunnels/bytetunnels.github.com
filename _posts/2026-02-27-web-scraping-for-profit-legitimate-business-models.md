@@ -456,29 +456,20 @@ These eight models exist on a spectrum from pure service to pure product. Unders
 ```mermaid
 graph TD
     subgraph Service["Service Models"]
-        A["Freelance Scraping<br>Projects"]
-        B["Managed Scraping<br>Service"]
-        C["Scraping Consulting<br>& Architecture"]
+        A["Freelance Scraping<br/>Projects"]
+        B["Managed Scraping<br/>Service"]
     end
 
     subgraph Hybrid["Hybrid Models"]
-        D["Research Data<br>Services"]
-        E["Scraping-as-a-Service<br>Platform"]
+        E["Scraping-as-a-Service<br/>Platform"]
     end
 
     subgraph Product["Product Models"]
-        F["Price Monitoring<br>SaaS"]
-        G["Lead Generation<br>Platform"]
-        H["Real Estate Data<br>Aggregation"]
-        I["Job Market<br>Analytics"]
-        J["Brand Monitoring<br>SaaS"]
-        K["Financial / Alternative<br>Data Feeds"]
+        G["Lead Generation<br/>Platform"]
     end
 
     A -->|"Productize<br>repeatable work"| B
     B -->|"Build self-serve<br>platform"| E
-    C -->|"Package expertise<br>into product"| F
-    D -->|"Automate delivery<br>and access"| I
     E -->|"Specialize in<br>a vertical"| G
 
     style Service fill:#1a2332,stroke:#3b82f6,color:#adbac7
@@ -486,7 +477,50 @@ graph TD
     style Product fill:#1a2332,stroke:#10b981,color:#adbac7
 ```
 
-**Service models** (left side) are easier to start, generate revenue faster, but scale linearly with your time. **Product models** (right side) take longer to build, require upfront investment, but scale independently of your time once established. **Hybrid models** sit in between, combining elements of both.
+```mermaid
+graph LR
+    subgraph Service["Service Models"]
+        C["Scraping Consulting<br>& Architecture"]
+    end
+
+    subgraph Product["Product Models"]
+        F["Price Monitoring<br/>SaaS"]
+    end
+
+    C -->|"Package expertise<br>into product"| F
+
+    style Service fill:#1a2332,stroke:#3b82f6,color:#adbac7
+    style Product fill:#1a2332,stroke:#10b981,color:#adbac7
+```
+
+```mermaid
+graph LR
+    subgraph Hybrid["Hybrid Models"]
+        D["Research Data<br/>Services"]
+    end
+
+    subgraph Product["Product Models"]
+        I["Job Market<br/>Analytics"]
+    end
+
+    D -->|"Automate delivery<br>and access"| I
+
+    style Hybrid fill:#1a2332,stroke:#f59e0b,color:#adbac7
+    style Product fill:#1a2332,stroke:#10b981,color:#adbac7
+```
+
+```mermaid
+graph TD
+    subgraph Product["Product Models"]
+        H["Real Estate Data<br/>Aggregation"]
+        J["Brand Monitoring<br/>SaaS"]
+        K["Financial /<br/>Alternative Data<br/>Feeds"]
+    end
+
+    style Product fill:#1a2332,stroke:#10b981,color:#adbac7
+```
+
+**Service models** are easier to start, generate revenue faster, but scale linearly with your time. **Product models** take longer to build, require upfront investment, but scale independently of your time once established. **Hybrid models** sit in between, combining elements of both.
 
 The common progression is: start with services to learn the market, identify a repeatable data need, then productize it. Many successful scraping businesses followed exactly this path.
 

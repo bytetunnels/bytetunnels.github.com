@@ -21,13 +21,13 @@ Crawl4AI is an open-source Python library designed specifically for turning webs
 It sits in a distinct niche between general-purpose frameworks like Scrapy (which give you maximum control but require you to handle output formatting yourself -- see the [mega comparison of Playwright, Puppeteer, Selenium, and Scrapy](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/)) and commercial services like Firecrawl (which offer convenience but at a cost and with less transparency).
 
 ```mermaid
-graph TD
-    A["Crawl4AI v0.8 Architecture"] --> B["URL Discovery Engine"]
+graph LR
+    A["Crawl4AI v0.8<br/>Architecture"] --> B["URL Discovery Engine"]
     A --> C["Browser Automation Layer"]
-    A --> D["Content Extraction Pipeline"]
+    A --> D["Content Extraction<br/>Pipeline"]
     A --> E["Crash Recovery System"]
 
-    B --> B1["Prefetch Mode - New in v0.8"]
+    B --> B1["Prefetch Mode - New in<br/>v0.8"]
     B --> B2["Sitemap Parser"]
     B --> B3["Link Follower"]
 
@@ -35,8 +35,8 @@ graph TD
     C --> C2["Headless Chrome"]
 
     D --> D1["Markdown Generator"]
-    D --> D2["Structured Data Extractor"]
-    D --> D3["Pattern Learning Engine - New in v0.8"]
+    D --> D2["Structured Data<br/>Extractor"]
+    D --> D3["Pattern Learning Engine<br/>- New in v0.8"]
 
     E --> E1["State Snapshots"]
     E --> E2["Resume Manager"]
@@ -310,20 +310,26 @@ If you are running Crawl4AI in production, upgrading the Docker image to v0.8 sh
 The AI crawling space is evolving rapidly. The following comparison shows how Crawl4AI fits alongside the main alternatives.
 
 ```mermaid
-graph TD
-    A["Traditional Approach"] --> A1["Scrapy / BeautifulSoup"]
+graph LR
+    A["Traditional<br/>Approach"] --> A1["Scrapy /<br/>BeautifulSoup"]
     A1 --> A2["Manual parsing"]
     A1 --> A3["Custom pipelines"]
-    A1 --> A4["No LLM optimization"]
+    A1 --> A4["No LLM<br/>optimization"]
+```
 
-    B["AI-Optimized Open Source"] --> B1["Crawl4AI"]
-    B1 --> B2["Auto markdown output"]
+```mermaid
+graph LR
+    B["AI-Optimized Open<br/>Source"] --> B1["Crawl4AI"]
+    B1 --> B2["Auto markdown<br/>output"]
     B1 --> B3["Crash recovery"]
     B1 --> B4["Pattern learning"]
+```
 
-    C["AI-Optimized Commercial"] --> C1["Firecrawl"]
+```mermaid
+graph LR
+    C["AI-Optimized<br/>Commercial"] --> C1["Firecrawl"]
     C1 --> C2["TypeScript-based"]
-    C1 --> C3["Managed infrastructure"]
+    C1 --> C3["Managed<br/>infrastructure"]
     C1 --> C4["Pay per page"]
 ```
 

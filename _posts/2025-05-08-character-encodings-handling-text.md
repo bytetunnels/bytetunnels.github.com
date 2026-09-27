@@ -30,8 +30,8 @@ graph TD
 
     G["Text: Café"] --> H[ASCII Encoding]
     H --> I["Error: Character é not in ASCII"]
-    
-    style I fill:#ffcccc
+
+    style I fill:#ffcccc,color:#1f2328
 ```
 
 UTF-8 emerged as the solution to ASCII's limitations. It's a variable-length encoding that can represent every character in the Unicode standard while maintaining backward compatibility with ASCII. This means the first 128 characters in UTF-8 are identical to ASCII, but it can also handle over a million additional codepoints, covering virtually every writing system on Earth.
@@ -62,8 +62,8 @@ flowchart TD
     I -->|Yes| J[Clean Text]
     I -->|No| K[Garbled Text]
 
-    style K fill:#ffcccc
-    style J fill:#ccffcc
+    style K fill:#ffcccc,color:#1f2328
+    style J fill:#ccffcc,color:#1f2328
 ```
 
 ## Common Encoding Challenges and Solutions
@@ -220,22 +220,22 @@ Different regions and industries tend to use specific encodings. E-commerce site
 ```mermaid
 graph TB
     A[Website Source] --> B{Region/Language}
-    
+
     B --> C[Western Europe]
     B --> D[East Asia]
     B --> E[Eastern Europe]
     B --> F[Modern Sites]
-    
+
     C --> G[ISO-8859-1<br/>Windows-1252<br/>UTF-8]
     D --> H[UTF-8<br/>Shift_JIS<br/>GB2312<br/>EUC-KR]
     E --> I[UTF-8<br/>Windows-1251<br/>ISO-8859-2]
     F --> J[UTF-8<br/>Primary Choice]
-    
+
     G --> K[Detection Strategy]
     H --> K
     I --> K
     J --> K
-    
+
     K --> L[Header Check]
     K --> M[Meta Tag Check]
     K --> N[Auto Detection]

@@ -277,7 +277,7 @@ class APIScraper:
 The choice between static and dynamic scraping approaches has significant [performance implications](/posts/python-requests-vs-selenium-speed-performance-comparison/) that extend beyond simple execution time.
 
 ```mermaid
-graph TD
+graph LR
     A[Performance Factors]
 
     A --> B[Resource Usage]

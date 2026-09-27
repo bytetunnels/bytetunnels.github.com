@@ -122,19 +122,21 @@ The architectural difference between the two approaches is significant. BS4 plus
 ```mermaid
 graph TD
     subgraph BS4["BeautifulSoup + requests"]
+        direction TB
         A1["Python Script"] -->|"HTTP GET"| A2["Web Server"]
         A2 -->|"Raw HTML<br>response"| A3["requests library"]
-        A3 -->|"HTML string"| A4["BeautifulSoup<br>parser"]
+        A3 -->|"HTML string"| A4["BeautifulSoup<br/>parser"]
         A4 -->|"Parse tree"| A5["Search &<br>extract data"]
     end
 
-    style A1 fill:#ddffdd
-    style A4 fill:#ddffdd
+    style A1 fill:#ddffdd,color:#1f2328
+    style A4 fill:#ddffdd,color:#1f2328
 ```
 
 ```mermaid
 graph TD
     subgraph SEL["Selenium WebDriver"]
+        direction TB
         B1["Python Script"] -->|"Command"| B2["ChromeDriver"]
         B2 -->|"Launch &<br>navigate"| B3["Chrome Browser"]
         B3 -->|"HTTP GET"| B4["Web Server"]
@@ -144,7 +146,7 @@ graph TD
         B2 -->|"Element data"| B1
     end
 
-    style B3 fill:#ffdddd
+    style B3 fill:#ffdddd,color:#1f2328
 ```
 
 With BS4, you get the HTML and parse it yourself. With Selenium, a full browser does everything a human user's browser would do, and then you query the result. The tradeoff is clear: BS4 is fast and lean but limited to what the server sends. Selenium is slow and heavy but sees the page exactly as a human browser would.
@@ -489,11 +491,11 @@ graph TD
     K -->|"Yes"| L["Combine: Selenium<br>renders, BS4 parses"]
     K -->|"No"| M["Use Selenium<br>find_elements"]
 
-    style F fill:#ddffdd
-    style I fill:#ddffdd
-    style J fill:#ddffdd
-    style H fill:#ffdddd
-    style L fill:#ffffdd
+    style F fill:#ddffdd,color:#1f2328
+    style I fill:#ddffdd,color:#1f2328
+    style J fill:#ddffdd,color:#1f2328
+    style H fill:#ffdddd,color:#1f2328
+    style L fill:#ffffdd,color:#1f2328
 ```
 
 The key question is always: **is the data in the initial HTML response?** You can check this by right-clicking a page and selecting "View Page Source" in your browser. If the data appears there, BS4 can handle it. If the data only appears when you use "Inspect Element" (which shows the live DOM after JavaScript has run), you need a browser-based tool.

@@ -23,27 +23,29 @@ Nodriver says: don't touch the browser at all. Instead, remove every intermediar
 ```mermaid
 graph TD
     subgraph "Camoufox Architecture"
+        direction TB
         A["Python Script"] -->|"Playwright API"| B["Camoufox Launcher"]
-        B -->|"Starts custom build"| C["Modified Firefox<br>(C++ engine patches)"]
+        B -->|"Starts custom build"| C["Modified Firefox<br/>(C++ engine patches)"]
         C -->|"Spoofed fingerprints<br>from engine level"| D["Target Website"]
     end
 
-    style A fill:#cce5ff
-    style B fill:#cce5ff
-    style C fill:#cce5ff
-    style D fill:#f0f0f0
+    style A fill:#cce5ff,color:#1f2328
+    style B fill:#cce5ff,color:#1f2328
+    style C fill:#cce5ff,color:#1f2328
+    style D fill:#f0f0f0,color:#1f2328
 ```
 
 ```mermaid
 graph TD
     subgraph "Nodriver Architecture"
+        direction TB
         E["Python Script"] -->|"Direct CDP<br>(WebSocket)"| F["Unmodified Chrome"]
         F -->|"Clean browser<br>no automation flags"| G["Target Website"]
     end
 
-    style E fill:#d4edda
-    style F fill:#d4edda
-    style G fill:#f0f0f0
+    style E fill:#d4edda,color:#1f2328
+    style F fill:#d4edda,color:#1f2328
+    style G fill:#f0f0f0,color:#1f2328
 ```
 
 These are not just implementation details. They determine which detection layers each tool can defeat, what browser engine you are locked into, and how much setup is required.
@@ -65,11 +67,11 @@ graph TD
     D -.- I["Camoufox: engine-level<br>fingerprint spoofing"]
     E -.- J["Camoufox: humanize mode<br>Nodriver: manual scripting"]
 
-    style A fill:#ffcccc
-    style B fill:#ffe0cc
-    style C fill:#ffffcc
-    style D fill:#ccffcc
-    style E fill:#cce5ff
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffe0cc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#cce5ff,color:#1f2328
 ```
 
 ### Where Camoufox Goes Deeper
@@ -358,8 +360,8 @@ graph TD
     E -->|"Basic: WebDriver checks<br>automation flags"| D
     E -->|"Advanced: Canvas, WebGL<br>cross-referencing"| C
 
-    style C fill:#cce5ff
-    style D fill:#d4edda
+    style C fill:#cce5ff,color:#1f2328
+    style D fill:#d4edda,color:#1f2328
 ```
 
 | Feature | Camoufox | Nodriver |

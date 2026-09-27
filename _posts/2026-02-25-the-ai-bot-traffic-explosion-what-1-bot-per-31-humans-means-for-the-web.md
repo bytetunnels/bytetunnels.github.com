@@ -24,10 +24,10 @@ flowchart TD
     B --> C["Q3 2025: 1 bot per 65 humans"]
     C --> D["Q4 2025: 1 bot per 31 humans"]
 
-    style A fill:#ccffcc
-    style B fill:#ffffcc
-    style C fill:#ffddcc
-    style D fill:#ffcccc
+    style A fill:#ccffcc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style C fill:#ffddcc,color:#1f2328
+    style D fill:#ffcccc,color:#1f2328
 ```
 
 Several forces converged to create this acceleration. The biggest driver was the widespread adoption of retrieval-augmented generation by AI applications. RAG systems -- often powered by tools like [Crawl4AI](/posts/crawl4ai-v08-crash-recovery-prefetch-mode-and-whats-new/) and [LLM-based extraction pipelines](/posts/best-llm-structured-data-extraction-html-2026/) -- need fresh, real-time data from the web to ground their responses. Unlike training data collection, which happens in batches and can be scheduled for off-peak hours, RAG queries hit websites continuously throughout the day as end users interact with AI products.
@@ -37,24 +37,24 @@ RAG bot traffic increased roughly 33% over the course of 2025, while training-or
 ```mermaid
 flowchart TD
     subgraph TR["Training Scrapes - Down 15%"]
-        A1["Bulk crawl entire domains"]
-        A2["Run during off-peak hours"]
+        A1["Bulk crawl entire<br/>domains"]
+        A2["Run during off-peak<br/>hours"]
         A3["Store in training corpus"]
-        A4["Retrain models periodically"]
+        A4["Retrain models<br/>periodically"]
     end
 
     subgraph RAG["RAG Queries - Up 33%"]
         B1["User asks AI a question"]
-        B2["AI fetches relevant pages in real time"]
-        B3["AI synthesizes answer from fresh data"]
-        B4["Continuous traffic throughout the day"]
+        B2["AI fetches relevant<br/>pages in real time"]
+        B3["AI synthesizes answer<br/>from fresh data"]
+        B4["Continuous traffic<br/>throughout the day"]
     end
 
-    TR --> C["Declining share of total bot traffic"]
-    RAG --> D["Growing share of total bot traffic"]
+    TR --> C["Declining share of total<br/>bot traffic"]
+    RAG --> D["Growing share of total<br/>bot traffic"]
 
-    style TR fill:#ffcccc
-    style RAG fill:#ccffcc
+    style TR fill:#ffcccc,color:#1f2328
+    style RAG fill:#ccffcc,color:#1f2328
 ```
 
 ## The Infrastructure Cost Squeeze
@@ -73,20 +73,20 @@ Anti-bot protections are also driving costs upward. As sites deploy more sophist
 
 ```mermaid
 flowchart TD
-    A["Proxy Price Per Unit: Falling"] --> B["But Volume: Rising Sharply"]
-    B --> C["Total Proxy Spend: Up 58.3%"]
+    A["Proxy Price Per Unit:<br/>Falling"] --> B["But Volume: Rising<br/>Sharply"]
+    B --> C["Total Proxy Spend: Up<br/>58.3%"]
 
-    D["Anti-Bot Sophistication: Rising"] --> E["Need Higher-Quality Proxies"]
-    E --> F["Need More Frequent Rotation"]
+    D["Anti-Bot Sophistication:<br/>Rising"] --> E["Need Higher-Quality<br/>Proxies"]
+    E --> F["Need More Frequent<br/>Rotation"]
     F --> C
 
-    G["RAG Traffic: Always-On Demand"] --> H["Cannot Schedule Off-Peak"]
+    G["RAG Traffic: Always-On<br/>Demand"] --> H["Cannot Schedule Off-Peak"]
     H --> C
 
-    style A fill:#ccffcc
-    style B fill:#ffcccc
-    style C fill:#ffcccc
-    style D fill:#ffcccc
+    style A fill:#ccffcc,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style D fill:#ffcccc,color:#1f2328
 ```
 
 ## The Funding Picture

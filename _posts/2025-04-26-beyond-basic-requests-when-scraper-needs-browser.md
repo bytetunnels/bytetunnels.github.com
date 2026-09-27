@@ -27,12 +27,12 @@ graph TD
     E --> F[API Calls Made]
     F --> G[DOM Manipulation]
     G --> H[Dynamic Content Appears]
-    
+
     I[Basic Scraper] --> B
     J[Browser Automation] --> H
-    
-    style I fill:#ffcccc
-    style J fill:#ccffcc
+
+    style I fill:#ffcccc,color:#1f2328
+    style J fill:#ccffcc,color:#1f2328
 ```
 
 Traditional scrapers using libraries like `requests` stop at the initial HTML load. The [speed and performance gap between Python requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) helps illustrate why this trade-off matters. They receive whatever the server sends in the first response, which often contains little more than JavaScript loading scripts and empty containers. Browser automation, however, waits for the entire page lifecycle to complete, including JavaScript execution and dynamic content generation.
@@ -72,7 +72,7 @@ Some content only appears after specific user actions—clicking buttons, scroll
 Browser automation tools control real web browsers programmatically, giving you access to the full rendering engine that processes JavaScript, handles cookies, manages sessions, and executes all the complex behaviors modern websites expect.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph BS["Basic Scraping"]
         A1[HTTP Request]
         A2[Raw HTML]
@@ -95,8 +95,8 @@ flowchart TD
         B5 --> B6
     end
 
-    style A3 fill:#ffcccc
-    style B6 fill:#ccffcc
+    style A3 fill:#ffcccc,color:#1f2328
+    style B6 fill:#ccffcc,color:#1f2328
 ```
 
 ## Popular Browser Automation Tools
@@ -175,26 +175,26 @@ const puppeteer = require('puppeteer');
 Browser automation comes with significant overhead compared to basic HTTP requests. Understanding these trade-offs helps you make informed decisions about when to use each approach.
 
 ```mermaid
-graph TD
+graph LR
     M[Performance Comparison]
 
     M --> BR[Basic Requests]
     M --> BA[Browser Automation]
 
     BR --> A1[Speed: Very Fast]
-    BR --> B1[Resource Usage: Low Memory]
+    BR --> B1["Resource Usage: Low<br/>Memory"]
     BR --> C1[Complexity: Simple]
     BR --> D1[Reliability: Limited]
 
     BA --> A2[Speed: Slower]
-    BA --> B2[Resource Usage: High Memory]
+    BA --> B2["Resource Usage: High<br/>Memory"]
     BA --> C2[Complexity: Complex]
     BA --> D2[Reliability: High]
 
-    style A1 fill:#ccffcc
-    style B1 fill:#ccffcc
-    style C1 fill:#ccffcc
-    style D2 fill:#ccffcc
+    style A1 fill:#ccffcc,color:#1f2328
+    style B1 fill:#ccffcc,color:#1f2328
+    style C1 fill:#ccffcc,color:#1f2328
+    style D2 fill:#ccffcc,color:#1f2328
 ```
 
 ### Speed Comparison

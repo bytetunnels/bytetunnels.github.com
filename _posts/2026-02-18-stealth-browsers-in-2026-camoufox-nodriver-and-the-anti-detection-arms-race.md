@@ -31,11 +31,11 @@ graph TD
     D -->|Any layer fails| E["Blocked or CAPTCHA"]
     D -->|All layers pass| F["Request allowed"]
 
-    style A fill:#ffcccc
-    style B fill:#ffffcc
-    style C fill:#ccffcc
-    style E fill:#ff9999
-    style F fill:#99ff99
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style E fill:#ff9999,color:#1f2328
+    style F fill:#99ff99,color:#1f2328
 ```
 
 ### HTTP Layer
@@ -296,30 +296,40 @@ Each framework attacks the detection problem at a different level. For a [broade
 ```mermaid
 graph TD
     subgraph CF["Camoufox"]
-        A1["Engine-level C++ modifications"]
+        A1["Engine-level C++<br/>modifications"]
         A2["Custom Firefox build"]
-        A3["0% detection on test suites"]
+        A3["0% detection on test<br/>suites"]
     end
 
+    CF --> D["Deepest stealth, Firefox<br/>only"]
+
+    style A1 fill:#ccffcc,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph ND["Nodriver"]
         B1["Raw CDP communication"]
         B2["No WebDriver artifacts"]
         B3["Async Python API"]
     end
 
+    ND --> E["Strong stealth, Chrome,<br/>Python only"]
+
+    style B1 fill:#ccccff,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph SB["SeleniumBase UC Mode"]
         C1["ChromeDriver patches"]
         C2["Familiar Selenium API"]
         C3["Drop-in stealth upgrade"]
     end
 
-    CF --> D["Deepest stealth, Firefox only"]
-    ND --> E["Strong stealth, Chrome, Python only"]
-    SB --> F["Good stealth, easiest migration"]
+    SB --> F["Good stealth, easiest<br/>migration"]
 
-    style A1 fill:#ccffcc
-    style B1 fill:#ccccff
-    style C1 fill:#ffffcc
+    style C1 fill:#ffffcc,color:#1f2328
 ```
 
 On detection evasion depth, Camoufox operates at the deepest level by modifying the browser engine itself. Nodriver works at the protocol level, avoiding automation artifacts entirely. SeleniumBase UC Mode works at the application level, patching over detectable markers.
@@ -342,24 +352,24 @@ The decision often comes down to your threat model and existing codebase. Teams 
 
 ```mermaid
 graph TD
-    A["Need stealth browser automation?"] --> B{"Existing Selenium codebase?"}
+    A["Need stealth browser<br/>automation?"] --> B{"Existing Selenium<br/>codebase?"}
     B -->|Yes| C{"Sites heavily protected?"}
     C -->|No| D["SeleniumBase UC Mode"]
     C -->|Yes| E{"Willing to rewrite?"}
     E -->|No| D
-    E -->|Yes| F{"Need Chrome specifically?"}
+    E -->|Yes| F{"Need Chrome<br/>specifically?"}
     B -->|No| F
     F -->|Yes| G["Nodriver"]
     F -->|No| H{"Maximum stealth needed?"}
     H -->|Yes| I["Camoufox"]
     H -->|No| J{"Python or JavaScript?"}
     J -->|Python| G
-    J -->|JavaScript| K["Playwright with stealth patches"]
+    J -->|JavaScript| K["Playwright with stealth<br/>patches"]
 
-    style D fill:#ffffcc
-    style G fill:#ccccff
-    style I fill:#ccffcc
-    style K fill:#ffccff
+    style D fill:#ffffcc,color:#1f2328
+    style G fill:#ccccff,color:#1f2328
+    style I fill:#ccffcc,color:#1f2328
+    style K fill:#ffccff,color:#1f2328
 ```
 
 ## The Fingerprint Verification Test

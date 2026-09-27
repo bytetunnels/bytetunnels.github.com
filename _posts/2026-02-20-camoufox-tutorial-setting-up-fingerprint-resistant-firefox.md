@@ -21,29 +21,31 @@ Camoufox ships a custom-compiled Firefox binary where the fingerprint-producing 
 ```mermaid
 graph TD
     subgraph "Patch Approach"
-        A["Stock Browser"] --> B["JS Patches<br>(stealth plugins)"]
-        B --> C["Modified Surface<br>(detectable gaps)"]
-        C --> D["Anti-Bot Probes<br>for inconsistencies"]
+        direction TB
+        A["Stock Browser"] --> B["JS Patches<br/>(stealth plugins)"]
+        B --> C["Modified Surface<br/>(detectable gaps)"]
+        C --> D["Anti-Bot Probes<br/>for inconsistencies"]
         D --> E["Detected"]
     end
 
-    style A fill:#ffcccc
-    style B fill:#ffcccc
-    style C fill:#ffcccc
-    style E fill:#ff9999
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style E fill:#ff9999,color:#1f2328
 ```
 
 ```mermaid
 graph TD
     subgraph "Camoufox Approach"
-        F["Custom Firefox Build<br>(C++ engine changes)"] --> G["Native Fingerprints<br>(no JS shim layer)"]
-        G --> H["Anti-Bot Probes<br>find consistent data"]
+        direction TB
+        F["Custom Firefox Build<br/>(C++ engine changes)"] --> G["Native Fingerprints<br/>(no JS shim layer)"]
+        G --> H["Anti-Bot Probes<br/>find consistent data"]
         H --> I["Passes"]
     end
 
-    style F fill:#ccffcc
-    style G fill:#ccffcc
-    style I fill:#99ff99
+    style F fill:#ccffcc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style I fill:#99ff99,color:#1f2328
 ```
 
 The canvas hash, WebGL renderer string, and font metrics all come from the same modified engine, so cross-referencing them produces a consistent profile that passes checks which trip up JavaScript-based stealth solutions. For a direct comparison of the two approaches, see [Camoufox vs Selenium anti-detection approaches compared](/posts/camoufox-vs-selenium-anti-detection-approaches-compared/).
@@ -384,14 +386,14 @@ graph TD
     G -->|"Yes"| H["Content Served"]
     G -->|"No"| I["Blocked / CAPTCHA"]
 
-    style A fill:#cce5ff
-    style B fill:#cce5ff
-    style C fill:#cce5ff
-    style D fill:#d4edda
-    style E fill:#f0f0f0
-    style F fill:#f0f0f0
-    style H fill:#99ff99
-    style I fill:#ff9999
+    style A fill:#cce5ff,color:#1f2328
+    style B fill:#cce5ff,color:#1f2328
+    style C fill:#cce5ff,color:#1f2328
+    style D fill:#d4edda,color:#1f2328
+    style E fill:#f0f0f0,color:#1f2328
+    style F fill:#f0f0f0,color:#1f2328
+    style H fill:#99ff99,color:#1f2328
+    style I fill:#ff9999,color:#1f2328
 ```
 
 Each layer contributes to stealth: the Camoufox library configures fingerprint parameters, the custom Firefox build produces consistent fingerprints from native code, the TLS handshake uses Firefox's legitimate JA3/JA4 fingerprint, and the optional proxy routes traffic through a clean IP with locale matching. These layers reflect the broader [evolution of web scraping detection methods](/posts/evolution-web-scraping-detection-methods-timeline/) that have driven the need for engine-level stealth.

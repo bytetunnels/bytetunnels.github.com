@@ -22,19 +22,22 @@ That model is breaking down under the pressure of AI training at scale. When a l
 
 ```mermaid
 graph TD
-    A["The Old Model"] --> A1["Scrape public data freely"]
+    A["The Old Model"] --> A1["Scrape public data<br/>freely"]
     A1 --> A2["Parse and extract"]
     A2 --> A3["Store in database"]
     A3 --> A4["Use for any purpose"]
+```
 
-    B["The Emerging Model"] --> B1["Check licensing requirements"]
+```mermaid
+graph TD
+    B["The Emerging Model"] --> B1["Check licensing<br/>requirements"]
     B1 --> B2{"License available?"}
-    B2 -->|Yes| B3["Negotiate terms and pay"]
-    B2 -->|No| B4{"Data publicly scrapable?"}
-    B3 --> B5["Use within license terms"]
-    B4 -->|Yes| B6["Scrape with compliance checks"]
-    B4 -->|No| B7["Find alternative source"]
-    B6 --> B8["Respect usage restrictions"]
+    B2 -->|Yes| B3["Negotiate terms<br/>and pay"]
+    B2 -->|No| B4{"Data publicly<br/>scrapable?"}
+    B3 --> B5["Use within license<br/>terms"]
+    B4 -->|Yes| B6["Scrape with compliance<br/>checks"]
+    B4 -->|No| B7["Find alternative<br/>source"]
+    B6 --> B8["Respect usage<br/>restrictions"]
 ```
 
 ## The Legal Cases That Got Us Here
@@ -256,18 +259,18 @@ Putting all of this together, the following pattern shows how to build scrapers 
 ```mermaid
 flowchart TD
     A["Target URL"] --> B["Run compliance check"]
-    B --> C{"robots.txt allows access?"}
+    B --> C{"robots.txt allows<br/>access?"}
     C -->|No| D["Skip URL - Log reason"]
     C -->|Yes| E{"AI preference headers?"}
     E -->|Opt-out found| F["Skip for AI training"]
-    E -->|License required| G["Check marketplace for license"]
+    E -->|License required| G["Check marketplace for<br/>license"]
     E -->|No restrictions| H["Proceed with scraping"]
     G --> I{"License available?"}
-    I -->|Yes| J["Acquire license and fetch"]
+    I -->|Yes| J["Acquire license and<br/>fetch"]
     I -->|No| K["Log and skip"]
     H --> L["Fetch with rate limiting"]
     J --> L
-    L --> M["Extract and store with provenance"]
+    L --> M["Extract and store with<br/>provenance"]
     F --> D
 ```
 

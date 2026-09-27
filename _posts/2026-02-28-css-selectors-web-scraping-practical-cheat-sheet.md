@@ -1,4 +1,5 @@
 ---
+mermaid: true
 title: "CSS Selectors for Web Scraping: A Practical Cheat Sheet"
 date: 2026-02-28 12:00:00 +0000
 categories: ["Data Extraction"]

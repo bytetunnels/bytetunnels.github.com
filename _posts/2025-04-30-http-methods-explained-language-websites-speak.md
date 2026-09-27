@@ -181,16 +181,16 @@ print(f"Allowed methods: {allowed_methods}")
 ## Method Selection in Web Scraping Context
 
 ```mermaid
-flowchart TD
-    A[Web Scraping Task]
-    A --> B{"What's the Goal?"}
+flowchart LR
+    A["Web Scraping<br/>Task"]
+    A --> B{"What's the<br/>Goal?"}
 
     B -->|Fetch Data| C[Use GET]
     B -->|Submit Form| D[Use POST]
-    B -->|Check Availability| E[Use HEAD]
+    B -->|"Check<br/>Availability"| E[Use HEAD]
     B -->|Update Data| F[Use PUT/PATCH]
     B -->|Remove Data| G[Use DELETE]
-    B -->|Check Permissions| H[Use OPTIONS]
+    B -->|"Check<br/>Permissions"| H[Use OPTIONS]
 
     C --> I[Webpage Content<br/>API Responses<br/>File Downloads]
     D --> J[Login Forms<br/>Search Queries<br/>Data Submission]

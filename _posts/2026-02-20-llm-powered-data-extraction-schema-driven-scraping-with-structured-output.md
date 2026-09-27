@@ -30,11 +30,11 @@ graph TD
     E -->|No| G["Retry with error context"]
     G --> C
 
-    style A fill:#ffcccc
-    style B fill:#ffffcc
-    style C fill:#ccccff
-    style D fill:#ccffcc
-    style F fill:#99ff99
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style C fill:#ccccff,color:#1f2328
+    style D fill:#ccffcc,color:#1f2328
+    style F fill:#99ff99,color:#1f2328
 ```
 
 First, fetch the raw HTML. This can be a [simple HTTP request](/posts/python-requests-vs-selenium-speed-performance-comparison/) for static pages or a browser render using [Playwright or Puppeteer](/posts/playwright-vs-puppeteer-speed-stealth-developer-experience/) for JavaScript-heavy sites. Then preprocess by stripping out navigation, ads, scripts, and other noise. This step matters for controlling costs, since every token sent to an LLM costs money. Next, send the cleaned content along with your schema to the LLM. The model returns structured data that conforms to your schema. Finally, validate the output against the schema. If fields are missing or types are wrong, retry with the validation error included in the prompt so the model can self-correct.
@@ -201,10 +201,10 @@ graph TD
     A --> H["Cost: ~$0.10 per page"]
     G --> I["Cost: ~$0.002 per page"]
 
-    style A fill:#ffcccc
-    style G fill:#ccffcc
-    style H fill:#ff9999
-    style I fill:#99ff99
+    style A fill:#ffcccc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style H fill:#ff9999,color:#1f2328
+    style I fill:#99ff99,color:#1f2328
 ```
 
 A practical DOM pruning implementation:
@@ -323,30 +323,40 @@ The schema-driven pattern can be implemented several ways, from raw API calls to
 ```mermaid
 graph TD
     subgraph DA["Direct API Calls"]
-        A1["Full control over prompts"]
+        A1["Full control over<br/>prompts"]
         A2["Lowest per-call cost"]
         A3["Most code to maintain"]
     end
 
+    DA --> D["Best for: custom<br/>pipelines,<br/>cost-sensitive at scale"]
+
+    style A1 fill:#ccccff,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph LB["Libraries: LLM Scraper, ScrapeGraphAI"]
-        B1["Schema-driven out of the box"]
+        B1["Schema-driven out of the<br/>box"]
         B2["Built-in DOM handling"]
         B3["Community maintained"]
     end
 
+    LB --> E["Best for: rapid<br/>prototyping, standard<br/>extraction tasks"]
+
+    style B1 fill:#ccffcc,color:#1f2328
+```
+
+```mermaid
+graph TD
     subgraph MS["Managed Services: Firecrawl, Bright Data"]
         C1["Minimal code required"]
-        C2["Built-in proxy and rendering"]
+        C2["Built-in proxy and<br/>rendering"]
         C3["Highest per-page cost"]
     end
 
-    DA --> D["Best for: custom pipelines, cost-sensitive at scale"]
-    LB --> E["Best for: rapid prototyping, standard extraction tasks"]
-    MS --> F["Best for: teams without scraping infrastructure"]
+    MS --> F["Best for: teams without<br/>scraping infrastructure"]
 
-    style A1 fill:#ccccff
-    style B1 fill:#ccffcc
-    style C1 fill:#ffffcc
+    style C1 fill:#ffffcc,color:#1f2328
 ```
 
 Direct API calls give you the most flexibility. You control the prompt, the model, the preprocessing, and the retry logic. This is the best option for production systems where you need to optimize cost and handle edge cases specific to your target sites.

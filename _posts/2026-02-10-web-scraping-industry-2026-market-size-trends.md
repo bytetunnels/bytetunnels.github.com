@@ -28,8 +28,8 @@ Several data points help frame the scale:
 The growth is being driven by several converging forces: the explosion of AI training data demand, the shift toward real-time data for retrieval-augmented generation, increasing e-commerce competition requiring continuous price and product monitoring, and financial services firms that consume alternative data feeds at scale.
 
 ```mermaid
-flowchart TD
-    A["Web Scraping Industry<br>~$8-12B Total Market (2026)"] --> B["Proxy Services<br>~$4.2B"]
+flowchart LR
+    A["Web Scraping Industry<br/>~$8-12B Total Market<br/>(2026)"] --> B["Proxy Services<br/>~$4.2B"]
     A --> C["Scraping Tools &<br>Platforms ~$3.8B"]
     A --> D["Anti-Bot &<br>Detection ~$2-3B"]
     A --> E["Data Marketplaces<br>& DaaS ~$1-2B"]
@@ -55,8 +55,8 @@ flowchart TD
     E --> E4["Content Licensing"]
 
     style A fill:#4a90d9,color:#fff
-    style B fill:#66bb6a
-    style C fill:#ffa726
+    style B fill:#66bb6a,color:#1f2328
+    style C fill:#ffa726,color:#1f2328
     style D fill:#ef5350,color:#fff
     style E fill:#ab47bc,color:#fff
 ```
@@ -89,21 +89,21 @@ These platforms typically charge per API call or per successful data delivery, w
 Proxy infrastructure is the backbone of commercial web scraping. Without proxies, scrapers get IP-banned quickly. The proxy market has become increasingly sophisticated, with providers offering residential, datacenter, mobile, and ISP proxy types.
 
 ```mermaid
-flowchart TD
-    A["Proxy Types"] --> B["Datacenter Proxies<br>Fast, cheap, easily detected"]
-    A --> C["Residential Proxies<br>Real user IPs, harder to detect"]
-    A --> D["Mobile Proxies<br>Cellular network IPs,<br>highest trust"]
-    A --> E["ISP Proxies<br>Datacenter-hosted but<br>ISP-registered"]
+flowchart LR
+    A["Proxy Types"] --> B["Datacenter Proxies<br/>Fast, cheap, easily<br/>detected"]
+    A --> C["Residential Proxies<br/>Real user IPs, harder to<br/>detect"]
+    A --> D["Mobile Proxies<br/>Cellular network IPs,<br/>highest trust"]
+    A --> E["ISP Proxies<br/>Datacenter-hosted but<br/>ISP-registered"]
 
-    B --> F["Best for:<br>Low-protection sites,<br>high-volume tasks"]
-    C --> G["Best for:<br>E-commerce, social media,<br>search engines"]
-    D --> H["Best for:<br>Highest-protection sites,<br>account operations"]
-    E --> I["Best for:<br>Persistent sessions,<br>speed + stealth"]
+    B --> F["Best for:<br/>Low-protection sites,<br/>high-volume tasks"]
+    C --> G["Best for:<br/>E-commerce, social<br/>media,<br/>search engines"]
+    D --> H["Best for:<br/>Highest-protection<br/>sites,<br/>account operations"]
+    E --> I["Best for:<br/>Persistent sessions,<br/>speed + stealth"]
 
-    style B fill:#ccffcc
-    style C fill:#ffffcc
-    style D fill:#ffddcc
-    style E fill:#ddccff
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#ffddcc,color:#1f2328
+    style E fill:#ddccff,color:#1f2328
 ```
 
 **Major proxy providers include:**
@@ -150,20 +150,20 @@ Rather than scraping data yourself, you can buy pre-collected datasets from data
 Browser automation is the engine that powers JavaScript-heavy scraping. This segment includes both open-source tools and commercial products built on top of them.
 
 ```mermaid
-flowchart TD
-    A["Browser Automation<br>Ecosystem"] --> B["Open Source<br>Foundations"]
-    A --> C["Anti-Detection<br>Wrappers"]
-    A --> D["AI-Powered<br>Automation"]
-    A --> E["Commercial<br>Platforms"]
+flowchart LR
+    A["Browser Automation<br/>Ecosystem"] --> B["Open Source<br/>Foundations"]
+    A --> C["Anti-Detection<br/>Wrappers"]
+    A --> D["AI-Powered<br/>Automation"]
+    A --> E["Commercial<br/>Platforms"]
 
-    B --> B1["Playwright<br>(Microsoft)"]
-    B --> B2["Puppeteer<br>(Google)"]
-    B --> B3["Selenium<br>(SeleniumHQ)"]
+    B --> B1["Playwright<br/>(Microsoft)"]
+    B --> B2["Puppeteer<br/>(Google)"]
+    B --> B3["Selenium<br/>(SeleniumHQ)"]
 
-    C --> C1["Camoufox<br>(Firefox-based)"]
-    C --> C2["nodriver<br>(Chrome-based)"]
+    C --> C1["Camoufox<br/>(Firefox-based)"]
+    C --> C2["nodriver<br/>(Chrome-based)"]
     C --> C3["playwright-stealth"]
-    C --> C4["puppeteer-extra-<br>plugin-stealth"]
+    C --> C4["puppeteer-extra-<br/>plugin-stealth"]
 
     D --> D1["Browser Use"]
     D --> D2["Stagehand"]
@@ -174,8 +174,8 @@ flowchart TD
     E --> E3["Steel"]
 
     style A fill:#4a90d9,color:#fff
-    style B fill:#66bb6a
-    style C fill:#ffa726
+    style B fill:#66bb6a,color:#1f2328
+    style C fill:#ffa726,color:#1f2328
     style D fill:#ef5350,color:#fff
     style E fill:#ab47bc,color:#fff
 ```
@@ -245,29 +245,29 @@ The legal and regulatory landscape around web scraping is getting more complex, 
 **The EU AI Act** -- Enacted in 2024 with phased implementation through 2026, requires transparency about training data sources for certain categories of AI systems. This creates compliance incentives for AI companies to use licensed data with clear provenance rather than scraped data of uncertain origin.
 
 ```mermaid
-flowchart TD
-    A["Regulatory Pressure<br>on Web Scraping"] --> B["Data Protection<br>(GDPR, CCPA)"]
+flowchart LR
+    A["Regulatory Pressure<br/>on Web Scraping"] --> B["Data Protection<br/>(GDPR, CCPA)"]
     A --> C["Copyright &<br>Fair Use"]
-    A --> D["Computer Fraud<br>Laws (CFAA)"]
-    A --> E["AI-Specific<br>Regulation"]
+    A --> D["Computer Fraud<br/>Laws (CFAA)"]
+    A --> E["AI-Specific<br/>Regulation"]
 
-    B --> B1["Personal data<br>scraping restrictions"]
-    B --> B2["Right to be<br>forgotten requests"]
+    B --> B1["Personal data<br/>scraping restrictions"]
+    B --> B2["Right to be<br/>forgotten requests"]
 
-    C --> C1["AI training data<br>litigation"]
-    C --> C2["Content licensing<br>pressure"]
+    C --> C1["AI training data<br/>litigation"]
+    C --> C2["Content licensing<br/>pressure"]
 
-    D --> D1["hiQ v. LinkedIn<br>clarified public data"]
-    D --> D2["Terms of service<br>still enforceable"]
+    D --> D1["hiQ v. LinkedIn<br/>clarified public data"]
+    D --> D2["Terms of service<br/>still enforceable"]
 
-    E --> E1["EU AI Act data<br>provenance requirements"]
-    E --> E2["Transparency<br>obligations"]
+    E --> E1["EU AI Act data<br/>provenance requirements"]
+    E --> E2["Transparency<br/>obligations"]
 
     style A fill:#ef5350,color:#fff
-    style B fill:#ffcccc
-    style C fill:#ffddcc
-    style D fill:#ffffcc
-    style E fill:#ddccff
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffddcc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ddccff,color:#1f2328
 ```
 
 ### 5. Browser Automation Converging with AI Agents
@@ -296,20 +296,20 @@ As noted in our analysis of [the AI bot traffic explosion](/posts/the-ai-bot-tra
 - **Legal exposure:** Real-time RAG queries are harder to characterize as fair use than batch training data collection
 
 ```mermaid
-flowchart TD
-    A["AI Data Demand<br>Driving Scraping Growth"] --> B["Training Data<br>Collection"]
-    A --> C["RAG / Grounding<br>Data"]
+flowchart LR
+    A["AI Data Demand<br/>Driving Scraping Growth"] --> B["Training Data<br/>Collection"]
+    A --> C["RAG / Grounding<br/>Data"]
     A --> D["Evaluation &<br>Benchmarking"]
 
-    B --> B1["Billions of pages<br>crawled"]
-    B --> B2["Shifting toward<br>licensed data"]
+    B --> B1["Billions of pages<br/>crawled"]
+    B --> B2["Shifting toward<br/>licensed data"]
 
-    C --> C1["Real-time web<br>queries"]
-    C --> C2["Continuous,<br>always-on traffic"]
+    C --> C1["Real-time web<br/>queries"]
+    C --> C2["Continuous,<br/>always-on traffic"]
 
-    D --> D1["Testing model<br>outputs against<br>live web data"]
+    D --> D1["Testing model<br/>outputs against<br/>live web data"]
 
-    B1 --> E["Growing pressure<br>on web infrastructure"]
+    B1 --> E["Growing pressure<br/>on web infrastructure"]
     C2 --> E
     D1 --> E
 
@@ -360,11 +360,11 @@ Open source tools form the foundation of the web scraping industry. Even compani
 - **httpmorph** -- Python HTTP client with native TLS fingerprint impersonation
 
 ```mermaid
-flowchart TD
-    A["Open Source<br>Scraping Ecosystem"] --> B["HTTP-Level<br>Scraping"]
-    A --> C["Browser<br>Automation"]
-    A --> D["Anti-Detection<br>Tools"]
-    A --> E["AI-Powered<br>Extraction"]
+flowchart LR
+    A["Open Source<br/>Scraping Ecosystem"] --> B["HTTP-Level<br/>Scraping"]
+    A --> C["Browser<br/>Automation"]
+    A --> D["Anti-Detection<br/>Tools"]
+    A --> E["AI-Powered<br/>Extraction"]
 
     B --> B1["Scrapy"]
     B --> B2["httpx"]
@@ -384,8 +384,8 @@ flowchart TD
     E --> E2["ScrapeGraphAI"]
 
     style A fill:#4a90d9,color:#fff
-    style B fill:#66bb6a
-    style C fill:#ffa726
+    style B fill:#66bb6a,color:#1f2328
+    style C fill:#ffa726,color:#1f2328
     style D fill:#ef5350,color:#fff
     style E fill:#ab47bc,color:#fff
 ```
@@ -421,20 +421,20 @@ Based on current trajectories, here is where the web scraping industry is likely
 **The anti-bot arms race reaches an equilibrium.** Not a cessation, but a stabilization. The back-and-forth between scrapers and anti-bot systems will settle into a pattern where the cost of scraping a well-protected site is significant but predictable. The winners will be vendors who can operate at that cost point efficiently, and the losers will be small-scale scrapers who cannot afford the infrastructure to bypass modern defenses.
 
 ```mermaid
-flowchart TD
-    A["2026-2028<br>Industry Trajectory"] --> B["Market<br>Consolidation"]
-    A --> C["AI Extraction<br>Becomes Default"]
-    A --> D["Content Licensing<br>Grows"]
-    A --> E["Browser-as-a-Service<br>Emerges"]
-    A --> F["Regulatory<br>Clarity Improves"]
-    A --> G["Arms Race<br>Stabilizes"]
+flowchart LR
+    A["2026-2028<br/>Industry Trajectory"] --> B["Market<br/>Consolidation"]
+    A --> C["AI Extraction<br/>Becomes Default"]
+    A --> D["Content Licensing<br/>Grows"]
+    A --> E["Browser-as-a-Service<br/>Emerges"]
+    A --> F["Regulatory<br/>Clarity Improves"]
+    A --> G["Arms Race<br/>Stabilizes"]
 
-    B --> B1["Fewer, larger<br>proxy providers"]
-    C --> C1["LLM inference costs<br>drop below selector<br>maintenance costs"]
-    D --> D1["Premium content<br>licensed, commodity<br>data still scraped"]
-    E --> E1["Cloud browsers for<br>scraping and AI agents"]
-    F --> F1["More court<br>precedents, less<br>legal uncertainty"]
-    G --> G1["Scraping cost<br>predictable but<br>non-trivial"]
+    B --> B1["Fewer, larger<br/>proxy providers"]
+    C --> C1["LLM inference costs<br/>drop below selector<br/>maintenance costs"]
+    D --> D1["Premium content<br/>licensed, commodity<br/>data still scraped"]
+    E --> E1["Cloud browsers for<br/>scraping and AI agents"]
+    F --> F1["More court<br/>precedents, less<br/>legal uncertainty"]
+    G --> G1["Scraping cost<br/>predictable but<br/>non-trivial"]
 
     style A fill:#4a90d9,color:#fff
 ```

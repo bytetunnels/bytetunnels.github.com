@@ -29,11 +29,11 @@ graph TD
     G --> C
     F --> H["Data Pipeline"]
 
-    style A fill:#ffcccc
-    style C fill:#ccccff
-    style E fill:#ffffcc
-    style F fill:#ccffcc
-    style H fill:#99ff99
+    style A fill:#ffcccc,color:#1f2328
+    style C fill:#ccccff,color:#1f2328
+    style E fill:#ffffcc,color:#1f2328
+    style F fill:#ccffcc,color:#1f2328
+    style H fill:#99ff99,color:#1f2328
 ```
 
 The validation step is critical. LLMs are probabilistic -- one of the [unsolved problems of AI web scraping](/posts/the-unsolved-problems-of-ai-web-scraping-in-2026/) -- and even with structured output constraints, the data can be wrong -- a price extracted as a string instead of a float, a missing required field, or a hallucinated value. Schema validation catches these before bad data enters your pipeline.

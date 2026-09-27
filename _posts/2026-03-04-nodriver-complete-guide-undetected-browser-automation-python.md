@@ -25,22 +25,27 @@ Nodriver collapses that chain to a single hop.
 ```mermaid
 graph TD
     subgraph "Traditional Selenium"
-        A["Python Script"] -->|"HTTP commands"| B["ChromeDriver Binary"]
+        direction TB
+        A["Python Script"] -->|"HTTP commands"| B["ChromeDriver<br/>Binary"]
         B -->|"DevTools Protocol"| C["Chrome Browser"]
         B -.->|"Sets navigator.webdriver = true"| C
         B -.->|"Injects automation extensions"| C
         B -.->|"Adds cdc_ variables"| C
     end
 
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+```
+
+```mermaid
+graph LR
     subgraph "Nodriver"
         D["Python Script"] -->|"Direct CDP (WebSocket)"| E["Chrome Browser"]
     end
 
-    style A fill:#ffcccc
-    style B fill:#ffcccc
-    style C fill:#ffcccc
-    style D fill:#ccffcc
-    style E fill:#ccffcc
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
 ```
 
 Here is what each layer eliminates:

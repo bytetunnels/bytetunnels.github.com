@@ -53,9 +53,9 @@ graph TD
     H --> J["Chromium only"]
     I --> K["No browser needed"]
 
-    style A fill:#e6e6ff
-    style F fill:#e6ffe6
-    style K fill:#ccffcc
+    style A fill:#e6e6ff,color:#1f2328
+    style F fill:#e6ffe6,color:#1f2328
+    style K fill:#ccffcc,color:#1f2328
 ```
 
 Playwright launches its own server process, downloads specific browser builds, and communicates through a layered protocol. DrissionPage connects directly to your existing Chrome installation over CDP, or skips the browser entirely and makes HTTP calls. There is no intermediate server, no binary management, and no browser download on first run.
@@ -209,28 +209,28 @@ DrissionPage bakes timeouts into element lookups directly. If you call `page.ele
 DrissionPage communicates with Chrome over CDP using a direct WebSocket connection, similar to nodriver. It does not inject a driver binary, does not set `navigator.webdriver` to `true`, and does not add automation flags to the browser launch arguments. This gives it some inherent stealth advantages over Playwright's default configuration.
 
 ```mermaid
-graph TD
+graph LR
     A["Detection Signal"] --> B["DrissionPage"]
-    A --> C["Playwright<br>(default)"]
+    A --> C["Playwright<br/>(default)"]
 
-    B --> D["navigator.webdriver = undefined"]
+    B --> D["navigator.webdriver =<br/>undefined"]
     B --> E["No automation flags"]
     B --> F["No driver binary"]
     B --> G["Uses existing Chrome"]
 
-    C --> H["navigator.webdriver = true"]
+    C --> H["navigator.webdriver =<br/>true"]
     C --> I["--enable-automation flag"]
-    C --> J["Playwright server process"]
-    C --> K["Downloads custom Chromium"]
+    C --> J["Playwright server<br/>process"]
+    C --> K["Downloads custom<br/>Chromium"]
 
-    style D fill:#ccffcc
-    style E fill:#ccffcc
-    style F fill:#ccffcc
-    style G fill:#ccffcc
-    style H fill:#ffcccc
-    style I fill:#ffcccc
-    style J fill:#ffcccc
-    style K fill:#ffcccc
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ccffcc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style H fill:#ffcccc,color:#1f2328
+    style I fill:#ffcccc,color:#1f2328
+    style J fill:#ffcccc,color:#1f2328
+    style K fill:#ffcccc,color:#1f2328
 ```
 
 That said, DrissionPage is not an anti-detection tool in the same league as Camoufox or a fully patched nodriver setup, as we discuss in [stealth browsers in 2026: Camoufox, nodriver, and the anti-detection arms race](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/). It does not spoof TLS fingerprints, randomize canvas or WebGL output, or handle advanced behavioral analysis. Its stealth comes from simply not adding the obvious automation markers that Playwright does. Against basic bot detection, that is often enough. Against Cloudflare Turnstile or Akamai Bot Manager, you will still need additional measures regardless of which tool you choose.
@@ -324,8 +324,8 @@ graph TD
     E --> H["Fast with some<br>stealth benefits"]
     F --> I["Full framework<br>with ecosystem"]
 
-    style C fill:#ccffcc
-    style G fill:#ccffcc
+    style C fill:#ccffcc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
 ```
 
 The real performance win is the hybrid approach. Starting 100 pages in session mode and only falling back to browser mode for the 5 pages that require JavaScript execution is orders of magnitude faster than rendering all 100 pages in a browser.

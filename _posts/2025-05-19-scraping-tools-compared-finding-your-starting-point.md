@@ -76,20 +76,26 @@ When JavaScript rendering becomes necessary, [browser automation tools](/posts/b
 graph TD
     A[Target Website] --> B{Content Type}
     B -->|Static HTML| C[HTTP Tools]
-    B -->|JavaScript Heavy| D[Browser Automation]
-    
-    C --> E[Requests + BeautifulSoup]
+
+    C --> E["Requests +<br/>BeautifulSoup"]
     C --> F[httpx/axios]
-    
+
+    E --> J["Fast & Lightweight"]
+    F --> K["Concurrent<br/>Processing"]
+```
+
+```mermaid
+graph TD
+    A[Target Website] --> B{Content Type}
+    B -->|JavaScript Heavy| D[Browser Automation]
+
     D --> G[Selenium]
     D --> H[Playwright]
     D --> I[Puppeteer]
-    
-    E --> J["Fast & Lightweight"]
-    F --> K[Concurrent Processing]
-    G --> L[Wide Browser Support]
-    H --> M["Modern & Feature Rich"]
-    I --> N[Chrome/Node.js Focus]
+
+    G --> L["Wide Browser<br/>Support"]
+    H --> M["Modern & Feature<br/>Rich"]
+    I --> N["Chrome/Node.js<br/>Focus"]
 ```
 
 ### Selenium: The Veteran
@@ -201,24 +207,32 @@ The choice between these tools depends on several factors that form a decision m
 
 ```mermaid
 graph TD
-    A[Project Requirements]
-    A --> B{JavaScript Required?}
+    A["Project<br/>Requirements"]
+    A --> B{"JavaScript<br/>Required?"}
 
-    B -->|No| C{Performance Critical?}
-    B -->|Yes| D{Browser Compatibility?}
+    B -->|No| C{"Performance<br/>Critical?"}
 
-    C -->|Yes| E[Requests + BeautifulSoup]
-    C -->|No| F[Consider Async HTTP]
+    C -->|Yes| E["Requests +<br/>BeautifulSoup"]
+    C -->|No| F["Consider Async<br/>HTTP"]
+
+    E --> J["Best for Static<br/>Sites"]
+    F --> K[High Concurrency]
+```
+
+```mermaid
+graph TD
+    A["Project<br/>Requirements"]
+    A --> B{"JavaScript<br/>Required?"}
+
+    B -->|Yes| D{"Browser<br/>Compatibility?"}
 
     D -->|Multiple Browsers| G[Selenium]
     D -->|Chrome Only| H[Puppeteer]
     D -->|Modern Features| I[Playwright]
 
-    E --> J[Best for Static Sites]
-    F --> K[High Concurrency]
     G --> L[Legacy Support]
     H --> M[JS Ecosystem]
-    I --> N[Future-Proof Choice]
+    I --> N["Future-Proof<br/>Choice"]
 ```
 
 ### Performance Considerations

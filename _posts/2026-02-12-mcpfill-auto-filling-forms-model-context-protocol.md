@@ -35,10 +35,10 @@ flowchart TD
     C -->|"Confirmation"| B
     B -->|"Result"| A
 
-    style A fill:#e8eaf6
-    style B fill:#e3f2fd
-    style C fill:#e8f5e9
-    style D fill:#fff3e0
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e3f2fd,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style D fill:#fff3e0,color:#1f2328
 ```
 
 ## The Form-Filling Problem for AI
@@ -333,10 +333,10 @@ flowchart TD
     F -->|Yes| G["MCPFill + Manual<br>File Handling"]
     F -->|No| H["Full MCPFill<br>Automation"]
 
-    style C fill:#ffcdd2
-    style E fill:#fff9c4
-    style G fill:#fff9c4
-    style H fill:#c8e6c9
+    style C fill:#ffcdd2,color:#1f2328
+    style E fill:#fff9c4,color:#1f2328
+    style G fill:#fff9c4,color:#1f2328
+    style H fill:#c8e6c9,color:#1f2328
 ```
 
 ## MCPFill vs. Manual Playwright Form Filling
@@ -388,25 +388,25 @@ MCPFill does not exist in isolation. It is part of a growing ecosystem of MCP se
 **[Browser-Use and Stagehand](/posts/browser-agent-frameworks-compared-browser-use-vs-stagehand-vs-skyvern/)** are higher-level agent frameworks that already include form-filling capabilities as part of their broader automation toolkit. They take a different approach by embedding the browser interaction logic inside the agent framework rather than exposing it through MCP.
 
 ```mermaid
-graph TD
+graph LR
     A["AI Agent"] --> B["MCP Protocol"]
 
-    B --> C["Playwright MCP<br>General browser control"]
-    B --> D["MCPFill<br>Form-specific intelligence"]
-    B --> E["Puppeteer MCP<br>Alternative browser engine"]
-    B --> F["Other MCP Servers<br>File, database, API"]
+    B --> C["Playwright MCP<br/>General browser control"]
+    B --> D["MCPFill<br/>Form-specific<br/>intelligence"]
+    B --> E["Puppeteer MCP<br/>Alternative browser<br/>engine"]
+    B --> F["Other MCP Servers<br/>File, database, API"]
 
     C --> G["Browser Instance"]
     D --> G
     E --> G
 
-    style A fill:#e8eaf6
-    style B fill:#e3f2fd
-    style C fill:#e8f5e9
-    style D fill:#c8e6c9
-    style E fill:#e8f5e9
-    style F fill:#fff3e0
-    style G fill:#fff3e0
+    style A fill:#e8eaf6,color:#1f2328
+    style B fill:#e3f2fd,color:#1f2328
+    style C fill:#e8f5e9,color:#1f2328
+    style D fill:#c8e6c9,color:#1f2328
+    style E fill:#e8f5e9,color:#1f2328
+    style F fill:#fff3e0,color:#1f2328
+    style G fill:#fff3e0,color:#1f2328
 ```
 
 The MCP approach has a structural advantage: composability. An AI agent can use the Playwright MCP server for navigation, MCPFill for form filling, and a database MCP server for fetching the data to fill -- all in the same conversation, all through the same protocol.

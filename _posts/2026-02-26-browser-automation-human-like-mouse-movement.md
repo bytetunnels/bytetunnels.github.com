@@ -51,13 +51,13 @@ Where `MT` is movement time, `D` is distance, `W` is target width, and `a` and `
 Real cursor trajectories have several distinct properties that set them apart from programmatic movement:
 
 ```mermaid
-graph TD
-    A["Real Human Mouse Movement"] --> B["Curved paths<br>not straight lines"]
-    A --> C["Acceleration and<br>deceleration phases"]
-    A --> D["Micro-jitter from<br>hand tremor"]
-    A --> E["Occasional overshoot<br>past the target"]
-    A --> F["Variable speed<br>throughout path"]
-    A --> G["Brief pauses<br>mid-movement"]
+graph LR
+    A["Real Human Mouse<br/>Movement"] --> B["Curved paths<br/>not straight lines"]
+    A --> C["Acceleration and<br/>deceleration phases"]
+    A --> D["Micro-jitter from<br/>hand tremor"]
+    A --> E["Occasional overshoot<br/>past the target"]
+    A --> F["Variable speed<br/>throughout path"]
+    A --> G["Brief pauses<br/>mid-movement"]
 ```
 
 **Curved paths.** Humans do not move the cursor in perfectly straight lines. The path between two points always has some curvature, often resembling a slight arc. The curvature varies between individuals and even between individual movements by the same person.
@@ -584,13 +584,13 @@ A coefficient of variation (CV) below 0.1 for velocity means the speed is almost
 Mouse movement is one piece of the behavioral puzzle. Detection systems analyze multiple behavioral channels simultaneously, and inconsistency between them is itself a signal.
 
 ```mermaid
-graph TD
-    A["Behavioral Signals"] --> B["Mouse movement<br>trajectory and speed"]
-    A --> C["Scroll patterns<br>smooth vs jump scrolling"]
-    A --> D["Typing cadence<br>key-down to key-up timing"]
-    A --> E["Click patterns<br>dwell time, double-clicks"]
-    A --> F["Idle behavior<br>pauses between actions"]
-    A --> G["Navigation flow<br>reading time per page"]
+graph LR
+    A["Behavioral Signals"] --> B["Mouse movement<br/>trajectory and speed"]
+    A --> C["Scroll patterns<br/>smooth vs jump scrolling"]
+    A --> D["Typing cadence<br/>key-down to key-up<br/>timing"]
+    A --> E["Click patterns<br/>dwell time,<br/>double-clicks"]
+    A --> F["Idle behavior<br/>pauses between actions"]
+    A --> G["Navigation flow<br/>reading time per page"]
 ```
 
 ### Scroll Patterns

@@ -131,7 +131,7 @@ sequenceDiagram
     participant Script
     participant Browser
     participant Element
-    
+
     Script->>Browser: Navigate to page
     Browser->>Element: Begin rendering
     Script->>Element: Check if present

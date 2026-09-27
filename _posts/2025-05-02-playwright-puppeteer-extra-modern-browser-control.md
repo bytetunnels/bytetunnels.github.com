@@ -22,12 +22,12 @@ Browser automation has evolved from simple page navigation tools to sophisticate
 graph TD
     A[Browser Automation Need] --> B{Content Type?}
     B -->|Static HTML| C[Basic HTTP Requests]
-    B -->|Dynamic JS Content| D[Browser Automation Required]
+    B -->|Dynamic JS Content| D["Browser Automation<br/>Required"]
     D --> E{Stealth Requirements?}
     E -->|Basic| F[Standard Playwright]
     E -->|High| G[Playwright with Stealth]
-    E -->|Maximum| H[Puppeteer Extra + Plugins]
-    F --> I[Fast, Reliable Automation]
+    E -->|Maximum| H["Puppeteer Extra +<br/>Plugins"]
+    F --> I["Fast, Reliable<br/>Automation"]
     G --> J[Advanced Anti-Detection]
     H --> K[Maximum Customization]
 ```
@@ -128,7 +128,7 @@ sequenceDiagram
     participant Browser as Browser Instance
     participant Page as Web Page
     participant API as Backend API
-    
+
     Script->>Browser: Launch with stealth settings
     Browser->>Page: Navigate to target
     Page->>Browser: Load dynamic content

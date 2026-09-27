@@ -30,10 +30,10 @@ graph TD
     H --> I["Automation flags present"]
     I --> J["Requires stealth plugins"]
 
-    style A fill:#ccffcc
-    style E fill:#ccffcc
-    style F fill:#ffcccc
-    style J fill:#ffcccc
+    style A fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ffcccc,color:#1f2328
+    style J fill:#ffcccc,color:#1f2328
 ```
 
 ## What Each Tool Leaks by Default
@@ -74,38 +74,38 @@ console.log(navigator.languages);        // may be ['en-US'] only
 ### Side-by-Side Detection Surface
 
 ```mermaid
-graph TD
+graph LR
     A["Detection Check"] --> B["navigator.webdriver"]
     A --> C["Automation flags"]
     A --> D["Driver binary artifacts"]
     A --> E["Browser properties"]
     A --> F["CDP detection"]
 
-    B --> B1["Nodriver: PASS<br>Returns undefined"]
-    B --> B2["Playwright: FAIL<br>Returns true"]
+    B --> B1["Nodriver: PASS<br/>Returns undefined"]
+    B --> B2["Playwright: FAIL<br/>Returns true"]
 
-    C --> C1["Nodriver: PASS<br>No flags set"]
-    C --> C2["Playwright: FAIL<br>Flags present"]
+    C --> C1["Nodriver: PASS<br/>No flags set"]
+    C --> C2["Playwright: FAIL<br/>Flags present"]
 
-    D --> D1["Nodriver: PASS<br>No binary"]
-    D --> D2["Playwright: PASS<br>No ChromeDriver"]
+    D --> D1["Nodriver: PASS<br/>No binary"]
+    D --> D2["Playwright: PASS<br/>No ChromeDriver"]
 
-    E --> E1["Nodriver: PASS<br>Normal Chrome"]
-    E --> E2["Playwright: PARTIAL<br>Some gaps"]
+    E --> E1["Nodriver: PASS<br/>Normal Chrome"]
+    E --> E2["Playwright: PARTIAL<br/>Some gaps"]
 
-    F --> F1["Nodriver: PARTIAL<br>CDP active"]
-    F --> F2["Playwright: PARTIAL<br>CDP active"]
+    F --> F1["Nodriver: PARTIAL<br/>CDP active"]
+    F --> F2["Playwright: PARTIAL<br/>CDP active"]
 
-    style B1 fill:#ccffcc
-    style B2 fill:#ffcccc
-    style C1 fill:#ccffcc
-    style C2 fill:#ffcccc
-    style D1 fill:#ccffcc
-    style D2 fill:#ccffcc
-    style E1 fill:#ccffcc
-    style E2 fill:#ffffcc
-    style F1 fill:#ffffcc
-    style F2 fill:#ffffcc
+    style B1 fill:#ccffcc,color:#1f2328
+    style B2 fill:#ffcccc,color:#1f2328
+    style C1 fill:#ccffcc,color:#1f2328
+    style C2 fill:#ffcccc,color:#1f2328
+    style D1 fill:#ccffcc,color:#1f2328
+    style D2 fill:#ccffcc,color:#1f2328
+    style E1 fill:#ccffcc,color:#1f2328
+    style E2 fill:#ffffcc,color:#1f2328
+    style F1 fill:#ffffcc,color:#1f2328
+    style F2 fill:#ffffcc,color:#1f2328
 ```
 
 ## Testing Against Common Anti-Bot Checks
@@ -410,7 +410,7 @@ graph TD
     F --> H["Result: Both pass<br>TLS fingerprint checks"]
     G --> H
 
-    style H fill:#ccffcc
+    style H fill:#ccffcc,color:#1f2328
 ```
 
 The minor difference: nodriver uses your system Chrome (exact TLS match), while Playwright bundles a specific Chromium build that may differ slightly. In practice, this rarely matters because anti-bot systems whitelist a range of Chromium-based fingerprints.
@@ -494,9 +494,9 @@ graph TD
     C --> F["Use Playwright<br>with stealth plugins"]
     D --> G["Consider Camoufox"]
 
-    style E fill:#ccffcc
-    style F fill:#ffffcc
-    style G fill:#ccccff
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ffffcc,color:#1f2328
+    style G fill:#ccccff,color:#1f2328
 ```
 
 For most scraping projects in 2026, nodriver gives you better stealth with less effort. But Playwright gives you a better developer experience, a richer feature set, and more room to grow. If you are building a quick scraper to bypass a protected site, nodriver is the faster path. If you are building a production system that needs to handle complex interactions across multiple browsers, Playwright is the stronger foundation even if you need to invest in stealth patches.

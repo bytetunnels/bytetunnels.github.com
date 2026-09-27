@@ -60,34 +60,34 @@ There are several reasons to look beyond the DOM when extracting data from a web
 Browsers offer several client-side storage mechanisms, each with different characteristics. Understanding the differences helps you know where to look for the data you need.
 
 ```mermaid
-flowchart TD
-    A["Browser Client-Side Storage"] --> B["Cookies"]
+flowchart LR
+    A["Browser Client-Side<br/>Storage"] --> B["Cookies"]
     A --> C["localStorage"]
     A --> D["sessionStorage"]
     A --> E["IndexedDB"]
 
-    B --> B1["Sent with every<br>HTTP request"]
+    B --> B1["Sent with every<br/>HTTP request"]
     B --> B2["4 KB limit per cookie"]
-    B --> B3["Can be httpOnly<br>and secure"]
-    B --> B4["Expiry-based<br>persistence"]
+    B --> B3["Can be httpOnly<br/>and secure"]
+    B --> B4["Expiry-based<br/>persistence"]
 
-    C --> C1["Never sent to<br>server automatically"]
+    C --> C1["Never sent to<br/>server automatically"]
     C --> C2["5-10 MB per origin"]
-    C --> C3["Persists across<br>sessions"]
-    C --> C4["Synchronous<br>string key-value"]
+    C --> C3["Persists across<br/>sessions"]
+    C --> C4["Synchronous<br/>string key-value"]
 
-    D --> D1["Never sent to<br>server automatically"]
+    D --> D1["Never sent to<br/>server automatically"]
     D --> D2["5-10 MB per origin"]
-    D --> D3["Cleared when<br>tab closes"]
-    D --> D4["Synchronous<br>string key-value"]
+    D --> D3["Cleared when<br/>tab closes"]
+    D --> D4["Synchronous<br/>string key-value"]
 
-    E --> E1["Never sent to<br>server automatically"]
-    E --> E2["Large storage<br>quota - hundreds of MB"]
-    E --> E3["Persists across<br>sessions"]
-    E --> E4["Asynchronous<br>structured data"]
+    E --> E1["Never sent to<br/>server automatically"]
+    E --> E2["Large storage<br/>quota - hundreds of MB"]
+    E --> E3["Persists across<br/>sessions"]
+    E --> E4["Asynchronous<br/>structured data"]
 
-    style C fill:#d4edda
-    style D fill:#fff3cd
+    style C fill:#d4edda,color:#1f2328
+    style D fill:#fff3cd,color:#1f2328
 ```
 
 For scraping purposes, localStorage and sessionStorage are the most commonly targeted because they use a simple key-value API that is trivial to dump. IndexedDB requires more complex asynchronous queries, and cookies are usually easier to capture through network-level interception.

@@ -19,24 +19,24 @@ Form automation goes beyond basic input filling. If you need a refresher on the 
 Before diving into automation techniques, it's crucial to categorize forms based on their complexity. This classification helps determine the appropriate automation strategy and tools needed for successful interaction.
 
 ```mermaid
-graph TD
+graph LR
     A[Form Types] --> B[Simple Forms]
     A --> C[Dynamic Forms]
     A --> D[Multi-Step Forms]
-    A --> E[Complex Interactive Forms]
-    
+    A --> E["Complex Interactive<br/>Forms"]
+
     B --> B1[Static Fields]
     B --> B2[Basic Validation]
     B --> B3[Single Submit]
-    
+
     C --> C1[Conditional Fields]
     C --> C2[AJAX Validation]
     C --> C3[Dynamic Options]
-    
+
     D --> D1[Wizard Forms]
     D --> D2[Progress Tracking]
     D --> D3[State Management]
-    
+
     E --> E1[File Uploads]
     E --> E2[Rich Text Editors]
     E --> E3[Custom Components]
@@ -141,7 +141,7 @@ sequenceDiagram
     participant Step2 as Address Details
     participant Step3 as Payment Info
     participant Server as Form Server
-    
+
     Bot->>Step1: Fill personal information
     Step1->>Server: Validate step 1
     Server->>Step1: Return validation + session state
@@ -313,10 +313,10 @@ The core pattern for resilient form filling is: wait for the element with `WebDr
 Form automation performance significantly impacts overall scraping efficiency, especially when processing large volumes of submissions. Optimization strategies focus on reducing wait times, minimizing browser overhead, and implementing intelligent retry mechanisms.
 
 ```mermaid
-graph TD
-    A[Form Automation Performance]
+graph LR
+    A["Form Automation<br/>Performance"]
 
-    A --> B[Wait Strategy Optimization]
+    A --> B["Wait Strategy<br/>Optimization"]
     A --> C[Resource Management]
     A --> D[Batch Processing]
     A --> E[Caching Strategies]

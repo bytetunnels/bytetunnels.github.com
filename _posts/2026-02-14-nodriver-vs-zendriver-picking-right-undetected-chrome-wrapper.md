@@ -29,9 +29,9 @@ graph TD
     B -.-|"2023+<br>Official successor"| B
     C -.-|"2024+<br>Bug fixes + new features"| C
 
-    style A fill:#ffe0b2
-    style B fill:#c8e6c9
-    style C fill:#b3e5fc
+    style A fill:#ffe0b2,color:#1f2328
+    style B fill:#c8e6c9,color:#1f2328
+    style C fill:#b3e5fc,color:#1f2328
 ```
 
 This lineage matters because it determines who fixes what, how fast patches land, and where the project is headed.
@@ -141,7 +141,7 @@ Zendriver's feature additions over nodriver include:
 Both tools share the same fundamental architecture since zendriver is a fork. The differences are in the wrapper layer and developer experience, not in how they communicate with Chrome.
 
 ```mermaid
-graph TD
+graph LR
     subgraph "Shared Architecture"
         A["Python async code"] -->|"WebSocket"| B["Chrome DevTools Protocol"]
         B --> C["Unmodified Chrome"]
@@ -155,19 +155,19 @@ graph TD
 
     subgraph "Zendriver Layer"
         H["zd.start()"] --> I["Standard asyncio"]
-        I --> J["Extended API +<br>Docker + cookies"]
+        I --> J["Extended API +<br/>Docker + cookies"]
     end
 
-    style A fill:#f5f5f5
-    style B fill:#f5f5f5
-    style C fill:#f5f5f5
-    style D fill:#f5f5f5
-    style E fill:#c8e6c9
-    style F fill:#c8e6c9
-    style G fill:#c8e6c9
-    style H fill:#b3e5fc
-    style I fill:#b3e5fc
-    style J fill:#b3e5fc
+    style A fill:#f5f5f5,color:#1f2328
+    style B fill:#f5f5f5,color:#1f2328
+    style C fill:#f5f5f5,color:#1f2328
+    style D fill:#f5f5f5,color:#1f2328
+    style E fill:#c8e6c9,color:#1f2328
+    style F fill:#c8e6c9,color:#1f2328
+    style G fill:#c8e6c9,color:#1f2328
+    style H fill:#b3e5fc,color:#1f2328
+    style I fill:#b3e5fc,color:#1f2328
+    style J fill:#b3e5fc,color:#1f2328
 ```
 
 The stealth properties are identical in both tools because they stem from the same approach: launching an unmodified Chrome instance and communicating via CDP without injecting automation artifacts. Neither tool patches the browser, neither uses a driver binary, and neither sets automation flags.
@@ -281,16 +281,16 @@ Both tools share the same stealth baseline because they use the same approach to
 One notable comparison by Dima Kynal tested nodriver, zendriver, Selenium, and Playwright against major anti-bot services including Cloudflare, DataDome, CloudFront, and Akamai. In that baseline test, zendriver achieved a higher pass rate than nodriver --- 75% versus 25%.
 
 ```mermaid
-graph TD
-    A["Anti-Bot Test Results<br>(Baseline, No Extra Config)"] --> B["Zendriver: 75%<br>pass rate"]
-    A --> C["Nodriver: 25%<br>pass rate"]
+graph LR
+    A["Anti-Bot Test Results<br/>(Baseline, No Extra<br/>Config)"] --> B["Zendriver: 75%<br/>pass rate"]
+    A --> C["Nodriver: 25%<br/>pass rate"]
     A --> D["Selenium: lower"]
     A --> E["Playwright: lower"]
 
-    style B fill:#c8e6c9
-    style C fill:#fff9c4
-    style D fill:#ffccbc
-    style E fill:#ffccbc
+    style B fill:#c8e6c9,color:#1f2328
+    style C fill:#fff9c4,color:#1f2328
+    style D fill:#ffccbc,color:#1f2328
+    style E fill:#ffccbc,color:#1f2328
 ```
 
 Take these numbers with appropriate caution. Anti-bot performance depends heavily on the specific site, the Chrome version, the test methodology, and whether additional configuration (proxies, fingerprint adjustments, timing) is applied. The bug fixes in zendriver may account for some of the difference, particularly if nodriver had issues with specific CDP interactions at the time of testing.
@@ -306,22 +306,22 @@ This is where the two projects differ most significantly.
 **Zendriver** adopted an open-contribution model. The cdpdriver organization accepts pull requests, triages issues publicly, and has merged fixes that nodriver had not accepted. The risk is the usual one for community forks: if the core contributors lose interest or move on, the project could stall. As of early 2026, development appears active, with regular releases and responsive issue handling.
 
 ```mermaid
-graph TD
+graph LR
     A["Maintenance Model"] --> B["Nodriver"]
     A --> C["Zendriver"]
 
-    B --> D["Single maintainer<br>(ultrafunkamsterdam)"]
+    B --> D["Single maintainer<br/>(ultrafunkamsterdam)"]
     D --> E["Deep expertise"]
     D --> F["Slow PR merges"]
-    D --> G["Restricted contributions"]
+    D --> G["Restricted<br/>contributions"]
 
-    C --> H["Community maintainers<br>(cdpdriver org)"]
+    C --> H["Community maintainers<br/>(cdpdriver org)"]
     H --> I["Faster bug fixes"]
     H --> J["Open PRs welcome"]
-    H --> K["Sustainability depends<br>on contributor base"]
+    H --> K["Sustainability depends<br/>on contributor base"]
 
-    style B fill:#c8e6c9
-    style C fill:#b3e5fc
+    style B fill:#c8e6c9,color:#1f2328
+    style C fill:#b3e5fc,color:#1f2328
 ```
 
 ## When to Choose Nodriver

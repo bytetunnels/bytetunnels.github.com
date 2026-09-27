@@ -24,7 +24,7 @@ sequenceDiagram
     participant Server
     participant API
     participant CDN
-    
+
     Browser->>Server: Initial HTML Request
     Server-->>Browser: HTML Response
     Browser->>CDN: CSS/JS Resources

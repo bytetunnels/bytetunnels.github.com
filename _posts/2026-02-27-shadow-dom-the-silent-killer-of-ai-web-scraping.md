@@ -29,15 +29,15 @@ flowchart TD
 
     subgraph SHADOW["Shadow Root - Encapsulated"]
         E -.->|"shadowRoot"| F["div.card-inner"]
-        F --> G["h2.product-title: Laptop Pro"]
+        F --> G["h2.product-title: Laptop<br/>Pro"]
         F --> H["span.price: $999"]
         F --> I["button: Add to Cart"]
     end
 
-    J["document.querySelector '.price'"] -->|"Returns null"| K["Cannot cross shadow boundary"]
+    J["document.querySelector<br/>'.price'"] -->|"Returns null"| K["Cannot cross shadow<br/>boundary"]
 
-    style SHADOW fill:#ffcccc
-    style K fill:#ffcccc
+    style SHADOW fill:#ffcccc,color:#1f2328
+    style K fill:#ffcccc,color:#1f2328
 ```
 
 When a developer creates a Web Component, they attach a shadow root to their custom element. Everything rendered inside that shadow root is part of the component's internal structure. From the outside, you can see the custom element tag -- something like `<my-product-card>` -- but you cannot see or query its internal elements using standard DOM methods.
@@ -92,24 +92,24 @@ with sync_playwright() as p:
 The problem is not limited to `querySelector`. Every major scraping approach has a blind spot at shadow DOM boundaries, as any [mega comparison of browser automation tools](/posts/playwright-vs-puppeteer-vs-selenium-vs-scrapy-2026-mega-comparison/) will confirm.
 
 ```mermaid
-flowchart TD
-    A["Scraping Approach"] --> B["querySelector / CSS Selectors"]
+flowchart LR
+    A["Scraping Approach"] --> B["querySelector / CSS<br/>Selectors"]
     A --> C["XPath Expressions"]
     A --> D["page.content / innerHTML"]
-    A --> E["Accessibility Tree Snapshot"]
+    A --> E["Accessibility Tree<br/>Snapshot"]
     A --> F["Beautiful Soup / Cheerio"]
 
     B --> G["Stops at shadow boundary"]
     C --> H["Stops at shadow boundary"]
     D --> I["Returns outer tag only"]
     E --> J["May miss shadow content"]
-    F --> K["Parses only main document HTML"]
+    F --> K["Parses only main<br/>document HTML"]
 
-    style G fill:#ffcccc
-    style H fill:#ffcccc
-    style I fill:#ffcccc
-    style J fill:#ffcccc
-    style K fill:#ffcccc
+    style G fill:#ffcccc,color:#1f2328
+    style H fill:#ffcccc,color:#1f2328
+    style I fill:#ffcccc,color:#1f2328
+    style J fill:#ffcccc,color:#1f2328
+    style K fill:#ffcccc,color:#1f2328
 ```
 
 CSS selectors and `querySelector` operate on the document's DOM tree. Shadow roots are not part of that tree, so selectors cannot cross into them. `document.querySelector('.price')` will never find an element with class `price` inside a shadow root.
@@ -349,22 +349,22 @@ When your scraper returns empty results on a page that clearly has content, here
 
 ```mermaid
 flowchart TD
-    A["Scraper returns empty results on a visible page"] --> B{"Are there custom element tags in the HTML?"}
-    B -->|No| C["Problem is likely JS rendering, not Shadow DOM"]
-    B -->|Yes| D{"Can you access element.shadowRoot?"}
-    D -->|Yes - Open Shadow DOM| E["Use Playwright locator - auto-pierces"]
+    A["Scraper returns empty<br/>results on a visible<br/>page"] --> B{"Are there custom element<br/>tags in the HTML?"}
+    B -->|No| C["Problem is likely JS<br/>rendering, not Shadow<br/>DOM"]
+    B -->|Yes| D{"Can you access<br/>element.shadowRoot?"}
+    D -->|Yes - Open Shadow DOM| E["Use Playwright locator -<br/>auto-pierces"]
     D -->|No - Returns null| F{"Is it closed shadow DOM?"}
-    F -->|Yes| G["Use addInitScript to force open mode"]
-    F -->|"Not sure"| H["Check if component uses attachShadow"]
-    E --> I["Use recursive walker for nested shadows"]
+    F -->|Yes| G["Use addInitScript to<br/>force open mode"]
+    F -->|"Not sure"| H["Check if component uses<br/>attachShadow"]
+    E --> I["Use recursive walker for<br/>nested shadows"]
     G --> I
-    I --> J["Extract data from all shadow boundaries"]
+    I --> J["Extract data from all<br/>shadow boundaries"]
     J --> K{"Nested shadow roots?"}
     K -->|Yes| I
     K -->|No| L["Data extraction complete"]
 
-    style A fill:#ffcccc
-    style L fill:#ccffcc
+    style A fill:#ffcccc,color:#1f2328
+    style L fill:#ccffcc,color:#1f2328
 ```
 
 ## Why AI Agents Struggle the Most

@@ -33,13 +33,13 @@ graph TD
     G --> H["Structured Data<br>JSON output"]
     F -->|No| I["Return Markdown<br>as final output"]
 
-    style A fill:#ffcccc
-    style B fill:#ffffcc
-    style D fill:#ffffcc
-    style E fill:#ccffcc
-    style G fill:#ccccff
-    style H fill:#99ff99
-    style I fill:#99ff99
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style G fill:#ccccff,color:#1f2328
+    style H fill:#99ff99,color:#1f2328
+    style I fill:#99ff99,color:#1f2328
 ```
 
 The key insight is that LLM extraction is optional. Many use cases only need the markdown conversion step -- feeding documentation pages into a RAG system, for example, or archiving article content. The LLM layer adds cost and latency, so Crawl4ai lets you skip it when you do not need it.
@@ -384,10 +384,10 @@ graph TD
     C -->|No| F["Use Playwright<br>directly"]
     C -->|Yes| G["Use Crawl4ai"]
 
-    style D fill:#ccffcc
-    style E fill:#ccffcc
-    style F fill:#ffffcc
-    style G fill:#ccccff
+    style D fill:#ccffcc,color:#1f2328
+    style E fill:#ccffcc,color:#1f2328
+    style F fill:#ffffcc,color:#1f2328
+    style G fill:#ccccff,color:#1f2328
 ```
 
 **Use Crawl4ai when:**

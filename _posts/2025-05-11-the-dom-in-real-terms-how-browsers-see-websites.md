@@ -82,7 +82,7 @@ sequenceDiagram
     participant HTML Parser
     participant DOM Tree
     participant JavaScript Engine
-    
+
     Browser->>HTML Parser: Raw HTML
     HTML Parser->>DOM Tree: Initial DOM
     JavaScript Engine->>DOM Tree: Modify DOM

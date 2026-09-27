@@ -413,25 +413,25 @@ print(response.json())
 Performance on standardized benchmarks shows where each framework does best. The WebVoyager benchmark tests agents across 586 real-world web tasks and provides the most thorough comparison available.
 
 ```mermaid
-graph TD
+graph LR
     subgraph "WebVoyager Benchmark Scores"
         A["Browser Use: 89.1%"]
         B["Skyvern: 85.85%"]
     end
 
     subgraph "Task Type Strengths"
-        C["Browser Use: Multi-step navigation"]
-        D["Skyvern: Form-filling tasks"]
-        E["Stagehand: Hybrid workflows"]
+        C["Browser Use: Multi-step<br/>navigation"]
+        D["Skyvern: Form-filling<br/>tasks"]
+        E["Stagehand: Hybrid<br/>workflows"]
     end
 
     A --> C
     B --> D
     E --> E
 
-    style A fill:#d4edda
-    style B fill:#fff3cd
-    style E fill:#d1ecf1
+    style A fill:#d4edda,color:#1f2328
+    style B fill:#fff3cd,color:#1f2328
+    style E fill:#d1ecf1,color:#1f2328
 ```
 
 Browser Use leads overall with 89.1% on WebVoyager, benefiting from its agent-first architecture that reasons through unexpected situations. Skyvern follows at 85.85%, with particular strength in form-filling tasks where computer vision shines. Stagehand does not publish a single benchmark number because its performance depends on how much of the workflow is handled by deterministic Playwright code versus AI --- which is exactly the point of its design.
@@ -444,25 +444,25 @@ The decision between these three comes down to your team's skills, your use case
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{"What is your primary language?"}
-    B -->|Python| C{"How predictable is the workflow?"}
-    B -->|TypeScript| D{"Do you need fine-grained control?"}
+    A[Start] --> B{"What is your primary<br/>language?"}
+    B -->|Python| C{"How predictable is the<br/>workflow?"}
+    B -->|TypeScript| D{"Do you need fine-grained<br/>control?"}
 
     C -->|Highly variable| E["Browser Use"]
     C -->|Mostly predictable| F{"Is it form-heavy?"}
     F -->|Yes| G["Skyvern"]
-    F -->|No| H["Browser Use or Skyvern"]
+    F -->|No| H["Browser Use or<br/>Skyvern"]
 
     D -->|Yes| I["Stagehand"]
-    D -->|No| J{"Budget constraints?"}
-    J -->|Tight budget| K["Stagehand with minimal AI calls"]
+    D -->|No| J{"Budget<br/>constraints?"}
+    J -->|Tight budget| K["Stagehand with minimal<br/>AI calls"]
     J -->|Flexible| L["Stagehand"]
 
-    style E fill:#e6f3ff
-    style G fill:#fff0e6
-    style I fill:#f0ffe6
-    style K fill:#f0ffe6
-    style L fill:#f0ffe6
+    style E fill:#e6f3ff,color:#1f2328
+    style G fill:#fff0e6,color:#1f2328
+    style I fill:#f0ffe6,color:#1f2328
+    style K fill:#f0ffe6,color:#1f2328
+    style L fill:#f0ffe6,color:#1f2328
 ```
 
 ### Choose Browser Use when:

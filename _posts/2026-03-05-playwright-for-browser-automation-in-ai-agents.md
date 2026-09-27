@@ -43,9 +43,9 @@ graph TD
 ```mermaid
 graph TD
     G[Accessibility Tree] --> H[Labeled Roles and States] --> I[Element References]
-    style G fill:#d4edda
-    style H fill:#d4edda
-    style I fill:#d4edda
+    style G fill:#d4edda,color:#1f2328
+    style H fill:#d4edda,color:#1f2328
+    style I fill:#d4edda,color:#1f2328
 ```
 
 ## The Accessibility Tree: How AI Agents See Web Pages
@@ -404,7 +404,7 @@ Microsoft now provides three distinct ways to connect Playwright to AI agents, e
 ```mermaid
 graph TD
     A1[AI Agent] -->|MCP Protocol| A2[MCP Server] --> A3[Playwright] --> A4[Browser]
-    style A1 fill:#fff3cd
+    style A1 fill:#fff3cd,color:#1f2328
 ```
 
 **Playwright CLI** -- ~27K tokens/task, best for long multi-step workflows:
@@ -413,7 +413,7 @@ graph TD
 graph TD
     B1[Coding Agent] -->|Shell Commands| B2[playwright-cli] --> B3[Snapshots on Disk]
     B3 --> B4[Agent Reads Selectively]
-    style B1 fill:#d4edda
+    style B1 fill:#d4edda,color:#1f2328
 ```
 
 **Playwright Test Agents** -- built-in to v1.56+, best for test generation and maintenance:
@@ -421,7 +421,7 @@ graph TD
 ```mermaid
 graph TD
     C1[Planner] -->|Markdown spec| C2[Generator] -->|Test files| C3[Healer] -->|Fixed tests| C4[CI Pipeline]
-    style C1 fill:#d1ecf1
+    style C1 fill:#d1ecf1,color:#1f2328
 ```
 
 ### Path 1: Playwright MCP Server
@@ -644,7 +644,7 @@ graph TD
     A[Python Client] -->|RPC| B[Node.js Relay]
     B -->|CDP| C[Browser]
     D["Extra hop = latency"]
-    style D fill:#fff3cd
+    style D fill:#fff3cd,color:#1f2328
 ```
 
 **Direct CDP architecture:**
@@ -653,7 +653,7 @@ graph TD
 graph TD
     E[Python Client] -->|CDP| F[Browser]
     G["No relay = faster"]
-    style G fill:#d4edda
+    style G fill:#d4edda,color:#1f2328
 ```
 
 This does not mean Playwright is the wrong choice for AI agents. It means that at Browser Use's scale -- running thousands of agent tasks per day with complex multi-step workflows -- the abstraction layer's overhead became significant enough to justify building a custom CDP client. For most teams, Playwright's stability, documentation, and ecosystem make it the practical choice. The CDP path makes sense only when you have hit Playwright's ceiling and have the engineering capacity to maintain a protocol-level integration.
@@ -680,7 +680,7 @@ The Playwright AI ecosystem in 2026 has grown beyond Microsoft's official tools 
 **Official Microsoft integrations:**
 
 ```mermaid
-graph TD
+graph LR
     PW[Playwright Core] --> MCP[MCP Server]
     PW --> CLI[CLI]
     PW --> TA[Test Agents]
@@ -691,7 +691,7 @@ graph TD
     TA --> P[Planner]
     TA --> G[Generator]
     TA --> H[Healer]
-    style PW fill:#e6f3ff
+    style PW fill:#e6f3ff,color:#1f2328
 ```
 
 **Third-party frameworks built on Playwright:**
@@ -704,9 +704,9 @@ graph TD
     BU --> CDP["Migrated to CDP"]
     SH --> HY["Hybrid: Playwright + AI"]
     SK --> VIS["Visual: LLM + CV"]
-    style CDP fill:#fff3cd
-    style HY fill:#d4edda
-    style VIS fill:#fff0e6
+    style CDP fill:#fff3cd,color:#1f2328
+    style HY fill:#d4edda,color:#1f2328
+    style VIS fill:#fff0e6,color:#1f2328
 ```
 
 **Official Microsoft tools:** MCP, CLI, and Test Agents cover the three main use cases -- coding agent integration, token-efficient automation, and test generation.

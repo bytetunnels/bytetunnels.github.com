@@ -21,18 +21,18 @@ The first question is about **HTTP fetching speed** -- how quickly can you downl
 The second question is about **HTML parsing speed** -- once you have the HTML, how quickly can you extract the data you need? This is a CPU-bound problem. A parser written in C will beat a parser written in pure Python every time.
 
 ```mermaid
-graph TD
-    A["Web Scraping Speed"] --> B["HTTP Fetching<br>(Network I/O bound)"]
-    A --> C["HTML Parsing<br>(CPU bound)"]
-    B --> D["Sync clients<br>requests, httpx"]
-    B --> E["Async clients<br>aiohttp, httpx async"]
-    B --> F["Framework<br>Scrapy / Twisted"]
-    C --> G["Pure Python<br>html.parser"]
-    C --> H["C-backed<br>lxml, selectolax"]
-    C --> I["Hybrid<br>BeautifulSoup + lxml"]
+graph LR
+    A["Web Scraping Speed"] --> B["HTTP Fetching<br/>(Network I/O bound)"]
+    A --> C["HTML Parsing<br/>(CPU bound)"]
+    B --> D["Sync clients<br/>requests, httpx"]
+    B --> E["Async clients<br/>aiohttp, httpx async"]
+    B --> F["Framework<br/>Scrapy / Twisted"]
+    C --> G["Pure Python<br/>html.parser"]
+    C --> H["C-backed<br/>lxml, selectolax"]
+    C --> I["Hybrid<br/>BeautifulSoup + lxml"]
 
-    style B fill:#ddeeff
-    style C fill:#ddffdd
+    style B fill:#ddeeff,color:#1f2328
+    style C fill:#ddffdd,color:#1f2328
 ```
 
 Optimizing only one side while ignoring the other leaves performance on the table. A scraper using aiohttp for blazing fast downloads but BeautifulSoup with `html.parser` for parsing will bottleneck on the CPU side. The reverse -- `requests` with lxml -- will bottleneck on the network side.
@@ -170,11 +170,11 @@ graph TD
 
     SEQ -->|"5-10x slower"| ASYNC
 
-    style R fill:#ffdddd
-    style HS fill:#ffdddd
-    style AIO fill:#ddffdd
-    style HA fill:#ddeeff
-    style SC fill:#ddeeff
+    style R fill:#ffdddd,color:#1f2328
+    style HS fill:#ffdddd,color:#1f2328
+    style AIO fill:#ddffdd,color:#1f2328
+    style HA fill:#ddeeff,color:#1f2328
+    style SC fill:#ddeeff,color:#1f2328
 ```
 
 The takeaway is clear: for any job involving more than a handful of pages, async clients are dramatically faster. The difference between aiohttp and httpx async is relatively small; the difference between any async client and any sync client is enormous.
@@ -343,20 +343,20 @@ parsel is the selector library that Scrapy uses internally. It is built on top o
 | **BeautifulSoup + html.parser** | 45-65ms | ~10x slower | Pure Python |
 
 ```mermaid
-graph TD
-    FAST["Fastest Parsers"] --> SEL["selectolax<br>3-7ms"]
-    FAST --> LX["lxml direct<br>8-15ms"]
-    FAST --> PAR["parsel<br>10-18ms"]
+graph LR
+    FAST["Fastest Parsers"] --> SEL["selectolax<br/>3-7ms"]
+    FAST --> LX["lxml direct<br/>8-15ms"]
+    FAST --> PAR["parsel<br/>10-18ms"]
 
-    MED["Mid-range"] --> BSL["BeautifulSoup + lxml<br>20-35ms"]
+    MED["Mid-range"] --> BSL["BeautifulSoup + lxml<br/>20-35ms"]
 
-    SLOW["Slowest"] --> BSH["BeautifulSoup + html.parser<br>45-65ms"]
+    SLOW["Slowest"] --> BSH["BeautifulSoup +<br/>html.parser<br/>45-65ms"]
 
-    style SEL fill:#ddffdd
-    style LX fill:#ddffdd
-    style PAR fill:#ddffdd
-    style BSL fill:#ffffdd
-    style BSH fill:#ffdddd
+    style SEL fill:#ddffdd,color:#1f2328
+    style LX fill:#ddffdd,color:#1f2328
+    style PAR fill:#ddffdd,color:#1f2328
+    style BSL fill:#ffffdd,color:#1f2328
+    style BSH fill:#ffdddd,color:#1f2328
 ```
 
 The gap between selectolax and BeautifulSoup with `html.parser` is roughly 10x. On a single page, that is the difference between 5ms and 50ms -- barely noticeable. On 100,000 pages, it is the difference between 8 minutes and 83 minutes of pure parse time.
@@ -514,10 +514,10 @@ graph TD
     C -->|"Yes: retries, rate<br>limits, monitoring"| E["Use Scrapy"]
     C -->|"No: quick script"| F["Use httpx async +<br>BeautifulSoup(lxml)"]
 
-    style B fill:#ddffdd
-    style D fill:#ddeeff
-    style E fill:#ffffdd
-    style F fill:#ddffdd
+    style B fill:#ddffdd,color:#1f2328
+    style D fill:#ddeeff,color:#1f2328
+    style E fill:#ffffdd,color:#1f2328
+    style F fill:#ddffdd,color:#1f2328
 ```
 
 

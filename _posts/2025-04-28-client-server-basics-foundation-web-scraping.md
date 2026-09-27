@@ -19,7 +19,7 @@ When you open your browser and navigate to any website, you're participating in 
 At its core, the client-server model is a distributed computing architecture where tasks are divided between service providers (servers) and service requesters (clients). In web scraping, we position ourselves as clients, making requests to servers just like a web browser would.
 
 ```mermaid
-graph TD
+graph LR
     B[Web Server]
 
     A[Client Browser] -->|HTTP Request| B
@@ -28,9 +28,9 @@ graph TD
     C[Web Scraper] -->|HTTP Request| B
     B -->|HTTP Response| C
 
-    style A fill:#e1f5fe
-    style C fill:#f3e5f5
-    style B fill:#e8f5e8
+    style A fill:#e1f5fe,color:#1f2328
+    style C fill:#f3e5f5,color:#1f2328
+    style B fill:#e8f5e8,color:#1f2328
 ```
 
 The beauty of this model lies in its simplicity and standardization. Servers don't need to know whether they're responding to a human using Chrome or a Python script using the requests library. They simply process incoming requests and send back responses according to established protocols.
@@ -83,7 +83,7 @@ sequenceDiagram
     participant S as Scraper
     participant DNS as DNS Server
     participant W as Web Server
-    
+
     S->>DNS: Resolve domain name
     DNS->>S: Return IP address
     S->>W: Establish TCP connection
@@ -241,14 +241,22 @@ graph TB
         B5[Session Storage]
         B6[Local Storage]
     end
-    
+```
+
+```mermaid
+graph TB
+
     subgraph "Basic HTTP Client"
         C1[HTTP Requests]
         C2[Response Handling]
         C3[Header Management]
         C4[Cookie Support]
     end
-    
+```
+
+```mermaid
+graph TB
+
     subgraph "Advanced Scraper"
         A1[Browser Automation]
         A2[JavaScript Rendering]

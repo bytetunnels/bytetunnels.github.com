@@ -40,22 +40,22 @@ The critical difference from localStorage is its lifetime. sessionStorage is tie
 Both APIs share the same interface, but their persistence and scope differ in ways that matter for scraping.
 
 ```mermaid
-graph TD
+graph LR
     A["Browser Storage APIs"] --> B["localStorage"]
     A --> C["sessionStorage"]
 
-    B --> B1["Persists across<br>browser restarts"]
-    B --> B2["Shared across all<br>tabs on same origin"]
-    B --> B3["Cleared only by<br>code or user action"]
+    B --> B1["Persists across<br/>browser restarts"]
+    B --> B2["Shared across all<br/>tabs on same origin"]
+    B --> B3["Cleared only by<br/>code or user action"]
     B --> B4["5-10 MB per origin"]
 
-    C --> C1["Cleared when<br>tab closes"]
-    C --> C2["Isolated to the<br>specific tab"]
-    C --> C3["Survives page<br>reloads within tab"]
+    C --> C1["Cleared when<br/>tab closes"]
+    C --> C2["Isolated to the<br/>specific tab"]
+    C --> C3["Survives page<br/>reloads within tab"]
     C --> C4["5-10 MB per origin"]
 
-    style B fill:#d4edda
-    style C fill:#fff3cd
+    style B fill:#d4edda,color:#1f2328
+    style C fill:#fff3cd,color:#1f2328
 ```
 
 | Feature | localStorage | sessionStorage |
@@ -608,14 +608,14 @@ The `max_age_seconds` parameter is important. Because sessionStorage is designed
 sessionStorage is strictly scoped to the origin. Your scraper can only access sessionStorage for the domain the page is currently displaying. There is no way to read sessionStorage from a different origin through `evaluate()` or `execute_script()`.
 
 ```mermaid
-graph TD
-    A["Your scraper navigates to<br>https://app.example.com"] --> B["Can read sessionStorage<br>for app.example.com"]
-    A --> C["Cannot read sessionStorage<br>for api.example.com"]
-    A --> D["Cannot read sessionStorage<br>for other-site.com"]
+graph LR
+    A["Your scraper navigates<br/>to<br/>https://app.example.com"] --> B["Can read sessionStorage<br/>for app.example.com"]
+    A --> C["Cannot read<br/>sessionStorage<br/>for api.example.com"]
+    A --> D["Cannot read<br/>sessionStorage<br/>for other-site.com"]
 
-    style B fill:#d4edda
-    style C fill:#f8d7da
-    style D fill:#f8d7da
+    style B fill:#d4edda,color:#1f2328
+    style C fill:#f8d7da,color:#1f2328
+    style D fill:#f8d7da,color:#1f2328
 ```
 
 If the application loads data from a subdomain API into its own sessionStorage, you can still read it -- it has already been copied into the current origin's storage. But if a different subdomain maintains its own sessionStorage, you would need to navigate to that subdomain to access it.

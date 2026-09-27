@@ -119,15 +119,15 @@ flowchart TD
     B -->|Disallowed| D[Find Alternative Method]
     C -->|Acceptable| E{Assess Data Sensitivity}
     C -->|Restrictive| F[Contact Site Owner]
-    E -->|Public Data| G[Proceed with Rate Limiting]
+    E -->|Public Data| G["Proceed with Rate<br/>Limiting"]
     E -->|Personal Data| H[Review Privacy Laws]
     F --> I{Permission Granted?}
     I -->|Yes| G
-    I -->|No| J[Abandon or Find Alternatives]
-    H --> K{Compliant with Regulations?}
+    I -->|No| J["Abandon or Find<br/>Alternatives"]
+    H --> K{"Compliant with<br/>Regulations?"}
     K -->|Yes| G
-    K -->|No| L[Modify Approach or Abandon]
-    G --> M[Implement Ethical Scraping]
+    K -->|No| L["Modify Approach or<br/>Abandon"]
+    G --> M["Implement Ethical<br/>Scraping"]
 ```
 
 ## Technical Architecture Questions
@@ -180,16 +180,16 @@ graph TD
     B -->|429| D[Rate Limited]
     B -->|5xx| E[Server Error]
     B -->|4xx| F[Client Error]
-    
+
     D --> G[Exponential Backoff]
     E --> H[Retry with Delay]
     F --> I[Log and Skip]
-    
+
     G --> J{"Retry Count < Max?"}
     H --> J
     J -->|Yes| A
     J -->|No| K[Mark as Failed]
-    
+
     C --> L[Success]
 ```
 

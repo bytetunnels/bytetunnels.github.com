@@ -69,12 +69,12 @@ Still, the surface web remains the lowest-friction starting point for any data c
 The deep web is everything that search engines cannot or do not index. This is not because the content is illegal or hidden intentionally -- it is simply behind some kind of access barrier. Your email inbox is deep web. Your bank account dashboard is deep web. A university library's journal search portal is deep web.
 
 ```mermaid
-graph TD
-    A["Deep Web Data Sources"] --> B["Login-Protected<br>Email, social media<br>accounts, dashboards"]
-    A --> C["Paywall Content<br>News subscriptions<br>academic journals"]
-    A --> D["Form-Gated Data<br>Search portals<br>government databases"]
-    A --> E["Dynamic Content<br>AJAX-loaded results<br>infinite scroll pages"]
-    A --> F["Session-Dependent<br>Shopping carts<br>personalized feeds"]
+graph LR
+    A["Deep Web Data Sources"] --> B["Login-Protected<br/>Email, social media<br/>accounts, dashboards"]
+    A --> C["Paywall Content<br/>News subscriptions<br/>academic journals"]
+    A --> D["Form-Gated Data<br/>Search portals<br/>government databases"]
+    A --> E["Dynamic Content<br/>AJAX-loaded results<br/>infinite scroll pages"]
+    A --> F["Session-Dependent<br/>Shopping carts<br/>personalized feeds"]
 
     style A fill:#4682B4,color:#fff
     style B fill:#5F9EA0,color:#fff
@@ -118,11 +118,11 @@ Always read the terms of service. Always consider whether an official API exists
 APIs (Application Programming Interfaces) are purpose-built endpoints that return data in structured formats like JSON or XML. Unlike web pages, which are designed for humans to read in a browser, APIs are designed for machines to consume directly. This makes them the cleanest and most reliable data source when they are available.
 
 ```mermaid
-graph TD
-    A["API Data Sources"] --> B["Public APIs<br>No authentication<br>Open data endpoints"]
-    A --> C["Authenticated APIs<br>API keys required<br>Rate-limited access"]
-    A --> D["Partner APIs<br>Contractual access<br>Higher rate limits"]
-    A --> E["Internal APIs<br>Not documented<br>Used by website frontend"]
+graph LR
+    A["API Data Sources"] --> B["Public APIs<br/>No authentication<br/>Open data endpoints"]
+    A --> C["Authenticated APIs<br/>API keys required<br/>Rate-limited access"]
+    A --> D["Partner APIs<br/>Contractual access<br/>Higher rate limits"]
+    A --> E["Internal APIs<br/>Not documented<br/>Used by website frontend"]
 
     style A fill:#228B22,color:#fff
     style B fill:#32CD32,color:#000
@@ -202,11 +202,11 @@ The key insight is that form-based databases are fundamentally different from we
 Not all web data sits still waiting to be fetched. Some data flows continuously in real time, and collecting it requires a different architectural approach.
 
 ```mermaid
-graph TD
-    A["Real-Time Data Sources"] --> B["WebSocket Streams<br>Stock tickers<br>Crypto prices<br>Live sports scores"]
-    A --> C["Server-Sent Events<br>Notification feeds<br>Live dashboards"]
-    A --> D["Polling Endpoints<br>Status checks<br>Inventory updates"]
-    A --> E["Message Queues<br>IoT sensor data<br>Chat streams"]
+graph LR
+    A["Real-Time Data Sources"] --> B["WebSocket Streams<br/>Stock tickers<br/>Crypto prices<br/>Live sports scores"]
+    A --> C["Server-Sent Events<br/>Notification feeds<br/>Live dashboards"]
+    A --> D["Polling Endpoints<br/>Status checks<br/>Inventory updates"]
+    A --> E["Message Queues<br/>IoT sensor data<br/>Chat streams"]
 
     style A fill:#8B4513,color:#fff
     style B fill:#CD853F,color:#000
@@ -270,13 +270,23 @@ The type of data source you are dealing with should drive your choice of tools a
 graph TD
     A["What kind of data<br>do you need?"] --> B{"Is it publicly<br>accessible?"}
     B -->|Yes| C{"Does the page<br>use JavaScript?"}
-    B -->|No| D{"Is there an<br>official API?"}
 
     C -->|No| E["Use requests +<br>BeautifulSoup or Scrapy"]
     C -->|Yes| F{"Is there embedded<br>structured data?"}
 
     F -->|Yes| G["Extract JSON-LD<br>from page source"]
     F -->|No| H["Use Playwright<br>or Puppeteer"]
+
+    style A fill:#4B0082,color:#fff
+    style E fill:#228B22,color:#fff
+    style G fill:#228B22,color:#fff
+    style H fill:#DAA520,color:#000
+```
+
+```mermaid
+graph TD
+    A["What kind of data<br>do you need?"] --> B{"Is it publicly<br>accessible?"}
+    B -->|No| D{"Is there an<br>official API?"}
 
     D -->|Yes| I["Use the API with<br>requests or httpx"]
     D -->|No| J{"Does it require<br>authentication?"}
@@ -285,9 +295,6 @@ graph TD
     J -->|No| L["Use requests with<br>POST form submission"]
 
     style A fill:#4B0082,color:#fff
-    style E fill:#228B22,color:#fff
-    style G fill:#228B22,color:#fff
-    style H fill:#DAA520,color:#000
     style I fill:#228B22,color:#fff
     style K fill:#CD5C5C,color:#fff
     style L fill:#DAA520,color:#000

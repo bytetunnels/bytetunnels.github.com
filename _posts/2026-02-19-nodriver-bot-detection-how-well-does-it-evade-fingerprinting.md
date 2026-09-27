@@ -17,31 +17,31 @@ Nodriver's entire pitch is stealth. If you are new to the tool, our [complete gu
 The stealth that nodriver provides is not based on patches or overrides. It is structural. By removing every intermediary between your Python script and Chrome, nodriver eliminates the artifacts that detection systems have relied on for years.
 
 ```mermaid
-graph TD
-    A["Selenium + ChromeDriver"] --> B["navigator.webdriver = true"]
+graph LR
+    A["Selenium + ChromeDriver"] --> B["navigator.webdriver =<br/>true"]
     A --> C["cdc_ variables in DOM"]
     A --> D["--enable-automation flag"]
-    A --> E["Automation extensions injected"]
-    A --> F["ChromeDriver process visible"]
+    A --> E["Automation extensions<br/>injected"]
+    A --> F["ChromeDriver process<br/>visible"]
 
-    G["Nodriver"] --> H["navigator.webdriver = undefined"]
+    G["Nodriver"] --> H["navigator.webdriver =<br/>undefined"]
     G --> I["No cdc_ variables"]
     G --> J["No automation flags"]
     G --> K["No extensions injected"]
     G --> L["No driver process"]
 
-    style A fill:#ffcccc
-    style B fill:#ffcccc
-    style C fill:#ffcccc
-    style D fill:#ffcccc
-    style E fill:#ffcccc
-    style F fill:#ffcccc
-    style G fill:#ccffcc
-    style H fill:#ccffcc
-    style I fill:#ccffcc
-    style J fill:#ccffcc
-    style K fill:#ccffcc
-    style L fill:#ccffcc
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffcccc,color:#1f2328
+    style C fill:#ffcccc,color:#1f2328
+    style D fill:#ffcccc,color:#1f2328
+    style E fill:#ffcccc,color:#1f2328
+    style F fill:#ffcccc,color:#1f2328
+    style G fill:#ccffcc,color:#1f2328
+    style H fill:#ccffcc,color:#1f2328
+    style I fill:#ccffcc,color:#1f2328
+    style J fill:#ccffcc,color:#1f2328
+    style K fill:#ccffcc,color:#1f2328
+    style L fill:#ccffcc,color:#1f2328
 ```
 
 Here is what nodriver removes compared to a standard Selenium setup:
@@ -232,33 +232,33 @@ This returns real Chrome plugins like "PDF Viewer" and "Chrome PDF Viewer" rathe
 Here is where the picture changes. Modern detection goes far beyond checking `navigator.webdriver`. The advanced fingerprinting layers are where nodriver's "clean Chrome" approach runs out of answers.
 
 ```mermaid
-graph TD
-    A["Detection Layer"] --> B["Automation Flags<br>(nodriver passes)"]
-    A --> C["Canvas Fingerprinting<br>(nodriver exposed)"]
-    A --> D["WebGL Fingerprinting<br>(nodriver exposed)"]
-    A --> E["TLS Fingerprinting<br>(nodriver passes*)"]
-    A --> F["Font Enumeration<br>(nodriver exposed)"]
-    A --> G["Behavioral Analysis<br>(nodriver neutral)"]
+graph LR
+    A["Detection Layer"] --> B["Automation Flags<br/>(nodriver passes)"]
+    A --> C["Canvas Fingerprinting<br/>(nodriver exposed)"]
+    A --> D["WebGL Fingerprinting<br/>(nodriver exposed)"]
+    A --> E["TLS Fingerprinting<br/>(nodriver passes*)"]
+    A --> F["Font Enumeration<br/>(nodriver exposed)"]
+    A --> G["Behavioral Analysis<br/>(nodriver neutral)"]
 
     B --> H["Result: Clean"]
-    C --> I["Result: Unique to machine"]
+    C --> I["Result: Unique to<br/>machine"]
     D --> J["Result: Unique to GPU"]
-    E --> K["Result: Real Chrome TLS<br>*unless behind proxy"]
-    F --> L["Result: System fonts exposed"]
-    G --> M["Result: Depends on<br>your code"]
+    E --> K["Result: Real Chrome TLS<br/>*unless behind proxy"]
+    F --> L["Result: System fonts<br/>exposed"]
+    G --> M["Result: Depends on<br/>your code"]
 
-    style B fill:#ccffcc
-    style H fill:#ccffcc
-    style C fill:#ffffcc
-    style D fill:#ffffcc
-    style E fill:#ffffcc
-    style F fill:#ffffcc
-    style G fill:#ffffcc
-    style I fill:#ffffcc
-    style J fill:#ffffcc
-    style K fill:#ffffcc
-    style L fill:#ffffcc
-    style M fill:#ffffcc
+    style B fill:#ccffcc,color:#1f2328
+    style H fill:#ccffcc,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
+    style D fill:#ffffcc,color:#1f2328
+    style E fill:#ffffcc,color:#1f2328
+    style F fill:#ffffcc,color:#1f2328
+    style G fill:#ffffcc,color:#1f2328
+    style I fill:#ffffcc,color:#1f2328
+    style J fill:#ffffcc,color:#1f2328
+    style K fill:#ffffcc,color:#1f2328
+    style L fill:#ffffcc,color:#1f2328
+    style M fill:#ffffcc,color:#1f2328
 ```
 
 ### Canvas Fingerprinting
@@ -608,22 +608,22 @@ Nodriver has constraints that no amount of configuration can fix.
 **No built-in behavioral automation.** Nodriver does not automatically generate human-like mouse movements, scroll patterns, or typing dynamics. You have to implement these yourself, as shown in the examples above.
 
 ```mermaid
-graph TD
-    A["Nodriver Stealth Coverage"] --> B["Automation Artifacts<br>COVERED"]
-    A --> C["Headless Detection<br>COVERED (headed mode)"]
-    A --> D["Canvas Fingerprint<br>NOT COVERED"]
-    A --> E["WebGL Fingerprint<br>NOT COVERED"]
-    A --> F["TLS Fingerprint<br>COVERED (direct connect)"]
-    A --> G["Font Fingerprint<br>NOT COVERED"]
-    A --> H["Behavioral Analysis<br>NOT COVERED (manual)"]
+graph LR
+    A["Nodriver Stealth<br/>Coverage"] --> B["Automation Artifacts<br/>COVERED"]
+    A --> C["Headless Detection<br/>COVERED (headed mode)"]
+    A --> D["Canvas Fingerprint<br/>NOT COVERED"]
+    A --> E["WebGL Fingerprint<br/>NOT COVERED"]
+    A --> F["TLS Fingerprint<br/>COVERED (direct connect)"]
+    A --> G["Font Fingerprint<br/>NOT COVERED"]
+    A --> H["Behavioral Analysis<br/>NOT COVERED (manual)"]
 
-    style B fill:#ccffcc
-    style C fill:#ccffcc
-    style F fill:#ccffcc
-    style D fill:#ffcccc
-    style E fill:#ffcccc
-    style G fill:#ffcccc
-    style H fill:#ffffcc
+    style B fill:#ccffcc,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style F fill:#ccffcc,color:#1f2328
+    style D fill:#ffcccc,color:#1f2328
+    style E fill:#ffcccc,color:#1f2328
+    style G fill:#ffcccc,color:#1f2328
+    style H fill:#ffffcc,color:#1f2328
 ```
 
 ## When Nodriver Is Enough vs When to Escalate
@@ -652,9 +652,9 @@ graph TD
     I -->|Yes| G
     I -->|No| E
 
-    style E fill:#ccffcc
-    style G fill:#cce5ff
-    style C fill:#ffffcc
+    style E fill:#ccffcc,color:#1f2328
+    style G fill:#cce5ff,color:#1f2328
+    style C fill:#ffffcc,color:#1f2328
 ```
 
 Nodriver occupies a practical middle ground. It is dramatically stealthier than Selenium or unpatched Playwright, easy to set up, and requires no custom browser builds. For the full landscape of anti-detection tools, see [stealth browsers in 2026: Camoufox, nodriver, and the anti-detection arms race](/posts/stealth-browsers-in-2026-camoufox-nodriver-and-the-anti-detection-arms-race/) and our [timeline of how detection methods have evolved](/posts/evolution-web-scraping-detection-methods-timeline/). For many scraping tasks, that middle ground is exactly where you need to be. When it is not enough, the escalation path to Camoufox is clear, and the decision to escalate is usually obvious --- if nodriver gets blocked after you have added proxies and realistic behavior, the site is doing engine-level fingerprinting that only an engine-level solution can address.

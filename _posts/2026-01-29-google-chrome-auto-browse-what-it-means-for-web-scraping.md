@@ -38,9 +38,9 @@ graph TD
     G --> D
     F -->|Yes| H["Agent returns results to user"]
 
-    style A fill:#ffffcc
-    style B fill:#ccccff
-    style H fill:#ccffcc
+    style A fill:#ffffcc,color:#1f2328
+    style B fill:#ccccff,color:#1f2328
+    style H fill:#ccffcc,color:#1f2328
 ```
 
 ## The Architecture Behind Auto Browse
@@ -145,10 +145,10 @@ Browser Use is an open-source framework that connects LLMs to browser automation
 Stagehand has gained enormous traction in the developer community, amassing over 20,000 GitHub stars. As one of the leading [Puppeteer alternatives](/posts/top-puppeteer-alternatives-what-to-use-instead/), it extends Playwright with AI-powered selectors, letting you write automation scripts that use natural language to identify elements instead of brittle CSS selectors. Stagehand sits at a practical middle ground between fully autonomous agents and traditional scripted automation.
 
 ```mermaid
-graph TD
+graph LR
     subgraph FA["Fully Autonomous"]
         A1["Chrome Auto Browse"]
-        A2["OpenAI Operator - deprecated"]
+        A2["OpenAI Operator -<br/>deprecated"]
     end
 
     subgraph HY["Hybrid - AI-Assisted Scripting"]
@@ -162,16 +162,16 @@ graph TD
         C3["Selenium"]
     end
 
-    FA --> D["Higher abstraction, less control"]
-    TR --> E["Lower abstraction, full control"]
-    HY --> F["Balanced abstraction and control"]
+    FA --> D["Higher abstraction, less<br/>control"]
+    TR --> E["Lower abstraction, full<br/>control"]
+    HY --> F["Balanced abstraction and<br/>control"]
 
-    style A1 fill:#ccccff
-    style B1 fill:#ccffcc
-    style B2 fill:#ccffcc
-    style C1 fill:#ffffcc
-    style C2 fill:#ffffcc
-    style C3 fill:#ffffcc
+    style A1 fill:#ccccff,color:#1f2328
+    style B1 fill:#ccffcc,color:#1f2328
+    style B2 fill:#ccffcc,color:#1f2328
+    style C1 fill:#ffffcc,color:#1f2328
+    style C2 fill:#ffffcc,color:#1f2328
+    style C3 fill:#ffffcc,color:#1f2328
 ```
 
 
@@ -411,10 +411,10 @@ graph TD
     B --> C["Fully Agentic Browsing"]
     C --> D["Browser as AI Operating System"]
 
-    style A fill:#ffcccc
-    style B fill:#ffffcc
-    style C fill:#ccffcc
-    style D fill:#ccccff
+    style A fill:#ffcccc,color:#1f2328
+    style B fill:#ffffcc,color:#1f2328
+    style C fill:#ccffcc,color:#1f2328
+    style D fill:#ccccff,color:#1f2328
 ```
 
 Whether you adopt Google's Auto Browse or build your own agents with open-source tools, the way web scraping works is changing. The browser agent era has arrived, and the developers who integrate LLM-powered resilience into their scraping stacks now will be better positioned as websites and anti-bot systems continue to evolve.

@@ -129,14 +129,14 @@ options.add_argument('--headless=new')   # Use this one
 The practical impact is substantial. Pages that broke under old headless mode work correctly with `--headless=new`. Navigator properties, WebGL rendering, and media APIs all behave identically to headed Chrome. If you are still using `--headless` without `=new`, switch immediately.
 
 ```mermaid
-graph TB
-    A[Chrome Headless Evolution]
-    A --> B["--headless (old)<br>Separate Shell Implementation"]
-    A --> C["--headless=new<br>Full Chrome, No Display"]
-    B --> D[Different navigator properties]
-    B --> E[Missing some CSS features]
+graph LR
+    A["Chrome Headless<br/>Evolution"]
+    A --> B["--headless (old)<br/>Separate Shell<br/>Implementation"]
+    A --> C["--headless=new<br/>Full Chrome, No Display"]
+    B --> D["Different navigator<br/>properties"]
+    B --> E["Missing some CSS<br/>features"]
     B --> F[Easier to detect as bot]
-    C --> G[Identical to headed Chrome]
+    C --> G["Identical to headed<br/>Chrome"]
     C --> H[Full CSS and JS support]
     C --> I[Harder to fingerprint]
 ```
@@ -304,20 +304,20 @@ GitHub Actions runners include Chrome and ChromeDriver out of the box. Selenium 
 Most behavior is identical between headless and headed mode when using `--headless=new`. But there are edge cases worth knowing about.
 
 ```mermaid
-graph TB
+graph LR
     A[Behavior Differences]
     A --> B[Identical in Both Modes]
     A --> C[Different in Headless]
 
-    B --> D[DOM parsing and manipulation]
+    B --> D["DOM parsing and<br/>manipulation"]
     B --> E[JavaScript execution]
-    B --> F[Network requests and cookies]
-    B --> G[CSS computation and layout]
+    B --> F["Network requests and<br/>cookies"]
+    B --> G["CSS computation and<br/>layout"]
 
-    C --> H[No physical screen capture<br>Screenshots are internal renders]
-    C --> I[Default window size may differ]
-    C --> J[Some permission prompts skipped]
-    C --> K[WebRTC and media may differ]
+    C --> H["No physical screen<br/>capture<br/>Screenshots are internal<br/>renders"]
+    C --> I["Default window size may<br/>differ"]
+    C --> J["Some permission prompts<br/>skipped"]
+    C --> K["WebRTC and media may<br/>differ"]
 ```
 
 Screenshots taken in headless mode are rendered internally, not captured from a physical display. This means they are pixel-perfect and unaffected by screen resolution, DPI settings, or other windows overlapping your browser. In some ways, headless screenshots are more reliable than headed ones.

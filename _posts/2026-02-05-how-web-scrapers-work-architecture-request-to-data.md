@@ -367,22 +367,24 @@ The architecture changes significantly when you switch from a simple HTTP scrape
 ```mermaid
 graph TD
     subgraph SIMPLE["Simple HTTP Scraper"]
-        A1["Python Script"] --> A2["HTTP Request<br>via requests library"]
+        direction TB
+        A1["Python Script"] --> A2["HTTP Request<br/>via requests library"]
         A2 --> A3["Raw HTML Response"]
-        A3 --> A4["Parse with<br>BeautifulSoup"]
+        A3 --> A4["Parse with<br/>BeautifulSoup"]
         A4 --> A5["Extracted Data"]
     end
 
     subgraph BROWSER["Browser-Based Scraper"]
-        B1["Python Script"] --> B2["Launch Browser<br>via Playwright/Selenium"]
-        B2 --> B3["Browser loads page<br>executes JavaScript"]
-        B3 --> B4["Rendered DOM<br>with all content"]
-        B4 --> B5["Query DOM<br>via selectors"]
+        direction TB
+        B1["Python Script"] --> B2["Launch Browser<br/>via Playwright/Selenium"]
+        B2 --> B3["Browser loads page<br/>executes JavaScript"]
+        B3 --> B4["Rendered DOM<br/>with all content"]
+        B4 --> B5["Query DOM<br/>via selectors"]
         B5 --> B6["Extracted Data"]
     end
 
-    style SIMPLE fill:#e8f4e8
-    style BROWSER fill:#e8e8f4
+    style SIMPLE fill:#e8f4e8,color:#1f2328
+    style BROWSER fill:#e8e8f4,color:#1f2328
 ```
 
 The simple scraper is fast and lightweight. It sends a single HTTP request, gets the raw HTML, and parses it. It uses minimal memory and can make hundreds of requests per second. The [speed difference between requests and Selenium](/posts/python-requests-vs-selenium-speed-performance-comparison/) can be dramatic.
